@@ -1,0 +1,34 @@
+/**
+ * @module ZKr
+ * @category utils/oop
+ * @label oop
+ * @position 395 / 1990
+ * @source esbuild bundle from @iflow-ai/iflow-cli v0.5.19
+ * @package iflow-cli-ce (Community Edition)
+ * @license Apache-2.0
+ *
+ * This module was automatically extracted and categorized.
+ * The original variable name (ZKr) is preserved for compatibility.
+ * DO NOT rename this module's variable - it's referenced by other modules.
+ */
+
+
+var ZKr = T((bre) => {
+  "use strict";
+  Object.defineProperty(bre, "__esModule", { value: !0 });
+  bre.RandomIdGenerator = bre.BatchSpanProcessor = void 0;
+  var MNo = YKr();
+  Object.defineProperty(bre, "BatchSpanProcessor", {
+    enumerable: !0,
+    get: function () {
+      return MNo.BatchSpanProcessor;
+    },
+  });
+  var FNo = XKr();
+  Object.defineProperty(bre, "RandomIdGenerator", {
+    enumerable: !0,
+    get: function () {
+      return FNo.RandomIdGenerator;
+    },
+  });
+});

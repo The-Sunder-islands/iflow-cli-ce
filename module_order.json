@@ -1,0 +1,9955 @@
+{
+  "total": 1990,
+  "order": [
+    {
+      "name": "cSr",
+      "category": "ui/react",
+      "label": "react"
+    },
+    {
+      "name": "Yt",
+      "category": "browser/jsdom",
+      "label": "jsdom"
+    },
+    {
+      "name": "wSr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "RSr",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "BSr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "E8t",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "k8t",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "fwr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "hwr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "gwr",
+      "category": "ui/react",
+      "label": "react"
+    },
+    {
+      "name": "Awr",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "eR",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "khe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Qwr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Nhe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "iee",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "f9t",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "g9t",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "dxr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "A9t",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "gRe",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "Ixr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "kxr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Fxr",
+      "category": "ui/ink",
+      "label": "ink"
+    },
+    {
+      "name": "jxr",
+      "category": "ui/react",
+      "label": "react"
+    },
+    {
+      "name": "Kxr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ERe",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "MTr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "UTr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "HTr",
+      "category": "app/terminal",
+      "label": "iflow-terminal"
+    },
+    {
+      "name": "lDr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pDr",
+      "category": "app/terminal",
+      "label": "iflow-terminal"
+    },
+    {
+      "name": "m6t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "aIr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "uIr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "cIr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "hIr",
+      "category": "network/url",
+      "label": "url"
+    },
+    {
+      "name": "ex",
+      "category": "network/url",
+      "label": "url"
+    },
+    {
+      "name": "TIr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "RIr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kIr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "GIr",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "HIr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "VIr",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "WIr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "T6t",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "XIr",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "M6t",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "C7r",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "F6t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "w7r",
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    {
+      "name": "T7r",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "I7r",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "k7r",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Iee",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "P7r",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "F7r",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "U7r",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Q6t",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "tRr",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "xC",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "G6t",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "aRr",
+      "category": "utils/data",
+      "label": "data"
+    },
+    {
+      "name": "cRr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "dRr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "q6t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yRr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "CRr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "SRr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "m3e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Z6t",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "RRr",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "kRr",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "Pee",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "NRr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "nyt",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "f3e",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "EG",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "FRr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "syt",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "mB",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "sx",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "dyt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vG",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "gyt",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "Ayt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yyt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_yt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZRr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wyt",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "xyt",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "hkr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "wkr",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "Dyt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Pkr",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "Pyt",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "Lyt",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "Fyt",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "Qyt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qyt",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "pB",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Gkr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "qkr",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "i_t",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "s_t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ykr",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "l_t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "h_t",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "Xkr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "aOe",
+      "category": "system/process",
+      "label": "process"
+    },
+    {
+      "name": "__t",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "nOr",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "cOr",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "lOr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "mOr",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "dOr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pOe",
+      "category": "app/auth",
+      "label": "iflow-auth"
+    },
+    {
+      "name": "MOr",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "jOr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aNr",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "tge",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "evt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tvt",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "uLr",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "cLr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pLr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "svt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gLr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_Lr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ELr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vLr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "CLr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "qGr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "HGr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "VGr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "WGr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lvt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "JGr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "XGr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "eqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bvt",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "aqr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "uqr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "fqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Aqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Eqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Cqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Tqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ii",
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    {
+      "name": "xvt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Qqr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Yqr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Tvt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jqr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Zqr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "tHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_x",
+      "category": "utils/data",
+      "label": "data"
+    },
+    {
+      "name": "lHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "QNe",
+      "category": "utils/data",
+      "label": "data"
+    },
+    {
+      "name": "yHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "EHr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Uvt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jvt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "THr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "GNe",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "kHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "HNe",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "VNe",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "Wvt",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "UHr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "KNe",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "OB",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qC",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ite",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "QHr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "GHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Zvt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ePe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "rPe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "HHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "JHr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "eVr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "tVr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "rVr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "aVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "fge",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "aCt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "cCt",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "dVr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "pVr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "gVr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "bVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "AVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pCt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bCt",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "vVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "SVr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "bge",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "xPe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wVr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "xVr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "DVr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "RVr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "kVr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "OVr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "_Ct",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "PVr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "MVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "FVr",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "UVr",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "jVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "QVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "HVr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "yge",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jPe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "MCt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_ge",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jCt",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "GCt",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "YVr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "eWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "rWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "nWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "oWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "cWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZPe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "mWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "dWr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "nBe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "hWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "AWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Dx",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "vWr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "m4t",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "RWr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "kWr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "d4t",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "MWr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "FWr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "UWr",
+      "category": "utils/data",
+      "label": "data"
+    },
+    {
+      "name": "jWr",
+      "category": "utils/data",
+      "label": "data"
+    },
+    {
+      "name": "QWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GWr",
+      "category": "utils/data",
+      "label": "data"
+    },
+    {
+      "name": "qWr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kx",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "HWr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Azr",
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    {
+      "name": "yzr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "_zr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "A4t",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "y4t",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "E4t",
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    {
+      "name": "vzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Szr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "wzr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "xzr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "kBe",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Tzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Izr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "Rzr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "kzr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "S4t",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Ozr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Pzr",
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    {
+      "name": "Bzr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Lzr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "x4t",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Mzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GBe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "HBe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "D4t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "R4t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Uzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jzr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Gzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Xte",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Vzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Wzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "O4t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "B4t",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "Jzr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Zzr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Rge",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "oLe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "eYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "tYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "nYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "oYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "sYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "aYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "F4t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "cYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "dYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "fYr",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "pYr",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "hYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "AYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "rre",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_Yr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "EYr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "z4t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "CYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "DYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "IYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "OYr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "NYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "PYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "BYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "nSt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "oSt",
+      "category": "app/hooks",
+      "label": "iflow-hooks"
+    },
+    {
+      "name": "LYr",
+      "category": "app/hooks",
+      "label": "iflow-hooks"
+    },
+    {
+      "name": "MYr",
+      "category": "app/hooks",
+      "label": "iflow-hooks"
+    },
+    {
+      "name": "FYr",
+      "category": "app/hooks",
+      "label": "iflow-hooks"
+    },
+    {
+      "name": "UYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uSt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jYr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "mSt",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "qYr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "VYr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Pge",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "GLe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "WYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "zYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "KYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "XYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "ZYr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "eKr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "pSt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "rKr",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "oKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sKr",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "aKr",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "uKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "cKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "mKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "dKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "fKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mge",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sMe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uMe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xSt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "DSt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kSt",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "OSt",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "vKr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "CKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "TKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "LSt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "IKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "RKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "OKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "PKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "BKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "LKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "HSt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "FKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "DMe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "UKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "OMe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "PMe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZSt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "twt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "iwt",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "owt",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "zKr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "YKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "XKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZKr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "cwt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "rJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "nJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "iJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "aJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZMe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "fJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vwt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "CJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xwt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Rwt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "TJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "NJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "UJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mwt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "QJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "VJr",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "WJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "KJr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "La",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qwt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "g0",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "fFe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ph",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "bFe",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "rxt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "d2",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "VC",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "Ire",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "UB",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lxt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "f2",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "IR",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Rre",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "DFe",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "pXr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "hXr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "a8",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yXr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "NFe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "EXr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "pq",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mxt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "FFe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "KXr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "XXr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "eZr",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "nZr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Mre",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qFe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "HFe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "VFe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "WFe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tTt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "iTt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aTt",
+      "category": "utils/data",
+      "label": "data"
+    },
+    {
+      "name": "uTt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "KFe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "eUe",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "Bh",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Aq",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "QB",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bq",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GB",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "XC",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "dTt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "MZr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "CTt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "VZr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "YZr",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "JZr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oUe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "wTt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "oen",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "sen",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "aen",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "uen",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "den",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "fen",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "NTt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zB",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "hUe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "QTt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qTt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "YTt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "vbe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hre",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "EUe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ren",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "ken",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "Oen",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "aDt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "uDt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "lDt",
+      "category": "app/analytics",
+      "label": "iflow-analytics"
+    },
+    {
+      "name": "jen",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "Qen",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hen",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "Wen",
+      "category": "utils/diff",
+      "label": "diff"
+    },
+    {
+      "name": "zen",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "Obe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ODt",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "jxt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Jen",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "QUe",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "Pbe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qUe",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "iIt",
+      "category": "app/analytics",
+      "label": "iflow-analytics"
+    },
+    {
+      "name": "Atn",
+      "category": "app/session",
+      "label": "iflow-session"
+    },
+    {
+      "name": "ytn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fbe",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "wtn",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "gIt",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "ktn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mtn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jtn",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "qtn",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "Htn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ktn",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "Vbe",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "ern",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Wbe",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "trn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "srn",
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    {
+      "name": "mrn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "frn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "prn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "grn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "brn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Arn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "_rn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ern",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vrn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Crn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "wrn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xrn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "YIt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Irn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Rrn",
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    {
+      "name": "krn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Nrn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Prn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Brn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Lrn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Frn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Urn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jrn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "t7t",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Qrn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hrn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Vrn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Krn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jrn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "s7t",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Xbe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "enn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "rnn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "l7t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "nnn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "inn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "onn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "snn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lnn",
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    {
+      "name": "fnn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pnn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "rAe",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "y7t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_7t",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "Ann",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "ynn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Snn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "w7t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xnn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Rnn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "knn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Onn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Nnn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Pnn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Bnn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "x7t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Unn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jnn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Gnn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qnn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "k7t",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Knn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Jnn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "rin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ain",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "min",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "din",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "F7t",
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    {
+      "name": "U7t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ein",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Q7t",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "Sin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xin",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "uAe",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Oje",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Tin",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Din",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Rin",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Oin",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Nin",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Pin",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "H7t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Lin",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Uin",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jin",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "Qin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Gin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Vin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Win",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Wje",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Yje",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Z7t",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tRt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Yin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Kin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Jin",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Zin",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ron",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "mAe",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "iRt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "oRt",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "ion",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "oon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lRt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "don",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Aon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_on",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Eon",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "von",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "mRt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ton",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Don",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ron",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ARt",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Mon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fon",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Gon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Yon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Jon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Xon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Zon",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "nsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "a4",
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    {
+      "name": "usn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "csn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wRt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "DRt",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "fsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "hsn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "bAe",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "BQe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gsn",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "bsn",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "ysn",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Esn",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "vsn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Csn",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "kRt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wsn",
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    {
+      "name": "Dsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Isn",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "Rsn",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "ksn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Osn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Nsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Psn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Bsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Lsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Msn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fsn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "jRt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Usn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Gsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Vsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ysn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Ksn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Jsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Xsn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Zsn",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "wun",
+      "category": "system/sandbox",
+      "label": "sandbox"
+    },
+    {
+      "name": "Ff",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "zkt",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "Gun",
+      "category": "protocol/acp",
+      "label": "acp"
+    },
+    {
+      "name": "Yun",
+      "category": "protocol/acp",
+      "label": "acp"
+    },
+    {
+      "name": "icn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "acn",
+      "category": "protocol/acp",
+      "label": "acp"
+    },
+    {
+      "name": "mcn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "gcn",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "Scn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Icn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Ocn",
+      "category": "system/process",
+      "label": "process"
+    },
+    {
+      "name": "Lcn",
+      "category": "app/session",
+      "label": "iflow-session"
+    },
+    {
+      "name": "Qcn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qcn",
+      "category": "system/sandbox",
+      "label": "sandbox"
+    },
+    {
+      "name": "Vcn",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "zcn",
+      "category": "protocol/acp",
+      "label": "acp"
+    },
+    {
+      "name": "Xcn",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "tln",
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    {
+      "name": "iln",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "sln",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "uln",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "_ln",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "Y5e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vMt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ha",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tc",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "dk",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "t8e",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "upn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "UMt",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "r8e",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "hpn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lE",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "_pn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "vpn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qH",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wpn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "n8e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "s8e",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Bze",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "a8e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mze",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Hpn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "oFt",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "ehn",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "Qze",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "ihn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "dhn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "fhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ahn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_hn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vhn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Chn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Shn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "whn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Thn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Yze",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Ihn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Rhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "khn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Ohn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "RFt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kFt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Lhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Uhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Qhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "FFt",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Whn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Xhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Zhn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "e3n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "t3n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "i3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "o3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "s3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "a3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "u3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "c3n",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "m3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "f3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "h3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "g3n",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "A3n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "x3n",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "C8e",
+      "category": "utils/config",
+      "label": "config"
+    },
+    {
+      "name": "lUt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_a",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "nc",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bk",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "I8e",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Q3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "TUt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "DUt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "R8e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Y3n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pE",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "egn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "rgn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ign",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "k8e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "P8e",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "bYe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "B8e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yYe",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Sgn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "xgn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Pgn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Bgn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ugn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jgn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Qgn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qgn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Hgn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Vgn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Wgn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "zgn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ygn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xYe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jgn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Xgn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Zgn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ebn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ibn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "sbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "abn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lbn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "dbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "hbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ybn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "_bn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ebn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Cbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Tbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Dbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ibn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Rbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "kbn",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "Nbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Bbn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mbn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Fbn",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "jbn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hbn",
+      "category": "app/session",
+      "label": "iflow-session"
+    },
+    {
+      "name": "nAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "uAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "bAn",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "yAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "CAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "SAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "DAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "RAn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "PAn",
+      "category": "cli/args",
+      "label": "commander"
+    },
+    {
+      "name": "MAn",
+      "category": "app/session",
+      "label": "iflow-session"
+    },
+    {
+      "name": "f2n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "_2n",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "f9e",
+      "category": "app/tools",
+      "label": "iflow-tools"
+    },
+    {
+      "name": "T9e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fjt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "za",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sc",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wk",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "N9e",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "n5n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tQt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "rQt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "P9e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "l5n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yE",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "h5n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "b5n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "y5n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "B9e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "F9e",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "yKe",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "U9e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "EKe",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "U5n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "j5n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "Y5n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "K5n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "e8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "t8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "r8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "n8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "o8n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "s8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "a8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "u8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "c8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "l8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "DKe",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "d8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "f8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "p8n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "h8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jQt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "QQt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "y8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "E8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "v8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "w8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "T8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "YQt",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "R8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "P8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "B8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "L8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "M8n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "F8n",
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    {
+      "name": "j8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Q8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "G8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "q8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "H8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "V8n",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "z8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "K8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "X8n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Z8n",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "t9n",
+      "category": "model/google",
+      "label": "google-genai"
+    },
+    {
+      "name": "n9n",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "o9n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "l9n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "p9n",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "C0",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "cyn",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "myn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ayn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Nk",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Cyn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "wyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Tyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Iyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Nyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sHt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Qyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Vyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Kyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Xyn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "e_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "r_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "i_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "s_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "u_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "l_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "d_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "p_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "g_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "A_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "__n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "v_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "S_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "mHt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Pk",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "XM",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "jT",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Z1",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "D_n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "hHt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "N6e",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "z0",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "O_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qo",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "P_n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "EHt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "GV",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "CHt",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "HV",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "IHt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xHt",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "LHt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "hEn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "MHt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Fk",
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    {
+      "name": "jHt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "j6e",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "EEn",
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    {
+      "name": "DEn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bae",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "YHt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Nd",
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    {
+      "name": "I6",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_ae",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "LEn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "UEn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "eVt",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "tVt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "rVt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "cXe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "iVt",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "YEn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lXe",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "rvn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wvn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vVt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "CVt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pXe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Mvn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "DVt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "IVt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Hvn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Wvn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "eCn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "BCn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "GVt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "FCn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GCn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "HCn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "WVt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "zVt",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "KCn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "XCn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "e4n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "l4n",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "KVt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "JVt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "b4n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZVt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "v4n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tWt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "D4n",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "k4n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "P4n",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "LXe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "iWt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "oWt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pye",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "HXe",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "pSn",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "vSn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "ISn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "kSn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "OSn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "FSn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "zk",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vWt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Tye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Dye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Iye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Rye",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "kye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Oye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Nye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Pye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Bye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Lye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "KXe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "B2",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "CWt",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "SWt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "JXe",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Swn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Twn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Rwn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Own",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Bwn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "ZXe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Fwn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Uwn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Qwn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kWt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Wwn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "txn",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "nxn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "ixn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "sxn",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "axn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "cxn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "mxn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "fxn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "J4",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Axn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Txn",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "Rxn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "QWt",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "Mxn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Hye",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qye",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "WWt",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "qxn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Kxn",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "Xxn",
+      "category": "app/output",
+      "label": "iflow-output"
+    },
+    {
+      "name": "rTn",
+      "category": "app/output",
+      "label": "iflow-output"
+    },
+    {
+      "name": "oTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aTn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "cTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "mTn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bZe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "JWt",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "hTn",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "XWt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ZWt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ezt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "STn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "nzt",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "DTn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "BTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "FTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "GTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "HTn",
+      "category": "app/output",
+      "label": "iflow-output"
+    },
+    {
+      "name": "f1",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "Pd",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jk",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "tS",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "XTn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "eDn",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "nDn",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "kZe",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "OZe",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "uDn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lDn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "dDn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Izt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "kzt",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "bDn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "SDn",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "TDn",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "Lzt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Mzt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "LDn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gF",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jzt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qzt",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "mW",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Kzt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GZe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "nIn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "aIn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Wzt",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "aYt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vIn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "TIn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Dg",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "eA",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "lYt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "u_e",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "FIn",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Ig",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "bYt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "WIn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZIn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "t7n",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "E7n",
+      "category": "browser/jsdom",
+      "label": "jsdom"
+    },
+    {
+      "name": "d_e",
+      "category": "browser/jsdom",
+      "label": "jsdom"
+    },
+    {
+      "name": "Kr",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "lue",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "vF",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "CF",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "I7n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aet",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "uet",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "N7n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "det",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "VYt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "zYt",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "KYt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "XYt",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "eKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "z7n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "K7n",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "yet",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "rRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aKt",
+      "category": "app/multimodal",
+      "label": "iflow-multimodal"
+    },
+    {
+      "name": "_et",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "g_e",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "cRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "dKt",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "dRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Cet",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "pKt",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "gRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ARn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "bKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "SRn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "xRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "DRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "RRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xet",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "wF",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "MRn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "IKt",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "OKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "BKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "WRn",
+      "category": "utils/markdown",
+      "label": "markdown"
+    },
+    {
+      "name": "KRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "XRn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "VKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "zKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "KKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "XKt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "eJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "skn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "nJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "dkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "dJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "W8",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Iet",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ekn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Skn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "xkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Dkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Rkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Nkn",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "Bkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Fkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "IJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Vkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "PJt",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "Jkn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Zkn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "tOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "iOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "sOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "QJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "dOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "gOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "AOn",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "_On",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "SOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ZJt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "DOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ROn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "OOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "POn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "LOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "FOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "jOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "GOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "HOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "WOn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "YOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "cXt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZOn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "tNn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "nNn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oNn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aNn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "mNn",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "gXt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pNn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "bXt",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "wXt",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "TXt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Get",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "oPn",
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    {
+      "name": "aPn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "UXt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GXt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qXt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "hPn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gPn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "WXt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "APn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "YXt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "KXt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vPn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "SPn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "kPn",
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    {
+      "name": "lBn",
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    {
+      "name": "dBn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "fBn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "OF",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vZt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wtt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wZt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "TZt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gBn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "IZt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "OZt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ABn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yBn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "LZt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vBn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "CBn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "SBn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wBn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xBn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "RBn",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "NBn",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "BBn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "MBn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ptt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "YBn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "tLn",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "sLn",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "uLn",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "lLn",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "fLn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "hLn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "rf",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "_Ln",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oer",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "R_e",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "wLn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uer",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ler",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "PW",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "ger",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "fer",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Cer",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "oMn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sMn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "uMn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ser",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "trt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Der",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "EMn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ier",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xMn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Oer",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Per",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "LW",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Mer",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Wer",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sFn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "aFn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Yer",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ttr",
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    {
+      "name": "atr",
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    {
+      "name": "utr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "UFn",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "HFn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ZFn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "uD",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "ytr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "dUn",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "Ctr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "rce",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wrt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vtr",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "CUn",
+      "category": "utils/config",
+      "label": "config"
+    },
+    {
+      "name": "tEe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "RUn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "BUn",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Trt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Drt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Btr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "HUn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ltr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Mtr",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "Utr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jtr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Htr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Wtr",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "Ktr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jtr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ztr",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "nrr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "grr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ejn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ojn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sjn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "cjn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "fjn",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "hjn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bjn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "yjn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Cjn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Djn",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "Njn",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "Bjn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Mjn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ujn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Gjn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hjn",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Wjn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Yjn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lEe",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "zF",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "fce",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oQn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Rrr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "mEe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lQn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Nrr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Brr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "XW",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "jrr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Frr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "zrr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qQn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bO",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Yrt",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "WQn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Jrt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Xrt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Zrt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ent",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "rGn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jrr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "CEe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aGn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "enr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "rnr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "tz",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "unr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "onr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "hnr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jGn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "QGn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "kEe",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "qGn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "mnt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "OEe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "_nr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "vnr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Cnr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "iqn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wnr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "rz",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Inr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "gqn",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Onr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "jnr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Qnr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "bnt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qnr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hnr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Vnr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "znr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Tce",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Knr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jqn",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Xqn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tHn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "nHn",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "sHn",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "cHn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "lHn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "DHn",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "RHn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "PHn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "LHn",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "GHn",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "HHn",
+      "category": "app/prompt",
+      "label": "iflow-prompt"
+    },
+    {
+      "name": "UWn",
+      "category": "app/workspace",
+      "label": "iflow-workspace"
+    },
+    {
+      "name": "n0",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "da",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "xit",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "BYn",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "ks",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "fsr",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "mU",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "fKn",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "kve",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "Ove",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "yKn",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "nle",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "ile",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "SKn",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wKn",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "Dsr",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "DKn",
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    {
+      "name": "Pve",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ksr",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "Bve",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "NO",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "HE",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "PO",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "jg",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "z6",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jit",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yJn",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "ule",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "MJn",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "HJn",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "EU",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Aar",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "rot",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "ple",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "AXn",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "vXn",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "zz",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jar",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "VXn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pot",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "XXn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "tZn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lZn",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "fZn",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "dCe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "_Zn",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "SZn",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "RZn",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "BZn",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "LZn",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "cur",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "Jz",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pCe",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "Eur",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "wur",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Dur",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "Our",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "dei",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Mur",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "Fur",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "kei",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "Pei",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "Rot",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "wle",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Hur",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hei",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Wei",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "Yei",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jei",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Zei",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xle",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "nti",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ati",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ecr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "dti",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "gti",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Eti",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "Cti",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xti",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "Iti",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "tY",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "CCe",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "Rle",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "gri",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "wCe",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "Nri",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Lri",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fri",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Tcr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Wri",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jri",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "sst",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "TU",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aY",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "Lle",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "cst",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "hni",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Lcr",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "Sni",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "Rni",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "jcr",
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    {
+      "name": "Fni",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "qni",
+      "category": "network/sse",
+      "label": "eventsource"
+    },
+    {
+      "name": "Xni",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "mY",
+      "category": "app/model",
+      "label": "iflow-model"
+    },
+    {
+      "name": "GO",
+      "category": "utils/buffer",
+      "label": "buffer"
+    },
+    {
+      "name": "xii",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Dii",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kii",
+      "category": "utils/encoding",
+      "label": "encoding"
+    },
+    {
+      "name": "Pii",
+      "category": "utils/encoding",
+      "label": "encoding"
+    },
+    {
+      "name": "Lii",
+      "category": "utils/encoding",
+      "label": "encoding"
+    },
+    {
+      "name": "Fii",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Qii",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Hii",
+      "category": "utils/encoding",
+      "label": "encoding"
+    },
+    {
+      "name": "Vii",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Wii",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ust",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Flr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "zii",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Yii",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ulr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Kii",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Xii",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "toi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ioi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uoi",
+      "category": "utils/encoding",
+      "label": "encoding"
+    },
+    {
+      "name": "loi",
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    {
+      "name": "moi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "AY",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "foi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "poi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "hoi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "boi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yoi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_oi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Eoi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Coi",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "Joi",
+      "category": "protocol/acp",
+      "label": "acp"
+    },
+    {
+      "name": "Xoi",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "Kai",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "Zdr",
+      "category": "model/google",
+      "label": "google-genai"
+    },
+    {
+      "name": "jci",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Qci",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "n1r",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "eSe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tSe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "udi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "mdi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pdi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Afr",
+      "category": "app/agent",
+      "label": "iflow-agent"
+    },
+    {
+      "name": "Ffr",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "alt",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "efi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ult",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "CSe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "clt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "llt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "mlt",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "lfi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "d3",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "e5",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "ffi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "bfi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "FS",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "hpr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "rK",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Tfi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ofi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "Mfi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "flt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "RSe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "zfi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Xfi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "npi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "opi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "upi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "dpi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "_pi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "plt",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "wpi",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "Tpi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "blt",
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    {
+      "name": "Opi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ppi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Lpi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "jpi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Vpi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "zpi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Epr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Jpi",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "ehi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ihi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ahi",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "Z0",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_hi",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "vhi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xhi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "AN",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "khi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Nhi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Bhi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mhi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Npr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Ppr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hhi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Whi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Yhi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Jhi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Zhi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "t3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "n3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "o3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "a3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "c3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "m3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "f3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "h3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "b3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "y3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "E3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "C3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "w3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "T3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "I3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "k3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "O3i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "B3i",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "F3i",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "yN",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "Tc",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "j3i",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "Hg",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "thr",
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    {
+      "name": "Rlt",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Cme",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Rgi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ep",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ngi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "p3",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ahr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Lgi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mgi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fgi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "mhr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Qgi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qgi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hgi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Vgi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Wgi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ghr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ahr",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "sbi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Hlt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "mbi",
+      "category": "network/http",
+      "label": "undici"
+    },
+    {
+      "name": "fbi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pbi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "bbi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "aK",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "xAi",
+      "category": "utils/id",
+      "label": "id"
+    },
+    {
+      "name": "Zhr",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "vA",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "S0t",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "o5i",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Ga",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "L5i",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "M5i",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "q0t",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "J5i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "t8i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "s8i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "a8i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "u8i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "c8i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "l8i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Gme",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "f8i",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "Dgr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "h8i",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "A8i",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "smt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "E8i",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "Vgr",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "Vme",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Wme",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "j8i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "zme",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Zgr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pmt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Amt",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "y9i",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "PN",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "EK",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "vK",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "b9",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "W9i",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "Zme",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "dbr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "fbr",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "J9i",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "X9i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "aI",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "uI",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "m6i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "d6i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "QS",
+      "category": "network/http",
+      "label": "ky"
+    },
+    {
+      "name": "Abr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "SK",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "T6i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "GS",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "Ibr",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "d_i",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "cAr",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "lAr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "g_i",
+      "category": "network/url",
+      "label": "url"
+    },
+    {
+      "name": "mAr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Swe",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "O_i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "N_i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "P_i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "M_i",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "yAr",
+      "category": "network/url",
+      "label": "url"
+    },
+    {
+      "name": "ude",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "cde",
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    {
+      "name": "lde",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "mde",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "kEi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "TK",
+      "category": "network/http",
+      "label": "ky"
+    },
+    {
+      "name": "bvi",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "UAr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Avi",
+      "category": "network/url",
+      "label": "url"
+    },
+    {
+      "name": "Nvi",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "Pvi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Mvi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Gvi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "ECi",
+      "category": "network/http",
+      "label": "ky"
+    },
+    {
+      "name": "CCi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "qAr",
+      "category": "network/http",
+      "label": "ky"
+    },
+    {
+      "name": "H4i",
+      "category": "network/http",
+      "label": "ky"
+    },
+    {
+      "name": "x2r",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "T2r",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "kwi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "D2r",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Uwi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Gwi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "sxi",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "mxi",
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    {
+      "name": "dxi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "fxi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pxi",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "yxi",
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    {
+      "name": "wxi",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "Ixi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Oxi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Lxi",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "YLi",
+      "category": "app/analytics",
+      "label": "iflow-analytics"
+    },
+    {
+      "name": "ZLi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "eMi",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "vMi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "DMi",
+      "category": "app/auth",
+      "label": "iflow-auth"
+    },
+    {
+      "name": "FMi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "F8r",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "zMi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Hht",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "JMi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ZMi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "j8r",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "rFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Q8r",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "sFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "uFi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "pFi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "_Fi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "CFi",
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    {
+      "name": "TFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "IFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "NFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "BFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "MFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "UFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "GFi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vUi",
+      "category": "app/auth",
+      "label": "iflow-auth"
+    },
+    {
+      "name": "wTe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xTe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "w1e",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "E3t",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Z9r",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "NA",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "hJ",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "r6r",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "n6r",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "i6r",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "eji",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "o6r",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lji",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pji",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "yji",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "vji",
+      "category": "utils/object",
+      "label": "object"
+    },
+    {
+      "name": "d6r",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "xji",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Dji",
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    {
+      "name": "Rji",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "kji",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Bji",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Lji",
+      "category": "network/express",
+      "label": "express"
+    },
+    {
+      "name": "Uji",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Gji",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "nQi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oQi",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "jGi",
+      "category": "ui/react",
+      "label": "react"
+    },
+    {
+      "name": "Rt",
+      "category": "app/multimodal",
+      "label": "iflow-multimodal"
+    },
+    {
+      "name": "yqi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vqi",
+      "category": "system/sandbox",
+      "label": "sandbox"
+    },
+    {
+      "name": "Bqi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Uqi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "jqi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Gqi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oyr",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Wqi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Yqi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "tHi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "nHi",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "sHi",
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    {
+      "name": "uHi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "fHi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "hyr",
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    {
+      "name": "_Hi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "THi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "OHi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "TWi",
+      "category": "utils/markdown",
+      "label": "markdown"
+    },
+    {
+      "name": "OWi",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "aEr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "zv",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Tfe",
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    {
+      "name": "JXi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "eZi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "rZi",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "uZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "dZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "gZi",
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    {
+      "name": "_Zi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "CZi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "wZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "IZi",
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    {
+      "name": "RZi",
+      "category": "network/tls",
+      "label": "tls"
+    },
+    {
+      "name": "kZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "PZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "FZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "QZi",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "qZi",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "HZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "VZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "WZi",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "KZi",
+      "category": "system/tmp",
+      "label": "tmp"
+    },
+    {
+      "name": "ZZi",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "oeo",
+      "category": "system/tmp",
+      "label": "tmp"
+    },
+    {
+      "name": "aeo",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "heo",
+      "category": "utils/config",
+      "label": "config"
+    },
+    {
+      "name": "Aeo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "_eo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "veo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Seo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xeo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Deo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Reo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "iAt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Peo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Leo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oAt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "LEr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "MEr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "sAt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "aAt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "FEr",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "qeo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Veo",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Yv",
+      "category": "utils/versioning",
+      "label": "versioning"
+    },
+    {
+      "name": "NDe",
+      "category": "utils/versioning",
+      "label": "versioning"
+    },
+    {
+      "name": "BDe",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "oto",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "ato",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "cto",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "dto",
+      "category": "utils/versioning",
+      "label": "versioning"
+    },
+    {
+      "name": "pto",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "lAt",
+      "category": "utils/versioning",
+      "label": "versioning"
+    },
+    {
+      "name": "_to",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vto",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "wto",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Tto",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Nto",
+      "category": "utils/versioning",
+      "label": "versioning"
+    },
+    {
+      "name": "mAt",
+      "category": "utils/versioning",
+      "label": "versioning"
+    },
+    {
+      "name": "zto",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "oro",
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    {
+      "name": "pro",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "gro",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Aro",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "_ro",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vro",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Sro",
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    {
+      "name": "cno",
+      "category": "utils/json",
+      "label": "json"
+    },
+    {
+      "name": "mno",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "xAt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "pno",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "bno",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "yno",
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    {
+      "name": "DAt",
+      "category": "utils/net",
+      "label": "mime"
+    },
+    {
+      "name": "IAt",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "vno",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "wno",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Dno",
+      "category": "utils/events",
+      "label": "events"
+    },
+    {
+      "name": "Ino",
+      "category": "unknown",
+      "label": "unknown"
+    },
+    {
+      "name": "Mno",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Fno",
+      "category": "app/session",
+      "label": "iflow-session"
+    },
+    {
+      "name": "Mio",
+      "category": "utils/oop",
+      "label": "oop"
+    },
+    {
+      "name": "Uio",
+      "category": "unknown",
+      "label": "unknown"
+    }
+  ]
+}

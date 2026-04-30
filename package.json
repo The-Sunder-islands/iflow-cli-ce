@@ -1,0 +1,31 @@
+{
+  "name": "iflow-cli-ce",
+  "version": "0.5.19-ce.1",
+  "description": "iFlow CLI Community Edition - A powerful AI assistant for your terminal",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-Sunder-islands/iflow-cli-ce.git"
+  },
+  "bin": {
+    "iflow-ce": "bundle/entry.js"
+  },
+  "files": [
+    "bundle/",
+    "vendors/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ai",
+    "cli",
+    "assistant",
+    "terminal",
+    "community-edition"
+  ],
+  "license": "Apache-2.0"
+}

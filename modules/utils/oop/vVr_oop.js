@@ -1,0 +1,34 @@
+/**
+ * @module vVr
+ * @category utils/oop
+ * @label oop
+ * @position 204 / 1990
+ * @source esbuild bundle from @iflow-ai/iflow-cli v0.5.19
+ * @package iflow-cli-ce (Community Edition)
+ * @license Apache-2.0
+ *
+ * This module was automatically extracted and categorized.
+ * The original variable name (vVr) is preserved for compatibility.
+ * DO NOT rename this module's variable - it's referenced by other modules.
+ */
+
+
+var vVr = T((CPe) => {
+  "use strict";
+  Object.defineProperty(CPe, "__esModule", { value: !0 });
+  CPe.detectResources = void 0;
+  var EVr = (Zt(), bt(cr)),
+    ACt = bCt(),
+    MTo = (t = {}) =>
+      (t.detectors || [])
+        .map((r) => {
+          try {
+            let n = (0, ACt.resourceFromDetectedResource)(r.detect(t));
+            return (EVr.diag.debug(`${r.constructor.name} found resource.`, n), n);
+          } catch (n) {
+            return (EVr.diag.debug(`${r.constructor.name} failed: ${n.message}`), (0, ACt.emptyResource)());
+          }
+        })
+        .reduce((r, n) => r.merge(n), (0, ACt.emptyResource)());
+  CPe.detectResources = MTo;
+});

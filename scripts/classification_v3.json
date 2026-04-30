@@ -1,0 +1,7449 @@
+{
+  "total": 1846,
+  "category_counts": {
+    "ui/react": 3,
+    "browser/jsdom": 3,
+    "unknown": 648,
+    "utils/events": 42,
+    "wasm": 1,
+    "app/i18n": 10,
+    "app/core": 411,
+    "network/tls": 126,
+    "utils/crypto": 9,
+    "network/ws": 5,
+    "browser/playwright": 13,
+    "app/terminal": 4,
+    "network/url": 5,
+    "utils/validation": 119,
+    "model/google": 17,
+    "ui/terminal": 13,
+    "utils/lodash": 15,
+    "utils/data": 17,
+    "security/jwt": 11,
+    "utils/cache": 12,
+    "app/usage": 11,
+    "utils/object": 42,
+    "app/auth": 3,
+    "app/api": 11,
+    "telemetry/otel": 81,
+    "telemetry/resource": 42,
+    "app/telemetry": 6,
+    "system/process": 9,
+    "utils/id": 8,
+    "network/grpc": 30,
+    "app/hooks": 4,
+    "system/instrument": 1,
+    "utils/net": 23,
+    "app/analytics": 3,
+    "utils/config": 3,
+    "cli/args": 2,
+    "app/ide": 1,
+    "app/tools": 1,
+    "app/extensions": 1,
+    "utils/oop": 3,
+    "utils/compression": 17,
+    "utils/xml": 2,
+    "app/output": 3,
+    "app/multimodal": 2,
+    "utils/markdown": 2,
+    "utils/fs": 13,
+    "system/tmp": 1,
+    "app/workspace": 1,
+    "network/http": 24,
+    "utils/stream": 2,
+    "network/sse": 1,
+    "app/model": 1,
+    "utils/buffer": 1,
+    "utils/encoding": 3,
+    "app/agent": 1,
+    "utils/json": 1,
+    "system/sandbox": 1,
+    "app/planner": 1
+  },
+  "modules": {
+    "cSr": {
+      "category": "ui/react",
+      "label": "react"
+    },
+    "Yt": {
+      "category": "browser/jsdom",
+      "label": "jsdom"
+    },
+    "wSr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "RSr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "BSr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "E8t": {
+      "category": "wasm",
+      "label": "wasm-data"
+    },
+    "k8t": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "fwr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "hwr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "gwr": {
+      "category": "ui/react",
+      "label": "react"
+    },
+    "Awr": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "eR": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "khe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Qwr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Nhe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "iee": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "f9t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "g9t": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "dxr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "A9t": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "gRe": {
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    "Ixr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "kxr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Fxr": {
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    "jxr": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "Kxr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ERe": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "MTr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "UTr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "HTr": {
+      "category": "app/terminal",
+      "label": "iflow-terminal"
+    },
+    "lDr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pDr": {
+      "category": "app/terminal",
+      "label": "iflow-terminal"
+    },
+    "m6t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aIr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "uIr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cIr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "hIr": {
+      "category": "network/url",
+      "label": "url"
+    },
+    "ex": {
+      "category": "network/url",
+      "label": "url"
+    },
+    "TIr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "RIr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kIr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GIr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "HIr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "VIr": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "WIr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "T6t": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "XIr": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "M6t": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "C7r": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "F6t": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "w7r": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "T7r": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "I7r": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "k7r": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "P7r": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "F7r": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "U7r": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Q6t": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "tRr": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "xC": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "G6t": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "aRr": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "cRr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "dRr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "q6t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "yRr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "CRr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "SRr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "m3e": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Z6t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "RRr": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "kRr": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "Pee": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "NRr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "nyt": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "f3e": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "EG": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "FRr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "syt": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "mB": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "sx": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "dyt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vG": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "gyt": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "Ayt": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "yyt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "_yt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ZRr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wyt": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "xyt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "hkr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "wkr": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "Dyt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Pkr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Pyt": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Lyt": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "Fyt": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "Qyt": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "qyt": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "pB": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Gkr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "qkr": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "i_t": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "s_t": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Ykr": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "l_t": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "h_t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Xkr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "aOe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "__t": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "nOr": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "cOr": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "lOr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mOr": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "dOr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "pOe": {
+      "category": "app/auth",
+      "label": "iflow-auth"
+    },
+    "MOr": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "aNr": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "tge": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "evt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "tvt": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "uLr": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "cLr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pLr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "svt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "gLr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_Lr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ELr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vLr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "CLr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "qGr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "HGr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "VGr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "WGr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lvt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "JGr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "XGr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "eqr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "tqr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "bvt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "aqr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "fqr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Aqr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "yqr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Eqr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vqr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Cqr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "wqr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Tqr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ii": {
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    "xvt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Qqr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Yqr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Tvt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Jqr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Zqr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "tHr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_x": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "lHr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "QNe": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "yHr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "EHr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Uvt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "jvt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "THr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GNe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "kHr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "HNe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "VNe": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "Wvt": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "UHr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "KNe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "OB": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qC": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Ite": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "jHr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "QHr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "GHr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Zvt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ePe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rPe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "HHr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zHr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "JHr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "eVr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "tVr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "rVr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "aVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "uVr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "fge": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "cCt": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "dVr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "pVr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "gVr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "bVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "AVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "pCt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "yVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "bCt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vVr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "SVr": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "bge": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "xPe": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "wVr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "xVr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "DVr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "RVr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "kVr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "OVr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "_Ct": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "PVr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "MVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "FVr": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "UVr": {
+      "category": "utils/id",
+      "label": "id"
+    },
+    "jVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "QVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qVr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "yge": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "jPe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zVr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "MCt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "_ge": {
+      "category": "app/terminal",
+      "label": "iflow-terminal"
+    },
+    "jCt": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "GCt": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "YVr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "eWr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rWr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "nWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "oWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "uWr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ZPe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "lWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "dWr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "nBe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "hWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "AWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yWr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Dx": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "vWr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "m4t": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "RWr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "kWr": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "d4t": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "MWr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "FWr": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "UWr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "jWr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "QWr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GWr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "qWr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "kx": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "HWr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Azr": {
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    "yzr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "_zr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "A4t": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "y4t": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "E4t": {
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    "vzr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Szr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "wzr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "xzr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "kBe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Tzr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Izr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Rzr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "kzr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "S4t": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Ozr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Pzr": {
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    "Bzr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "x4t": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Mzr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GBe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "HBe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "D4t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "R4t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Fzr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Uzr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "jzr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Gzr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Xte": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Vzr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Wzr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "O4t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "zzr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "B4t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Jzr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Zzr": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Rge": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "oLe": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "eYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "tYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "nYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "oYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "sYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "aYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "F4t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "dYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fYr": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "pYr": {
+      "category": "utils/id",
+      "label": "id"
+    },
+    "hYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "gYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "bYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "AYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rre": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "yYr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "_Yr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "EYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "z4t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vYr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "CYr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xYr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "DYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "IYr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kYr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "OYr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "NYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "PYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "BYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "nSt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oSt": {
+      "category": "app/hooks",
+      "label": "iflow-hooks"
+    },
+    "LYr": {
+      "category": "app/hooks",
+      "label": "iflow-hooks"
+    },
+    "MYr": {
+      "category": "app/hooks",
+      "label": "iflow-hooks"
+    },
+    "FYr": {
+      "category": "app/hooks",
+      "label": "iflow-hooks"
+    },
+    "UYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "uSt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "jYr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mSt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "VYr": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Pge": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "GLe": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "WYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "zYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "KYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "XYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "ZYr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "eKr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "pSt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rKr": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "oKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "sKr": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "aKr": {
+      "category": "utils/id",
+      "label": "id"
+    },
+    "uKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "dKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "pKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Mge": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "sMe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "uMe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xSt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "DSt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kSt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "OSt": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "vKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "CKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "xKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "TKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "LSt": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "IKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "RKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "kKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "OKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "PKr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "BKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "LKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "FKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "DMe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "UKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "OMe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "PMe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZSt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "twt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "iwt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "owt": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "zKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "YKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "XKr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZKr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "cwt": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "tJr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "rJr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "nJr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "iJr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "sJr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aJr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "uJr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "ZMe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "lJr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "fJr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "vJr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vwt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "CJr": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "xwt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Rwt": {
+      "category": "system/instrument",
+      "label": "instrument"
+    },
+    "wJr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "TJr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "NJr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "UJr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mwt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "QJr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "GJr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qJr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "VJr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "WJr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zJr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "KJr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "La": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qwt": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "g0": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fFe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ph": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "bFe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "rxt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "d2": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "VC": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "Ire": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "UB": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "lxt": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "f2": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Rre": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "DFe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pXr": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "hXr": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "a8": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "yXr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "NFe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "EXr": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "pq": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Mxt": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "FFe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "KXr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "eZr": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "nZr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mre": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "qFe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "HFe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "VFe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "WFe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "tTt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "iTt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "aTt": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "uTt": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "KFe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "eUe": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "Bh": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Aq": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "QB": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "bq": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "GB": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "XC": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "dTt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "MZr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "VZr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "YZr": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "JZr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oUe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wTt": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "oen": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "sen": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "uen": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "den": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "fen": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "NTt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "zB": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "hUe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "QTt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qTt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "YTt": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "vbe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Hre": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "EUe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ren": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "ken": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "Oen": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "aDt": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "uDt": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "lDt": {
+      "category": "app/analytics",
+      "label": "iflow-analytics"
+    },
+    "jen": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "Qen": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Hen": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Wen": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zen": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "Obe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ODt": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "jxt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Jen": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "QUe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Pbe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qUe": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "iIt": {
+      "category": "app/analytics",
+      "label": "iflow-analytics"
+    },
+    "Atn": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "ytn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Fbe": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "wtn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "gIt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ktn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Mtn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "jtn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qtn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Ktn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Vbe": {
+      "category": "network/grpc",
+      "label": "grpc"
+    },
+    "Wbe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "srn": {
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    "Rrn": {
+      "category": "app/telemetry",
+      "label": "iflow-telemetry"
+    },
+    "Qrn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Hrn": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Jrn": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Xbe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "l7t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "inn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "onn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "snn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lnn": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "pnn": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "rAe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "y7t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_7t": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "Ann": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "ynn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Snn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "w7t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xnn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Rnn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "knn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Onn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Nnn": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Pnn": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Bnn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "x7t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Unn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "jnn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Gnn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qnn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "k7t": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Knn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jnn": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "rin": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ain": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "uin": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "lin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "min": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "din": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pin": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "gin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "F7t": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "U7t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ein": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Q7t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Sin": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xin": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "uAe": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Oje": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "Tin": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Din": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Rin": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Oin": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Nin": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Pin": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "H7t": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Lin": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "jin": {
+      "category": "utils/id",
+      "label": "id"
+    },
+    "Qin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Gin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Hin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Vin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Win": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Wje": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Yje": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Z7t": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "tRt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "zin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Yin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Kin": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jin": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Zin": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mAe": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "iRt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oRt": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "ion": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "oon": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "lon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lRt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "don": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "gon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "bon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Aon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "yon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_on": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Eon": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "von": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mRt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ton": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Don": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ron": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ARt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Mon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Fon": {
+      "category": "telemetry/otel",
+      "label": "opentelemetry"
+    },
+    "Gon": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zon": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Yon": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Jon": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Xon": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Zon": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "tsn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "nsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "a4": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "usn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "csn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wRt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "DRt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "fsn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "hsn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "bAe": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "BQe": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "gsn": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "bsn": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "ysn": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Esn": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Csn": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "kRt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wsn": {
+      "category": "telemetry/resource",
+      "label": "resource"
+    },
+    "Dsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Isn": {
+      "category": "system/process",
+      "label": "process"
+    },
+    "Rsn": {
+      "category": "utils/id",
+      "label": "id"
+    },
+    "ksn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Osn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Nsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Psn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Bsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Lsn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Msn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Fsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "jRt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Usn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Gsn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Hsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Vsn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zsn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ysn": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "Ksn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Xsn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Zsn": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "wun": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ff": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "zkt": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "Gun": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Yun": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "icn": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "acn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mcn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "gcn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Scn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Icn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Ocn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Lcn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Qcn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qcn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Vcn": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "zcn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Xcn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "tln": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "iln": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "sln": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "uln": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "_ln": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "Y5e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vMt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Ha": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "tc": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "dk": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "t8e": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "upn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "UMt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "hpn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lE": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "_pn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "vpn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qH": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "wpn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "n8e": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "s8e": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Bze": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "a8e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Mze": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Hpn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "oFt": {
+      "category": "utils/id",
+      "label": "id"
+    },
+    "ehn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Qze": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "ihn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "dhn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "fhn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bhn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ahn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "yhn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "_hn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vhn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Chn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Shn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "whn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "xhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Thn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Yze": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Ihn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Rhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "khn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Ohn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "RFt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "kFt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Lhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Fhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Uhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Qhn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "qhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "FFt": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Jhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Xhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Zhn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "e3n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "t3n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "i3n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "o3n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "s3n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "a3n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "u3n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "c3n": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "m3n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "f3n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "h3n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "g3n": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "A3n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "x3n": {
+      "category": "utils/id",
+      "label": "id"
+    },
+    "C8e": {
+      "category": "utils/config",
+      "label": "config"
+    },
+    "lUt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "nc": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "bk": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "I8e": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Q3n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "TUt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "DUt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "R8e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Y3n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "pE": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "egn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "rgn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ign": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "k8e": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "P8e": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "B8e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yYe": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Sgn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "xgn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Pgn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Bgn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ugn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "jgn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Qgn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qgn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "lbn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "kbn": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "Bbn": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "Fbn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "jbn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Hbn": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "nAn": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "uAn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lAn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bAn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "CAn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xAn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "DAn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "RAn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "PAn": {
+      "category": "cli/args",
+      "label": "commander"
+    },
+    "MAn": {
+      "category": "app/ide",
+      "label": "iflow-ide"
+    },
+    "f2n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_2n": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "f9e": {
+      "category": "app/tools",
+      "label": "iflow-tools"
+    },
+    "T9e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Fjt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "za": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "sc": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "wk": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "N9e": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "n5n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "tQt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rQt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "P9e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "l5n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "yE": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "h5n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "b5n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "y5n": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "B9e": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "F9e": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "yKe": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "U9e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "EKe": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "j5n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Y5n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "K5n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "e8n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "t8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "r8n": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "n8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "o8n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "s8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "a8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "u8n": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "c8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "l8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "DKe": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "d8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "f8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "p8n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "h8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "jQt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "QQt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "y8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "E8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "v8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "w8n": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "T8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "YQt": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "R8n": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "P8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "B8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "L8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "M8n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "F8n": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "j8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Q8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "G8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "q8n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "H8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "V8n": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "z8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "K8n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "X8n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Z8n": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "t9n": {
+      "category": "model/google",
+      "label": "google-genai"
+    },
+    "n9n": {
+      "category": "app/extensions",
+      "label": "iflow-extensions"
+    },
+    "o9n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "l9n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "p9n": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "C0": {
+      "category": "utils/oop",
+      "label": "inherits"
+    },
+    "cyn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "myn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ayn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Nk": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Cyn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wyn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Tyn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Iyn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kyn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Nyn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "sHt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Fyn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Qyn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qyn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Vyn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zyn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Kyn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Xyn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "e_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "r_n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "i_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "s_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "u_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "l_n": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "d_n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "p_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "g_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "A_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "__n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "v_n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "S_n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mHt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Pk": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "XM": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "jT": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Z1": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "hHt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "N6e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "z0": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "O_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qo": {
+      "category": "utils/oop",
+      "label": "inherits"
+    },
+    "P_n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "EHt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GV": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "CHt": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "HV": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "IHt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xHt": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "LHt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "hEn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "MHt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Fk": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "j6e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "EEn": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "DEn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bae": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "YHt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Nd": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "I6": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "_ae": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "LEn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "UEn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "eVt": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "tVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cXe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "iVt": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "YEn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lXe": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "rvn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "wvn": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "vVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "CVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "pXe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mvn": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "DVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "IVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Hvn": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "Wvn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "eCn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "BCn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "FCn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "GCn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "HCn": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "WVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "zVt": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "XCn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "e4n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "l4n": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "KVt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "JVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "b4n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZVt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "v4n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "tWt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "D4n": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "k4n": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "P4n": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "LXe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "iWt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oWt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "HXe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "pSn": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "vSn": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "ISn": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "kSn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "OSn": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "FSn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zk": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Tye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Dye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Iye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Rye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Oye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Nye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Pye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Bye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Lye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Mye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Fye": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "KXe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "B2": {
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    "CWt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "SWt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "JXe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Swn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Twn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Rwn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Own": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Bwn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZXe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Fwn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Uwn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Qwn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "kWt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Wwn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "txn": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "nxn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ixn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "sxn": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "axn": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "cxn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mxn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fxn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "J4": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Axn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Txn": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "QWt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mxn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Hye": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qye": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "WWt": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "qxn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Kxn": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "Xxn": {
+      "category": "app/output",
+      "label": "iflow-output"
+    },
+    "rTn": {
+      "category": "app/output",
+      "label": "iflow-output"
+    },
+    "oTn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "aTn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cTn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mTn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bZe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "JWt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "hTn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ZWt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ezt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "STn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xTn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "nzt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "DTn": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "kTn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "BTn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "FTn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "GTn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "HTn": {
+      "category": "app/output",
+      "label": "iflow-output"
+    },
+    "f1": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Pd": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Jk": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "tS": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "XTn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "eDn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "nDn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kZe": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "OZe": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "uDn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "lDn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "dDn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Izt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kzt": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "bDn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "SDn": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "TDn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Lzt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Mzt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "LDn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "gF": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qzt": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "mW": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Kzt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "GZe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "nIn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aIn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Wzt": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "aYt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vIn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "TIn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Dg": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "eA": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "lYt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "u_e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "FIn": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Ig": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bYt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "WIn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZIn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "t7n": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "E7n": {
+      "category": "browser/jsdom",
+      "label": "jsdom"
+    },
+    "d_e": {
+      "category": "browser/jsdom",
+      "label": "jsdom"
+    },
+    "Kr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "lue": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vF": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "CF": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "I7n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aet": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "uet": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "N7n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "det": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "VYt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "zYt": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "KYt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "XYt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "eKt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "z7n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "K7n": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yet": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "rRn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aKt": {
+      "category": "app/multimodal",
+      "label": "iflow-multimodal"
+    },
+    "_et": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "g_e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aRn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "cRn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "dKt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "dRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Cet": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pKt": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "gRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ARn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "SRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "DRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "RRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xet": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "wF": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "MRn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "IKt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "OKt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "BKt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "WRn": {
+      "category": "utils/markdown",
+      "label": "markdown"
+    },
+    "KRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "XRn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qKt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "VKt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "zKt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "KKt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "XKt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "eJt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "skn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "nJt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oJt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lkn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "dkn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "pkn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lJt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "dJt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "W8": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Iet": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ekn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Skn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "xkn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Dkn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Rkn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Nkn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Bkn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xJt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Fkn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "IJt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qkn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Vkn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "PJt": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Jkn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Zkn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "tOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "iOn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "sOn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "QJt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "lOn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "dOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pOn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "gOn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "AOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "_On": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "SOn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZJt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "DOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ROn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "OOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "POn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "LOn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "FOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "GOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "HOn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "WOn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "YOn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "cXt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZOn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "tNn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "nNn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oNn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aNn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mNn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "gXt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pNn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bXt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wXt": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "TXt": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Get": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oPn": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "aPn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "UXt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GXt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qXt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "hPn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "gPn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "WXt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "APn": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "YXt": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "KXt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vPn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "SPn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "kPn": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "lBn": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "dBn": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "fBn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "OF": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vZt": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "wtt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "wZt": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "TZt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "gBn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "IZt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "OZt": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "ABn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "yBn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "LZt": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "vBn": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "CBn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "SBn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xBn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "RBn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "NBn": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "BBn": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "MBn": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "Ptt": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "YBn": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "tLn": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "sLn": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "uLn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "lLn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fLn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "hLn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rf": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "_Ln": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oer": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "R_e": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "wLn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "uer": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ler": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "PW": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "fer": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Cer": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "oMn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "sMn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "uMn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ser": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "trt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Der": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "EMn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ier": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xMn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Oer": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Per": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "LW": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Mer": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Wer": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "sFn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "aFn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Yer": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ttr": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "atr": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "utr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "UFn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "HFn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZFn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "uD": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "dUn": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "Ctr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "rce": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "wrt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vtr": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "CUn": {
+      "category": "utils/config",
+      "label": "config"
+    },
+    "tEe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "RUn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "BUn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Trt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Drt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Btr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "HUn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ltr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mtr": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "Utr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Wtr": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "Ztr": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "grr": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "ojn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "sjn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cjn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fjn": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "hjn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bjn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yjn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Cjn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Djn": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "Njn": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "Bjn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mjn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ujn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Gjn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Hjn": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Wjn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Yjn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lEe": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "zF": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fce": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oQn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Rrr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mEe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "lQn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Nrr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Brr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "XW": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "jrr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Frr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "qQn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "bO": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Yrt": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "WQn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jrt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Xrt": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Zrt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ent": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "rGn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jrr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "CEe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aGn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "enr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rnr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "tz": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "unr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "onr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "hnr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "QGn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "kEe": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "qGn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mnt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "OEe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_nr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Cnr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "iqn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "wnr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "rz": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Inr": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "gqn": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "Onr": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "jnr": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "Qnr": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "bnt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qnr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Hnr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Vnr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Tce": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Knr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jqn": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Xqn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "tHn": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "nHn": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "sHn": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "cHn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "lHn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "DHn": {
+      "category": "system/tmp",
+      "label": "tmp"
+    },
+    "RHn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "PHn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "LHn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "GHn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "HHn": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "UWn": {
+      "category": "app/workspace",
+      "label": "iflow-workspace"
+    },
+    "n0": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "da": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "xit": {
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    "BYn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ks": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "fsr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mU": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "fKn": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "kve": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ove": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yKn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "nle": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ile": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "SKn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wKn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Dsr": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "DKn": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "Pve": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ksr": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "Bve": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "NO": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "HE": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "PO": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "jg": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "jit": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yJn": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "ule": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "MJn": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "HJn": {
+      "category": "utils/stream",
+      "label": "stream"
+    },
+    "EU": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "Aar": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "rot": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ple": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "AXn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "vXn": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "zz": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "jar": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "VXn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pot": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "XXn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "tZn": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "lZn": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "fZn": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "dCe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_Zn": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "SZn": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "RZn": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "BZn": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "LZn": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cur": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "Jz": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "pCe": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "Eur": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "wur": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Dur": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "Our": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "dei": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Mur": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "Fur": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "kei": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "Pei": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "Rot": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "wle": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Hur": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Hei": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Wei": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Yei": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jei": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Zei": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xle": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "nti": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ati": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ecr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "gti": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Eti": {
+      "category": "utils/stream",
+      "label": "stream"
+    },
+    "Cti": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xti": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "Iti": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "tY": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "CCe": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Rle": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "gri": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "wCe": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "Nri": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Lri": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Fri": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Tcr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Wri": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jri": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "sst": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "TU": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "aY": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Lle": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "cst": {
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    "hni": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Lcr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Sni": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Rni": {
+      "category": "network/ws",
+      "label": "websocket"
+    },
+    "jcr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Fni": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "qni": {
+      "category": "network/sse",
+      "label": "eventsource"
+    },
+    "Xni": {
+      "category": "network/http",
+      "label": "undici"
+    },
+    "mY": {
+      "category": "app/model",
+      "label": "iflow-model"
+    },
+    "GO": {
+      "category": "utils/buffer",
+      "label": "buffer"
+    },
+    "xii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Dii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "kii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Pii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Lii": {
+      "category": "utils/encoding",
+      "label": "encoding"
+    },
+    "Fii": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Qii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Hii": {
+      "category": "utils/encoding",
+      "label": "encoding"
+    },
+    "Vii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ust": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Flr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "zii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Yii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ulr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Kii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Xii": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "toi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ioi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "uoi": {
+      "category": "utils/encoding",
+      "label": "encoding"
+    },
+    "loi": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "AY": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "foi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "poi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "hoi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "boi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yoi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "_oi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Eoi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Coi": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "Joi": {
+      "category": "utils/validation",
+      "label": "ajv"
+    },
+    "Xoi": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "Kai": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "Zdr": {
+      "category": "model/google",
+      "label": "google-genai"
+    },
+    "jci": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Qci": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "eSe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "tSe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "udi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mdi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pdi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Afr": {
+      "category": "app/agent",
+      "label": "iflow-agent"
+    },
+    "Ffr": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "alt": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "efi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ult": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "CSe": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "clt": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "llt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mlt": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "lfi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "d3": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "e5": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "ffi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "bfi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "FS": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "hpr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "rK": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Tfi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ofi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Mfi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "flt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "zfi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Xfi": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "npi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "opi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "upi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "dpi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "_pi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "plt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wpi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Tpi": {
+      "category": "utils/json",
+      "label": "json"
+    },
+    "blt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Opi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ppi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Lpi": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "Vpi": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "zpi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Epr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jpi": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "ehi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ihi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "ahi": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "Z0": {
+      "category": "utils/oop",
+      "label": "inherits"
+    },
+    "_hi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "xhi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "AN": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "khi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Nhi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Bhi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mhi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Npr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Ppr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Hhi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Whi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Yhi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Jhi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Zhi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "t3i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "n3i": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "o3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "a3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "c3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "m3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "f3i": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "h3i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "b3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "y3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "E3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "C3i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "w3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "T3i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "I3i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "k3i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "O3i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "B3i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "F3i": {
+      "category": "browser/playwright",
+      "label": "playwright"
+    },
+    "yN": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "j3i": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Hg": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "thr": {
+      "category": "model/google",
+      "label": "google-auth"
+    },
+    "Rlt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Cme": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Rgi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ep": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ngi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "ahr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Lgi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mgi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Fgi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mhr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Qgi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qgi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Hgi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Vgi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "ghr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ahr": {
+      "category": "utils/events",
+      "label": "events"
+    },
+    "sbi": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Hlt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mbi": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "fbi": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "pbi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bbi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "aK": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "xAi": {
+      "category": "utils/id",
+      "label": "id"
+    },
+    "Zhr": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "vA": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "S0t": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "o5i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Ga": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "L5i": {
+      "category": "utils/xml",
+      "label": "xml"
+    },
+    "M5i": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "q0t": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "J5i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "t8i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "s8i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "a8i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "u8i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "c8i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "l8i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Gme": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "f8i": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "h8i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "A8i": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "E8i": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "Vgr": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "Vme": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Wme": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "j8i": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "zme": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Zgr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pmt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "Amt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "y9i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "PN": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "EK": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "vK": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "b9": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "W9i": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Zme": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "dbr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fbr": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "X9i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "aI": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "uI": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "m6i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "d6i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "QS": {
+      "category": "utils/data",
+      "label": "data"
+    },
+    "SK": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "T6i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GS": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "Ibr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "d_i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cAr": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "g_i": {
+      "category": "network/url",
+      "label": "url"
+    },
+    "Swe": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "O_i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "N_i": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "P_i": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "M_i": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yAr": {
+      "category": "network/url",
+      "label": "url"
+    },
+    "ude": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cde": {
+      "category": "utils/crypto",
+      "label": "crypto"
+    },
+    "lde": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mde": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "kEi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "TK": {
+      "category": "network/http",
+      "label": "ky"
+    },
+    "bvi": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "Avi": {
+      "category": "network/url",
+      "label": "url"
+    },
+    "Nvi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Pvi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mvi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Gvi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ECi": {
+      "category": "network/http",
+      "label": "ky"
+    },
+    "CCi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "qAr": {
+      "category": "network/http",
+      "label": "ky"
+    },
+    "H4i": {
+      "category": "security/jwt",
+      "label": "jwt"
+    },
+    "x2r": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "T2r": {
+      "category": "utils/lodash",
+      "label": "lodash"
+    },
+    "kwi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "D2r": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Uwi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Gwi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "sxi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "mxi": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "fxi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pxi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yxi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wxi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Ixi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Oxi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Lxi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "YLi": {
+      "category": "app/analytics",
+      "label": "iflow-analytics"
+    },
+    "ZLi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "eMi": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "vMi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "DMi": {
+      "category": "app/auth",
+      "label": "iflow-auth"
+    },
+    "FMi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "F8r": {
+      "category": "cli/args",
+      "label": "yargs"
+    },
+    "Hht": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "JMi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZMi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rFi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Q8r": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "sFi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "uFi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "pFi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_Fi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "CFi": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "TFi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "IFi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "NFi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "BFi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "MFi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "UFi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "GFi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vUi": {
+      "category": "app/auth",
+      "label": "iflow-auth"
+    },
+    "i6r": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "o6r": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lji": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "pji": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "yji": {
+      "category": "app/terminal",
+      "label": "iflow-terminal"
+    },
+    "vji": {
+      "category": "utils/compression",
+      "label": "compression"
+    },
+    "d6r": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xji": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Dji": {
+      "category": "utils/cache",
+      "label": "cache"
+    },
+    "Rji": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "kji": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Bji": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Lji": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Uji": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Gji": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "nQi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oQi": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "jGi": {
+      "category": "ui/react",
+      "label": "react"
+    },
+    "Rt": {
+      "category": "app/multimodal",
+      "label": "iflow-multimodal"
+    },
+    "yqi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vqi": {
+      "category": "system/sandbox",
+      "label": "sandbox"
+    },
+    "Bqi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Uqi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "oyr": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Wqi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Yqi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "tHi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "nHi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "sHi": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "uHi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "fHi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "hyr": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "_Hi": {
+      "category": "ui/terminal",
+      "label": "terminal"
+    },
+    "THi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "OHi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "TWi": {
+      "category": "utils/markdown",
+      "label": "markdown"
+    },
+    "OWi": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "aEr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "zv": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Tfe": {
+      "category": "app/usage",
+      "label": "iflow-usage"
+    },
+    "JXi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "eZi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "rZi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "uZi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "dZi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "gZi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "_Zi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "CZi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "wZi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "IZi": {
+      "category": "utils/fs",
+      "label": "fs"
+    },
+    "RZi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "kZi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "PZi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "FZi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "QZi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "qZi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "HZi": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "VZi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "WZi": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "KZi": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ZZi": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "oeo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "aeo": {
+      "category": "utils/object",
+      "label": "object"
+    },
+    "heo": {
+      "category": "utils/config",
+      "label": "config"
+    },
+    "Aeo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_eo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "veo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Seo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "xeo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Deo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Reo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "iAt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Peo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Leo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "oAt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "LEr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "MEr": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "aAt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "FEr": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "qeo": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Veo": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Yv": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "NDe": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "BDe": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "ato": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "cto": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "dto": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pto": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "lAt": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "_to": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vto": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "wto": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Tto": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Nto": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "mAt": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "zto": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "oro": {
+      "category": "app/i18n",
+      "label": "iflow-i18n"
+    },
+    "pro": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "gro": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Aro": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "_ro": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vro": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Sro": {
+      "category": "app/api",
+      "label": "iflow-api"
+    },
+    "cno": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "mno": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "pno": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "bno": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "yno": {
+      "category": "app/core",
+      "label": "iflow-core"
+    },
+    "DAt": {
+      "category": "utils/net",
+      "label": "mime"
+    },
+    "IAt": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "vno": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "wno": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Dno": {
+      "category": "utils/validation",
+      "label": "zod"
+    },
+    "Ino": {
+      "category": "unknown",
+      "label": "unknown"
+    },
+    "Mno": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Fno": {
+      "category": "app/planner",
+      "label": "iflow-planner"
+    },
+    "Mio": {
+      "category": "network/tls",
+      "label": "tls"
+    },
+    "Uio": {
+      "category": "unknown",
+      "label": "unknown"
+    }
+  }
+}
