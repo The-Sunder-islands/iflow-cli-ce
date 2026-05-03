@@ -1362,10 +1362,11 @@ var Dqe,
         }),
           this.registerModel(pH, {
             supportsThinking: !0,
-            supportedReasoningLevels: ["low", "medium", "high"],
-            maxThinkingTokens: 32e3,
+            supportedReasoningLevels: ["low", "medium", "high", "max"],
+            maxThinkingTokens: 64e3,
             configureRequest: (e, r) => {
-              (r.reasoningLevel !== "low" && (e.reasoning = !0), (e.thinking_mode = !0));
+              (e.thinking = { type: r.reasoningLevel === "low" ? "disabled" : "enabled" }),
+                r.reasoningEffort && (e.reasoning_effort = r.reasoningEffort);
             },
           }),
           this.registerModel(/glm-4.7/, {
@@ -3817,6 +3818,14 @@ async function KOt(t, e, r) {
     }
     return m;
   }
+  if (e === Kt.DEEPSEEK) {
+    m.baseUrl = u || "https://api.deepseek.com";
+    m.apiKey = a;
+    if (r?.thinking) m.thinking = r.thinking;
+    if (r?.reasoning_effort) m.reasoning_effort = r.reasoning_effort;
+    if (r?.max_tokens) m.max_tokens = r.max_tokens;
+    return m;
+  }
   return e === Kt.LOGIN_WITH_AONE
     ? ((m.baseUrl = u || Rqe), (m.multimodalModelName = "Qwen2.5-VL-72B_aone"), a && (m.apiKey = a), m)
     : ([...A6, Kt.OPENAI_COMPATIBLE].includes(e) && a && ((m.apiKey = a), (m.baseUrl = u), (m.model = c)), m);
@@ -3846,10 +3855,11 @@ var Kt,
         (t.IFLOW = "iflow"),
         (t.AONE = "aone"),
         (t.IDEA_LAB = "idealab"),
+        (t.DEEPSEEK = "deepseek"),
         (t.OPENAI_COMPATIBLE = "openai-compatible"));
     })(Kt || (Kt = {}));
-    ((A6 = [Kt.IFLOW, Kt.AONE]),
-      (Nis = { [Kt.IDEA_LAB]: "https://idealab.alibaba-inc.com/api/openai/v1", [Kt.IFLOW]: Iie, [Kt.AONE]: Rqe }));
+    ((A6 = [Kt.IFLOW, Kt.AONE, Kt.DEEPSEEK]),
+      (Nis = { [Kt.IDEA_LAB]: "https://idealab.alibaba-inc.com/api/openai/v1", [Kt.IFLOW]: Iie, [Kt.AONE]: Rqe, [Kt.DEEPSEEK]: "https://api.deepseek.com" }));
   });
 var Qqe,
   f0n = j(() => {

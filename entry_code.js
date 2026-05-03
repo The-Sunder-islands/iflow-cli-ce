@@ -9680,6 +9680,11 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
     [y, E] = (0, mw.useState)(""),
     [v, C] = (0, mw.useState)([]),
     [x, k] = (0, mw.useState)(!1),
+    [dsThinking, _dsT] = (0, mw.useState)("high"),
+    [dsMaxTokens, _dsMT] = (0, mw.useState)("32768"),
+    [dsTemp, _dsTemp] = (0, mw.useState)("1.0"),
+    [dsTopP, _dsTopP] = (0, mw.useState)("1.0"),
+    [dsModels, _dsMod] = (0, mw.useState)([]),
     [R, P] = (0, mw.useState)(() => {
       if (r) return r;
       let J = bqi(process.env.GEMINI_DEFAULT_AUTH_TYPE);
@@ -9691,6 +9696,7 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
       !o && D === "global" && { label: n("authDialog.loginWithIFlowApiKey"), value: Kt.IFLOW },
       !o && D === "aone" && { label: n("authDialog.loginWithAoneRecommend"), value: Kt.LOGIN_WITH_AONE },
       !o && D === "aone" && { label: n("authDialog.loginWithAoneApiKey"), value: Kt.AONE },
+      !o && D === "global" && { label: "\u{1F916} DeepSeek API Key", value: Kt.DEEPSEEK },
       { label: n("authDialog.openaiCompatibleApi"), value: Kt.OPENAI_COMPATIBLE },
     ].filter(Boolean),
     N = Math.max(
@@ -9712,8 +9718,11 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
           let ne = pj(J);
           ne ? P(ne) : (P(null), t(J, "User"));
         }
-      } else if (A6.includes(J)) (c(J), a("input-api-key"), P(null));
-      else if (J === Kt.OPENAI_COMPATIBLE)
+      } else if (A6.includes(J)) {
+        if (J === Kt.DEEPSEEK) {
+          c(J), a("input-api-key"), P(null);
+        } else (c(J), a("input-api-key"), P(null));
+      } else if (J === Kt.OPENAI_COMPATIBLE)
         (c(J), a("input-openai-config"), p("baseUrl"), d({ baseUrl: "", apiKey: "" }), P(null));
       else {
         let q = pj(J);
@@ -9744,8 +9753,16 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
           } finally {
             k(!1);
           }
-        } else u === Kt.IFLOW && C([...AJ()]);
-        (a("input-model-name"), g(""));
+          (a("input-model-name"), g(""));
+        } else if (u === Kt.DEEPSEEK) {
+          A(J);
+          let q = await fetchDsModels(J);
+          if (q) P(q);
+          (a("deepseek-config"), g(""));
+        } else {
+          u === Kt.IFLOW && C([...AJ()]);
+          (a("input-model-name"), g(""));
+        }
       }
     },
     L = (J) => {
@@ -9756,6 +9773,42 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
         let q = { ...m, modelName: J };
         t(u, "User", q);
       }
+    },
+    DEFAULT_DS_MODELS = [
+      { label: "DeepSeek-V4-Pro", value: "deepseek-v4-pro" },
+      { label: "DeepSeek-V4-Flash", value: "deepseek-v4-flash" },
+      { label: "deepseek-chat (legacy)", value: "deepseek-chat" },
+      { label: "deepseek-reasoner (legacy)", value: "deepseek-reasoner" },
+    ],
+    fetchDsModels = async (key) => {
+      try {
+        let res = await fetch("https://api.deepseek.com/models", {
+          headers: { Authorization: "Bearer " + key },
+        });
+        if (res.ok) {
+          let data = await res.json();
+          if (data.data && data.data.length > 0) {
+            _dsMod(data.data.map(function (m) { return { label: m.id, value: m.id }; }));
+            _dsT("high");
+            return null;
+          }
+        }
+      } catch (e) {}
+      _dsMod(DEFAULT_DS_MODELS);
+      return null;
+    },
+    dsSubmit = () => {
+      let config = {
+        apiKey: b,
+        modelName: h || "deepseek-v4-pro",
+        baseUrl: "https://api.deepseek.com",
+        thinking: { type: dsThinking === "off" ? "disabled" : "enabled" },
+        reasoning_effort: dsThinking === "off" ? void 0 : dsThinking,
+        max_tokens: dsThinking === "off" ? parseInt(dsMaxTokens, 10) || 32768 : parseInt(dsMaxTokens, 10) || 65536,
+        temperature: parseFloat(dsTemp),
+        top_p: parseFloat(dsTopP),
+      };
+      t(u, "User", config);
     },
     G = () => {
       (a("select"), c(null), P(null));
@@ -9776,6 +9829,8 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
           let q = Buffer.from(b, "utf8").toString("base64"),
             ne = { baseUrl: "https://ducky.code.alibaba-inc.com/v1/openai", apiKey: q, modelName: J, searchApiKey: q };
           t(u, "User", ne);
+        } else if (u === Kt.DEEPSEEK) {
+          dsSubmit();
         } else {
           let q = { apiKey: b, modelName: J };
           t(u, "User", q);
@@ -9790,6 +9845,8 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
           let q = Buffer.from(b, "utf8").toString("base64"),
             ne = { baseUrl: "https://ducky.code.alibaba-inc.com/v1/openai", apiKey: q, modelName: J, searchApiKey: q };
           t(u, "User", ne);
+        } else if (u === Kt.DEEPSEEK) {
+          dsSubmit();
         } else {
           let q = { apiKey: b, modelName: J };
           t(u, "User", q);
@@ -9857,7 +9914,33 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
           ],
         })
       : s === "input-api-key"
-        ? u === Kt.IFLOW
+        ? u === Kt.DEEPSEEK
+          ? (0, ai.jsxs)(ie, {
+              borderStyle: "round",
+              borderColor: ae.Gray,
+              flexDirection: "column",
+              padding: 1,
+              width: "100%",
+              children: [
+                (0, ai.jsx)(W, { bold: !0, children: "\u{1F916} DeepSeek API Configuration" }),
+                (0, ai.jsx)(ie, {
+                  marginTop: 1,
+                  children: (0, ai.jsx)(W, { children: "Enter your DeepSeek API Key from platform.deepseek.com/api_keys" }),
+                }),
+                (0, ai.jsx)(ie, {
+                  marginTop: 1,
+                  children: (0, ai.jsx)(U1e, {
+                    onSubmit: B,
+                    onCancel: G,
+                    label: "API Key",
+                    placeholder: "sk-...",
+                    isFocused: !0,
+                    validateApiKey: !0,
+                  }),
+                }),
+              ],
+            })
+          : u === Kt.IFLOW
           ? (0, ai.jsxs)(ie, {
               borderStyle: "round",
               borderColor: ae.Gray,
@@ -9966,6 +10049,93 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
                       onCancel: U,
                       label: n("authDialog.modelNameLabel"),
                       placeholder: n("authDialog.modelNamePlaceholder"),
+                      isFocused: !0,
+                    }),
+                  }),
+                ],
+              })
+          : s === "deepseek-config"
+            ? (0, ai.jsxs)(ie, {
+                borderStyle: "round",
+                borderColor: ae.Gray,
+                flexDirection: "column",
+                padding: 1,
+                width: "100%",
+                children: [
+                  (0, ai.jsx)(W, { bold: !0, children: "\u{1F916} DeepSeek Model & Parameters" }),
+                  dsModels.length > 0
+                    ? (0, ai.jsxs)(ie, { flexDirection: "column", marginTop: 1, children: [
+                        (0, ai.jsx)(W, { children: "Select model:" }),
+                        (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(yl, { items: dsModels, initialIndex: 0, onSelect: (J) => g(J), isFocused: !0 }) }),
+                      ]})
+                    : (0, ai.jsx)(W, { color: ae.AccentBlue, children: "Fetching available models..." }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(W, { children: "Model name (type or select above):" }),
+                  }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(Ty, { onSubmit: (J) => g(J), label: "Model", placeholder: "deepseek-v4-pro", isFocused: !1 }),
+                  }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: "Thinking mode:" }) }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(yl, {
+                      items: [
+                        { label: "OFF (Non-thinking)", value: "off" },
+                        { label: "HIGH (Recommended)", value: "high" },
+                        { label: "MAX (Best reasoning)", value: "max" },
+                      ],
+                      initialIndex: dsThinking === "off" ? 0 : dsThinking === "max" ? 2 : 1,
+                      onSelect: (J) => _dsT(J),
+                      isFocused: !1,
+                    }),
+                  }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(W, {
+                      color: dsThinking !== "off" ? ae.Gray : void 0,
+                      children: "Max Tokens (ignored in thinking mode)",
+                    }),
+                  }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(Ty, { onSubmit: (J) => _dsMT(J), label: "Max Tokens", placeholder: dsMaxTokens, isFocused: !1 }),
+                  }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(W, {
+                      color: dsThinking !== "off" ? ae.Gray : void 0,
+                      children: dsThinking !== "off" ? "Temperature (disabled in thinking mode)" : "Temperature (0.0 - 2.0)",
+                    }),
+                  }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(Ty, { onSubmit: (J) => _dsTemp(J), label: "Temperature", placeholder: dsTemp, isFocused: !1 }),
+                  }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(W, {
+                      color: dsThinking !== "off" ? ae.Gray : void 0,
+                      children: dsThinking !== "off" ? "Top-P (disabled in thinking mode)" : "Top-P (0.0 - 1.0)",
+                    }),
+                  }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(Ty, { onSubmit: (J) => _dsTopP(J), label: "Top-P", placeholder: dsTopP, isFocused: !1 }),
+                  }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 2,
+                    children: (0, ai.jsx)(W, { bold: !0, children: "Press Enter to confirm & start" }),
+                  }),
+                  R && (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentRed, children: R }) }),
+                  (0, ai.jsx)(ie, {
+                    marginTop: 1,
+                    children: (0, ai.jsx)(Ty, {
+                      onSubmit: dsSubmit,
+                      onCancel: () => { a("input-api-key"); _dsMod([]); },
+                      label: "Start",
+                      placeholder: "Press Enter to confirm",
                       isFocused: !0,
                     }),
                   }),
