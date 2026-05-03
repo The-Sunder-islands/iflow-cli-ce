@@ -1,0 +1,23 @@
+# Temporary planning & progress files
+PLAN.md
+PROGRESS.md
+
+# Intermediate build artifacts
+iflow_formatted.js
+*_formatted.js
+
+# npm package extraction (temporary)
+npm_package/
+
+# Analysis scripts (temporary)
+scripts/analyze_modules.py
+scripts/classify_v2.py
+scripts/classify_final.py
+scripts/classification_v2.json
+scripts/classification_v3.json
+scripts/module_analysis.json
+scripts/module_analysis_v2.json
+scripts/split_modules.py
+
+# Node modules
+node_modules/

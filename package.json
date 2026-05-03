@@ -5,7 +5,6 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/The-Sunder-islands/iflow-cli-ce.git"

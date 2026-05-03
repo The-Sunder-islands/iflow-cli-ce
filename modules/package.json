@@ -1,0 +1,4 @@
+{
+  "type": "commonjs",
+  "description": "iflow-cli-ce modules - CJS modules loaded by vm runtime"
+}

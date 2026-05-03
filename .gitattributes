@@ -1,0 +1,2 @@
+# Mark build artifacts as auto-generated to hide them in PRs/diffs
+bundle/* linguist-generated=true
