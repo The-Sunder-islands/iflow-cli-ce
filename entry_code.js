@@ -9668,6 +9668,65 @@ var ai = Se(Rt(), 1);
 function bqi(t) {
   return t && Object.values(Kt).includes(t) ? t : null;
 }
+
+// === DeepSeek model registry & helpers ===
+var DS_MODEL_REGISTRY = {
+  "deepseek-v4-pro":   { ctx: 1048576, thinking: 3 },
+  "deepseek-v4-flash": { ctx: 1048576, thinking: 3 },
+  "deepseek-chat":     { ctx: 131072, thinking: 0 },
+  "deepseek-reasoner": { ctx: 131072, thinking: 2 },
+};
+
+function parseCtxWindow(input) {
+  if (!input || typeof input !== "string") return 0;
+  var s = input.replace(/\s+/g, "").replace(/,/g, "").toUpperCase();
+  if (/^\d+$/.test(s)) return parseInt(s, 10);
+  var m = s.match(/^(\d+(?:\.\d+)?)([KM])$/);
+  if (m) {
+    var v = parseFloat(m[1]);
+    return Math.round(m[2] === "M" ? v * 1048576 : v * 1024);
+  }
+  return 0;
+}
+
+function formatCtxWindow(n) {
+  if (n >= 1048576 && n % 1048576 === 0) return (n / 1048576) + "M";
+  if (n >= 1024 && n % 1024 === 0) return (n / 1024) + "K";
+  return String(n);
+}
+
+function getDsModelInfo(modelId) {
+  var info = DS_MODEL_REGISTRY[modelId];
+  if (info) return { ctx: info.ctx, thinking: info.thinking, known: true };
+  return { ctx: 0, thinking: 3, known: false };
+}
+
+function fetchDsModels(key, onDone, onError) {
+  try {
+    fetch("https://api.deepseek.com/models", {
+      headers: { Authorization: "Bearer " + key },
+    }).then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    }).then(function (data) {
+      if (data && data.data && data.data.length > 0) {
+        var models = data.data.map(function (m) {
+          var info = getDsModelInfo(m.id);
+          return {
+            label: m.id + (info.known ? " | ctx: " + formatCtxWindow(info.ctx) : ""),
+            value: m.id,
+            ctx: info.ctx,
+            thinking: info.thinking,
+            known: info.known,
+          };
+        });
+        onDone(models);
+      } else {
+        throw new Error("Empty model list");
+      }
+    }).catch(function (e) { onError(e); });
+  } catch (e) { onError(e); }
+}
 function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
   let { t: n } = rr(),
     o = R8r(),
@@ -9680,11 +9739,17 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
     [y, E] = (0, mw.useState)(""),
     [v, C] = (0, mw.useState)([]),
     [x, k] = (0, mw.useState)(!1),
+    [dsModels, _dsMod] = (0, mw.useState)([]),
+    [dsModel, _dsMdl] = (0, mw.useState)(""),
+    [dsCtx, _dsCtx] = (0, mw.useState)(0),
     [dsThinking, _dsT] = (0, mw.useState)("high"),
-    [dsMaxTokens, _dsMT] = (0, mw.useState)("32768"),
+    [dsThinkingMax, _dsTMax] = (0, mw.useState)(3),
+    [dsKnown, _dsKn] = (0, mw.useState)(!0),
+    [dsCtxInput, _dsCI] = (0, mw.useState)(""),
+    [dsMaxTokens, _dsMT] = (0, mw.useState)("65536"),
     [dsTemp, _dsTemp] = (0, mw.useState)("1.0"),
     [dsTopP, _dsTopP] = (0, mw.useState)("1.0"),
-    [dsModels, _dsMod] = (0, mw.useState)([]),
+    [dsStep, _dsStep] = (0, mw.useState)(null),
     [R, P] = (0, mw.useState)(() => {
       if (r) return r;
       let J = bqi(process.env.GEMINI_DEFAULT_AUTH_TYPE);
@@ -9720,7 +9785,7 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
         }
       } else if (A6.includes(J)) {
         if (J === Kt.DEEPSEEK) {
-          c(J), a("input-api-key"), P(null);
+          c(J), a("input-api-key"), P(null), _dsStep("key");
         } else (c(J), a("input-api-key"), P(null));
       } else if (J === Kt.OPENAI_COMPATIBLE)
         (c(J), a("input-openai-config"), p("baseUrl"), d({ baseUrl: "", apiKey: "" }), P(null));
@@ -9756,9 +9821,15 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
           (a("input-model-name"), g(""));
         } else if (u === Kt.DEEPSEEK) {
           A(J);
-          let q = await fetchDsModels(J);
-          if (q) P(q);
-          (a("deepseek-config"), g(""));
+          fetchDsModels(J, function(models) {
+            _dsMod(models);
+            _dsStep("models");
+            a("deepseek-config");
+          }, function(err) {
+            P("Failed to fetch models: " + (err.message || "Unknown error") + ". Check your API key.");
+          });
+          _dsStep("fetching");
+          a("deepseek-config");
         } else {
           u === Kt.IFLOW && C([...AJ()]);
           (a("input-model-name"), g(""));
@@ -9774,41 +9845,49 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
         t(u, "User", q);
       }
     },
-    DEFAULT_DS_MODELS = [
-      { label: "DeepSeek-V4-Pro", value: "deepseek-v4-pro" },
-      { label: "DeepSeek-V4-Flash", value: "deepseek-v4-flash" },
-      { label: "deepseek-chat (legacy)", value: "deepseek-chat" },
-      { label: "deepseek-reasoner (legacy)", value: "deepseek-reasoner" },
-    ],
-    fetchDsModels = async (key) => {
-      try {
-        let res = await fetch("https://api.deepseek.com/models", {
-          headers: { Authorization: "Bearer " + key },
-        });
-        if (res.ok) {
-          let data = await res.json();
-          if (data.data && data.data.length > 0) {
-            _dsMod(data.data.map(function (m) { return { label: m.id, value: m.id }; }));
-            _dsT("high");
-            return null;
-          }
-        }
-      } catch (e) {}
-      _dsMod(DEFAULT_DS_MODELS);
-      return null;
-    },
     dsSubmit = () => {
-      let config = {
+      var config = {
         apiKey: b,
-        modelName: h || "deepseek-v4-pro",
+        modelName: dsModel || "deepseek-v4-pro",
         baseUrl: "https://api.deepseek.com",
         thinking: { type: dsThinking === "off" ? "disabled" : "enabled" },
         reasoning_effort: dsThinking === "off" ? void 0 : dsThinking,
-        max_tokens: dsThinking === "off" ? parseInt(dsMaxTokens, 10) || 32768 : parseInt(dsMaxTokens, 10) || 65536,
-        temperature: parseFloat(dsTemp),
-        top_p: parseFloat(dsTopP),
+        max_tokens: parseInt(dsMaxTokens, 10) || (dsThinking === "off" ? 8192 : dsCtx > 0 ? Math.min(dsCtx, 65536) : 65536),
+        temperature: dsThinking === "off" ? parseFloat(dsTemp) : void 0,
+        top_p: dsThinking === "off" ? parseFloat(dsTopP) : void 0,
       };
       t(u, "User", config);
+    },
+    dsSelectModel = (J) => {
+      var info = getDsModelInfo(J);
+      _dsMdl(J);
+      _dsCtx(info.ctx);
+      _dsKn(info.known);
+      _dsTMax(info.thinking);
+      _dsT(info.thinking > 0 ? "high" : "off");
+      if (info.thinking > 0) _dsStep("thinking");
+      else {
+        _dsMaxTokens(info.ctx > 0 ? String(Math.min(info.ctx, 65536)) : "");
+        _dsStep("params-max-tokens");
+      }
+    },
+    dsCycleThinking = () => {
+      if (dsThinkingMax <= 1) return;
+      if (dsThinking === "off") _dsT("high");
+      else if (dsThinking === "high" && dsThinkingMax >= 3) _dsT("max");
+      else _dsT("off");
+    },
+    dsConfirmThinking = () => {
+      if (dsThinking !== "off") {
+        _dsMaxTokens(dsCtx > 0 ? String(Math.min(dsCtx, 65536)) : "65536");
+        _dsStep("params-max-tokens");
+      } else {
+        _dsMaxTokens(dsCtx > 0 ? String(Math.min(dsCtx, 8192)) : "8192");
+        _dsStep("params-max-tokens");
+      }
+    },
+    dsBackToInputKey = () => {
+      a("input-api-key"); _dsStep(null); _dsMod([]); _dsMdl(""); _dsT("high");
     },
     G = () => {
       (a("select"), c(null), P(null));
@@ -9888,6 +9967,14 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
         }
       },
       { isActive: !0 },
+    ),
+    pn(
+      (J) => {
+        if (J.name === "tab" && s === "deepseek-config" && dsStep === "thinking") {
+          dsCycleThinking();
+        }
+      },
+      { isActive: s === "deepseek-config" && dsStep === "thinking" },
     ),
     s === "input-oauth-code"
       ? (0, ai.jsxs)(ie, {
@@ -10055,92 +10142,53 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
                 ],
               })
           : s === "deepseek-config"
-            ? (0, ai.jsxs)(ie, {
-                borderStyle: "round",
-                borderColor: ae.Gray,
-                flexDirection: "column",
-                padding: 1,
-                width: "100%",
-                children: [
-                  (0, ai.jsx)(W, { bold: !0, children: "\u{1F916} DeepSeek Model & Parameters" }),
-                  dsModels.length > 0
-                    ? (0, ai.jsxs)(ie, { flexDirection: "column", marginTop: 1, children: [
-                        (0, ai.jsx)(W, { children: "Select model:" }),
-                        (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(yl, { items: dsModels, initialIndex: 0, onSelect: (J) => g(J), isFocused: !0 }) }),
-                      ]})
-                    : (0, ai.jsx)(W, { color: ae.AccentBlue, children: "Fetching available models..." }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(W, { children: "Model name (type or select above):" }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(Ty, { onSubmit: (J) => g(J), label: "Model", placeholder: "deepseek-v4-pro", isFocused: !1 }),
-                  }),
-                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: "Thinking mode:" }) }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(yl, {
-                      items: [
-                        { label: "OFF (Non-thinking)", value: "off" },
-                        { label: "HIGH (Recommended)", value: "high" },
-                        { label: "MAX (Best reasoning)", value: "max" },
-                      ],
-                      initialIndex: dsThinking === "off" ? 0 : dsThinking === "max" ? 2 : 1,
-                      onSelect: (J) => _dsT(J),
-                      isFocused: !1,
-                    }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(W, {
-                      color: dsThinking !== "off" ? ae.Gray : void 0,
-                      children: "Max Tokens (ignored in thinking mode)",
-                    }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(Ty, { onSubmit: (J) => _dsMT(J), label: "Max Tokens", placeholder: dsMaxTokens, isFocused: !1 }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(W, {
-                      color: dsThinking !== "off" ? ae.Gray : void 0,
-                      children: dsThinking !== "off" ? "Temperature (disabled in thinking mode)" : "Temperature (0.0 - 2.0)",
-                    }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(Ty, { onSubmit: (J) => _dsTemp(J), label: "Temperature", placeholder: dsTemp, isFocused: !1 }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(W, {
-                      color: dsThinking !== "off" ? ae.Gray : void 0,
-                      children: dsThinking !== "off" ? "Top-P (disabled in thinking mode)" : "Top-P (0.0 - 1.0)",
-                    }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(Ty, { onSubmit: (J) => _dsTopP(J), label: "Top-P", placeholder: dsTopP, isFocused: !1 }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 2,
-                    children: (0, ai.jsx)(W, { bold: !0, children: "Press Enter to confirm & start" }),
-                  }),
+            ? dsStep === "fetching"
+              ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
+                  (0, ai.jsx)(W, { bold: !0, children: "\u{1F916} DeepSeek" }),
+                  (0, ai.jsx)(ie, { marginTop: 2, children: (0, ai.jsx)(W, { color: ae.AccentBlue, children: "Fetching available models from api.deepseek.com..." }) }),
                   R && (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentRed, children: R }) }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(Ty, {
-                      onSubmit: dsSubmit,
-                      onCancel: () => { a("input-api-key"); _dsMod([]); },
-                      label: "Start",
-                      placeholder: "Press Enter to confirm",
-                      isFocused: !0,
-                    }),
-                  }),
-                ],
-              })
+                ]})
+              : dsStep === "models"
+              ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
+                  (0, ai.jsx)(W, { bold: !0, children: "\u{1F916} Select DeepSeek Model" }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: "Available models (name | context window):" }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(yl, { items: dsModels, initialIndex: 0, onSelect: dsSelectModel, isFocused: !0 }) }),
+                  R && (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentRed, children: R }) }),
+                ]})
+              : dsStep === "ctx-input"
+              ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
+                  (0, ai.jsx)(W, { bold: !0, children: "\u{1F916} Context Window Size" }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: "Unknown model \"" + dsModel + "\". Enter max context window:" }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.Gray, children: "Format: 1000000, 1M, 1000K, 1000k, etc." }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(Ty, { onSubmit: (J) => { var c = parseCtxWindow(J); if (c > 0) { _dsCtx(c); _dsMaxTokens(String(Math.min(c,65536))); _dsStep(dsThinkingMax > 0 ? "thinking" : "params-max-tokens"); } }, label: "Context Window", placeholder: "128K", isFocused: !0 }) }),
+                ]})
+              : dsStep === "thinking"
+              ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
+                  (0, ai.jsx)(W, { bold: !0, children: "\u{1F9E0} Thinking Mode\u00A0\u00A0[" + (dsThinking === "off" ? "OFF" : dsThinking === "max" ? "MAX" : "HIGH") + "]" }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: "Model: " + dsModel + " (thinking levels: " + dsThinkingMax + ")" }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: dsThinking === "off" ? "Thinking disabled \u2014 parameters will be configurable." : dsThinking === "max" ? "MAX \u2014 deepest reasoning." : "HIGH \u2014 recommended." }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentPurple, children: "Tab to cycle, Enter to confirm, Esc to go back" }) }),
+                  (0, ai.jsx)(ie, { marginTop: 2, children: (0, ai.jsx)(Ty, { onSubmit: dsConfirmThinking, onCancel: () => _dsStep("models"), label: "Confirm thinking", placeholder: "Press Tab to change, Enter to continue", isFocused: !0 }) }),
+                ]})
+              : dsStep === "params-max-tokens"
+              ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
+                  (0, ai.jsx)(W, { bold: !0, children: "\u26A1 Max Output Tokens" }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: "Context: " + (dsCtx > 0 ? formatCtxWindow(dsCtx) : "unknown") + (dsThinking !== "off" ? " | Thinking: " + dsThinking.toUpperCase() : "") }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(Ty, { onSubmit: (J) => { _dsMT(J); dsThinking !== "off" ? dsSubmit() : _dsStep("params-temperature"); }, onCancel: () => _dsStep("thinking"), label: "Max Tokens", placeholder: dsMaxTokens, isFocused: !0 }) }),
+                ]})
+              : dsStep === "params-temperature"
+              ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
+                  (0, ai.jsx)(W, { bold: !0, children: "\u{1F321} Temperature" }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: "0.0 = deterministic, 1.0 = balanced, 2.0 = creative" }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(Ty, { onSubmit: (J) => { _dsTemp(J); _dsStep("params-top-p"); }, onCancel: () => _dsStep("params-max-tokens"), label: "Temperature", placeholder: dsTemp, isFocused: !0 }) }),
+                ]})
+              : dsStep === "params-top-p"
+              ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
+                  (0, ai.jsx)(W, { bold: !0, children: "\u{1F4CA} Top-P (Nucleus Sampling)" }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: "0.0-1.0. Higher = more diverse output." }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(Ty, { onSubmit: (J) => { _dsTopP(J); dsSubmit(); }, onCancel: () => _dsStep("params-temperature"), label: "Top-P", placeholder: dsTopP, isFocused: !0 }) }),
+                ]})
+              : null
           : s === "input-openai-config"
             ? (0, ai.jsxs)(ie, {
                 borderStyle: "round",
@@ -33051,7 +33099,8 @@ function uio({ config: t, showSuggestions: e }) {
   let r = t.getThinkingModeEnabled(),
     [n, o] = (0, Vfe.useState)(r),
     s = t.getModel(),
-    a = (0, Vfe.useMemo)(() => A2.supportsThinking(s), [s]);
+    a = (0, Vfe.useMemo)(() => A2.supportsThinking(s), [s]),
+    ds = (0, Vfe.useMemo)(() => /deepseek/i.test(s), [s]);
   return (
     (0, Vfe.useEffect)(() => {
       o(r);
@@ -33059,8 +33108,16 @@ function uio({ config: t, showSuggestions: e }) {
     pn(
       (u) => {
         if (u.name === "tab" && !u.shift && !u.ctrl && !u.meta && a && !e) {
-          let c = !t.getThinkingModeEnabled();
-          (t.setThinkingModeEnabled(c), o(c));
+          if (ds) {
+            var cur = t.getReasoningEffort();
+            if (cur === "off" || cur === void 0) t.setReasoningEffort("high");
+            else if (cur === "high") t.setReasoningEffort("max");
+            else t.setReasoningEffort("off");
+            o(t.getThinkingModeEnabled());
+          } else {
+            let c = !t.getThinkingModeEnabled();
+            (t.setThinkingModeEnabled(c), o(c));
+          }
         }
       },
       { isActive: !0 },

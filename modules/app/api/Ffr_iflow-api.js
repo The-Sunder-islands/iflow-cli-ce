@@ -4199,6 +4199,7 @@ var dn,
           (this.geminiMdFilePaths = e.geminiMdFilePaths ?? []),
           (this.approvalMode = e.approvalMode ?? dn.DEFAULT),
           (this.thinkingModeEnabled = e.thinkingModeEnabled ?? rlt),
+          (this.reasoningEffort = e.reasoningEffort ?? (rlt ? "high" : "off")),
           (this.smartApprovalConfig = {
             whitelistEnabled: e.smartApprovalConfig?.whitelistEnabled ?? !0,
             blacklistEnabled: e.smartApprovalConfig?.blacklistEnabled ?? !0,
@@ -4545,6 +4546,13 @@ var dn,
       setThinkingModeEnabled(e) {
         this.thinkingModeEnabled = e;
       }
+      getReasoningEffort() {
+        return this.reasoningEffort || (this.thinkingModeEnabled ? "high" : "off");
+      }
+      setReasoningEffort(e) {
+        this.reasoningEffort = e;
+        this.thinkingModeEnabled = e !== "off";
+      }
       getSmartApprovalConfig() {
         return this.smartApprovalConfig;
       }
@@ -4846,6 +4854,7 @@ var dn,
           geminiMdFileCount: this.geminiMdFileCount,
           approvalMode: this.approvalMode,
           thinkingModeEnabled: this.thinkingModeEnabled,
+          reasoningEffort: this.reasoningEffort,
           showMemoryUsage: this.showMemoryUsage,
           contextFileName: void 0,
           accessibility: this.accessibility,
