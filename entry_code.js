@@ -11365,10 +11365,15 @@ await Yr();
 vn();
 Hn();
 var $I = Se(Rt(), 1);
-var FHi = ({ enabled: t, supported: e }) => {
+var FHi = ({ enabled: t, supported: e, reasoningLabel: Rl }) => {
   let { t: r } = rr(),
     [n, o] = (0, K1e.useState)(!1),
-    s = (0, K1e.useRef)(!1);
+    s = (0, K1e.useRef)(!1),
+    label = Rl
+      ? Rl === "off"
+        ? r("input.thinkingOff")
+        : Rl.toUpperCase()
+      : r(t ? "input.thinkingOn" : "input.thinkingOff");
   return (
     (0, K1e.useEffect)(() => {
       if (e && !s.current) {
@@ -11388,8 +11393,8 @@ var FHi = ({ enabled: t, supported: e }) => {
               children: [
                 (0, $I.jsxs)(W, { color: ae.Gray, children: [r("input.thinkingMode"), ":"] }),
                 (0, $I.jsxs)(W, {
-                  color: t ? ae.Foreground : ae.Gray,
-                  children: [" ", r(t ? "input.thinkingOn" : "input.thinkingOff")],
+                  color: Rl ? (Rl === "off" ? ae.Gray : ae.Foreground) : t ? ae.Foreground : ae.Gray,
+                  children: [" ", label],
                 }),
                 n && (0, $I.jsx)(W, { color: ae.Gray, children: r("input.thinkingToggleHint") }),
               ],
@@ -11561,7 +11566,7 @@ var qHi = (0, GHi.memo)(
                     (0, _o.jsxs)(_o.Fragment, {
                       children: [
                         (0, _o.jsx)(UHi, { approvalMode: y }),
-                        (0, _o.jsx)(FHi, { enabled: A.isEnabled, supported: A.isSupported }),
+                        (0, _o.jsx)(FHi, { enabled: A.isEnabled, supported: A.isSupported, reasoningLabel: A.reasoningLabel }),
                       ],
                     }),
                   b && (0, _o.jsx)($Hi, {}),
@@ -32997,7 +33002,8 @@ function uio({ config: t, showSuggestions: e }) {
     [n, o] = (0, Vfe.useState)(r),
     s = t.getModel(),
     a = (0, Vfe.useMemo)(() => A2.supportsThinking(s), [s]),
-    ds = (0, Vfe.useMemo)(() => /deepseek/i.test(s), [s]);
+    ds = (0, Vfe.useMemo)(() => /deepseek/i.test(s), [s]),
+    [rl, setRl] = (0, Vfe.useState)(ds ? t.getReasoningEffort() || "high" : null);
   return (
     (0, Vfe.useEffect)(() => {
       o(r);
@@ -33011,6 +33017,7 @@ function uio({ config: t, showSuggestions: e }) {
             else if (cur === "high") t.setReasoningEffort("max");
             else t.setReasoningEffort("off");
             o(t.getThinkingModeEnabled());
+            setRl(t.getReasoningEffort());
           } else {
             let c = !t.getThinkingModeEnabled();
             (t.setThinkingModeEnabled(c), o(c));
@@ -33019,7 +33026,7 @@ function uio({ config: t, showSuggestions: e }) {
       },
       { isActive: !0 },
     ),
-    { isEnabled: n && a, isSupported: a }
+    { isEnabled: n && a, isSupported: a, reasoningLabel: rl }
   );
 }
 var cio = Se(Yt(), 1);
@@ -35332,6 +35339,7 @@ ${je.description}`
           )
             try {
               let Je = n.getContentGeneratorConfig();
+              tt && n.getReasoningEffort && (tt.reasoningEffort = n.getReasoningEffort());
               Je && (Je.thinking = tt);
             } catch (Je) {
               o(`Failed to set thinking config: ${Je}`);
@@ -41053,6 +41061,7 @@ async function lso(t, e, r, n) {
     try {
       let O = u1e.createThinkingConfig("\u601D\u8003"),
         N = t.getContentGeneratorConfig();
+      O && t.getReasoningEffort && (O.reasoningEffort = t.getReasoningEffort());
       N && O.maxTokens > 0 && (N.thinking = O);
     } catch (O) {
       console.warn("Failed to configure thinking mode:", O);

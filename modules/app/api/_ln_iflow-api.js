@@ -1365,8 +1365,11 @@ var Dqe,
             supportedReasoningLevels: ["low", "medium", "high", "max"],
             maxThinkingTokens: 64e3,
             configureRequest: (e, r) => {
-              (e.thinking = { type: r.reasoningLevel === "low" ? "disabled" : "enabled" }),
-                r.reasoningEffort && (e.reasoning_effort = r.reasoningEffort);
+              r.reasoningEffort
+                ? r.reasoningEffort === "off"
+                  ? (e.thinking = { type: "disabled" })
+                  : ((e.thinking = { type: "enabled" }), (e.reasoning_effort = r.reasoningEffort))
+                : (e.thinking = { type: r.reasoningLevel === "low" ? "disabled" : "enabled" });
             },
           }),
           this.registerModel(/glm-4.7/, {
