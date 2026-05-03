@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Ffr) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t, class t
+ * Functions: K4a, rSa, R1i, Zfr, J4a, eSa, gSe, ipr, tSa, z4a, U1i, C1i, mme, X4a, Z4a
+ * Features: esbuild module exports: Ffr, CONTAINS iflow.cn API references, dotenv related, MCP server handling, telemetry/OTLP, agent/subagent
+ * === End semantic info ===
  */
 
 

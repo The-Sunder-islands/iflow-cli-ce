@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (aNr) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class extends, class t, class extends, class extends
+ * Functions: e, vNr, lte, qNr, hBr, U3e, HNr, fAo, _Ao, o, BC, aEt, JPr, Ibo, kOe
+ * Features: esbuild module exports: aNr, CONTAINS iflow.cn API references, CONTAINS Google API references, dotenv related, MCP server handling, telemetry/OTLP, agent/subagent
+ * === End semantic info ===
  */
 
 
@@ -1530,7 +1536,7 @@ No search paths or include patterns were specified. Nothing to read or concatena
           contentLengthExceed: "Content length exceed LLM Limit. TraceID: {{traceId}}",
           modelError: "Model error TraceID: {{traceId}}",
           apiTokenExpired:
-            "Your API Token has expired. API Tokens have a validity period of 7 days. You can reset your token at https://platform.iflow.cn/docs/api-key-management.",
+            "Your API Token has expired. API Tokens have a validity period of 7 days. You can reset your token at https://platform.iflow.cn/docs/api-key-management. /* @iflow-platform-endpoint */",
           invalidApiKey: "Invalid API key provided",
           modelNotSupport: "The specified model is not supported",
           modelRateLimitReached:
@@ -5079,7 +5085,7 @@ var lNr,
             "\u5185\u5BB9\u957F\u5EA6\u8D85\u51FA\u5927\u8BED\u8A00\u6A21\u578B\u9650\u5236\u3002TraceID\uFF1A{{traceId}}",
           modelError: "\u6A21\u578B\u9519\u8BEF TraceID: {{traceId}}",
           apiTokenExpired:
-            "API Token \u5DF2\u8FC7\u671F\u3002API Token \u6709\u6548\u671F\u4E3A 7 \u5929\u3002\u60A8\u53EF\u4EE5\u5728 https://platform.iflow.cn/docs/api-key-management \u91CD\u7F6E\u60A8\u7684 token\u3002",
+            "API Token \u5DF2\u8FC7\u671F\u3002API Token \u6709\u6548\u671F\u4E3A 7 \u5929\u3002\u60A8\u53EF\u4EE5\u5728 https://platform.iflow.cn/docs/api-key-management /* @iflow-platform-endpoint */ \u91CD\u7F6E\u60A8\u7684 token\u3002",
           invalidApiKey: "\u63D0\u4F9B\u7684 API \u5BC6\u94A5\u65E0\u6548",
           modelNotSupport:
             "\u5FC3\u6D41\u4E0D\u652F\u6301\u5F53\u524D\u6A21\u578B\uFF0C\u8BF7\u66F4\u6362\u6A21\u578B\u540E\u91CD\u8BD5\u3002",

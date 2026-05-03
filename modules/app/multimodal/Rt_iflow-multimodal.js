@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Rt) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t
+ * Functions: LTe, MTe, iqi, Ucu, UTe, xj, sqi, oqi, FTe
+ * Features: esbuild module exports: Rt
+ * === End semantic info ===
  */
 
 

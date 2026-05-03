@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (UWn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t, class extends, class extends, class extends, class t, class t, class extends, class extends, class extends, class extends, class t extends uA, class t extends uA, class extends, class extends, class extends, class t, class t, class t, class extends, class extends, class t extends Li, class extends, class t extends Li, class t extends Li, class t extends Li, class extends
+ * Functions: Yir, Iia, Rz, wor, xve, Zzn, Ior, dna, Lzn, f, Jce, Xce, jia, m, Sve
+ * Features: esbuild module exports: UWn, dotenv related
+ * === End semantic info ===
  */
 
 

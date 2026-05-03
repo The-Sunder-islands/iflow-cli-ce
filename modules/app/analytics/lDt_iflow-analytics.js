@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (lDt) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: mDt, _jo
+ * Features: esbuild module exports: lDt
+ * === End semantic info ===
  */
 
 

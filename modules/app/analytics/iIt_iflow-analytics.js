@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (iIt) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: YQo, Iq, qQo
+ * Features: esbuild module exports: iIt
+ * === End semantic info ===
  */
 
 

@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Kai) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class extends, class extends, class extends, class extends, class extends, class extends, class t extends Li, class extends, class extends, class extends, class t, class extends, class t extends Li, class t extends Li, class t extends Li, class extends, class t, class UserService, class REMEMBER, class t, class definition, class Foo, class t extends Li, class t extends Li, class definition, class Foo, class t extends Li, class t extends Li, class t extends Li, class t extends Li, class t extends Li, class t extends Li
+ * Functions: sui, E0e, e, B0e, F0e, yci, Cci, Q9a, I4e, G8a, D4e, uui, O8a, w8a, qU
+ * Features: esbuild module exports: Kai, CONTAINS iflow.cn API references, dotenv related, MCP server handling, telemetry/OTLP, agent/subagent
+ * === End semantic info ===
  */
 
 
@@ -1328,7 +1334,7 @@ ${a}
               this.executeWithGeminiUrlContext(e, r, n, o)
             );
           try {
-            let u = "https://platform.iflow.cn/api/search/webFetch";
+            let u = "https://platform.iflow.cn/api/search/webFetch /* @iflow-platform-endpoint */";
             console.debug(`[WebFetchTool] Using platform API to fetch: ${s}`);
             let c = { url: s };
             n && n(c);
@@ -2633,7 +2639,7 @@ var HD,
           if (((s = this.config.getContentGeneratorConfig()?.apiKey || ""), !s))
             throw new Error("\u672A\u627E\u5230\u5FC3\u6D41\u8BA4\u8BC1 apiKey\uFF0C\u8BF7\u91CD\u65B0\u767B\u5F55");
           return {
-            baseUrl: "https://apis.iflow.cn/v1",
+            baseUrl: "https://apis.iflow.cn/v1 /* @iflow-api-endpoint */",
             apiKey: s,
             model: "QWen3-4B",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${s}`, "user-agent": "iFlow-Cli" },

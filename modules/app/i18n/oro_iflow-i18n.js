@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (oro) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: svr, bAt, I5
+ * Features: esbuild module exports: oro
+ * === End semantic info ===
  */
 
 

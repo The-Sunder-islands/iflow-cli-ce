@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (HTn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: oTs, azt, nTs, iTs, Zxs, eTs, tTs, rTs
+ * Features: esbuild module exports: HTn
+ * === End semantic info ===
  */
 
 

@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (srn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: Kqo, orn, nrn, Jqo
+ * Features: esbuild module exports: srn, telemetry/OTLP
+ * === End semantic info ===
  */
 
 

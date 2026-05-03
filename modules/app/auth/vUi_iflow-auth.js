@@ -10,6 +10,13 @@
  * This module was automatically extracted and categorized.
  * The original variable name (vUi) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t extends Error, class did, class did, class t extends Error, class extends, class t extends Error
+ * Exports: createColors
+ * Functions: P, Cou, K, m3t, J, sw, Q, N9r, K9r, Biu, VFi, ne, g9r, Y, Piu
+ * Features: esbuild module exports: vUi, dotenv related
+ * === End semantic info ===
  */
 
 

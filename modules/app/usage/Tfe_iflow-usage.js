@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Tfe) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class extends, class extends, class extends, class t
+ * Functions: GXi, Hbt, bEr, gEr, o, QXi
+ * Features: esbuild module exports: Tfe
+ * === End semantic info ===
  */
 
 

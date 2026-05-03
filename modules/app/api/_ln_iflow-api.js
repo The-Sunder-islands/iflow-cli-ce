@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (_ln) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class t, class t extends Error, class t, class t extends Fa, class t extends Fa, class t extends Fa, class extends, class t extends Fa, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class t extends Fa, class t extends Fa, class extends, class t extends Fa, class extends, class t extends Fa, class t extends Fa, class extends, class t extends Fa, class t extends Fa, class extends, class extends, class t extends Fa, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class t extends Fa, class extends, class s extends o, class extends, class extends, class t extends Error, class extends
+ * Functions: b2, e5e, Aln, Sdn, eWe, TVe, LVe, H0, Jdn, Rdn, b1n, idn, XBt, K1n, hH
+ * Features: esbuild module exports: _ln, CONTAINS iflow.cn API references, dotenv related, MCP server handling, telemetry/OTLP, agent/subagent
+ * === End semantic info ===
  */
 
 
@@ -1077,7 +1083,7 @@ var _4,
         let s = this.createImageAnalysisPrompt();
         try {
           let a =
-            this.isIFlowMode && (this.baseUrl === "https://apis.iflow.cn/v1" || this.baseUrl.includes("iflow"))
+            this.isIFlowMode && (this.baseUrl === "https://apis.iflow.cn/v1 /* @iflow-api-endpoint */" || this.baseUrl.includes("iflow"))
               ? "qwen3-vl-plus"
               : this.modelName;
           a =
@@ -1135,7 +1141,7 @@ var _4,
         if (s) return s;
         try {
           let a =
-            this.isIFlowMode && (this.baseUrl === "https://apis.iflow.cn/v1" || this.baseUrl.includes("iflow"))
+            this.isIFlowMode && (this.baseUrl === "https://apis.iflow.cn/v1 /* @iflow-api-endpoint */" || this.baseUrl.includes("iflow"))
               ? "qwen3-vl-plus"
               : this.modelName;
           a =
@@ -2745,7 +2751,7 @@ ${"=".repeat(80)}
             } catch (c) {
               if (
                 (b2(c),
-                this.baseUrl === "https://apis.iflow.cn/v1" ||
+                this.baseUrl === "https://apis.iflow.cn/v1 /* @iflow-api-endpoint */" ||
                   this.baseUrl === "https://ducky.code.alibaba-inc.com/v1/openai")
               )
                 try {
@@ -2782,7 +2788,7 @@ ${"=".repeat(80)}
             s = await fetch(
               n === "aone"
                 ? "https://ducky.code.alibaba-inc.com/v1/openai/chat/completions"
-                : "https://apis.iflow.cn/v1/chat/completions",
+                : "https://apis.iflow.cn/v1/chat/completions /* @iflow-api-endpoint */",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${this.apiKey}` },
@@ -3153,7 +3159,7 @@ var Np,
       (l1 = "Qwen3-Coder-Plus"),
       (Die = "text-embedding-v1"),
       (ZR = "gemini-2.5-flash-lite"),
-      (Iie = "https://apis.iflow.cn/v1"),
+      (Iie = "https://apis.iflow.cn/v1 /* @iflow-api-endpoint */"),
       (Rqe = "https://ducky.code.alibaba-inc.com/v1/openai"),
       (u2e = [
         { label: "GLM-4.7", value: "glm-4.7" },

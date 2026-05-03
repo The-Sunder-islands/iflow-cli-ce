@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Vcn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: Nrs, _Ot, r, Trs, Srs, krs, Hcn, EOt, Ors, xrs, Rrs, Drs, wrs, Irs
+ * Features: esbuild module exports: Vcn
+ * === End semantic info ===
  */
 
 

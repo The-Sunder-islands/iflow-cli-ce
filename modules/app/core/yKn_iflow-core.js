@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (yKn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class bKn
+ * Features: esbuild module exports: yKn
+ * === End semantic info ===
  */
 
 

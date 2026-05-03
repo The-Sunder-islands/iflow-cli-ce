@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (HHn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t, class t, class t, class t, class t, class extends, class extends, class extends, class t extends SVn, class t extends Li, class extends, class t extends Li, class extends
+ * Functions: P, qta, e, sA, lir, K, ive, NVn, o, xra, B, gD, gs, znt, Qp
+ * Features: esbuild module exports: HHn, dotenv related
+ * === End semantic info ===
  */
 
 

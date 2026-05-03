@@ -10,6 +10,13 @@
  * This module was automatically extracted and categorized.
  * The original variable name (MAn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends
+ * Exports: _parse, spawn, sync, _enoent
+ * Functions: Qbs, Zbs, UAn, Ebs, Ibs, Nbs, BAn, Cbs, tAs, f, cjt, kbs, Ek, d, pjt
+ * Features: esbuild module exports: MAn, dotenv related, MCP server handling
+ * === End semantic info ===
  */
 
 

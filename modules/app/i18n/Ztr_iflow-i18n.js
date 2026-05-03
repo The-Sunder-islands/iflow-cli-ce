@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Ztr) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: jzs, Mzs, Up, rEe, Uzs, Qzs, Fzs, Gzs
+ * Features: esbuild module exports: Ztr
+ * === End semantic info ===
  */
 
 

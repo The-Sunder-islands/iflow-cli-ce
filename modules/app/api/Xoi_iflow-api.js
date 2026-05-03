@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Xoi) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class extends, class t extends Li, class extends, class extends, class t extends Li, class t extends Li, class t extends Li, class t extends Li, class t extends Li, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends
+ * Functions: P, i5a, c5a, fai, t0e, K, V0r, Asi, tmr, zsi, m0e, wat, bsi, omr, Q
+ * Features: esbuild module exports: Xoi, CONTAINS iflow.cn API references, dotenv related, telemetry/OTLP, agent/subagent
+ * === End semantic info ===
  */
 
 
@@ -2596,7 +2602,7 @@ ${m}`;
     \u8BF7\u5224\u65AD\u4EE5\u4E0B\u6587\u672C\u662F\u5426\u4E3A\u4E2D\u6587\u3002\u53EA\u56DE\u7B54"\u662F"\u6216"\u5426"
     \u91CD\u8981\uFF1A\u4E0D\u8981\u5176\u4ED6\u89E3\u91CA\u3002\u53EA\u56DE\u7B54"\u662F"\u6216"\u5426"
     \u6587\u672C\u5185\u5BB9\uFF1A${n}`.trim(),
-      s = await fetch("https://apis.iflow.cn/v1/chat/completions", {
+      s = await fetch("https://apis.iflow.cn/v1/chat/completions /* @iflow-api-endpoint */", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${e}`, "user-agent": "iFlow-Cli" },
         body: JSON.stringify({
@@ -3415,7 +3421,7 @@ var u3,
           s = {
             "tool.name": "xinliu_web_search",
             "search.query": e.query,
-            "api.endpoint": "https://platform.iflow.cn/api/search/webSearch",
+            "api.endpoint": "https://platform.iflow.cn/api/search/webSearch /* @iflow-platform-endpoint */",
           };
         return jh("tool.xinliu_web_search", s, async () => {
           let a = {},
@@ -3495,7 +3501,7 @@ var u3,
           let m = typeof e.num == "number" && Number.isFinite(e.num) ? e.num : 15,
             d = { keywords: e.query, num: m };
           n && n(d);
-          let f = "https://platform.iflow.cn/api/search/webSearch",
+          let f = "https://platform.iflow.cn/api/search/webSearch /* @iflow-platform-endpoint */",
             p = { Authorization: `Bearer ${u}` },
             h = 3,
             g = 0,

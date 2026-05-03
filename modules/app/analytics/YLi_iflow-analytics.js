@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (YLi) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t extends Rr, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class t extends E3, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends
+ * Features: esbuild module exports: YLi
+ * === End semantic info ===
  */
 
 

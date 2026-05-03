@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (BYn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t
+ * Features: esbuild module exports: BYn
+ * === End semantic info ===
  */
 
 

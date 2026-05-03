@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (HTr) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Exports: signals, load, unload
+ * Features: esbuild module exports: HTr
+ * === End semantic info ===
  */
 
 

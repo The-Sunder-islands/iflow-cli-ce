@@ -10,6 +10,13 @@
  * This module was automatically extracted and categorized.
  * The original variable name (DMi) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t
+ * Exports: populate, _parseVault, _configVault, configDotenv, exports, config, parse, decrypt
+ * Functions: zru, PMi, rnu, qht, x8r, tTe, Yru, Hru, tnu, NMi, Jru, RMi, Xru, c1e, nTe
+ * Features: esbuild module exports: DMi, dotenv related, MCP server handling
+ * === End semantic info ===
  */
 
 

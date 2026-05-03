@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (E4t) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends
+ * Functions: L7o, U7o, M7o
+ * Features: esbuild module exports: E4t, telemetry/OTLP
+ * === End semantic info ===
  */
 
 

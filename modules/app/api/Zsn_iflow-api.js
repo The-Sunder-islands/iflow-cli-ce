@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Zsn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t, class extends, class extends, class extends
+ * Functions: qne, nun, ng, hGe, AGe, fGe, dGe, Rkt, ZXo, EGe, uun, Jan, vAe, iZo, XXo
+ * Features: esbuild module exports: Zsn, CONTAINS iflow.cn API references, dotenv related, MCP server handling, telemetry/OTLP
+ * === End semantic info ===
  */
 
 

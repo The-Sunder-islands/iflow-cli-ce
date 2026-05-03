@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (zkt) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: Aes, _es, Ees, n, bes, ves, hes, NAe, yes, jun, Ces, Ses
+ * Features: esbuild module exports: zkt, dotenv related
+ * === End semantic info ===
  */
 
 

@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (f9e) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class extends, class extends, class t extends Li, class extends
+ * Functions: vk, CAs, sKe, h9e, B2n, O2n, S2n, wjt, SAs, gAs, wAs, _9e, y9e, T2n, b9e
+ * Features: esbuild module exports: f9e, dotenv related, MCP server handling
+ * === End semantic info ===
  */
 
 

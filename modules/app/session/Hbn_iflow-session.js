@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Hbn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends
+ * Functions: Kbn, Gbn, Jgs, UYe, Kgs, Jbn
+ * Features: esbuild module exports: Hbn
+ * === End semantic info ===
  */
 
 

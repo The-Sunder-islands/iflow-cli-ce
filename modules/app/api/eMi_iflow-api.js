@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (eMi) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: Oru, kru, _8r, Zxe, b8r, y8r, Iru, Cru, Lru, h8r, Nru, g8r, wru, Sru, Rru
+ * Features: esbuild module exports: eMi, CONTAINS iflow.cn API references, dotenv related, MCP server handling, telemetry/OTLP, agent/subagent
+ * === End semantic info ===
  */
 
 

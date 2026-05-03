@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (pOe) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t, class t, class extends, class t extends ste, class extends, class t extends ste
+ * Functions: ite, Y5, tte, gOe, bB, ba, Mc, nte, ui, Xgo, L_t, bOe, lx, x3e, Tn
+ * Features: esbuild module exports: pOe, dotenv related, MCP server handling
+ * === End semantic info ===
  */
 
 

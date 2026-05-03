@@ -10,6 +10,10 @@
  * This module was automatically extracted and categorized.
  * The original variable name (FYr) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Features: esbuild module exports: FYr
+ * === End semantic info ===
  */
 
 

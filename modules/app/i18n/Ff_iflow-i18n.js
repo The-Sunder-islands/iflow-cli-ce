@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Ff) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: mes, BZo, GZo, les, oes, ces, Dun, MZo, ZZo, LZo, xZo, ees, ies, ues, DZo
+ * Features: esbuild module exports: Ff, dotenv related
+ * === End semantic info ===
  */
 
 

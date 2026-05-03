@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Atn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: sGo, n, oGo, nGo, aIt, btn, c, rGo, a, aGo, tGo, uGo
+ * Features: esbuild module exports: Atn
+ * === End semantic info ===
  */
 
 

@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (rTn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: Xws, L, eTn, f, q, d, m, v, Q, k, exs, p, N, B, R
+ * Features: esbuild module exports: rTn
+ * === End semantic info ===
  */
 
 

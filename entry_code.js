@@ -322,7 +322,11 @@ function RX(t, e) {
   let n = ((e % r) + r) % r;
   return n === 0 ? [...t] : [...t.slice(-n), ...t.slice(0, -n)];
 }
+// ==== SECTION START: Soo (react-devtools-core + terminal UI capabilities) ====
+
 var Soo = j(() => {});
+// ==== SECTION END: Soo ====
+
 import { isDeepStrictEqual as l5u } from "node:util";
 function m5u({
   items: t = [],
@@ -1421,11 +1425,19 @@ function RCr(t, e) {
 function cpe(t) {
   return Object.keys(t);
 }
+// ==== SECTION START: lpe (filesystem utility functions (read/write/json)) ====
+
 var lpe = j(() => {});
+// ==== SECTION END: lpe ====
+
 function Qm(t) {
   return !!t && !!t.then && typeof t.then == "function";
 }
+// ==== SECTION START: mpe (path manipulation utilities) ====
+
 var mpe = j(() => {});
+// ==== SECTION END: mpe ====
+
 function hQ(t) {
   let r = t.replace(/\s{2,}/g, " ").split(/\s+(?![^[]*]|[^<]*>)/),
     n = /\.*[\][<>]/g,
@@ -1444,7 +1456,11 @@ function hQ(t) {
     s
   );
 }
+// ==== SECTION START: w2t (workspace scanner & file finder) ====
+
 var w2t = j(() => {});
+// ==== SECTION END: w2t ====
+
 function Ci(t, e, r) {
   function n() {
     return typeof t == "object" ? [{ demanded: [], optional: [] }, t, e] : [hQ(`cmd ${t}`), e, r];
@@ -1568,16 +1584,24 @@ function MX(
 function q8u(t) {
   return typeof t == "function";
 }
+// ==== SECTION START: OCr (config merge & environment loader) ====
+
 var OCr = j(() => {
   mpe();
 });
+// ==== SECTION END: OCr ====
+
 function NCr(t) {
   if (typeof Ae > "u") return null;
   for (let e = 0, r = Object.keys(Ae.cache), n; e < r.length; e++)
     if (((n = Ae.cache[r[e]]), n.exports === t)) return n;
   return null;
 }
+// ==== SECTION START: Mso (telemetry & OTLP initialization) ====
+
 var Mso = j(() => {});
+// ==== SECTION END: Mso ====
+
 function Uso(t, e, r, n) {
   return new PCr(t, e, r, n);
 }
@@ -1912,9 +1936,13 @@ function gQ(t = {}, e = () => !0) {
     r
   );
 }
+// ==== SECTION START: I2t (model/AI provider setup (Google, OpenAI compat)) ====
+
 var I2t = j(() => {
   lpe();
 });
+// ==== SECTION END: I2t ====
+
 function bQ(t) {
   typeof process > "u" ||
     [process.stdout, process.stderr].forEach((e) => {
@@ -1922,7 +1950,11 @@ function bQ(t) {
       r._handle && r.isTTY && typeof r._handle.setBlocking == "function" && r._handle.setBlocking(t);
     });
 }
+// ==== SECTION START: MCr (auth provider registration) ====
+
 var MCr = j(() => {});
+// ==== SECTION END: MCr ====
+
 function z8u(t) {
   return typeof t == "boolean";
 }
@@ -2302,11 +2334,15 @@ function jso(t) {
 function R2t(t) {
   return FCr(t) ? t.text : t;
 }
+// ==== SECTION START: Gso (extension & plugin manager) ====
+
 var Gso = j(() => {
   I2t();
   _1e();
   MCr();
 });
+// ==== SECTION END: Gso ====
+
 var qso,
   Hso,
   Vso = j(() => {
@@ -2581,7 +2617,11 @@ function Yso(t, e) {
           : (r[n][o] = Math.min(r[n - 1][o - 1] + 1, Math.min(r[n][o - 1] + 1, r[n - 1][o] + 1)));
   return r[e.length][t.length];
 }
+// ==== SECTION START: Kso (tool registry + main execution logic) ====
+
 var Kso = j(() => {});
+// ==== SECTION END: Kso ====
+
 function Xso(t, e, r) {
   let n = r.y18n.__,
     o = r.y18n.__n,

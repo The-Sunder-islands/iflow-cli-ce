@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Wme) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class t extends uwe
+ * Functions: r
+ * Features: esbuild module exports: Wme, dotenv related
+ * === End semantic info ===
  */
 
 

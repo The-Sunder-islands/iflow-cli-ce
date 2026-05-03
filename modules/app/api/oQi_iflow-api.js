@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (oQi) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: fuu, Vau, wuu, guu, q3t, AQi, zau, tuu, suu, Zau, luu, Euu, Xau, buu
+ * Features: esbuild module exports: oQi, CONTAINS iflow.cn API references, dotenv related, MCP server handling
+ * === End semantic info ===
  */
 
 
@@ -98,7 +103,7 @@ var bQi,
         n && (s.name = n);
         let a = { "User-Agent": "iFlow-Cli", "Content-Type": "application/json" };
         o === "private" && (a.Authorization = `Bearer ${t}`);
-        let u = await fetch("https://apis.iflow.cn/v1/commands/list", {
+        let u = await fetch("https://apis.iflow.cn/v1/commands/list /* @iflow-api-endpoint */", {
           method: "POST",
           headers: a,
           body: JSON.stringify(s),
@@ -130,7 +135,7 @@ var bQi,
     }),
       (Hau = async (t, e) => {
         try {
-          let r = await fetch(`https://apis.iflow.cn/v1/commands/get/${e}`, {
+          let r = await fetch(`https://apis.iflow.cn/v1/commands/get/${e}`, /* @iflow-api-endpoint */ {
             headers: { Authorization: `Bearer ${t}` },
           });
           if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
@@ -248,7 +253,7 @@ var Yau,
         if (!t) return { success: !1, message: I.t("commandsGet.pleaseAuthenticate") };
         let o = { page: e, size: r, usePage: !0, visibility: "public" };
         n && (o.name = n);
-        let s = await fetch("https://apis.iflow.cn/v1/commands/list", {
+        let s = await fetch("https://apis.iflow.cn/v1/commands/list /* @iflow-api-endpoint */", {
           method: "POST",
           headers: { "User-Agent": "iFlow-Cli", "Content-Type": "application/json" },
           body: JSON.stringify(o),
@@ -280,7 +285,7 @@ var Yau,
     }),
       (Kau = async (t, e) => {
         try {
-          let r = await fetch(`https://apis.iflow.cn/v1/commands/get/${e}`, {
+          let r = await fetch(`https://apis.iflow.cn/v1/commands/get/${e}`, /* @iflow-api-endpoint */ {
             headers: { Authorization: `Bearer ${t}` },
           });
           if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
@@ -474,7 +479,7 @@ var ruu,
       return t.sort((n, o) => (n.scope !== o.scope ? (n.scope === "global" ? -1 : 1) : n.name.localeCompare(o.name)));
     }),
       (nuu = async (t, e = 1, r = 20) => {
-        let n = new URL("https://apis.iflow.cn/v1/commands/list");
+        let n = new URL("https://apis.iflow.cn/v1/commands/list /* @iflow-api-endpoint */");
         (n.searchParams.append("page", e.toString()),
           n.searchParams.append("size", r.toString()),
           n.searchParams.append("visibility", "public"));
@@ -649,7 +654,7 @@ var auu,
       (cuu = async (t, e = 1, r = 20) => {
         try {
           if (!t) return { success: !1, message: I.t("commandsOnline.pleaseAuthenticate") };
-          let o = await fetch("https://apis.iflow.cn/v1/commands/list", {
+          let o = await fetch("https://apis.iflow.cn/v1/commands/list /* @iflow-api-endpoint */", {
             method: "POST",
             headers: { "User-Agent": "iFlow-Cli", "Content-Type": "application/json" },
             body: JSON.stringify({ page: e, size: r, usePage: !0, visibility: "public", publishStatus: "published" }),
@@ -769,7 +774,7 @@ var OQi,
         let s = { page: e, size: r, usePage: !0, visibility: o },
           a = { "User-Agent": "iFlow-Cli", "Content-Type": "application/json" };
         o === "private" && (a.Authorization = `Bearer ${t}`);
-        let u = await fetch("https://apis.iflow.cn/v1/agents/list", {
+        let u = await fetch("https://apis.iflow.cn/v1/agents/list /* @iflow-api-endpoint */", {
           method: "POST",
           headers: a,
           body: JSON.stringify(s),
@@ -801,7 +806,7 @@ var OQi,
     }),
       (muu = async (t, e) => {
         try {
-          let r = await fetch(`https://apis.iflow.cn/v1/agents/get/${e}`, {
+          let r = await fetch(`https://apis.iflow.cn/v1/agents/get/${e}`, /* @iflow-api-endpoint */ {
             headers: { Authorization: `Bearer ${t}` },
           });
           if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
@@ -1230,7 +1235,7 @@ var vuu,
       (Suu = async (t, e = 1, r = 20) => {
         try {
           if (!t) return { success: !1, message: I.t("agentsOnline.pleaseAuthenticate") };
-          let o = await fetch("https://apis.iflow.cn/v1/agents/list", {
+          let o = await fetch("https://apis.iflow.cn/v1/agents/list /* @iflow-api-endpoint */", {
             method: "POST",
             headers: { "User-Agent": "iFlow-Cli", "Content-Type": "application/json" },
             body: JSON.stringify({ page: e, size: r, visibility: "public" }),

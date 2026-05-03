@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (OWi) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t, class extends
+ * Functions: eEr, B1u, s1u, V1u, AKi, HJi, zJi, rbt, UYi, xbt, Xdu, F1u, j1u, SDe, FKi
+ * Features: esbuild module exports: OWi, CONTAINS iflow.cn API references, dotenv related, MCP server handling
+ * === End semantic info ===
  */
 
 
@@ -386,7 +392,7 @@ var HYi,
 import rP from "node:process";
 import Jdu from "node:os";
 async function Xdu(t, e) {
-  let r = "https://apis.iflow.cn/v1/bug/report",
+  let r = "https://apis.iflow.cn/v1/bug/report /* @iflow-api-endpoint */",
     o = { content: JSON.stringify(t, null, 2) },
     s = { "Content-Type": "application/json" };
   e && (s.Authorization = `Bearer ${e}`);
@@ -836,7 +842,7 @@ var iKi,
       (GA = "\x1B[1m"),
       (qd = "\x1B[0m"),
       (sKi = async (t, e) => {
-        let r = await fetch(`https://apis.iflow.cn/v1/commands/get/${e}`, {
+        let r = await fetch(`https://apis.iflow.cn/v1/commands/get/${e}`, /* @iflow-api-endpoint */ {
           headers: { Authorization: `Bearer ${t}` },
         });
         if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
@@ -1311,7 +1317,7 @@ var fKi,
       description: I.t("command.docs"),
       kind: "built-in",
       action: async (t) => {
-        let e = "https://platform.iflow.cn/cli/quickstart";
+        let e = "https://platform.iflow.cn/cli/quickstart /* @iflow-platform-endpoint */";
         if (dKi.env.SANDBOX && dKi.env.SANDBOX !== "sandbox-exec")
           t.ui.addItem({ type: "info", text: I.t("docsCommand.pleaseOpenUrl", { url: e }) }, Date.now());
         else {
@@ -1750,7 +1756,7 @@ var pDe,
           u = Object.keys(a),
           c = o.getBlockedMcpServers() || [];
         if (u.length === 0 && c.length === 0) {
-          let h = "https://platform.iflow.cn/mcp";
+          let h = "https://platform.iflow.cn/mcp /* @iflow-platform-endpoint */";
           return process.env.SANDBOX && process.env.SANDBOX !== "sandbox-exec"
             ? {
                 type: "message",

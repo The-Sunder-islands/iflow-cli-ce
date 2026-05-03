@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Fno) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t extends Error, class t, class t extends Da, class t extends Da, class t extends Da, class extends, class t extends Da, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class t extends Da, class t extends Da, class extends, class t extends Da, class extends, class t extends Da, class t extends Da, class extends, class t extends Da, class t extends Da, class extends, class extends, class t extends Da, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class extends, class t extends Da, class extends, class extends, class t
+ * Functions: AAu, Wno, e, Vno, WAt, EAu, rQ, bAu, na, a, Hno, Bvr, o, dP, r
+ * Features: esbuild module exports: Fno, MCP server handling
+ * === End semantic info ===
  */
 
 

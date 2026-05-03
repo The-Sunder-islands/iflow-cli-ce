@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (j3i) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends
+ * Functions: U3i, q3i, V3i
+ * Features: esbuild module exports: j3i
+ * === End semantic info ===
  */
 
 

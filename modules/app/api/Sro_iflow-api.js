@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Sro) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends, class extends
+ * Functions: lbu, obu, Lgu, ubu, abu, hvr, Ugu, QDe, CAt, sbu, vAt, pbu, cbu, Bgu, _At
+ * Features: esbuild module exports: Sro, CONTAINS iflow.cn API references, dotenv related, telemetry/OTLP, agent/subagent
+ * === End semantic info ===
  */
 
 
@@ -943,7 +949,7 @@ ${o.updateMessage}`),
     };
   });
 async function abu(t, e) {
-  let r = "https://apis.iflow.cn/v1/chat/qaRetrieve";
+  let r = "https://apis.iflow.cn/v1/chat/qaRetrieve /* @iflow-api-endpoint */";
   try {
     let n = await fetch(r, {
       method: "POST",
@@ -994,8 +1000,8 @@ function ubu(t) {
     };
   return r in n
     ? n[r] === ""
-      ? `https://platform.iflow.cn/cli/${r}`
-      : `https://platform.iflow.cn/cli/${n[r]}/${e}`
+      ? `https://platform.iflow.cn/cli/${r}` /* @iflow-platform-endpoint */
+      : `https://platform.iflow.cn/cli/${n[r]}/${e}` /* @iflow-platform-endpoint */
     : "";
 }
 function cbu(t, e) {

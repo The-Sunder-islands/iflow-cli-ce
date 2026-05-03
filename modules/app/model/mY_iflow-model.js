@@ -10,6 +10,13 @@
  * This module was automatically extracted and categorized.
  * The original variable name (mY) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t, class t extends Li, class extends, class t extends Li, class t extends Li
+ * Exports: RedirectHandler, WebSocketStream, getGlobalOrigin, Dispatcher, errors, EventSource, upgrade, Agent, pipeline, parseCookie, getCookies, RetryHandler, MessageEvent, WebSocketError, request
+ * Functions: Cba, uii, qle, nv, nii, kba, Cst, tlr, Ist, Nba, Eii, Aii, a, o3, o
+ * Features: esbuild module exports: mY, dotenv related
+ * === End semantic info ===
  */
 
 

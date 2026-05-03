@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (ERe) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Exports: default
+ * Functions: Umo, Smo, wmo, kRe, Fmo, Ghe, U9t, sTr, imo, xmo, nTr, TTr, j9t, DTr, NRe
+ * Features: esbuild module exports: ERe
+ * === End semantic info ===
  */
 
 

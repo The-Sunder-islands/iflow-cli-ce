@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Xxn) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: zws
+ * Features: esbuild module exports: Xxn
+ * === End semantic info ===
  */
 
 

@@ -10,15 +10,51 @@
     "url": "git+https://github.com/The-Sunder-islands/iflow-cli-ce.git"
   },
   "bin": {
-    "iflow-ce": "bundle/entry.js"
+    "iflow-ce": "bin/iflow-ce.cjs",
+    "iflow-ce-dev": "bin/iflow-ce-dev.cjs"
   },
   "files": [
     "bundle/",
-    "vendors/",
-    "scripts/",
+    "bin/",
+    "src/",
+    "modules/",
+    "preamble.js",
+    "entry_code.js",
+    "module_order.json",
+    "bundled_licenses.txt",
+    "build.js",
     "README.md",
     "LICENSE"
   ],
+  "scripts": {
+    "dev": "node bin/iflow-ce-dev.cjs",
+    "start": "node bin/iflow-ce.cjs",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "@google/genai": ">=1.0.0",
+    "@grpc/proto-loader": ">=0.7.0",
+    "@lydell/node-pty": ">=1.1.0",
+    "archiver": ">=7.0.0",
+    "asciify-image": ">=0.1.10",
+    "crc-32": ">=1.2.0",
+    "deep-extend": ">=0.6.0",
+    "fzf": ">=0.5.0",
+    "gifuct-js": ">=2.1.2",
+    "ink": ">=6.5.0",
+    "ky": ">=1.0.0",
+    "long": ">=5.0.0",
+    "node-notifier": ">=10.0.1",
+    "node-pty": ">=1.0.0",
+    "normalize-path": ">=3.0.0",
+    "react-devtools-core": ">=6.1.5",
+    "shell-quote": ">=1.8.3",
+    "tmp": ">=0.2.0",
+    "undici": ">=7.0.0",
+    "xmlchars": ">=2.2.0",
+    "yargs-parser": ">=21.0.0",
+    "zip-stream": ">=6.0.0"
+  },
   "keywords": [
     "ai",
     "cli",

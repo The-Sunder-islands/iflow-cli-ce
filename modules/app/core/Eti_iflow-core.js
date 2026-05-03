@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (Eti) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class extends
+ * Functions: rfa
+ * Features: esbuild module exports: Eti
+ * === End semantic info ===
  */
 
 

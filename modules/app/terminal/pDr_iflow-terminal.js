@@ -10,6 +10,12 @@
  * This module was automatically extracted and categorized.
  * The original variable name (pDr) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Classes: class t, class extends
+ * Functions: s6t, e6, rdo, yee, KRe, mDr, W
+ * Features: esbuild module exports: pDr, dotenv related
+ * === End semantic info ===
  */
 
 

@@ -10,6 +10,11 @@
  * This module was automatically extracted and categorized.
  * The original variable name (k8t) is preserved for compatibility.
  * DO NOT rename this module's variable - it's referenced by other modules.
+ *
+ * === Auto-analyzed semantic info ===
+ * Functions: vhe, rG, Lco
+ * Features: esbuild module exports: k8t
+ * === End semantic info ===
  */
 
 
