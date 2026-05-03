@@ -4291,7 +4291,7 @@ import * as d2t from "fs";
 import rC from "node:process";
 Ot();
 dc();
-var I8r = new Date("2026-04-16T16:00:00.000Z");
+var I8r = new Date("2099-01-01T00:00:00.000Z"); // was 2026-04-16 — sunset removed for CE
 function R8r() {
   return Date.now() >= I8r.getTime();
 }
