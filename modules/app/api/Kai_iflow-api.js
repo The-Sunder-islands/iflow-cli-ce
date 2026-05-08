@@ -5629,12 +5629,12 @@ ${x}
   if (E) {
     let C = E.toLowerCase();
     if (!["0", "false"].includes(C))
-      if (["1", "true"].includes(C)) (N0e.mkdirSync(HU.dirname(o), { recursive: !0 }), N0e.writeFileSync(o, y));
+      if (["1", "true"].includes(C)) (N0e.mkdirSync(HU.dirname(o), { recursive: !0 }), N0e.writeFileSync(o, systemPrompt));
       else {
         let x = E;
         x.startsWith("~/") ? (x = HU.join(dut.homedir(), x.slice(2))) : x === "~" && (x = dut.homedir());
         let k = HU.resolve(x);
-        (N0e.mkdirSync(HU.dirname(k), { recursive: !0 }), N0e.writeFileSync(k, y));
+        (N0e.mkdirSync(HU.dirname(k), { recursive: !0 }), N0e.writeFileSync(k, systemPrompt));
       }
   }
   let v =
@@ -5645,7 +5645,7 @@ ${x}
 
 ${e.trim()}`
       : "";
-  return `${y}${h}${v}`;
+  return `${systemPrompt}${h}${v}`;
 }
 function Adr() {
   return `
