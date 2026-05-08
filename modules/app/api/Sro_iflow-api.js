@@ -1794,6 +1794,7 @@ var zj,
     zYi();
     KYi();
     ZYi();
+    renderCmdInit();
     tKi();
     nKi();
     cKi();

@@ -467005,6 +467005,7 @@ var zj,
     zYi();
     KYi();
     ZYi();
+    renderCmdInit();
     tKi();
     nKi();
     cKi();
@@ -480631,7 +480632,8 @@ var SearchProvider,
               pageno: 1,
             }),
           );
-          return { results: s.slice(0, o) };
+          let a = s.filter((c) => c.title && c.title !== "Untitled" && c.url && c.url !== "No link").slice(0, o);
+          return { results: a };
         } catch (s) {
           console.error("[SearchProvider] webSearch error:", s);
           return { results: [] };
