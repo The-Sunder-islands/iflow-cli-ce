@@ -3487,8 +3487,9 @@ var u3,
             s && s(0, !1, "param_error", 0),
             { llmContent: I.t("xinliuWebSearch.errors.invalidParameters", { reason: a }), returnDisplay: a }
           );
-        let u = this.config.getSearchApiKey();
-        if (!u)
+        let u = this.config.getSearchApiKey(),
+          c = this.config.getSearchProvider();
+        if (!u && !c)
           return (
             s && s(0, !1, "api_key_error", 0),
             {
@@ -3496,12 +3497,60 @@ var u3,
               returnDisplay: "Search capability requires searchApiKey to be configured.",
             }
           );
-        let c = Date.now();
+        if (c)
+          try {
+            let f = await c.webSearch(e.query, typeof e.num == "number" && Number.isFinite(e.num) ? e.num : 15, r);
+            if (!f || !f.results || f.results.length === 0)
+              return (
+                s && s(Date.now() - 0, !0, "empty_result", 0),
+                {
+                  llmContent: I.t("xinliuWebSearch.messages.noResults", { query: e.query }),
+                  returnDisplay: I.t("xinliuWebSearch.messages.noResultsShort"),
+                }
+              );
+            let p = "",
+              h = [];
+            return (
+              f.results.forEach((g, b) => {
+                let A = g.title || "Untitled",
+                  y = g.url || g.link || "No link",
+                  E = g.date || "No time",
+                  v = g.snippet || "No snippet";
+                (p += `
+[${b + 1}] title: ${A}
+`),
+                  (p += `date: ${E}
+`),
+                  (p += `link: ${y}
+`),
+                  (p += `snippet: ${v}
+`),
+                  h.push({ web: { uri: y, title: A } });
+              }),
+              s && s(Date.now() - 0, !0, void 0, f.results.length),
+              {
+                llmContent: I.t("xinliuWebSearch.messages.searchResults", { query: e.query, results: p }),
+                returnDisplay: I.t("xinliuWebSearch.messages.searchResultsReturned", { query: e.query }),
+                sources: h,
+              }
+            );
+          } catch (f) {
+            let p = `Error during web search for query "${e.query}": ${mr(f)}`;
+            return (
+              console.error(p, f),
+              s && s(Date.now() - 0, !1, "provider_error", 0),
+              {
+                llmContent: I.t("xinliuWebSearch.errors.searchFailed", { error: p }),
+                returnDisplay: I.t("xinliuWebSearch.errors.searchFailedShort"),
+              }
+            );
+          }
+        let m = Date.now();
         try {
           let m = typeof e.num == "number" && Number.isFinite(e.num) ? e.num : 15,
             d = { keywords: e.query, num: m };
           n && n(d);
-          let f = "https://platform.iflow.cn/api/search/webSearch /* @iflow-platform-endpoint */",
+          let f = this.config.getSearchEndpoint(),
             p = { Authorization: `Bearer ${u}` },
             h = 3,
             g = 0,

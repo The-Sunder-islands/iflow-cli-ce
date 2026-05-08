@@ -4078,6 +4078,9 @@ var dn,
       baseUrl;
       authType;
       searchApiKey;
+      searchEndpoint;
+      fetchEndpoint;
+      searchProvider;
       toolRegistry;
       promptRegistry;
       sessionId;
@@ -4654,6 +4657,24 @@ var dn,
       }
       getSearchApiKey() {
         return this.searchApiKey ?? this.contentGeneratorConfig?.apiKey;
+      }
+      getSearchEndpoint() {
+        return this.searchEndpoint ?? process.env.IFLOW_SEARCH_ENDPOINT ?? "https://platform.iflow.cn/api/search/webSearch";
+      }
+      getFetchEndpoint() {
+        return this.fetchEndpoint ?? process.env.IFLOW_FETCH_ENDPOINT ?? "https://platform.iflow.cn/api/search/webFetch";
+      }
+      getSearchProvider() {
+        return this.searchProvider || null;
+      }
+      setSearchProvider(e) {
+        this.searchProvider = e;
+      }
+      setSearchEndpoint(e) {
+        this.searchEndpoint = e;
+      }
+      setFetchEndpoint(e) {
+        this.fetchEndpoint = e;
       }
       getBaseUrl() {
         return this.contentGeneratorConfig?.baseUrl ?? this.baseUrl;

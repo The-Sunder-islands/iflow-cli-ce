@@ -159500,7 +159500,7 @@ Signal: Signal number or \`(none)\` if no signal was received.
         }
         getFunctionDeclarations() {
           let e = [],
-            n = !!this.config.getSearchApiKey();
+            n = !!this.config.getSearchApiKey() || !!this.config.getSearchProvider();
           return (
             this.tools.forEach((o) => {
               ((o.name === "web_search" || o.name === "web_fetch" || o.name === "xinliu_web_fetch") && !n) ||
@@ -159510,7 +159510,7 @@ Signal: Signal number or \`(none)\` if no signal was received.
           );
         }
         getAllTools() {
-          let r = !!this.config.getSearchApiKey();
+          let r = !!this.config.getSearchApiKey() || !!this.config.getSearchProvider();
           return Array.from(this.tools.values())
             .filter(
               (o) => !((o.name === "web_search" || o.name === "web_fetch" || o.name === "xinliu_web_fetch") && !r),
@@ -366238,8 +366238,9 @@ var u3,
             s && s(0, !1, "param_error", 0),
             { llmContent: I.t("xinliuWebSearch.errors.invalidParameters", { reason: a }), returnDisplay: a }
           );
-        let u = this.config.getSearchApiKey();
-        if (!u)
+        let u = this.config.getSearchApiKey(),
+          c = this.config.getSearchProvider();
+        if (!u && !c)
           return (
             s && s(0, !1, "api_key_error", 0),
             {
@@ -366247,12 +366248,60 @@ var u3,
               returnDisplay: "Search capability requires searchApiKey to be configured.",
             }
           );
-        let c = Date.now();
+        if (c)
+          try {
+            let f = await c.webSearch(e.query, typeof e.num == "number" && Number.isFinite(e.num) ? e.num : 15, r);
+            if (!f || !f.results || f.results.length === 0)
+              return (
+                s && s(Date.now() - 0, !0, "empty_result", 0),
+                {
+                  llmContent: I.t("xinliuWebSearch.messages.noResults", { query: e.query }),
+                  returnDisplay: I.t("xinliuWebSearch.messages.noResultsShort"),
+                }
+              );
+            let p = "",
+              h = [];
+            return (
+              f.results.forEach((g, b) => {
+                let A = g.title || "Untitled",
+                  y = g.url || g.link || "No link",
+                  E = g.date || "No time",
+                  v = g.snippet || "No snippet";
+                (p += `
+[${b + 1}] title: ${A}
+`),
+                  (p += `date: ${E}
+`),
+                  (p += `link: ${y}
+`),
+                  (p += `snippet: ${v}
+`),
+                  h.push({ web: { uri: y, title: A } });
+              }),
+              s && s(Date.now() - 0, !0, void 0, f.results.length),
+              {
+                llmContent: I.t("xinliuWebSearch.messages.searchResults", { query: e.query, results: p }),
+                returnDisplay: I.t("xinliuWebSearch.messages.searchResultsReturned", { query: e.query }),
+                sources: h,
+              }
+            );
+          } catch (f) {
+            let p = `Error during web search for query "${e.query}": ${mr(f)}`;
+            return (
+              console.error(p, f),
+              s && s(Date.now() - 0, !1, "provider_error", 0),
+              {
+                llmContent: I.t("xinliuWebSearch.errors.searchFailed", { error: p }),
+                returnDisplay: I.t("xinliuWebSearch.errors.searchFailedShort"),
+              }
+            );
+          }
+        let m = Date.now();
         try {
           let m = typeof e.num == "number" && Number.isFinite(e.num) ? e.num : 15,
             d = { keywords: e.query, num: m };
           n && n(d);
-          let f = "https://platform.iflow.cn/api/search/webSearch /* @iflow-platform-endpoint */",
+          let f = this.config.getSearchEndpoint(),
             p = { Authorization: `Bearer ${u}` },
             h = 3,
             g = 0,
@@ -372002,23 +372051,39 @@ ${a}
               returnDisplay: I.t("xinliuWebFetch.errors.noUrlFound"),
             };
           let s = e.url,
-            a = this.config.getSearchApiKey();
-          if (!a)
+            a = this.config.getSearchProvider();
+          if (a)
+            try {
+              let c = await a.webFetch(s, r);
+              if (c)
+                return {
+                  llmContent: `Title: ${c.title || ""}
+URL: ${c.url || s}
+
+Content:
+${c.content || ""}`,
+                  returnDisplay: I.t("xinliuWebFetch.messages.contentProcessedProxy", { url: s }),
+                };
+            } catch (c) {
+              console.error("[WebFetchTool] Provider error, falling back to platform API:", c);
+            }
+          let u = this.config.getSearchApiKey();
+          if (!u)
             return (
               console.debug("[WebFetchTool] No searchApiKey available, falling back to urlContext"),
               this.executeWithGeminiUrlContext(e, r, n, o)
             );
           try {
-            let u = "https://platform.iflow.cn/api/search/webFetch /* @iflow-platform-endpoint */";
+            let l = this.config.getFetchEndpoint();
             console.debug(`[WebFetchTool] Using platform API to fetch: ${s}`);
             let c = { url: s };
             n && n(c);
             let m = new AbortController(),
               d = setTimeout(() => m.abort(), r9a),
-              f = await fetch(u, {
+              f = await fetch(l, {
                 method: "POST",
                 headers: rH({
-                  Authorization: `Bearer ${a}`,
+                  Authorization: `Bearer ${u}`,
                   "Content-Type": "application/json",
                   Accept: "application/json",
                 }),
@@ -398696,6 +398761,9 @@ var dn,
       baseUrl;
       authType;
       searchApiKey;
+      searchEndpoint;
+      fetchEndpoint;
+      searchProvider;
       toolRegistry;
       promptRegistry;
       sessionId;
@@ -399272,6 +399340,24 @@ var dn,
       }
       getSearchApiKey() {
         return this.searchApiKey ?? this.contentGeneratorConfig?.apiKey;
+      }
+      getSearchEndpoint() {
+        return this.searchEndpoint ?? process.env.IFLOW_SEARCH_ENDPOINT ?? "https://platform.iflow.cn/api/search/webSearch";
+      }
+      getFetchEndpoint() {
+        return this.fetchEndpoint ?? process.env.IFLOW_FETCH_ENDPOINT ?? "https://platform.iflow.cn/api/search/webFetch";
+      }
+      getSearchProvider() {
+        return this.searchProvider || null;
+      }
+      setSearchProvider(e) {
+        this.searchProvider = e;
+      }
+      setSearchEndpoint(e) {
+        this.searchEndpoint = e;
+      }
+      setFetchEndpoint(e) {
+        this.fetchEndpoint = e;
       }
       getBaseUrl() {
         return this.contentGeneratorConfig?.baseUrl ?? this.baseUrl;

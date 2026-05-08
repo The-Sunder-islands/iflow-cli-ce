@@ -1972,7 +1972,7 @@ Signal: Signal number or \`(none)\` if no signal was received.
         }
         getFunctionDeclarations() {
           let e = [],
-            n = !!this.config.getSearchApiKey();
+            n = !!this.config.getSearchApiKey() || !!this.config.getSearchProvider();
           return (
             this.tools.forEach((o) => {
               ((o.name === "web_search" || o.name === "web_fetch" || o.name === "xinliu_web_fetch") && !n) ||
@@ -1982,7 +1982,7 @@ Signal: Signal number or \`(none)\` if no signal was received.
           );
         }
         getAllTools() {
-          let r = !!this.config.getSearchApiKey();
+          let r = !!this.config.getSearchApiKey() || !!this.config.getSearchProvider();
           return Array.from(this.tools.values())
             .filter(
               (o) => !((o.name === "web_search" || o.name === "web_fetch" || o.name === "xinliu_web_fetch") && !r),

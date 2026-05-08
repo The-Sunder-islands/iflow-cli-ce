@@ -1327,23 +1327,39 @@ ${a}
               returnDisplay: I.t("xinliuWebFetch.errors.noUrlFound"),
             };
           let s = e.url,
-            a = this.config.getSearchApiKey();
-          if (!a)
+            a = this.config.getSearchProvider();
+          if (a)
+            try {
+              let c = await a.webFetch(s, r);
+              if (c)
+                return {
+                  llmContent: `Title: ${c.title || ""}
+URL: ${c.url || s}
+
+Content:
+${c.content || ""}`,
+                  returnDisplay: I.t("xinliuWebFetch.messages.contentProcessedProxy", { url: s }),
+                };
+            } catch (c) {
+              console.error("[WebFetchTool] Provider error, falling back to platform API:", c);
+            }
+          let u = this.config.getSearchApiKey();
+          if (!u)
             return (
               console.debug("[WebFetchTool] No searchApiKey available, falling back to urlContext"),
               this.executeWithGeminiUrlContext(e, r, n, o)
             );
           try {
-            let u = "https://platform.iflow.cn/api/search/webFetch /* @iflow-platform-endpoint */";
+            let l = this.config.getFetchEndpoint();
             console.debug(`[WebFetchTool] Using platform API to fetch: ${s}`);
             let c = { url: s };
             n && n(c);
             let m = new AbortController(),
               d = setTimeout(() => m.abort(), r9a),
-              f = await fetch(u, {
+              f = await fetch(l, {
                 method: "POST",
                 headers: rH({
-                  Authorization: `Bearer ${a}`,
+                  Authorization: `Bearer ${u}`,
                   "Content-Type": "application/json",
                   Accept: "application/json",
                 }),
