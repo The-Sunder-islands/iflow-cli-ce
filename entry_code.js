@@ -4296,7 +4296,8 @@ var pj = (t) => (
   t === Kt.LOGIN_WITH_IFLOW ||
     t === Kt.LOGIN_WITH_AONE ||
     t === Kt.CLOUD_SHELL ||
-    [...A6, Kt.OPENAI_COMPATIBLE].includes(t)
+    [...A6, Kt.OPENAI_COMPATIBLE].includes(t) ||
+    (typeof t == "string" && t.startsWith("provider:"))
     ? null
     : "Invalid auth method selected."
 );
