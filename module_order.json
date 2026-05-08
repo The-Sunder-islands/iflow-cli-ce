@@ -1,5 +1,5 @@
 {
-  "total": 2013,
+  "total": 2014,
   "order": [
     {
       "name": "cSr",
@@ -10065,6 +10065,11 @@
       "name": "SearchEnginesFinal",
       "category": "app/search",
       "label": "final"
+    },
+    {
+      "name": "ProviderRegistry",
+      "category": "app/search",
+      "label": "registry"
     }
   ]
 }
