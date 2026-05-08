@@ -21,3 +21,4 @@ scripts/split_modules.py
 
 # Node modules
 node_modules/
+vendors/
