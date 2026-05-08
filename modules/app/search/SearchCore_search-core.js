@@ -166,9 +166,15 @@ var SearchCore,
         try {
           let n = await e.request(r.query, new SearchParams(), r);
           if (!n || !n.url) return [];
-          let o = await this.network.request(n);
+          let o;
+          if (e.useRenderer && typeof SearchRenderer?.fetch === "function") {
+            let s = await SearchRenderer.fetch(n.url, this.network.defaults.timeout);
+            o = new SearchResponse({ status: 200, text: s.content || "", finalUrl: n.url });
+          } else {
+            o = await this.network.request(n);
+          }
           let s = await e.response(o, r);
-          return s || [];
+          return s.results || s || [];
         } catch (t) {
           console.error(`[Engine ${e.name}] Error:`, t.message);
           return [];
@@ -186,6 +192,30 @@ var SearchCore,
       ExtraTools: [],
       registerTool(e) {
         SearchCore.ExtraTools.push(e);
+      },
+      Html: {
+        _xp: null,
+        _xpGet() { if(!this._xp) this._xp = require("xpath"); return this._xp; },
+        parse(e) {
+          const { parseHTML } = require("linkedom");
+          return parseHTML(e).document;
+        },
+        selectText(e, r) {
+          const n = this._xpGet().select(e, r);
+          if (!n || n.length === 0) return null;
+          const o = n[0];
+          return typeof o === "string" ? o : o.textContent || o.value || null;
+        },
+        selectAllText(e, r) {
+          const n = this._xpGet().select(e, r);
+          if (!n) return [];
+          return n.map((o) => (typeof o === "string" ? o : o.textContent || o.value || "")).filter(Boolean);
+        },
+        selectAllHref(e, r) {
+          const n = this._xpGet().select(e, r);
+          if (!n) return [];
+          return n.map((o) => o.value || o.textContent || "").filter(Boolean);
+        },
       },
       SearchInit: {
         _provider: null,

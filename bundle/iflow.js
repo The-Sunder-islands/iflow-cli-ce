@@ -472406,9 +472406,15 @@ var Uio = T((ROl, Fio) => {
         try {
           let n = await e.request(r.query, new SearchParams(), r);
           if (!n || !n.url) return [];
-          let o = await this.network.request(n);
+          let o;
+          if (e.useRenderer && typeof SearchRenderer?.fetch === "function") {
+            let s = await SearchRenderer.fetch(n.url, this.network.defaults.timeout);
+            o = new SearchResponse({ status: 200, text: s.content || "", finalUrl: n.url });
+          } else {
+            o = await this.network.request(n);
+          }
           let s = await e.response(o, r);
-          return s || [];
+          return s.results || s || [];
         } catch (t) {
           console.error(`[Engine ${e.name}] Error:`, t.message);
           return [];
@@ -472426,6 +472432,30 @@ var Uio = T((ROl, Fio) => {
       ExtraTools: [],
       registerTool(e) {
         SearchCore.ExtraTools.push(e);
+      },
+      Html: {
+        _xp: null,
+        _xpGet() { if(!this._xp) this._xp = require("xpath"); return this._xp; },
+        parse(e) {
+          const { parseHTML } = require("linkedom");
+          return parseHTML(e).document;
+        },
+        selectText(e, r) {
+          const n = this._xpGet().select(e, r);
+          if (!n || n.length === 0) return null;
+          const o = n[0];
+          return typeof o === "string" ? o : o.textContent || o.value || null;
+        },
+        selectAllText(e, r) {
+          const n = this._xpGet().select(e, r);
+          if (!n) return [];
+          return n.map((o) => (typeof o === "string" ? o : o.textContent || o.value || "")).filter(Boolean);
+        },
+        selectAllHref(e, r) {
+          const n = this._xpGet().select(e, r);
+          if (!n) return [];
+          return n.map((o) => o.value || o.textContent || "").filter(Boolean);
+        },
       },
       SearchInit: {
         _provider: null,
@@ -472458,7 +472488,6 @@ var Uio = T((ROl, Fio) => {
 var EG_web = {},
   eG_web = j(() => {
     "use strict";
-    const cheerio = require("cheerio");
 
     function eb(text, start, end) {
       let i = text.indexOf(start);
@@ -472547,52 +472576,58 @@ var EG_web = {},
       maxPage: 50,
       timeRangeSupport: !0,
       safesearch: !0,
+      useRenderer: !0,
       async request(query, params, sq) {
         var start = (sq.pageno - 1) * 10,
           lang = sq.language || "all",
-          lc = "en",
-          cc = "US";
-        if (lang !== "all") {
-          var pts = lang.split("-");
-          lc = pts[0];
-          cc = pts[1] || lc.toUpperCase();
-        }
-        var qp = { q: query, hl: lc + "-" + cc, ie: "utf8", oe: "utf8", start: String(start), };
+          lc = "en", cc = "US";
+        if (lang !== "all") { var pts = lang.split("-"); lc = pts[0]; cc = pts[1] || lc.toUpperCase(); }
+        var qp = { q: query, hl: lc + "-" + cc, ie: "utf8", oe: "utf8", start: String(start) };
         if (lang !== "all") qp.lr = "lang_" + lc;
-        if (lang && lang.includes("-")) qp.cr = "country" + cc;
         var url = "https://www.google.com/search?" + new URLSearchParams(qp);
-        var tMap = { day: "d", week: "w", month: "m", year: "y" };
-        if (sq.timeRange && tMap[sq.timeRange]) url += "&tbs=qdr:" + tMap[sq.timeRange];
+        if (sq.timeRange) url += "&tbs=qdr:" + ({day:"d",week:"w",month:"m",year:"y"})[sq.timeRange];
         if (sq.safesearch) url += "&safe=" + ({0:"off",1:"medium",2:"high"})[sq.safesearch];
         params.url = url;
-        params.headers["Accept-Language"] = lc + "-" + cc;
+        params.headers["Accept-Language"] = lc + "-" + cc + "," + lc + ";q=0.9";
         params.cookies["CONSENT"] = "YES+";
         return params;
       },
       async response(resp, sq) {
-        var $ = cheerio.load(resp.text);
-        var results = [];
-        // Modern Google: #search > div > div > div > div[data-hveid] > div > div > a
-        // Fallback: .g. tF2Cxc or div.g
-        $("div.g, .tF2Cxc").each(function () {
-          var el = $(this);
-          var a = el.find("a[href]").first();
-          var href = a.attr("href") || "";
-          var title = el.find("h3").first().text().trim() || a.text().trim();
-          var snippet = el.find(".VwiC3b, [data-sncf], .lEBKkf, span.aCOpRe").first().text().trim()
-            || el.find(".st, .fZi<TuU").first().text().trim();
-          if (!href || href.startsWith("/")) return;
-          // Filter out unwanted: videos, shopping, etc.
-          if (href.includes("/search?")) return;
-          if (title) results.push({ title, url: href, content: snippet, snippet });
-        });
-        // Suggestions
-        var sug = [];
-        $("div[data-suggestion]").each(function () {
-          var t = $(this).attr("data-suggestion");
-          if (t) sug.push(t);
-        });
-        return { results, suggestions: sug };
+        if (!resp.text) return { results: [] };
+        const Html = SearchCore?.Html;
+        if (!Html) return { results: [] };
+        const doc = Html.parse(resp.text);
+        var results = [], seen = new Set();
+        // xpath patterns from SearXNG's google.py
+        var patterns = [
+          '//div[contains(@class,"g")]//a/@href',
+          '//div[@id="search"]//a[starts-with(@href,"http")]/@href',
+          '//a[starts-with(@href,"http")]',
+        ];
+        var urls = [];
+        for (var p of patterns) { urls = Html.selectAllHref(doc, p); if (urls.length > 0) break; }
+        var titlePatterns = [
+          '//div[contains(@class,"g")]//h3/text()',
+          '//h3/a/text()',
+          '//h3/text()',
+          '//a[starts-with(@href,"http")]/text()',
+        ];
+        var titles = [];
+        for (var p of titlePatterns) { titles = Html.selectAllText(doc, p); if (titles.length > 0) break; }
+        var snippetPatterns = [
+          '//div[contains(@class,"g")]//div[contains(@class,"VwiC3b")]/text()',
+          '//div[contains(@class,"g")]//span/text()',
+        ];
+        var snippets = [];
+        for (var p of snippetPatterns) { snippets = Html.selectAllText(doc, p); if (snippets.length > 0) break; }
+        for (var i = 0; i < urls.length && results.length < 15; i++) {
+          var u = urls[i];
+          if (u.startsWith("/url?q=")) u = decodeURIComponent(u.slice(7).split("&")[0]);
+          if (!u.startsWith("http") || seen.has(u)) continue;
+          seen.add(u);
+          results.push({ url: u, title: titles[i] || "", content: snippets[i] || "", snippet: snippets[i] || "" });
+        }
+        return { results };
       },
     };
 
@@ -472607,34 +472642,30 @@ var EG_web = {},
       shortcut: "b",
       paging: !1,
       safesearch: !0,
+      useRenderer: !0,
       async request(query, params, sq) {
-        var ssMap = { 0: "off", 1: "moderate", 2: "strict" };
-        var qp = { q: query, adlt: ssMap[sq.safesearch] || "off" };
+        var qp = { q: query, adlt: ({0:"off",1:"moderate",2:"strict"})[sq.safesearch] || "off" };
         var lang = sq.language || "all";
-        if (lang !== "all") {
-          qp.mkt = lang;
-          var lc = lang.split("-")[0];
-          params.headers["Accept-Language"] = lang + "," + lc + ";q=0.9";
-        }
+        if (lang !== "all") { qp.mkt = lang; params.headers["Accept-Language"] = lang + "," + lang.split("-")[0] + ";q=0.9"; }
         params.url = "https://www.bing.com/search?" + new URLSearchParams(qp);
         return params;
       },
       async response(resp, sq) {
-        var $ = cheerio.load(resp.text);
-        var r = [];
-        $("#b_results > li.b_algo").each(function () {
-          var el = $(this);
-          var a = el.find("h2 a[href]").first();
-          var href = a.attr("href") || "";
-          var title = a.text().trim();
-          var snippet = el.find(".b_caption p, .b_lineclamp2, .b_algoSlug").first().text().trim();
-          if (!href || !title || href.startsWith("/")) return;
-          if (href.includes("bing.com/ck/a")) {
-            var u = href.match(/[?&]u=([^&]+)/);
-            if (u) href = dq(u[1]);
-          }
-          r.push({ url: href, title, content: snippet, snippet });
-        });
+        if (!resp.text) return { results: [] };
+        const Html = SearchCore?.Html;
+        if (!Html) return { results: [] };
+        const doc = Html.parse(resp.text);
+        var r = [], seen = new Set();
+        var urls = Html.selectAllHref(doc, '//li[contains(@class,"b_algo")]//h2/a/@href');
+        var titles = Html.selectAllText(doc, '//li[contains(@class,"b_algo")]//h2/a');
+        var snippets = Html.selectAllText(doc, '//li[contains(@class,"b_algo")]//div[contains(@class,"b_caption")]/p');
+        for (var i = 0; i < urls.length && r.length < 15; i++) {
+          var u = urls[i];
+          if (u.includes("bing.com/ck/a")) { var m = u.match(/[?&]u=([^&]+)/); if (m) u = decodeURIComponent(m[1]); }
+          if (!u.startsWith("http") || seen.has(u)) continue;
+          seen.add(u);
+          r.push({ url: u, title: titles[i] || "", content: snippets[i] || "", snippet: snippets[i] || "" });
+        }
         return { results: r };
       },
     };
@@ -472647,76 +472678,32 @@ var EG_web = {},
       name: "duckduckgo",
       categories: ["general", "web"],
       shortcut: "d",
-      paging: !0,
-      timeRangeSupport: !0,
-      safesearch: !0,
-      _vqdCache: {},
-      _ua: "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0",
+      paging: !1,
+      useRenderer: !0,
       async request(query, params, sq) {
-        if (query.length >= 500) return params;
-        var engRegion = "wt-wt",
-          ddgUrl = "https://html.duckduckgo.com/html/";
-        var lang = sq.language || "all";
-        if (lang !== "all") {
-          var pts = lang.split("-"),
-            lc = pts[0],
-            cc = (pts[1] || "").toUpperCase();
-          engRegion = cc ? cc.toLowerCase() + "-" + lc : lc + "-" + lc;
-        }
-        params.headers["User-Agent"] = this._ua;
-        params.headers["Sec-Fetch-Dest"] = "document";
-        params.headers["Sec-Fetch-Mode"] = "navigate";
-        params.headers["Sec-Fetch-Site"] = "same-origin";
-        params.headers["Sec-Fetch-User"] = "?1";
-        params.headers["Referer"] = "https://html.duckduckgo.com/";
-        if (!params.headers["Accept-Language"])
-          params.headers["Accept-Language"] = lang + "," + lang + "-" + lang.toUpperCase() + ";q=0.7";
-        var fd = { q: query };
-        params.url = ddgUrl;
-        params.method = "POST";
-        if (sq.pageno === 1) {
-          fd.b = "";
-        } else {
-          var cacheKey = query + "//" + this._ua,
-            vqd = this._vqdCache[cacheKey];
-          if (vqd) fd.vqd = vqd;
-          if (lang.indexOf("zh") === 0) return params;
-          fd.nextParams = "";
-          fd.api = "d.js";
-          fd.o = "json";
-          fd.v = "l";
-          var offset = 10 + (sq.pageno - 2) * 15;
-          fd.dc = String(offset + 1);
-          fd.s = String(offset);
-        }
-        fd.kl = engRegion;
-        params.cookies["kl"] = engRegion;
-        var tRange = { day: "d", week: "w", month: "m", year: "y" }[sq.timeRange];
-        if (tRange) {
-          fd.df = tRange;
-          params.cookies["df"] = tRange;
-        }
-        params.headers["Content-Type"] = "application/x-www-form-urlencoded";
-        params.headers["Referer"] = ddgUrl;
-        params.data = new URLSearchParams(fd).toString();
+        params.url = "https://lite.duckduckgo.com/lite/?q=" + encodeURIComponent(query);
+        params.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0";
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text;
-        if (resp.status === 303 || /<form[^>]*id="challenge-form"/i.test(h)) return { results: [] };
-        var vqdMatch = h.match(/<input[^>]*name="vqd"[^>]*value="([^"]*)"/i);
-        if (vqdMatch) this._vqdCache[sq.query + "//" + this._ua] = vqdMatch[1];
-        var $ = cheerio.load(h);
-        var r = [];
-        $("div.web-result, div.result").each(function () {
-          var el = $(this);
-          var a = el.find("h2 a[href], a.result__a[href]").first();
-          var href = a.attr("href") || "";
-          var title = a.text().trim();
-          var snippet = el.find(".result__snippet, .snippet").first().text().trim();
-          if (!href || !title) return;
-          r.push({ url: href, title, content: snippet, snippet });
-        });
+        if (!resp.text) return { results: [] };
+        const Html = SearchCore?.Html;
+        if (!Html) return { results: [] };
+        const doc = Html.parse(resp.text);
+        var r = [], seen = new Set();
+        // DDG Lite: tr.result > td > a
+        var urls = Html.selectAllHref(doc, '//tr[contains(@class,"result")]//a/@href');
+        var titles = Html.selectAllText(doc, '//tr[contains(@class,"result")]//a');
+        var snippets = Html.selectAllText(doc, '//tr[contains(@class,"result")]/td[2]');
+        // Fallback: any external links
+        if (urls.length === 0) urls = Html.selectAllHref(doc, '//a[starts-with(@href,"http")]/@href');
+        if (titles.length === 0) titles = Html.selectAllText(doc, '//a[starts-with(@href,"http")]');
+        for (var i = 0; i < urls.length && r.length < 15; i++) {
+          var u = urls[i];
+          if (!u.startsWith("http") || seen.has(u)) continue;
+          seen.add(u);
+          r.push({ url: u, title: titles[i] || "", content: snippets[i] || "", snippet: snippets[i] || "" });
+        }
         return { results: r };
       },
     };

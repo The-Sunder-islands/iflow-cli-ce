@@ -89,76 +89,58 @@ var EG_web = {},
       maxPage: 50,
       timeRangeSupport: !0,
       safesearch: !0,
+      useRenderer: !0,
       async request(query, params, sq) {
         var start = (sq.pageno - 1) * 10,
           lang = sq.language || "all",
-          lc = "en",
-          cc = "US";
-        if (lang !== "all") {
-          var pts = lang.split("-");
-          lc = pts[0];
-          cc = pts[1] || lc.toUpperCase();
-        }
-        var qp = {
-          q: query,
-          hl: lc + "-" + cc,
-          lr: lang === "all" ? "" : "lang_" + lc,
-          cr: !lang.includes("-") ? "" : "country" + cc,
-          ie: "utf8",
-          oe: "utf8",
-          filter: "0",
-          start: String(start),
-        };
+          lc = "en", cc = "US";
+        if (lang !== "all") { var pts = lang.split("-"); lc = pts[0]; cc = pts[1] || lc.toUpperCase(); }
+        var qp = { q: query, hl: lc + "-" + cc, ie: "utf8", oe: "utf8", start: String(start) };
+        if (lang !== "all") qp.lr = "lang_" + lc;
         var url = "https://www.google.com/search?" + new URLSearchParams(qp);
-        var tMap = { day: "d", week: "w", month: "m", year: "y" };
-        if (sq.timeRange && tMap[sq.timeRange]) url += "&tbs=qdr:" + tMap[sq.timeRange];
-        var fMap = { 0: "off", 1: "medium", 2: "high" };
-        if (sq.safesearch && fMap[sq.safesearch]) url += "&safe=" + fMap[sq.safesearch];
+        if (sq.timeRange) url += "&tbs=qdr:" + ({day:"d",week:"w",month:"m",year:"y"})[sq.timeRange];
+        if (sq.safesearch) url += "&safe=" + ({0:"off",1:"medium",2:"high"})[sq.safesearch];
         params.url = url;
-        params.headers["Accept"] = "*/*";
+        params.headers["Accept-Language"] = lc + "-" + cc + "," + lc + ";q=0.9";
         params.cookies["CONSENT"] = "YES+";
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [],
-          dimg = {},
-          dre = /(data:image[^']*?)'[^']*?'((?:dimg|pimg|tsuid)[^']*)/g,
-          dm;
-        while ((dm = dre.exec(h)) !== null) dimg[dm[2]] = de(dm[1]);
-        var blocks = allBlk(h, "div", "\\bg\\b");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            am = bl.match(/<a\s[^>]*data-ved[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!am || /\bclass\s*=/.test(am[0])) continue;
-          var url = am[1];
-          if (url.indexOf("/url?q=") === 0) url = dq(url.slice(7).split("&sa=U")[0]);
-          var tm = am[2].match(/<div[^>]*style[^>]*>([\s\S]*?)<\/div>/i),
-            title = tm ? st(tm[1]) : "";
-          if (!title) continue;
-          var cm = bl.match(/<div[^>]*class="[^"]*ilUpNd[^"]*"[^>]*>([\s\S]*?)<\/div>/i),
-            content = cm ? st(cm[1]) : "";
-          var im = am[0].match(/<img[^>]*src="([^"]*)"/i),
-            thumbnail = null;
-          if (im) {
-            thumbnail = im[1];
-            if (thumbnail.indexOf("data:image") === 0) {
-              var idm = am[0].match(/\bid\s*=\s*"([^"]*)"/);
-              if (idm && dimg[idm[1]]) thumbnail = dimg[idm[1]];
-            }
-          }
-          r.push({ url: url, title: title, content: content || "", thumbnail: thumbnail });
+        if (!resp.text) return { results: [] };
+        const Html = SearchCore?.Html;
+        if (!Html) return { results: [] };
+        const doc = Html.parse(resp.text);
+        var results = [], seen = new Set();
+        // xpath patterns from SearXNG's google.py
+        var patterns = [
+          '//div[contains(@class,"g")]//a/@href',
+          '//div[@id="search"]//a[starts-with(@href,"http")]/@href',
+          '//a[starts-with(@href,"http")]',
+        ];
+        var urls = [];
+        for (var p of patterns) { urls = Html.selectAllHref(doc, p); if (urls.length > 0) break; }
+        var titlePatterns = [
+          '//div[contains(@class,"g")]//h3/text()',
+          '//h3/a/text()',
+          '//h3/text()',
+          '//a[starts-with(@href,"http")]/text()',
+        ];
+        var titles = [];
+        for (var p of titlePatterns) { titles = Html.selectAllText(doc, p); if (titles.length > 0) break; }
+        var snippetPatterns = [
+          '//div[contains(@class,"g")]//div[contains(@class,"VwiC3b")]/text()',
+          '//div[contains(@class,"g")]//span/text()',
+        ];
+        var snippets = [];
+        for (var p of snippetPatterns) { snippets = Html.selectAllText(doc, p); if (snippets.length > 0) break; }
+        for (var i = 0; i < urls.length && results.length < 15; i++) {
+          var u = urls[i];
+          if (u.startsWith("/url?q=")) u = decodeURIComponent(u.slice(7).split("&")[0]);
+          if (!u.startsWith("http") || seen.has(u)) continue;
+          seen.add(u);
+          results.push({ url: u, title: titles[i] || "", content: snippets[i] || "", snippet: snippets[i] || "" });
         }
-        var sugBlocks = allBlk(h, "div", "gGQDvd");
-        for (var si = 0; si < sugBlocks.length; si++) {
-          var sla = sugBlocks[si].match(/<a[^>]*>([\s\S]*?)<\/a>/gi);
-          if (sla)
-            for (var li = 0; li < sla.length; li++) {
-              var t = st(sla[li]);
-              if (t) r.push({ suggestion: t });
-            }
-        }
-        return r;
+        return { results };
       },
     };
 
@@ -173,48 +155,31 @@ var EG_web = {},
       shortcut: "b",
       paging: !1,
       safesearch: !0,
+      useRenderer: !0,
       async request(query, params, sq) {
-        var ssMap = { 0: "off", 1: "moderate", 2: "strict" };
-        var qp = { q: query, adlt: ssMap[sq.safesearch] || "off" };
+        var qp = { q: query, adlt: ({0:"off",1:"moderate",2:"strict"})[sq.safesearch] || "off" };
         var lang = sq.language || "all";
-        if (lang !== "all") {
-          qp.mkt = lang;
-          var lc = lang.split("-")[0];
-          params.headers["Accept-Language"] = lang + "," + lc + ";q=0.9";
-        }
+        if (lang !== "all") { qp.mkt = lang; params.headers["Accept-Language"] = lang + "," + lang.split("-")[0] + ";q=0.9"; }
         params.url = "https://www.bing.com/search?" + new URLSearchParams(qp);
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [],
-          blocks = allBlk(h, "li", "b_algo");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            link = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!link) continue;
-          var href = link[1],
-            title = st(link[2]);
-          if (!href || !title) continue;
-          if (href.indexOf("https://www.bing.com/ck/a?") === 0) {
-            var uParam = href.match(/[?&]u=([^&]+)/);
-            if (uParam) {
-              var uVal = dq(uParam[1]);
-              if (uVal.indexOf("a1") === 0) href = b64u(uVal.slice(2));
-            }
-          }
-          var cm = bl.match(/<p[^>]*>([\s\S]*?)<\/p>/i),
-            content = cm ? st(cm[1]) : "";
-          r.push({ url: href, title: title, content: content });
+        if (!resp.text) return { results: [] };
+        const Html = SearchCore?.Html;
+        if (!Html) return { results: [] };
+        const doc = Html.parse(resp.text);
+        var r = [], seen = new Set();
+        var urls = Html.selectAllHref(doc, '//li[contains(@class,"b_algo")]//h2/a/@href');
+        var titles = Html.selectAllText(doc, '//li[contains(@class,"b_algo")]//h2/a');
+        var snippets = Html.selectAllText(doc, '//li[contains(@class,"b_algo")]//div[contains(@class,"b_caption")]/p');
+        for (var i = 0; i < urls.length && r.length < 15; i++) {
+          var u = urls[i];
+          if (u.includes("bing.com/ck/a")) { var m = u.match(/[?&]u=([^&]+)/); if (m) u = decodeURIComponent(m[1]); }
+          if (!u.startsWith("http") || seen.has(u)) continue;
+          seen.add(u);
+          r.push({ url: u, title: titles[i] || "", content: snippets[i] || "", snippet: snippets[i] || "" });
         }
-        if (r.length > 0) {
-          var sc = h.match(/<span[^>]*class="[^"]*sb_count[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
-          if (sc) {
-            var num = sc[1].replace(/[^0-9]/g, "");
-            if (num) r.push({ number_of_results: parseInt(num, 10) });
-          }
-        }
-        return r;
+        return { results: r };
       },
     };
 
@@ -226,94 +191,33 @@ var EG_web = {},
       name: "duckduckgo",
       categories: ["general", "web"],
       shortcut: "d",
-      paging: !0,
-      timeRangeSupport: !0,
-      safesearch: !0,
-      _vqdCache: {},
-      _ua: "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0",
+      paging: !1,
+      useRenderer: !0,
       async request(query, params, sq) {
-        if (query.length >= 500) return params;
-        var engRegion = "wt-wt",
-          ddgUrl = "https://html.duckduckgo.com/html/";
-        var lang = sq.language || "all";
-        if (lang !== "all") {
-          var pts = lang.split("-"),
-            lc = pts[0],
-            cc = (pts[1] || "").toUpperCase();
-          engRegion = cc ? cc.toLowerCase() + "-" + lc : lc + "-" + lc;
-        }
-        params.headers["User-Agent"] = this._ua;
-        params.headers["Sec-Fetch-Dest"] = "document";
-        params.headers["Sec-Fetch-Mode"] = "navigate";
-        params.headers["Sec-Fetch-Site"] = "same-origin";
-        params.headers["Sec-Fetch-User"] = "?1";
-        params.headers["Referer"] = "https://html.duckduckgo.com/";
-        if (!params.headers["Accept-Language"])
-          params.headers["Accept-Language"] = lang + "," + lang + "-" + lang.toUpperCase() + ";q=0.7";
-        var fd = { q: query };
-        params.url = ddgUrl;
-        params.method = "POST";
-        if (sq.pageno === 1) {
-          fd.b = "";
-        } else {
-          var cacheKey = query + "//" + this._ua,
-            vqd = this._vqdCache[cacheKey];
-          if (vqd) fd.vqd = vqd;
-          if (lang.indexOf("zh") === 0) return params;
-          fd.nextParams = "";
-          fd.api = "d.js";
-          fd.o = "json";
-          fd.v = "l";
-          var offset = 10 + (sq.pageno - 2) * 15;
-          fd.dc = String(offset + 1);
-          fd.s = String(offset);
-        }
-        fd.kl = engRegion;
-        params.cookies["kl"] = engRegion;
-        var tRange = { day: "d", week: "w", month: "m", year: "y" }[sq.timeRange];
-        if (tRange) {
-          fd.df = tRange;
-          params.cookies["df"] = tRange;
-        }
-        params.headers["Content-Type"] = "application/x-www-form-urlencoded";
-        params.headers["Referer"] = ddgUrl;
-        params.data = new URLSearchParams(fd).toString();
+        params.url = "https://lite.duckduckgo.com/lite/?q=" + encodeURIComponent(query);
+        params.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0";
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [];
-        if (resp.status === 303) return r;
-        if (/<form[^>]*id="challenge-form"/i.test(h)) return r;
-        var vqdMatch = h.match(/<input[^>]*name="vqd"[^>]*value="([^"]*)"/i);
-        if (vqdMatch) this._vqdCache[sq.query + "//" + this._ua] = vqdMatch[1];
-        var blocks = allBlk(h, "div", "web-result");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            link = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!link) continue;
-          var url = link[1],
-            title = st(link[2]);
-          if (!url || !title) continue;
-          var cm = bl.match(/<a[^>]*class="[^"]*result__snippet[^"]*"[^>]*>([\s\S]*?)<\/a>/i) ||
-            bl.match(/<a[^>]*class="[^"]*snippet[^"]*"[^>]*>([\s\S]*?)<\/a>/i);
-          var content = cm ? st(cm[1]) : "";
-          r.push({ url: url, title: title, content: content });
+        if (!resp.text) return { results: [] };
+        const Html = SearchCore?.Html;
+        if (!Html) return { results: [] };
+        const doc = Html.parse(resp.text);
+        var r = [], seen = new Set();
+        // DDG Lite: tr.result > td > a
+        var urls = Html.selectAllHref(doc, '//tr[contains(@class,"result")]//a/@href');
+        var titles = Html.selectAllText(doc, '//tr[contains(@class,"result")]//a');
+        var snippets = Html.selectAllText(doc, '//tr[contains(@class,"result")]/td[2]');
+        // Fallback: any external links
+        if (urls.length === 0) urls = Html.selectAllHref(doc, '//a[starts-with(@href,"http")]/@href');
+        if (titles.length === 0) titles = Html.selectAllText(doc, '//a[starts-with(@href,"http")]');
+        for (var i = 0; i < urls.length && r.length < 15; i++) {
+          var u = urls[i];
+          if (!u.startsWith("http") || seen.has(u)) continue;
+          seen.add(u);
+          r.push({ url: u, title: titles[i] || "", content: snippets[i] || "", snippet: snippets[i] || "" });
         }
-        var zc = eb(h, '<div id="zero_click_abstract"', "</div>");
-        if (zc) {
-          var zcText = st(zc),
-            zcUrl = zc.match(/<a[^>]*href="([^"]*)"/i);
-          if (
-            zcText &&
-            zcText.indexOf("Your IP address is") === -1 &&
-            zcText.indexOf("Your user agent:") === -1 &&
-            zcText.indexOf("URL Decoded:") === -1
-          ) {
-            r.push({ answer: zcText, url: zcUrl ? zcUrl[1] : null });
-          }
-        }
-        return r;
+        return { results: r };
       },
     };
 

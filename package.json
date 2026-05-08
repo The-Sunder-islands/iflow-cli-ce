@@ -36,6 +36,7 @@
     "@grpc/proto-loader": ">=0.7.0",
     "@lightpanda/browser": "^1.2.0",
     "@lydell/node-pty": ">=1.1.0",
+    "@xmldom/xmldom": "^0.9.10",
     "archiver": ">=7.0.0",
     "asciify-image": ">=0.1.10",
     "cheerio": "^1.2.0",
@@ -46,6 +47,7 @@
     "gifuct-js": ">=2.1.2",
     "ink": ">=6.5.0",
     "ky": ">=1.0.0",
+    "linkedom": "^0.18.12",
     "long": ">=5.0.0",
     "node-notifier": ">=10.0.1",
     "node-pty": ">=1.0.0",
@@ -55,6 +57,7 @@
     "tmp": ">=0.2.0",
     "undici": ">=7.0.0",
     "xmlchars": ">=2.2.0",
+    "xpath": "^0.0.34",
     "yargs-parser": ">=21.0.0",
     "zip-stream": ">=6.0.0"
   },
