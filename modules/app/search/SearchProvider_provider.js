@@ -30,6 +30,7 @@ var SearchProvider,
           [EG_b6, eG_b6],
           [EG_b7, eG_b7],
           [EG_b8, eG_b8],
+          [EG_final, eG_final],
         ];
         for (let [n, o] of r) {
           try {
@@ -61,7 +62,15 @@ var SearchProvider,
             }),
           );
           let a = s.filter((c) => c.title && c.title !== "Untitled" && c.url && c.url !== "No link").slice(0, o);
-          return { results: a };
+          let l = a.map((c) => ({
+            title: c.title || "",
+            url: c.url || "",
+            content: c.content || c.snippet || "",
+            snippet: c.snippet || c.content || "",
+            date: c.date || null,
+            engine: c.engine || "",
+          }));
+          return { results: l };
         } catch (s) {
           console.error("[SearchProvider] webSearch error:", s);
           return { results: [] };

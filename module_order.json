@@ -1,5 +1,5 @@
 {
-  "total": 2012,
+  "total": 2013,
   "order": [
     {
       "name": "cSr",
@@ -10060,6 +10060,11 @@
       "name": "SearchServer",
       "category": "app/search",
       "label": "express"
+    },
+    {
+      "name": "SearchEnginesFinal",
+      "category": "app/search",
+      "label": "final"
     }
   ]
 }
