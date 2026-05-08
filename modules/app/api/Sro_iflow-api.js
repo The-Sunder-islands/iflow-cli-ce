@@ -1795,6 +1795,7 @@ var zj,
     KYi();
     ZYi();
     renderCmdInit();
+    providerRegistryInit();
     tKi();
     nKi();
     cKi();
