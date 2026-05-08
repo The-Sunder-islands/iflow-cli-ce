@@ -9735,8 +9735,9 @@ function AuthSetupDialog({ onSelect: t, settings: e, initialErrorMessage: r }) {
         d({ baseUrl: "", apiKey: "", modelName: "" });
         P(null);
       } else if (J && J.startsWith("provider:")) {
-        let q = getProvider();
-        if (q) { c(J); a("input-api-key"); P(null); }
+        c(J);
+        let q = ProviderRegistry?.list?.find((ne) => "provider:" + ne.id === J);
+        if (q) { a("input-api-key"); P(null); }
       }
     },
     B = async (J) => {
@@ -9849,7 +9850,7 @@ function AuthSetupDialog({ onSelect: t, settings: e, initialErrorMessage: r }) {
             padding: 1,
             width: "100%",
             children: [
-              (0, ai.jsx)(W, { bold: !0, children: (getProvider ? getProvider()?.name : u) || "API Key" }),
+              (0, ai.jsx)(W, { bold: !0, children: (function(){var p=getProvider();return p?p.name:u&&u.toString().startsWith('provider:')?u.toString().slice(9):u||'API Key'})() }),
               (0, ai.jsx)(ie, {
                 marginTop: 1,
                 children: (0, ai.jsx)(U1e, {
@@ -9887,7 +9888,7 @@ function AuthSetupDialog({ onSelect: t, settings: e, initialErrorMessage: r }) {
               })
           : s === "deepseek-config"
             ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
-                (0, ai.jsx)(W, { bold: !0, children: (getProvider ? getProvider()?.name : u) + " - Select Model" }),
+                (0, ai.jsx)(W, { bold: !0, children: (function(){var p=getProvider();return p?p.name:u||'Select Model'})() + " - Select Model" }),
                 v.length > 0
                   ? (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(yl, { items: v, initialIndex: 0, onSelect: (J) => dsSubmit(J), isFocused: !0 }) })
                   : (0, ai.jsx)(ie, { marginTop: 2, children: (0, ai.jsx)(W, { color: ae.AccentBlue, children: "Fetching available models..." }) }),
