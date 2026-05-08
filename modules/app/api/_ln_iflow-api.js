@@ -3807,10 +3807,11 @@ async function KOt(t, e, r) {
   let n = d2e(),
     o = f2e(),
     s = p2e(),
-    a = r?.apiKey || n,
-    u = r?.baseUrl || o || Nis[e],
-    c = r?.modelName || t.getModel() || s || Np,
-    m = { model: c, authType: e, proxy: t?.getProxy(), debugMode: t?.getDebugMode(), config: t };
+    a = r?.apiKey || n;
+  if (!a && typeof Keychain?.getApiKey == "function") try { a = await Keychain.getApiKey(e); } catch {}
+  let u = r?.baseUrl || o || Nis[e];
+  c = r?.modelName || t.getModel() || s || Np;
+  let m = { model: c, authType: e, proxy: t?.getProxy(), debugMode: t?.getDebugMode(), config: t };
   if (e === Kt.CLOUD_SHELL) return m;
   if (e === Kt.LOGIN_WITH_IFLOW || e === Kt.IFLOW) {
     if (((m.baseUrl = u || Iie), (m.multimodalModelName = "qwen3-vl-plus"), a?.startsWith("sk-"))) m.apiKey = a;

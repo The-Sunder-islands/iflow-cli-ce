@@ -4291,7 +4291,7 @@ import * as d2t from "fs";
 import rC from "node:process";
 Ot();
 dc();
-var pj = (t) => (
+var validateAuthType = (t) => (
   qht(),
   t === Kt.LOGIN_WITH_IFLOW ||
     t === Kt.LOGIN_WITH_AONE ||
@@ -32282,6 +32282,7 @@ var oio = (t, e, r, n) => {
             (t.setValue(U, "baseUrl", "https://apis.iflow.cn/v1"),
             Y?.apiKey && t.setValue(U, "apiKey", Y.apiKey),
             Y?.isServerOAuth2 && t.setValue(U, "isServerOAuth2", Y.isServerOAuth2)));
+        if (Y?.apiKey && typeof Keychain?.saveApiKey == "function") Keychain.saveApiKey(H, Y.apiKey).catch(()=>{});
       },
       [t],
     ),
@@ -38621,7 +38622,7 @@ var g5u = (t) => {
     );
     ((0, mn.useEffect)(() => {
       if (r.merged.selectedAuthType && !r.merged.useExternalAuth) {
-        let an = pj(r.merged.selectedAuthType);
+        let an = validateAuthType(r.merged.selectedAuthType);
         an && (Pe(an), JA());
       }
     }, [r.merged.selectedAuthType, r.merged.useExternalAuth, JA, Pe]),
@@ -43798,7 +43799,7 @@ async function Cao() {
     if (A) {
       if (e.merged.selectedAuthType && !e.merged.useExternalAuth)
         try {
-          let y = pj(e.merged.selectedAuthType);
+          let y = validateAuthType(e.merged.selectedAuthType);
           if (y) throw new Error(y);
           await u.refreshAuth(e.merged.selectedAuthType, {
             apiKey: e.merged.apiKey,
@@ -43954,7 +43955,7 @@ async function m9u(t, e, r) {
     !jqe() &&
     (console.error(I.t("gemini.pleaseSetAuthMethod", { userSettingsPath: eJ })), process.exit(1)),
     t || (jqe() ? (t = Kt.IFLOW) : (t = Kt.IFLOW)));
-  let n = pj(t);
+  let n = validateAuthType(t);
   return (
     n != null && (console.error(n), process.exit(1)),
     await e.refreshAuth(t, { apiKey: r.merged.apiKey, baseUrl: r.merged.baseUrl, modelName: e.getModel() }),

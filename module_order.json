@@ -1,5 +1,5 @@
 {
-  "total": 2014,
+  "total": 2015,
   "order": [
     {
       "name": "cSr",
@@ -10070,6 +10070,11 @@
       "name": "ProviderRegistry",
       "category": "app/search",
       "label": "registry"
+    },
+    {
+      "name": "Keychain",
+      "category": "app/search",
+      "label": "keychain"
     }
   ]
 }
