@@ -119,7 +119,7 @@ var Mf,
   $an,
   Rne = j(() => {
     "use strict";
-    ((Mf = "iflow-cli"),
+    ((Mf = "iflow-cli-ce"),
       (ean = "iflow_cli.user_prompt"),
       (yAe = "iflow_cli.tool_call"),
       (tan = "iflow_cli.api_request"),
@@ -429,7 +429,7 @@ var Van = j(() => {
 import * as Qne from "os";
 import * as mGe from "fs";
 function Ma(t) {
-  let e = "0.5.19",
+  let e = "0.6.0",
     r = process.env.IFLOW_ENV || "normal",
     n = {
       darwin: "macOS",
@@ -1979,7 +1979,7 @@ function Bkt() {
   return RAe();
 }
 async function jh(t, e, r) {
-  let n = Qo.getTracer("iflow-cli"),
+  let n = Qo.getTracer("iflow-cli-ce"),
     { TraceContext: o } = await Promise.resolve().then(() => (OGe(), Sun)),
     s = o.getRootSpan(),
     a;
@@ -2136,7 +2136,7 @@ ${b.slice(0, 5e3)}`);
             tool: c,
             toolName: r?.toolName,
             toolArgs: r?.toolArgs ? JSON.stringify(r.toolArgs) : void 0,
-            cliVer: "0.5.19",
+            cliVer: "0.6.0",
             platform: process.platform,
             arch: process.arch,
             nodeVersion: process.version,

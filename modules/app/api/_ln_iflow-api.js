@@ -2198,7 +2198,7 @@ ${"=".repeat(80)}
             O = Bln(k, R, P, this.apiKey);
           (O && ((D["x-iflow-signature"] = O), (D["x-iflow-timestamp"] = P.toString())),
             x && (D = { ...D, traceparent: x }),
-            y === "aone" && (D = { ...D, "X-Client-Type": "iflow-cli", "X-Client-Version": "0.5.19" }),
+            y === "aone" && (D = { ...D, "X-Client-Type": "iflow-cli-ce", "X-Client-Version": "0.6.0" }),
             vqe(this.config, new Kne(this.baseUrl, a, JSON.stringify(p), r, JSON.stringify(e.contents))));
           let N = await fetch(`${E}/chat/completions`, {
               signal: e.config?.abortSignal,
@@ -3834,7 +3834,7 @@ async function KOt(t, e, r) {
     : (([...A6, Kt.OPENAI_COMPATIBLE].includes(e) || (typeof e == "string" && e.startsWith("provider:"))) && a && ((m.apiKey = a), (m.baseUrl = u), (m.model = c)), m);
 }
 async function JOt(t, e, r, n) {
-  let s = { headers: { "User-Agent": `iFlowCLI/0.5.19 (${process.platform}; ${process.arch})` } };
+  let s = { headers: { "User-Agent": `iFlowCLI-CE/0.6.0 (${process.platform}; ${process.arch})` } };
   if ((t.authType && [...A6, Kt.IDEA_LAB].includes(t.authType)) || t.authType === Kt.OPENAI_COMPATIBLE || (typeof t.authType == "string" && t.authType.startsWith("provider:")))
     return new gH({ ...t, config: e });
   if (t.authType === Kt.LOGIN_WITH_IFLOW || t.authType === Kt.LOGIN_WITH_AONE || t.authType === Kt.CLOUD_SHELL)

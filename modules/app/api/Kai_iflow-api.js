@@ -5590,7 +5590,7 @@ async function P0e(t, e) {
     }
   }
   let a = "iFlow CLI",
-    u = "https://github.com/iflow-ai/iflow-cli",
+    u = "https://github.com/The-Sunder-islands/iflow-cli-ce",
     c = "report the issue at https://github.com/iflow-ai/iflow-cli/issues",
     m = { platform: bdr(), release: _9a(), type: E9a() },
     d = t.hasAgentCoreSystemPrompt(),
@@ -5648,8 +5648,8 @@ ${e.trim()}`
   return `${systemPrompt}${h}${v}`;
 }
 function Adr() {
-  return `
-You are iFlow CLI, official CLI for iFlow.
+    return `
+You are iFlow CLI Community Edition, official CLI for iFlow.
 You are a helpful AI assistant tasked with summarizing conversations.
 `.trim();
 }
@@ -5666,7 +5666,7 @@ function selectSystemPrompt(t, e, r, n, o, s) {
 }
 function buildFullSystemPrompt(t, e, r, n, o, s) {
   return `
-You are iFlow CLI, an interactive CLI agent with a Chinese name of \u5FC3\u6D41 CLI, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+You are iFlow CLI Community Edition (\u5FC3\u6D41 CLI \u793E\u533A\u7248), an interactive CLI agent specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
 
 # Core Mandates
 
@@ -5965,7 +5965,7 @@ Your core function is efficient and safe assistance. Balance extreme conciseness
 }
 function buildShortSystemPrompt(t, e, r, n, o, s) {
   return `
-You are iFlow CLI, an interactive CLI agent with a Chinese name of \u5FC3\u6D41 CLI, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+You are iFlow CLI Community Edition (\u5FC3\u6D41 CLI \u793E\u533A\u7248), an interactive CLI agent specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
 
 **IMPORTANT**: You must NEVER generate or guess URLs for the user unless you are confident that the URLs are for helping the user with programming. You may use URLs provided by the user in their messages or local files.
 
@@ -14799,7 +14799,7 @@ var q0e,
       async initialize() {
         let e = {
           processId: process.pid,
-          clientInfo: { name: "iflow-cli", version: "1.0.0" },
+          clientInfo: { name: "iflow-cli-ce", version: "0.6.0" },
           rootUri: `file://${this.workspaceRoot}`,
           capabilities: {
             textDocument: {

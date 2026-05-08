@@ -108,8 +108,7 @@ var dau,
     ((dau = lau(import.meta.url)), (fau = mau.dirname(dau)));
   });
 async function uw() {
-  let t = await vj();
-  return "0.5.19";
+  return "0.6.0";
 }
 var D1e = j(() => {
   "use strict";
