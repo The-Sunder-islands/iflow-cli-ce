@@ -9709,186 +9709,105 @@ function fetchDsModels(key, onDone, onError) {
 }
 function AuthSetupDialog({ onSelect: t, settings: e, initialErrorMessage: r }) {
   let { t: n } = rr(),
-    o = !1,
-    [s, a] = (0, mw.useState)(o ? "input-openai-config" : "select"),
-    [u, c] = (0, mw.useState)(o ? Kt.OPENAI_COMPATIBLE : null),
-    [m, d] = (0, mw.useState)({ baseUrl: "", apiKey: "" }),
+    [s, a] = (0, mw.useState)("select"),
+    [u, c] = (0, mw.useState)(null),
+    [m, d] = (0, mw.useState)({ baseUrl: "", apiKey: "", modelName: "" }),
     [f, p] = (0, mw.useState)("baseUrl"),
     [h, g] = (0, mw.useState)(""),
     [b, A] = (0, mw.useState)(""),
-    [y, E] = (0, mw.useState)(""),
     [v, C] = (0, mw.useState)([]),
-    [x, k] = (0, mw.useState)(!1),
-    [dsModels, _dsMod] = (0, mw.useState)([]),
-    [R, P] = (0, mw.useState)(() => {
-      if (r) return r;
-      let J = bqi(process.env.GEMINI_DEFAULT_AUTH_TYPE);
-      return null;
-    }),
-    D = "global",
+    [R, P] = (0, mw.useState)(() => r || null),
+    // Build options: pre-configured providers + custom OpenAI
     O = [
-      !o && D === "global" && { label: n("authDialog.loginWithIFlowRecommend"), value: Kt.LOGIN_WITH_IFLOW },
-      !o && D === "global" && { label: n("authDialog.loginWithIFlowApiKey"), value: Kt.IFLOW },
-
-      !o && D === "global" && { label: "\u{1F916} DeepSeek API Key", value: Kt.DEEPSEEK },
-      { label: n("authDialog.openaiCompatibleApi"), value: Kt.OPENAI_COMPATIBLE },
-    ].filter(Boolean),
-    N = Math.max(
-      0,
-      O.findIndex((J) => {
-        if (e.merged.selectedAuthType) return J.value === e.merged.selectedAuthType;
-        let q = bqi(process.env.GEMINI_DEFAULT_AUTH_TYPE);
-        return q ? J.value === q : J.value === Kt.LOGIN_WITH_IFLOW;
-      }),
-    ),
+      ...(ProviderRegistry?.list || []).map((J) => ({
+        label: J.name,
+        value: "provider:" + J.id,
+      })),
+      { label: n("authDialog.openaiCompatibleApi"), value: "openai-custom" },
+    ],
+    N = 0,
+    getProvider = () => ProviderRegistry?.list?.find((J) => "provider:" + J.id === u),
     F = (J) => {
-      if (J === Kt.LOGIN_WITH_IFLOW) {
-        let q = e.merged.isServerOAuth2 === "true";
-        if (!fx() || q) {
-          c(J);
-          let ne = $3e();
-          (E(ne), a("input-oauth-code"), P(null));
-        } else {
-          let ne = pj(J);
-          ne ? P(ne) : (P(null), t(J, "User"));
-        }
-      } else if (A6.includes(J)) {
-        if (J === Kt.DEEPSEEK) {
-          c(J), a("input-api-key"), P(null);
-        } else (c(J), a("input-api-key"), P(null));
-      } else if (J === Kt.OPENAI_COMPATIBLE)
-        (c(J), a("input-openai-config"), p("baseUrl"), d({ baseUrl: "", apiKey: "" }), P(null));
-      else {
-        let q = pj(J);
-        q ? P(q) : (P(null), t(J, "User"));
+      if (J === "openai-custom") {
+        c("openai-custom");
+        a("input-openai-config");
+        p("baseUrl");
+        d({ baseUrl: "", apiKey: "", modelName: "" });
+        P(null);
+      } else if (J && J.startsWith("provider:")) {
+        let q = getProvider();
+        if (q) { c(J); a("input-api-key"); P(null); }
       }
     },
     B = async (J) => {
-      if (u && A6.includes(u)) {
-        if ((A(J), u === Kt.AONE)) {
-          k(!0);
-          try {
-            let q = Buffer.from(J, "utf8").toString("base64"),
-              ne = await LTe(q),
-              de = FTe(ne),
-              ce = await xj(J);
-            ce?.isC3() && (de = UTe(de, ce));
-            let ye = $Te(de),
-              Z = MTe(ye);
-            C(Z);
-          } catch (q) {
-            (console.error("Failed to load models:", q),
-              C([
-                { label: "Qwen3-Coder", value: "ide-whale/qwen3-coder" },
-                { label: "Claude-4-Sonnet", value: "ide-idealab/claude4-sonnet" },
-                { label: "DeepSeek-V3.2-Whale", value: "ide-whale/deepseek-v3.2-exp" },
-                { label: "Kimi-K2", value: "ide-whale/kimi_k2" },
-              ]));
-          } finally {
-            k(!1);
-          }
-          (a("input-model-name"), g(""));
-        } else if (u === Kt.DEEPSEEK) {
-          A(J);
-          fetchDsModels(J, function(models) {
-            _dsMod(models);
-            a("deepseek-config");
-          }, function(err) {
-            P("Failed to fetch models: " + (err.message || "Unknown error") + ". Check your API key.");
+      if (!u) return;
+      A(J);
+      let q = getProvider();
+      if (!q) return;
+      if (q.modelsUrl && q.baseUrl) {
+        try {
+          let ne = await fetch(q.baseUrl.replace(/\/+$/, "") + q.modelsUrl, {
+            headers: { Authorization: "Bearer " + J },
           });
-        } else {
-          u === Kt.IFLOW && C([...AJ()]);
-          (a("input-model-name"), g(""));
-        }
+          let de = await ne.json();
+          let ce = (de.data || de.models || []).map((ye) => ({
+            label: ye.id || ye.name || ye,
+            value: ye.id || ye.name || ye,
+          }));
+          if (ce.length > 0) { C(ce); a("deepseek-config"); return; }
+        } catch {}
       }
+      C([{ label: q.defaultModel || "default", value: q.defaultModel || "default" }]);
+      a("input-model-name");
     },
     L = (J) => {
       if (f === "baseUrl") (d((q) => ({ ...q, baseUrl: J })), p("apiKey"));
       else if (f === "apiKey") (d((q) => ({ ...q, apiKey: J })), p("modelName"));
       else if (f === "modelName") {
-        (d((ne) => ({ ...ne, modelName: J })), g(J));
-        let q = { ...m, modelName: J };
-        t(u, "User", q);
+        d((ne) => ({ ...ne, modelName: J }));
+        t("openai-custom", "User", { ...m, modelName: J });
       }
-    },
-    dsSubmit = (modelId) => {
-      var info = getDsModelInfo(modelId);
-      var config = {
-        apiKey: b,
-        modelName: modelId || "deepseek-v4-pro",
-        baseUrl: "https://api.deepseek.com",
-        thinking: info.thinking > 0 ? { type: "enabled" } : { type: "disabled" },
-        reasoning_effort: info.thinking > 0 ? "high" : void 0,
-        max_tokens: info.ctx > 0 ? Math.min(info.ctx, 65536) : 65536,
-        temperature: void 0,
-        top_p: void 0,
-      };
-      t(u, "User", config);
-    },
-    G = () => {
-      (a("select"), c(null), P(null));
-    },
-    Q = () => {
-      f === "modelName"
-        ? p("apiKey")
-        : f === "apiKey"
-          ? p("baseUrl")
-          : o || (a("select"), c(null), d({ baseUrl: "", apiKey: "" }), p("baseUrl"), P(null));
     },
     K = (J) => {
-      if (u && A6.includes(u))
-        if ((g(J), u === Kt.IFLOW)) {
-          let q = { baseUrl: "https://apis.iflow.cn/v1", apiKey: b, modelName: J, searchApiKey: b };
-          t(u, "User", q);
-        } else if (u === Kt.AONE) {
-          let q = Buffer.from(b, "utf8").toString("base64"),
-            ne = { baseUrl: "https://ducky.code.alibaba-inc.com/v1/openai", apiKey: q, modelName: J, searchApiKey: q };
-          t(u, "User", ne);
-        } else if (u === Kt.DEEPSEEK) {
-          dsSubmit(J);
-        } else {
-          let q = { apiKey: b, modelName: J };
-          t(u, "User", q);
-        }
+      g(J);
+      let q = getProvider();
+      let ne = { apiKey: b, modelName: J };
+      if (q) {
+        ne.baseUrl = q.baseUrl;
+        ne.providerId = q.id;
+        if (q.configureRequest) ne.configureRequest = q.configureRequest;
+      }
+      t(u, "User", ne);
     },
     H = (J) => {
-      if (u && A6.includes(u))
-        if ((g(J), u === Kt.IFLOW)) {
-          let q = { baseUrl: "https://apis.iflow.cn/v1", apiKey: b, modelName: J, searchApiKey: b };
-          t(u, "User", q);
-        } else if (u === Kt.AONE) {
-          let q = Buffer.from(b, "utf8").toString("base64"),
-            ne = { baseUrl: "https://ducky.code.alibaba-inc.com/v1/openai", apiKey: q, modelName: J, searchApiKey: q };
-          t(u, "User", ne);
-        } else if (u === Kt.DEEPSEEK) {
-          dsSubmit(J);
-        } else {
-          let q = { apiKey: b, modelName: J };
-          t(u, "User", q);
-        }
-    },
-    U = () => {
-      u && A6.includes(u) ? a("input-api-key") : (a("input-openai-config"), p("apiKey"));
-    },
-    Y = async (J) => {
-      try {
-        let q = await hte(J);
-        if (q.apiKey) {
-          let ne = {
-            baseUrl: "https://apis.iflow.cn/v1",
-            apiKey: q.apiKey,
-            modelName: Np,
-            searchApiKey: q.apiKey,
-            isServerOAuth2: "true",
-          };
-          t(u, "User", ne);
-        } else P(n("authDialog.failedToGetApiKey"));
-      } catch (q) {
-        P(q instanceof Error ? q.message : n("authDialog.authFailed"));
+      g(J);
+      let q = getProvider();
+      let ne = { apiKey: b, modelName: J };
+      if (q) {
+        ne.baseUrl = q.baseUrl;
+        ne.providerId = q.id;
+        if (q.configureRequest) ne.configureRequest = q.configureRequest;
       }
+      t(u, "User", ne);
     },
-    X = () => {
-      (a("select"), c(null), E(""), P(null));
+    dsSubmit = (modelId) => {
+      let q = getProvider();
+      let ne = {
+        apiKey: b,
+        modelName: modelId || q?.defaultModel || "default",
+        baseUrl: q?.baseUrl || "",
+        providerId: q?.id || u,
+      };
+      if (q?.configureRequest) ne.configureRequest = q.configureRequest;
+      t(u, "User", ne);
+    },
+    G = () => { a("select"); c(null); P(null); },
+    Q = () => {
+      if (u && !u.toString().startsWith("provider:")) {
+        f === "modelName" ? p("apiKey")
+          : f === "apiKey" ? p("baseUrl")
+          : (a("select"), c(null), d({ baseUrl: "", apiKey: "", modelName: "" }), p("baseUrl"), P(null));
+      } else a("select");
     };
   return (
     pn(
@@ -9904,240 +9823,91 @@ function AuthSetupDialog({ onSelect: t, settings: e, initialErrorMessage: r }) {
       },
       { isActive: !0 },
     ),
-    s === "input-oauth-code"
+    s === "select"
       ? (0, ai.jsxs)(ie, {
+          borderStyle: "round",
+          borderColor: ae.Gray,
           flexDirection: "column",
           padding: 1,
           width: "100%",
           children: [
-            (0, ai.jsx)(W, { bold: !0, children: n("authDialog.iflowOAuthLogin") }),
-            (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.oauthStep1") }) }),
-            (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(gqi, { text: y }) }),
-            (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.oauthStep2") }) }),
-            (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.oauthStep3") }) }),
+            (0, ai.jsx)(W, { bold: !0, children: n("authDialog.getStarted") }),
+            (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.howToAuth") }) }),
             (0, ai.jsx)(ie, {
               marginTop: 1,
-              children: (0, ai.jsx)(Ty, {
-                onSubmit: Y,
-                onCancel: X,
-                label: n("authDialog.authCodeLabel"),
-                placeholder: n("authDialog.authCodePlaceholder"),
-                isFocused: !0,
-              }),
+              children: (0, ai.jsx)(yl, { items: O, initialIndex: N, onSelect: F, isFocused: !0 }),
             }),
             R && (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentRed, children: R }) }),
+            (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.Gray, children: n("authDialog.useEnterToSelect") }) }),
           ],
         })
       : s === "input-api-key"
-        ? u === Kt.DEEPSEEK
-          ? (0, ai.jsxs)(ie, {
-              borderStyle: "round",
-              borderColor: ae.Gray,
-              flexDirection: "column",
-              padding: 1,
-              width: "100%",
-              children: [
-                (0, ai.jsx)(W, { bold: !0, children: "\u{1F916} DeepSeek API Configuration" }),
-                (0, ai.jsx)(ie, {
-                  marginTop: 1,
-                  children: (0, ai.jsx)(W, { children: "Enter your DeepSeek API Key from platform.deepseek.com/api_keys" }),
+        ? (0, ai.jsxs)(ie, {
+            borderStyle: "round",
+            borderColor: ae.Gray,
+            flexDirection: "column",
+            padding: 1,
+            width: "100%",
+            children: [
+              (0, ai.jsx)(W, { bold: !0, children: (getProvider ? getProvider()?.name : u) || "API Key" }),
+              (0, ai.jsx)(ie, {
+                marginTop: 1,
+                children: (0, ai.jsx)(U1e, {
+                  onSubmit: B, onCancel: G,
+                  label: n("authDialog.apiKeyLabel"),
+                  placeholder: n("authDialog.apiKeyPlaceholder"),
+                  isFocused: !0, validateApiKey: !0,
                 }),
-                (0, ai.jsx)(ie, {
-                  marginTop: 1,
-                  children: (0, ai.jsx)(U1e, {
-                    onSubmit: B,
-                    onCancel: G,
-                    label: "API Key",
-                    placeholder: "sk-...",
-                    isFocused: !0,
-                    validateApiKey: !0,
-                  }),
-                }),
-              ],
-            })
-          : u === Kt.IFLOW
-          ? (0, ai.jsxs)(ie, {
-              borderStyle: "round",
-              borderColor: ae.Gray,
-              flexDirection: "column",
-              padding: 1,
-              width: "100%",
-              children: [
-                (0, ai.jsx)(W, { bold: !0, children: n("authDialog.iflowAuth") }),
-                (0, ai.jsx)(ie, {
-                  marginTop: 1,
-                  children: (0, ai.jsx)(W, { children: n("authDialog.enterIFlowApiKey") }),
-                }),
-                (0, ai.jsx)(ie, {
-                  marginTop: 1,
-                  children: (0, ai.jsx)(U1e, {
-                    onSubmit: B,
-                    onCancel: G,
-                    label: n("authDialog.apiKeyLabel"),
-                    placeholder: n("authDialog.apiKeyPlaceholder"),
-                    isFocused: !0,
-                    validateApiKey: !0,
-                  }),
-                }),
-              ],
-            })
-          : null
+              }),
+              R && (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentRed, children: R }) }),
+            ],
+          })
         : s === "input-model-name"
-          ? u === Kt.IFLOW || u === Kt.AONE
-            ? x
-              ? (0, ai.jsxs)(ie, {
-                  borderStyle: "round",
-                  borderColor: ae.Gray,
-                  flexDirection: "column",
-                  padding: 1,
-                  width: "100%",
-                  children: [
-                    (0, ai.jsx)(W, { bold: !0, children: n("authDialog.modelConfig") }),
-                    (0, ai.jsx)(ie, {
-                      marginTop: 1,
-                      children: (0, ai.jsx)(W, { color: ae.AccentBlue, children: n("modelDialog.loading") }),
-                    }),
-                  ],
-                })
-              : (0, ai.jsxs)(ie, {
-                  borderStyle: "round",
-                  borderColor: ae.Gray,
-                  flexDirection: "column",
-                  padding: 1,
-                  width: "100%",
-                  children: [
-                    (0, ai.jsx)(W, { bold: !0, children: n("authDialog.modelConfig") }),
-                    (0, ai.jsx)(ie, {
-                      marginTop: 1,
-                      children: (0, ai.jsx)(W, { children: n("authDialog.selectModel") }),
-                    }),
-                    (0, ai.jsx)(ie, {
-                      marginTop: 1,
-                      children: (0, ai.jsx)(W, { color: ae.AccentBlue, children: n("authDialog.defaultSelection") }),
-                    }),
-                    (0, ai.jsx)(ie, {
-                      marginTop: 1,
-                      children: (0, ai.jsx)(yl, { items: v, initialIndex: 0, onSelect: H, isFocused: !0 }),
-                    }),
-                  ],
-                })
-            : (0, ai.jsxs)(ie, {
-                borderStyle: "round",
-                borderColor: ae.Gray,
-                flexDirection: "column",
-                padding: 1,
-                width: "100%",
+          ? v.length > 0 && v[0]?.value
+            ? (0, ai.jsxs)(ie, {
+                borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%",
                 children: [
                   (0, ai.jsx)(W, { bold: !0, children: n("authDialog.modelConfig") }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.selectModel") }) }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentBlue, children: n("authDialog.defaultSelection") }) }),
                   (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(W, { children: n("authDialog.enterModelName") }),
+                    marginTop: 1, children: (0, ai.jsx)(yl, { items: v, initialIndex: 0, onSelect: H, isFocused: !0 }),
                   }),
+                ],
+              })
+            : (0, ai.jsxs)(ie, {
+                borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%",
+                children: [
+                  (0, ai.jsx)(W, { bold: !0, children: n("authDialog.modelConfig") }),
+                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.enterModelName") }) }),
                   (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(Ty, {
-                      onSubmit: K,
-                      onCancel: U,
-                      label: n("authDialog.modelNameLabel"),
-                      placeholder: n("authDialog.modelNamePlaceholder"),
-                      isFocused: !0,
-                    }),
+                    marginTop: 1, children: (0, ai.jsx)(Ty, { onSubmit: K, onCancel: Q, label: n("authDialog.modelNameLabel"), placeholder: n("authDialog.modelNamePlaceholder"), isFocused: !0 }),
                   }),
                 ],
               })
           : s === "deepseek-config"
             ? (0, ai.jsxs)(ie, { borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%", children: [
-                (0, ai.jsx)(W, { bold: !0, children: "\u{1F916} Select DeepSeek Model" }),
-                dsModels.length > 0
-                  ? (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(yl, { items: dsModels, initialIndex: 0, onSelect: (J) => dsSubmit(J), isFocused: !0 }) })
-                  : (0, ai.jsx)(ie, { marginTop: 2, children: (0, ai.jsx)(W, { color: ae.AccentBlue, children: "Fetching available models from api.deepseek.com..." }) }),
+                (0, ai.jsx)(W, { bold: !0, children: (getProvider ? getProvider()?.name : u) + " - Select Model" }),
+                v.length > 0
+                  ? (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(yl, { items: v, initialIndex: 0, onSelect: (J) => dsSubmit(J), isFocused: !0 }) })
+                  : (0, ai.jsx)(ie, { marginTop: 2, children: (0, ai.jsx)(W, { color: ae.AccentBlue, children: "Fetching available models..." }) }),
                 R && (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentRed, children: R }) }),
               ]})
-          : s === "input-openai-config"
-            ? (0, ai.jsxs)(ie, {
-                borderStyle: "round",
-                borderColor: ae.Gray,
-                flexDirection: "column",
-                padding: 1,
-                width: "100%",
-                children: [
-                  (0, ai.jsx)(W, { bold: !0, children: n("authDialog.openaiConfig") }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(W, {
-                      children: n(
-                        f === "baseUrl"
-                          ? "authDialog.enterBaseUrl"
-                          : f === "apiKey"
-                            ? "authDialog.enterApiKey"
-                            : "authDialog.enterOpenaiModelName",
-                      ),
+            : s === "input-openai-config"
+              ? (0, ai.jsxs)(ie, {
+                  borderStyle: "round", borderColor: ae.Gray, flexDirection: "column", padding: 1, width: "100%",
+                  children: [
+                    (0, ai.jsx)(W, { bold: !0, children: n("authDialog.openaiConfig") }),
+                    (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n(f === "baseUrl" ? "authDialog.enterBaseUrl" : f === "apiKey" ? "authDialog.enterApiKey" : "authDialog.enterOpenaiModelName") }) }),
+                    (0, ai.jsx)(ie, { marginTop: 1, children:
+                      f === "baseUrl" ? (0, ai.jsx)(Ty, { onSubmit: L, onCancel: Q, label: n("authDialog.baseUrlLabel"), placeholder: n("authDialog.baseUrlPlaceholder"), isFocused: !0 })
+                      : f === "apiKey" ? (0, ai.jsx)(U1e, { onSubmit: L, onCancel: Q, label: n("authDialog.apiKeyLabel"), placeholder: n("authDialog.openaiApiKeyPlaceholder"), isFocused: !0, validateApiKey: !0 })
+                      : (0, ai.jsx)(Ty, { onSubmit: L, onCancel: Q, label: n("authDialog.modelNameLabel"), placeholder: n("authDialog.openaiModelPlaceholder"), isFocused: !0 })
                     }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children:
-                      f === "baseUrl"
-                        ? (0, ai.jsx)(Ty, {
-                            onSubmit: L,
-                            onCancel: Q,
-                            label: n("authDialog.baseUrlLabel"),
-                            placeholder: n("authDialog.baseUrlPlaceholder"),
-                            isFocused: !0,
-                          })
-                        : f === "apiKey"
-                          ? (0, ai.jsx)(U1e, {
-                              onSubmit: L,
-                              onCancel: Q,
-                              label: n("authDialog.apiKeyLabel"),
-                              placeholder: n("authDialog.openaiApiKeyPlaceholder"),
-                              isFocused: !0,
-                              validateApiKey: !0,
-                            })
-                          : (0, ai.jsx)(Ty, {
-                              onSubmit: L,
-                              onCancel: Q,
-                              label: n("authDialog.modelNameLabel"),
-                              placeholder: n("authDialog.openaiModelPlaceholder"),
-                              isFocused: !0,
-                            }),
-                  }),
-                  f === "baseUrl" &&
-                    m.baseUrl &&
-                    (0, ai.jsx)(ie, {
-                      marginTop: 1,
-                      children: (0, ai.jsx)(W, {
-                        color: ae.Gray,
-                        children: n("authDialog.current", { value: m.baseUrl }),
-                      }),
-                    }),
-                ],
-              })
-            : (0, ai.jsxs)(ie, {
-                borderStyle: "round",
-                borderColor: ae.Gray,
-                flexDirection: "column",
-                padding: 1,
-                width: "100%",
-                children: [
-                  (0, ai.jsx)(W, { bold: !0, children: n("authDialog.getStarted") }),
-                  (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.howToAuth") }) }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(yl, { items: O, initialIndex: N, onSelect: F, isFocused: !0 }),
-                  }),
-                  R &&
-                    (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentRed, children: R }) }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(W, { color: ae.Gray, children: n("authDialog.useEnterToSelect") }),
-                  }),
-                  (0, ai.jsx)(ie, {
-                    marginTop: 1,
-                    children: (0, ai.jsx)(W, { children: n("authDialog.termsOfService") }),
-                  }),
-                ],
-              })
+                    R && (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { color: ae.AccentRed, children: R }) }),
+                  ],
+                })
+              : null
   );
 }
 await Yr();
