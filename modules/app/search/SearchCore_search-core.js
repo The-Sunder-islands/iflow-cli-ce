@@ -197,11 +197,17 @@ var SearchCore,
           if (typeof searchProviderInit === "function") searchProviderInit();
           if (typeof searchPipelineInit === "function") searchPipelineInit();
           if (typeof searchRendererInit === "function") searchRendererInit();
+          if (typeof searchServerInit === "function") searchServerInit();
           try {
             let r = new SearchProvider();
             r.init();
             this._provider = r;
             if (e?.setSearchProvider) e.setSearchProvider(r);
+            if (SearchServer?.start) {
+              let n = r.registry;
+              let o = r.orchestrator;
+              SearchServer.start({ registry: n, orchestrator: o });
+            }
           } catch (t) {
             console.error("[SearchInit] Failed:", t);
           }

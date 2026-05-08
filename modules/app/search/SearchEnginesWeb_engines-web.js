@@ -99,66 +99,42 @@ var EG_web = {},
           lc = pts[0];
           cc = pts[1] || lc.toUpperCase();
         }
-        var qp = {
-          q: query,
-          hl: lc + "-" + cc,
-          lr: lang === "all" ? "" : "lang_" + lc,
-          cr: !lang.includes("-") ? "" : "country" + cc,
-          ie: "utf8",
-          oe: "utf8",
-          filter: "0",
-          start: String(start),
-        };
+        var qp = { q: query, hl: lc + "-" + cc, ie: "utf8", oe: "utf8", start: String(start), };
+        if (lang !== "all") qp.lr = "lang_" + lc;
+        if (lang && lang.includes("-")) qp.cr = "country" + cc;
         var url = "https://www.google.com/search?" + new URLSearchParams(qp);
         var tMap = { day: "d", week: "w", month: "m", year: "y" };
         if (sq.timeRange && tMap[sq.timeRange]) url += "&tbs=qdr:" + tMap[sq.timeRange];
-        var fMap = { 0: "off", 1: "medium", 2: "high" };
-        if (sq.safesearch && fMap[sq.safesearch]) url += "&safe=" + fMap[sq.safesearch];
+        if (sq.safesearch) url += "&safe=" + ({0:"off",1:"medium",2:"high"})[sq.safesearch];
         params.url = url;
-        params.headers["Accept"] = "*/*";
+        params.headers["Accept-Language"] = lc + "-" + cc;
         params.cookies["CONSENT"] = "YES+";
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [],
-          dimg = {},
-          dre = /(data:image[^']*?)'[^']*?'((?:dimg|pimg|tsuid)[^']*)/g,
-          dm;
-        while ((dm = dre.exec(h)) !== null) dimg[dm[2]] = de(dm[1]);
-        var blocks = allBlk(h, "div", "\\bg\\b");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            am = bl.match(/<a\s[^>]*data-ved[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!am || /\bclass\s*=/.test(am[0])) continue;
-          var url = am[1];
-          if (url.indexOf("/url?q=") === 0) url = dq(url.slice(7).split("&sa=U")[0]);
-          var tm = am[2].match(/<div[^>]*style[^>]*>([\s\S]*?)<\/div>/i),
-            title = tm ? st(tm[1]) : "";
-          if (!title) continue;
-          var cm = bl.match(/<div[^>]*class="[^"]*ilUpNd[^"]*"[^>]*>([\s\S]*?)<\/div>/i),
-            content = cm ? st(cm[1]) : "";
-          var im = am[0].match(/<img[^>]*src="([^"]*)"/i),
-            thumbnail = null;
-          if (im) {
-            thumbnail = im[1];
-            if (thumbnail.indexOf("data:image") === 0) {
-              var idm = am[0].match(/\bid\s*=\s*"([^"]*)"/);
-              if (idm && dimg[idm[1]]) thumbnail = dimg[idm[1]];
-            }
-          }
-          r.push({ url: url, title: title, content: content || "", thumbnail: thumbnail });
-        }
-        var sugBlocks = allBlk(h, "div", "gGQDvd");
-        for (var si = 0; si < sugBlocks.length; si++) {
-          var sla = sugBlocks[si].match(/<a[^>]*>([\s\S]*?)<\/a>/gi);
-          if (sla)
-            for (var li = 0; li < sla.length; li++) {
-              var t = st(sla[li]);
-              if (t) r.push({ suggestion: t });
-            }
-        }
-        return r;
+        var $ = cheerio.load(resp.text);
+        var results = [];
+        // Modern Google: #search > div > div > div > div[data-hveid] > div > div > a
+        // Fallback: .g. tF2Cxc or div.g
+        $("div.g, .tF2Cxc").each(function () {
+          var el = $(this);
+          var a = el.find("a[href]").first();
+          var href = a.attr("href") || "";
+          var title = el.find("h3").first().text().trim() || a.text().trim();
+          var snippet = el.find(".VwiC3b, [data-sncf], .lEBKkf, span.aCOpRe").first().text().trim()
+            || el.find(".st, .fZi<TuU").first().text().trim();
+          if (!href || href.startsWith("/")) return;
+          // Filter out unwanted: videos, shopping, etc.
+          if (href.includes("/search?")) return;
+          if (title) results.push({ title, url: href, content: snippet, snippet });
+        });
+        // Suggestions
+        var sug = [];
+        $("div[data-suggestion]").each(function () {
+          var t = $(this).attr("data-suggestion");
+          if (t) sug.push(t);
+        });
+        return { results, suggestions: sug };
       },
     };
 
@@ -186,35 +162,22 @@ var EG_web = {},
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [],
-          blocks = allBlk(h, "li", "b_algo");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            link = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!link) continue;
-          var href = link[1],
-            title = st(link[2]);
-          if (!href || !title) continue;
-          if (href.indexOf("https://www.bing.com/ck/a?") === 0) {
-            var uParam = href.match(/[?&]u=([^&]+)/);
-            if (uParam) {
-              var uVal = dq(uParam[1]);
-              if (uVal.indexOf("a1") === 0) href = b64u(uVal.slice(2));
-            }
+        var $ = cheerio.load(resp.text);
+        var r = [];
+        $("#b_results > li.b_algo").each(function () {
+          var el = $(this);
+          var a = el.find("h2 a[href]").first();
+          var href = a.attr("href") || "";
+          var title = a.text().trim();
+          var snippet = el.find(".b_caption p, .b_lineclamp2, .b_algoSlug").first().text().trim();
+          if (!href || !title || href.startsWith("/")) return;
+          if (href.includes("bing.com/ck/a")) {
+            var u = href.match(/[?&]u=([^&]+)/);
+            if (u) href = dq(u[1]);
           }
-          var cm = bl.match(/<p[^>]*>([\s\S]*?)<\/p>/i),
-            content = cm ? st(cm[1]) : "";
-          r.push({ url: href, title: title, content: content });
-        }
-        if (r.length > 0) {
-          var sc = h.match(/<span[^>]*class="[^"]*sb_count[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
-          if (sc) {
-            var num = sc[1].replace(/[^0-9]/g, "");
-            if (num) r.push({ number_of_results: parseInt(num, 10) });
-          }
-        }
-        return r;
+          r.push({ url: href, title, content: snippet, snippet });
+        });
+        return { results: r };
       },
     };
 
@@ -281,39 +244,22 @@ var EG_web = {},
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [];
-        if (resp.status === 303) return r;
-        if (/<form[^>]*id="challenge-form"/i.test(h)) return r;
+        var h = resp.text;
+        if (resp.status === 303 || /<form[^>]*id="challenge-form"/i.test(h)) return { results: [] };
         var vqdMatch = h.match(/<input[^>]*name="vqd"[^>]*value="([^"]*)"/i);
         if (vqdMatch) this._vqdCache[sq.query + "//" + this._ua] = vqdMatch[1];
-        var blocks = allBlk(h, "div", "web-result");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            link = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!link) continue;
-          var url = link[1],
-            title = st(link[2]);
-          if (!url || !title) continue;
-          var cm = bl.match(/<a[^>]*class="[^"]*result__snippet[^"]*"[^>]*>([\s\S]*?)<\/a>/i) ||
-            bl.match(/<a[^>]*class="[^"]*snippet[^"]*"[^>]*>([\s\S]*?)<\/a>/i);
-          var content = cm ? st(cm[1]) : "";
-          r.push({ url: url, title: title, content: content });
-        }
-        var zc = eb(h, '<div id="zero_click_abstract"', "</div>");
-        if (zc) {
-          var zcText = st(zc),
-            zcUrl = zc.match(/<a[^>]*href="([^"]*)"/i);
-          if (
-            zcText &&
-            zcText.indexOf("Your IP address is") === -1 &&
-            zcText.indexOf("Your user agent:") === -1 &&
-            zcText.indexOf("URL Decoded:") === -1
-          ) {
-            r.push({ answer: zcText, url: zcUrl ? zcUrl[1] : null });
-          }
-        }
-        return r;
+        var $ = cheerio.load(h);
+        var r = [];
+        $("div.web-result, div.result").each(function () {
+          var el = $(this);
+          var a = el.find("h2 a[href], a.result__a[href]").first();
+          var href = a.attr("href") || "";
+          var title = a.text().trim();
+          var snippet = el.find(".result__snippet, .snippet").first().text().trim();
+          if (!href || !title) return;
+          r.push({ url: href, title, content: snippet, snippet });
+        });
+        return { results: r };
       },
     };
 

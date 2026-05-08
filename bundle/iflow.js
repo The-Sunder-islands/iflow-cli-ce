@@ -472437,11 +472437,17 @@ var Uio = T((ROl, Fio) => {
           if (typeof searchProviderInit === "function") searchProviderInit();
           if (typeof searchPipelineInit === "function") searchPipelineInit();
           if (typeof searchRendererInit === "function") searchRendererInit();
+          if (typeof searchServerInit === "function") searchServerInit();
           try {
             let r = new SearchProvider();
             r.init();
             this._provider = r;
             if (e?.setSearchProvider) e.setSearchProvider(r);
+            if (SearchServer?.start) {
+              let n = r.registry;
+              let o = r.orchestrator;
+              SearchServer.start({ registry: n, orchestrator: o });
+            }
           } catch (t) {
             console.error("[SearchInit] Failed:", t);
           }
@@ -472550,66 +472556,42 @@ var EG_web = {},
           lc = pts[0];
           cc = pts[1] || lc.toUpperCase();
         }
-        var qp = {
-          q: query,
-          hl: lc + "-" + cc,
-          lr: lang === "all" ? "" : "lang_" + lc,
-          cr: !lang.includes("-") ? "" : "country" + cc,
-          ie: "utf8",
-          oe: "utf8",
-          filter: "0",
-          start: String(start),
-        };
+        var qp = { q: query, hl: lc + "-" + cc, ie: "utf8", oe: "utf8", start: String(start), };
+        if (lang !== "all") qp.lr = "lang_" + lc;
+        if (lang && lang.includes("-")) qp.cr = "country" + cc;
         var url = "https://www.google.com/search?" + new URLSearchParams(qp);
         var tMap = { day: "d", week: "w", month: "m", year: "y" };
         if (sq.timeRange && tMap[sq.timeRange]) url += "&tbs=qdr:" + tMap[sq.timeRange];
-        var fMap = { 0: "off", 1: "medium", 2: "high" };
-        if (sq.safesearch && fMap[sq.safesearch]) url += "&safe=" + fMap[sq.safesearch];
+        if (sq.safesearch) url += "&safe=" + ({0:"off",1:"medium",2:"high"})[sq.safesearch];
         params.url = url;
-        params.headers["Accept"] = "*/*";
+        params.headers["Accept-Language"] = lc + "-" + cc;
         params.cookies["CONSENT"] = "YES+";
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [],
-          dimg = {},
-          dre = /(data:image[^']*?)'[^']*?'((?:dimg|pimg|tsuid)[^']*)/g,
-          dm;
-        while ((dm = dre.exec(h)) !== null) dimg[dm[2]] = de(dm[1]);
-        var blocks = allBlk(h, "div", "\\bg\\b");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            am = bl.match(/<a\s[^>]*data-ved[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!am || /\bclass\s*=/.test(am[0])) continue;
-          var url = am[1];
-          if (url.indexOf("/url?q=") === 0) url = dq(url.slice(7).split("&sa=U")[0]);
-          var tm = am[2].match(/<div[^>]*style[^>]*>([\s\S]*?)<\/div>/i),
-            title = tm ? st(tm[1]) : "";
-          if (!title) continue;
-          var cm = bl.match(/<div[^>]*class="[^"]*ilUpNd[^"]*"[^>]*>([\s\S]*?)<\/div>/i),
-            content = cm ? st(cm[1]) : "";
-          var im = am[0].match(/<img[^>]*src="([^"]*)"/i),
-            thumbnail = null;
-          if (im) {
-            thumbnail = im[1];
-            if (thumbnail.indexOf("data:image") === 0) {
-              var idm = am[0].match(/\bid\s*=\s*"([^"]*)"/);
-              if (idm && dimg[idm[1]]) thumbnail = dimg[idm[1]];
-            }
-          }
-          r.push({ url: url, title: title, content: content || "", thumbnail: thumbnail });
-        }
-        var sugBlocks = allBlk(h, "div", "gGQDvd");
-        for (var si = 0; si < sugBlocks.length; si++) {
-          var sla = sugBlocks[si].match(/<a[^>]*>([\s\S]*?)<\/a>/gi);
-          if (sla)
-            for (var li = 0; li < sla.length; li++) {
-              var t = st(sla[li]);
-              if (t) r.push({ suggestion: t });
-            }
-        }
-        return r;
+        var $ = cheerio.load(resp.text);
+        var results = [];
+        // Modern Google: #search > div > div > div > div[data-hveid] > div > div > a
+        // Fallback: .g. tF2Cxc or div.g
+        $("div.g, .tF2Cxc").each(function () {
+          var el = $(this);
+          var a = el.find("a[href]").first();
+          var href = a.attr("href") || "";
+          var title = el.find("h3").first().text().trim() || a.text().trim();
+          var snippet = el.find(".VwiC3b, [data-sncf], .lEBKkf, span.aCOpRe").first().text().trim()
+            || el.find(".st, .fZi<TuU").first().text().trim();
+          if (!href || href.startsWith("/")) return;
+          // Filter out unwanted: videos, shopping, etc.
+          if (href.includes("/search?")) return;
+          if (title) results.push({ title, url: href, content: snippet, snippet });
+        });
+        // Suggestions
+        var sug = [];
+        $("div[data-suggestion]").each(function () {
+          var t = $(this).attr("data-suggestion");
+          if (t) sug.push(t);
+        });
+        return { results, suggestions: sug };
       },
     };
 
@@ -472637,35 +472619,22 @@ var EG_web = {},
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [],
-          blocks = allBlk(h, "li", "b_algo");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            link = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!link) continue;
-          var href = link[1],
-            title = st(link[2]);
-          if (!href || !title) continue;
-          if (href.indexOf("https://www.bing.com/ck/a?") === 0) {
-            var uParam = href.match(/[?&]u=([^&]+)/);
-            if (uParam) {
-              var uVal = dq(uParam[1]);
-              if (uVal.indexOf("a1") === 0) href = b64u(uVal.slice(2));
-            }
+        var $ = cheerio.load(resp.text);
+        var r = [];
+        $("#b_results > li.b_algo").each(function () {
+          var el = $(this);
+          var a = el.find("h2 a[href]").first();
+          var href = a.attr("href") || "";
+          var title = a.text().trim();
+          var snippet = el.find(".b_caption p, .b_lineclamp2, .b_algoSlug").first().text().trim();
+          if (!href || !title || href.startsWith("/")) return;
+          if (href.includes("bing.com/ck/a")) {
+            var u = href.match(/[?&]u=([^&]+)/);
+            if (u) href = dq(u[1]);
           }
-          var cm = bl.match(/<p[^>]*>([\s\S]*?)<\/p>/i),
-            content = cm ? st(cm[1]) : "";
-          r.push({ url: href, title: title, content: content });
-        }
-        if (r.length > 0) {
-          var sc = h.match(/<span[^>]*class="[^"]*sb_count[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
-          if (sc) {
-            var num = sc[1].replace(/[^0-9]/g, "");
-            if (num) r.push({ number_of_results: parseInt(num, 10) });
-          }
-        }
-        return r;
+          r.push({ url: href, title, content: snippet, snippet });
+        });
+        return { results: r };
       },
     };
 
@@ -472732,39 +472701,22 @@ var EG_web = {},
         return params;
       },
       async response(resp, sq) {
-        var h = resp.text,
-          r = [];
-        if (resp.status === 303) return r;
-        if (/<form[^>]*id="challenge-form"/i.test(h)) return r;
+        var h = resp.text;
+        if (resp.status === 303 || /<form[^>]*id="challenge-form"/i.test(h)) return { results: [] };
         var vqdMatch = h.match(/<input[^>]*name="vqd"[^>]*value="([^"]*)"/i);
         if (vqdMatch) this._vqdCache[sq.query + "//" + this._ua] = vqdMatch[1];
-        var blocks = allBlk(h, "div", "web-result");
-        for (var bi = 0; bi < blocks.length; bi++) {
-          var bl = blocks[bi],
-            link = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
-          if (!link) continue;
-          var url = link[1],
-            title = st(link[2]);
-          if (!url || !title) continue;
-          var cm = bl.match(/<a[^>]*class="[^"]*result__snippet[^"]*"[^>]*>([\s\S]*?)<\/a>/i) ||
-            bl.match(/<a[^>]*class="[^"]*snippet[^"]*"[^>]*>([\s\S]*?)<\/a>/i);
-          var content = cm ? st(cm[1]) : "";
-          r.push({ url: url, title: title, content: content });
-        }
-        var zc = eb(h, '<div id="zero_click_abstract"', "</div>");
-        if (zc) {
-          var zcText = st(zc),
-            zcUrl = zc.match(/<a[^>]*href="([^"]*)"/i);
-          if (
-            zcText &&
-            zcText.indexOf("Your IP address is") === -1 &&
-            zcText.indexOf("Your user agent:") === -1 &&
-            zcText.indexOf("URL Decoded:") === -1
-          ) {
-            r.push({ answer: zcText, url: zcUrl ? zcUrl[1] : null });
-          }
-        }
-        return r;
+        var $ = cheerio.load(h);
+        var r = [];
+        $("div.web-result, div.result").each(function () {
+          var el = $(this);
+          var a = el.find("h2 a[href], a.result__a[href]").first();
+          var href = a.attr("href") || "";
+          var title = a.text().trim();
+          var snippet = el.find(".result__snippet, .snippet").first().text().trim();
+          if (!href || !title) return;
+          r.push({ url: href, title, content: snippet, snippet });
+        });
+        return { results: r };
       },
     };
 
@@ -484811,6 +484763,106 @@ var EG_b8 = {},
           results.push(result);
         }
         return results;
+      },
+    };
+  });
+var SearchServer,
+  searchServerInit = j(() => {
+    "use strict";
+    const http = require("http");
+    let _app = null;
+    let _server = null;
+    let _port = 0;
+    let _registry = null;
+    let _orchestrator = null;
+    function searxngJson(e, r) {
+      let n = r.results || r;
+      return {
+        query: e.query || e,
+        results: (n || []).map((o) => ({
+          title: o.title || "",
+          url: o.url || "",
+          content: o.content || o.snippet || "",
+          engine: o.engine || "internal",
+          category: o.category || "general",
+          publishedDate: o.date || null,
+          thumbnail: o.thumbnail || null,
+        })),
+        number_of_results: (n || []).length,
+        answers: [],
+        corrections: [],
+        infoboxes: [],
+        suggestions: [],
+        unresponsive_engines: [],
+      };
+    }
+    function parseQuery(e) {
+      let r = new URL(e, "http://localhost");
+      return {
+        q: r.searchParams.get("q") || "",
+        format: r.searchParams.get("format") || "json",
+        categories: (r.searchParams.get("categories") || "general").split(","),
+        pageno: parseInt(r.searchParams.get("pageno") || "1", 10),
+        language: r.searchParams.get("language") || "all",
+        time_range: r.searchParams.get("time_range") || null,
+        safesearch: parseInt(r.searchParams.get("safesearch") || "0", 10),
+      };
+    }
+    async function handleSearch(e, r) {
+      let n = parseQuery(e);
+      if (!n.q) return r.status(400).json({ error: "Missing query parameter 'q'" });
+      if (!_registry) return r.status(503).json({ error: "Search engine not ready" });
+      try {
+        let o = new SearchCore.SearchQuery({
+          query: n.q,
+          categories: n.categories,
+          pageno: n.pageno,
+          timeRange: n.time_range,
+          safesearch: n.safesearch,
+          language: n.language,
+        });
+        let s = _orchestrator ? await _orchestrator.search(o) : _registry.searchAll(o);
+        let a = searxngJson(n.q, s);
+        if (n.format === "json") r.json(a);
+        else if (n.format === "csv") {
+          let c = "title,url,content,engine\n";
+          c += (a.results || []).map((l) => `"${(l.title||"").replace(/"/g,'""')}","${l.url}","${(l.content||"").replace(/"/g,'""').slice(0,200)}","${l.engine}"`).join("\n");
+          r.type("text/csv").send(c);
+        } else r.json(a);
+      } catch (o) {
+        console.error("[SearchServer] Search error:", o);
+        r.status(500).json({ error: o.message });
+      }
+    }
+    SearchServer = {
+      get port() { return _port; },
+      get url() { return _port ? `http://localhost:${_port}` : null; },
+      async start(e) {
+        if (_server) return;
+        _registry = e?.registry || null;
+        _orchestrator = e?.orchestrator || null;
+        let r = e?.port || 0;
+        return new Promise((n, o) => {
+          let s = require("express")();
+          s.get("/search", (a, c) => handleSearch(a, c));
+          s.get("/health", (a, c) => c.json({ status: "ok", engines: _registry?.all()?.length || 0, port: _port }));
+          s.get("/engines", (a, c) => {
+            let l = _registry?.all() || [];
+            c.json({ engines: l.map((u) => ({ name: u.name, categories: u.categories, shortcut: u.shortcut })) });
+          });
+          _server = s.listen(r, "127.0.0.1", () => {
+            _port = _server.address().port;
+            console.log(`[SearchServer] Listening on http://localhost:${_port}`);
+            n();
+          });
+          _server.on("error", (a) => { console.error("[SearchServer] Failed:", a); o(a); });
+        });
+      },
+      async stop() {
+        if (!_server) return;
+        await new Promise((e) => _server.close(e));
+        _server = null; _port = 0;
+        console.log("[SearchServer] Stopped");
       },
     };
   });
