@@ -472227,7 +472227,8005 @@ var Mio = T((IOl, Lio) => {
 var Uio = T((ROl, Fio) => {
   "use strict";
   Fio.exports = Mio();
-});
+});var SearchCore,
+  sC = j(() => {
+    "use strict";
+    const CRLF = "\r\n";
+    class EngineResult {
+      title;
+      url;
+      content;
+      snippet;
+      date;
+      engine;
+      category;
+      thumbnail;
+      imgSrc;
+      author;
+      source;
+      constructor(e) {
+        Object.assign(this, e);
+      }
+    }
+    class SearchQuery {
+      query;
+      categories;
+      engines;
+      pageno;
+      timeRange;
+      safesearch;
+      language;
+      constructor(e) {
+        this.query = e.query;
+        this.categories = e.categories || ["general"];
+        this.engines = e.engines || [];
+        this.pageno = e.pageno || 1;
+        this.timeRange = e.timeRange || null;
+        this.safesearch = e.safesearch || 0;
+        this.language = e.language || "all";
+      }
+    }
+    class SearchParams {
+      url;
+      method;
+      headers;
+      data;
+      cookies;
+      softMaxRedirects;
+      raiseForStatus;
+      constructor() {
+        this.method = "GET";
+        this.headers = {};
+        this.cookies = {};
+        this.softMaxRedirects = 5;
+        this.raiseForStatus = true;
+      }
+    }
+    class SearchResponse {
+      status;
+      headers;
+      text;
+      json;
+      finalUrl;
+      constructor(e) {
+        Object.assign(this, e);
+      }
+    }
+    class EngineRegistry {
+      engines = new Map();
+      categories = new Map();
+      shortcuts = new Map();
+      register(e) {
+        this.engines.set(e.name, e);
+        for (let r of e.categories || ["other"]) {
+          if (!this.categories.has(r)) this.categories.set(r, []);
+          this.categories.get(r).push(e);
+        }
+        if (e.shortcut) this.shortcuts.set(e.shortcut, e.name);
+      }
+      get(e) {
+        return this.engines.get(e);
+      }
+      listByCategory(e) {
+        return this.categories.get(e) || [];
+      }
+      all() {
+        return Array.from(this.engines.values());
+      }
+      resolveShortcut(e) {
+        let r = this.shortcuts.get(e);
+        return r ? this.engines.get(r) : null;
+      }
+      registerAll(e) {
+        for (let r of Object.values(e)) if (r?.name) this.register(r);
+      }
+      registerCategory(e) {
+        if (e && typeof e === "object") for (let r of Object.values(e)) if (r?.name) this.register(r);
+      }
+    }
+    class NetworkClient {
+      defaults;
+      constructor(e) {
+        this.defaults = {
+          timeout: e?.timeout || 15000,
+          userAgent: e?.userAgent || "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0",
+          proxy: e?.proxy || null,
+          headers: e?.headers || {},
+        };
+      }
+      async request(e) {
+        let r = e.url,
+          n = e.method || "GET",
+          o = { ...this.defaults.headers, ...e.headers },
+          s = { method: n, headers: o, signal: e.signal || null };
+        if (e.data) s.body = typeof e.data === "string" ? e.data : JSON.stringify(e.data);
+        if (this.defaults.proxy) {
+          let a = new URL(this.defaults.proxy);
+          s.duplex = "half";
+        }
+        s.headers["User-Agent"] ||= this.defaults.userAgent;
+        let c = await fetch(r, s),
+          l = await c.text(),
+          u = null;
+        try {
+          u = JSON.parse(l);
+        } catch {}
+        return new SearchResponse({
+          status: c.status,
+          headers: Object.fromEntries(c.headers.entries()),
+          text: l,
+          json: u,
+          finalUrl: c.url,
+        });
+      }
+      async get(e, r) {
+        return this.request({ ...r, url: e, method: "GET" });
+      }
+      async post(e, r, n) {
+        return this.request({ ...n, url: e, method: "POST", data: r });
+      }
+    }
+    class SearchOrchestrator {
+      registry;
+      network;
+      constructor(e, r) {
+        this.registry = e;
+        this.network = r;
+      }
+      async search(e) {
+        let r = [];
+        if (e.engines.length > 0) {
+          for (let n of e.engines) {
+            let o = this.registry.get(n);
+            if (o) r.push(o);
+          }
+        } else {
+          for (let n of e.categories) {
+            let o = this.registry.listByCategory(n);
+            r.push(...o);
+          }
+        }
+        let n = r.map((o) => this.executeEngine(o, e));
+        let s = await Promise.allSettled(n);
+        let a = [];
+        for (let c of s) if (c.status === "fulfilled") a.push(...c.value);
+        return a;
+      }
+      async executeEngine(e, r) {
+        try {
+          let n = await e.request(r.query, new SearchParams(), r);
+          if (!n || !n.url) return [];
+          let o = await this.network.request(n);
+          let s = await e.response(o, r);
+          return s || [];
+        } catch (t) {
+          console.error(`[Engine ${e.name}] Error:`, t.message);
+          return [];
+        }
+      }
+    }
+    SearchCore = {
+      EngineResult,
+      SearchQuery,
+      SearchParams,
+      SearchResponse,
+      EngineRegistry,
+      NetworkClient,
+      SearchOrchestrator,
+    };
+  });
+var EG_web = {},
+  eG_web = j(() => {
+    "use strict";
+
+    function eb(text, start, end) {
+      let i = text.indexOf(start);
+      if (i === -1) return null;
+      i += start.length;
+      let j = text.indexOf(end, i);
+      return j === -1 ? null : text.slice(i, j);
+    }
+
+    function st(s) {
+      return s ? s.replace(/<[^>]*>/g, "").replace(/&[^;]+;/g, " ").replace(/\s+/g, " ").trim() : "";
+    }
+
+    function dq(s) {
+      try {
+        return decodeURIComponent(s.replace(/\+/g, " "));
+      } catch {
+        return s;
+      }
+    }
+
+    function de(s) {
+      return s.replace(/\\(x[\da-fA-F]{2}|u[\da-fA-F]{4}|.)/g, (_, e) => {
+        if (e[0] === "x" || e[0] === "u") return String.fromCharCode(parseInt(e.slice(1), 16));
+        return { n: "\n", t: "\t", r: "\r" }[e] || e;
+      });
+    }
+
+    function b64u(s) {
+      s = s.replace(/-/g, "+").replace(/_/g, "/");
+      s += "=".repeat((4 - (s.length % 4)) % 4);
+      try {
+        return atob(s);
+      } catch {
+        return s;
+      }
+    }
+
+    function blk(html, tag, cls, from) {
+      var re = new RegExp("<" + tag + '\\s[^>]*class="[^"]*' + cls + '[^"]*"[^>]*>', "i");
+      re.lastIndex = from || 0;
+      var m = re.exec(html);
+      if (!m) return null;
+      var d = 1,
+        p = re.lastIndex,
+        ot = "<" + tag,
+        ct = "</" + tag + ">";
+      while (d > 0 && p < html.length) {
+        var no = html.indexOf(ot, p),
+          nc = html.indexOf(ct, p);
+        if (nc === -1) return { html: html.slice(m.index), start: m.index, end: html.length };
+        if (no !== -1 && no < nc) {
+          d++;
+          p = no + ot.length;
+        } else {
+          d--;
+          p = nc + ct.length;
+        }
+      }
+      return { html: html.slice(m.index, p), start: m.index, end: p };
+    }
+
+    function allBlk(html, tag, cls) {
+      var blocks = [],
+        pos = 0,
+        b;
+      while (pos < html.length) {
+        b = blk(html, tag, cls, pos);
+        if (!b) break;
+        blocks.push(b.html);
+        pos = b.end;
+      }
+      return blocks;
+    }
+
+    /**
+     * about: { website: "https://www.google.com", wikidata_id: "Q9366",
+     *   official_api_documentation: "https://developers.google.com/custom-search/",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_web.google = {
+      name: "google",
+      categories: ["general", "web"],
+      shortcut: "g",
+      paging: !0,
+      maxPage: 50,
+      timeRangeSupport: !0,
+      safesearch: !0,
+      async request(query, params, sq) {
+        var start = (sq.pageno - 1) * 10,
+          lang = sq.language || "all",
+          lc = "en",
+          cc = "US";
+        if (lang !== "all") {
+          var pts = lang.split("-");
+          lc = pts[0];
+          cc = pts[1] || lc.toUpperCase();
+        }
+        var qp = {
+          q: query,
+          hl: lc + "-" + cc,
+          lr: lang === "all" ? "" : "lang_" + lc,
+          cr: !lang.includes("-") ? "" : "country" + cc,
+          ie: "utf8",
+          oe: "utf8",
+          filter: "0",
+          start: String(start),
+        };
+        var url = "https://www.google.com/search?" + new URLSearchParams(qp);
+        var tMap = { day: "d", week: "w", month: "m", year: "y" };
+        if (sq.timeRange && tMap[sq.timeRange]) url += "&tbs=qdr:" + tMap[sq.timeRange];
+        var fMap = { 0: "off", 1: "medium", 2: "high" };
+        if (sq.safesearch && fMap[sq.safesearch]) url += "&safe=" + fMap[sq.safesearch];
+        params.url = url;
+        params.headers["Accept"] = "*/*";
+        params.cookies["CONSENT"] = "YES+";
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [],
+          dimg = {},
+          dre = /(data:image[^']*?)'[^']*?'((?:dimg|pimg|tsuid)[^']*)/g,
+          dm;
+        while ((dm = dre.exec(h)) !== null) dimg[dm[2]] = de(dm[1]);
+        var blocks = allBlk(h, "div", "\\bg\\b");
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var bl = blocks[bi],
+            am = bl.match(/<a\s[^>]*data-ved[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
+          if (!am || /\bclass\s*=/.test(am[0])) continue;
+          var url = am[1];
+          if (url.indexOf("/url?q=") === 0) url = dq(url.slice(7).split("&sa=U")[0]);
+          var tm = am[2].match(/<div[^>]*style[^>]*>([\s\S]*?)<\/div>/i),
+            title = tm ? st(tm[1]) : "";
+          if (!title) continue;
+          var cm = bl.match(/<div[^>]*class="[^"]*ilUpNd[^"]*"[^>]*>([\s\S]*?)<\/div>/i),
+            content = cm ? st(cm[1]) : "";
+          var im = am[0].match(/<img[^>]*src="([^"]*)"/i),
+            thumbnail = null;
+          if (im) {
+            thumbnail = im[1];
+            if (thumbnail.indexOf("data:image") === 0) {
+              var idm = am[0].match(/\bid\s*=\s*"([^"]*)"/);
+              if (idm && dimg[idm[1]]) thumbnail = dimg[idm[1]];
+            }
+          }
+          r.push({ url: url, title: title, content: content || "", thumbnail: thumbnail });
+        }
+        var sugBlocks = allBlk(h, "div", "gGQDvd");
+        for (var si = 0; si < sugBlocks.length; si++) {
+          var sla = sugBlocks[si].match(/<a[^>]*>([\s\S]*?)<\/a>/gi);
+          if (sla)
+            for (var li = 0; li < sla.length; li++) {
+              var t = st(sla[li]);
+              if (t) r.push({ suggestion: t });
+            }
+        }
+        return r;
+      },
+    };
+
+    /**
+     * about: { website: "https://www.bing.com", wikidata_id: "Q182496",
+     *   official_api_documentation: "https://github.com/MicrosoftDocs/bing-docs",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_web.bing = {
+      name: "bing",
+      categories: ["general", "web"],
+      shortcut: "b",
+      paging: !1,
+      safesearch: !0,
+      async request(query, params, sq) {
+        var ssMap = { 0: "off", 1: "moderate", 2: "strict" };
+        var qp = { q: query, adlt: ssMap[sq.safesearch] || "off" };
+        var lang = sq.language || "all";
+        if (lang !== "all") {
+          qp.mkt = lang;
+          var lc = lang.split("-")[0];
+          params.headers["Accept-Language"] = lang + "," + lc + ";q=0.9";
+        }
+        params.url = "https://www.bing.com/search?" + new URLSearchParams(qp);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [],
+          blocks = allBlk(h, "li", "b_algo");
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var bl = blocks[bi],
+            link = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
+          if (!link) continue;
+          var href = link[1],
+            title = st(link[2]);
+          if (!href || !title) continue;
+          if (href.indexOf("https://www.bing.com/ck/a?") === 0) {
+            var uParam = href.match(/[?&]u=([^&]+)/);
+            if (uParam) {
+              var uVal = dq(uParam[1]);
+              if (uVal.indexOf("a1") === 0) href = b64u(uVal.slice(2));
+            }
+          }
+          var cm = bl.match(/<p[^>]*>([\s\S]*?)<\/p>/i),
+            content = cm ? st(cm[1]) : "";
+          r.push({ url: href, title: title, content: content });
+        }
+        if (r.length > 0) {
+          var sc = h.match(/<span[^>]*class="[^"]*sb_count[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
+          if (sc) {
+            var num = sc[1].replace(/[^0-9]/g, "");
+            if (num) r.push({ number_of_results: parseInt(num, 10) });
+          }
+        }
+        return r;
+      },
+    };
+
+    /**
+     * about: { website: "https://lite.duckduckgo.com/lite/", wikidata_id: "Q12805",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_web.duckduckgo = {
+      name: "duckduckgo",
+      categories: ["general", "web"],
+      shortcut: "d",
+      paging: !0,
+      timeRangeSupport: !0,
+      safesearch: !0,
+      _vqdCache: {},
+      _ua: "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0",
+      async request(query, params, sq) {
+        if (query.length >= 500) return params;
+        var engRegion = "wt-wt",
+          ddgUrl = "https://html.duckduckgo.com/html/";
+        var lang = sq.language || "all";
+        if (lang !== "all") {
+          var pts = lang.split("-"),
+            lc = pts[0],
+            cc = (pts[1] || "").toUpperCase();
+          engRegion = cc ? cc.toLowerCase() + "-" + lc : lc + "-" + lc;
+        }
+        params.headers["User-Agent"] = this._ua;
+        params.headers["Sec-Fetch-Dest"] = "document";
+        params.headers["Sec-Fetch-Mode"] = "navigate";
+        params.headers["Sec-Fetch-Site"] = "same-origin";
+        params.headers["Sec-Fetch-User"] = "?1";
+        params.headers["Referer"] = "https://html.duckduckgo.com/";
+        if (!params.headers["Accept-Language"])
+          params.headers["Accept-Language"] = lang + "," + lang + "-" + lang.toUpperCase() + ";q=0.7";
+        var fd = { q: query };
+        params.url = ddgUrl;
+        params.method = "POST";
+        if (sq.pageno === 1) {
+          fd.b = "";
+        } else {
+          var cacheKey = query + "//" + this._ua,
+            vqd = this._vqdCache[cacheKey];
+          if (vqd) fd.vqd = vqd;
+          if (lang.indexOf("zh") === 0) return params;
+          fd.nextParams = "";
+          fd.api = "d.js";
+          fd.o = "json";
+          fd.v = "l";
+          var offset = 10 + (sq.pageno - 2) * 15;
+          fd.dc = String(offset + 1);
+          fd.s = String(offset);
+        }
+        fd.kl = engRegion;
+        params.cookies["kl"] = engRegion;
+        var tRange = { day: "d", week: "w", month: "m", year: "y" }[sq.timeRange];
+        if (tRange) {
+          fd.df = tRange;
+          params.cookies["df"] = tRange;
+        }
+        params.headers["Content-Type"] = "application/x-www-form-urlencoded";
+        params.headers["Referer"] = ddgUrl;
+        params.data = new URLSearchParams(fd).toString();
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [];
+        if (resp.status === 303) return r;
+        if (/<form[^>]*id="challenge-form"/i.test(h)) return r;
+        var vqdMatch = h.match(/<input[^>]*name="vqd"[^>]*value="([^"]*)"/i);
+        if (vqdMatch) this._vqdCache[sq.query + "//" + this._ua] = vqdMatch[1];
+        var blocks = allBlk(h, "div", "web-result");
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var bl = blocks[bi],
+            link = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
+          if (!link) continue;
+          var url = link[1],
+            title = st(link[2]);
+          if (!url || !title) continue;
+          var cm = bl.match(/<a[^>]*class="[^"]*result__snippet[^"]*"[^>]*>([\s\S]*?)<\/a>/i) ||
+            bl.match(/<a[^>]*class="[^"]*snippet[^"]*"[^>]*>([\s\S]*?)<\/a>/i);
+          var content = cm ? st(cm[1]) : "";
+          r.push({ url: url, title: title, content: content });
+        }
+        var zc = eb(h, '<div id="zero_click_abstract"', "</div>");
+        if (zc) {
+          var zcText = st(zc),
+            zcUrl = zc.match(/<a[^>]*href="([^"]*)"/i);
+          if (
+            zcText &&
+            zcText.indexOf("Your IP address is") === -1 &&
+            zcText.indexOf("Your user agent:") === -1 &&
+            zcText.indexOf("URL Decoded:") === -1
+          ) {
+            r.push({ answer: zcText, url: zcUrl ? zcUrl[1] : null });
+          }
+        }
+        return r;
+      },
+    };
+
+    /**
+     * about: { website: "https://search.yahoo.com/", wikidata_id: null,
+     *   official_api_documentation: "https://developer.yahoo.com/api/",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_web.yahoo = {
+      name: "yahoo",
+      categories: ["general", "web"],
+      shortcut: "y",
+      paging: !0,
+      timeRangeSupport: !0,
+      yahooLanguages: {
+        all: "any", ar: "ar", bg: "bg", cs: "cs", da: "da", de: "de", el: "el", en: "en", es: "es", et: "et",
+        fi: "fi", fr: "fr", he: "he", hr: "hr", hu: "hu", it: "it", ja: "ja", ko: "ko", lt: "lt", lv: "lv",
+        nl: "nl", no: "no", pl: "pl", pt: "pt", ro: "ro", ru: "ru", sk: "sk", sl: "sl", sv: "sv", th: "th",
+        tr: "tr", zh: "zh_chs", zh_Hans: "zh_chs", "zh-CN": "zh_chs", zh_Hant: "zh_cht", "zh-HK": "zh_cht",
+        "zh-TW": "zh_cht",
+      },
+      region2domain: {
+        CO: "co.search.yahoo.com", TH: "th.search.yahoo.com", VE: "ve.search.yahoo.com",
+        CL: "cl.search.yahoo.com", HK: "hk.search.yahoo.com", PE: "pe.search.yahoo.com",
+        CA: "ca.search.yahoo.com", DE: "de.search.yahoo.com", FR: "fr.search.yahoo.com",
+        TW: "tw.search.yahoo.com", GB: "uk.search.yahoo.com", UK: "uk.search.yahoo.com",
+        BR: "br.search.yahoo.com", IN: "in.search.yahoo.com", ES: "espanol.search.yahoo.com",
+        PH: "ph.search.yahoo.com", AR: "ar.search.yahoo.com", MX: "mx.search.yahoo.com",
+        SG: "sg.search.yahoo.com",
+      },
+      lang2domain: {
+        zh_chs: "hk.search.yahoo.com", zh_cht: "tw.search.yahoo.com", any: "search.yahoo.com",
+        en: "search.yahoo.com", bg: "search.yahoo.com", cs: "search.yahoo.com", da: "search.yahoo.com",
+        el: "search.yahoo.com", et: "search.yahoo.com", he: "search.yahoo.com", hr: "search.yahoo.com",
+        ja: "search.yahoo.com", ko: "search.yahoo.com", sk: "search.yahoo.com", sl: "search.yahoo.com",
+      },
+      _getDomain(langStr) {
+        var pts = (langStr || "all").split("-"),
+          l = this.yahooLanguages[pts[0]] || "any",
+          r = pts[1];
+        return this.region2domain[r] || this.lang2domain[l] || l + ".search.yahoo.com";
+      },
+      async request(query, params, sq) {
+        var pts = (sq.language || "all").split("-"),
+          lang = this.yahooLanguages[pts[0]] || "any",
+          region = pts[1];
+        var urlParams = { p: query };
+        var btf = { day: "d", week: "w", month: "m" }[sq.timeRange];
+        if (btf) urlParams.btf = btf;
+        if (sq.pageno === 1) {
+          urlParams.iscqry = "";
+        } else if (sq.pageno >= 2) {
+          urlParams.b = sq.pageno * 7 + 1;
+          urlParams.pz = 7;
+          urlParams.bct = 0;
+          urlParams.xargs = 0;
+        }
+        var ssMap = { 0: "p", 1: "i", 2: "r" };
+        params.cookies["sB"] =
+          "v=1&vm=" +
+          (ssMap[sq.safesearch] || "p") +
+          "&fl=1&vl=lang_" +
+          lang +
+          "&pn=10&rw=new&userset=1";
+        var domain = this._getDomain(sq.language);
+        params.url = "https://" + domain + "/search?" + new URLSearchParams(urlParams);
+        params._domain = domain;
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [],
+          domain = this._getDomain(sq.language),
+          urlXpath = './/div[contains(@class,"compTitle")]/h3/a/@href',
+          titleXpath = './/h3//a/@aria-label';
+        if (domain === "search.yahoo.com") {
+          urlXpath = './/div[contains(@class,"compTitle")]/a/@href';
+          titleXpath = './/div[contains(@class,"compTitle")]/a/h3/span';
+        }
+        var blocks = allBlk(h, "div", "algo-sr");
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var bl = blocks[bi];
+          var urlM;
+          if (domain === "search.yahoo.com") {
+            urlM = bl.match(/<div[^>]*class="[^"]*compTitle[^"]*"[^>]*>[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>[\s\S]*?<h3[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/i);
+          } else {
+            urlM = bl.match(/<div[^>]*class="[^"]*compTitle[^"]*"[^>]*>[\s\S]*?<h3[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
+          }
+          if (!urlM) {
+            urlM = bl.match(/<div[^>]*class="[^"]*compTitle[^"]*"[^>]*>[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
+          }
+          if (!urlM) continue;
+          var url = urlM[1],
+            title = st(urlM[2]);
+          if (!url) continue;
+          url = this._parseUrl(url);
+          var cm = bl.match(/<div[^>]*class="[^"]*compText[^"]*"[^>]*>([\s\S]*?)<\/div>/i),
+            content = cm ? st(cm[1]) : "";
+          r.push({ url: url, title: title, content: content });
+        }
+        var sugBlocks = allBlk(h, "div", "AlsoTry");
+        for (var si = 0; si < sugBlocks.length; si++) {
+          var sla = sugBlocks[si].match(/<a[^>]*>([\s\S]*?)<\/a>/gi);
+          if (sla)
+            for (var li = 0; li < sla.length; li++) {
+              var t = st(sla[li]);
+              if (t) r.push({ suggestion: t });
+            }
+        }
+        return r;
+      },
+      _parseUrl(urlString) {
+        var endings = ["/RS", "/RK"],
+          endpositions = [],
+          start = urlString.indexOf("http", urlString.indexOf("/RU=") + 1);
+        for (var ei = 0; ei < endings.length; ei++) {
+          var ep = urlString.lastIndexOf(endings[ei]);
+          if (ep > -1) endpositions.push(ep);
+        }
+        if (start === -1 || endpositions.length === 0) return urlString;
+        var end = Math.min.apply(null, endpositions);
+        return dq(urlString.slice(start, end));
+      },
+    };
+
+    /**
+     * about: { website: "https://www.aol.com", wikidata_id: "Q2407",
+     *   official_api_documentation: null, use_official_api: false,
+     *   require_api_key: false, results: "HTML" }
+     */
+    EG_web.aol = {
+      name: "aol",
+      categories: ["general"],
+      shortcut: "a",
+      paging: !0,
+      safesearch: !0,
+      timeRangeSupport: !0,
+      async request(query, params, sq) {
+        var pts = (sq.language || "all").split("-"),
+          language = pts[0],
+          region = pts[1];
+        if (language && language !== "all") query = query + " language:" + language;
+        if (region) query = query + " loc:" + region;
+        var args = {
+          q: query,
+          b: sq.pageno * 10 + 1,
+          pz: 10,
+        };
+        if (sq.timeRange) {
+          args.fr2 = "time";
+          args.age = sq.timeRange;
+        } else {
+          args.fr2 = "sb-top-search";
+        }
+        var ssMap = { 0: "p", 1: "r", 2: "i" };
+        params.cookies["sB"] = "vm=" + (ssMap[sq.safesearch] || "p");
+        params.url = "https://search.aol.com/aol/search?" + new URLSearchParams(args);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [],
+          webOl = eb(h, '<div id="web"', "</ol>");
+        if (webOl) {
+          var liRe = /<li[^>]*>([\s\S]*?)<\/li>/gi,
+            lm;
+          while ((lm = liRe.exec(webOl)) !== null) {
+            var li = lm[1];
+            if (/class="[^"]*first[^"]*"/i.test(li)) continue;
+            var urlM = li.match(/<h3[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
+            if (!urlM) {
+              urlM = li.match(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
+            }
+            if (!urlM) continue;
+            var url = this._deobfuscate(urlM[1]);
+            if (!url) continue;
+            var title = st(urlM[2]);
+            var cm = li.match(/<div[^>]*class="[^"]*compText[^"]*"[^>]*>([\s\S]*?)<\/div>/i),
+              content = cm ? st(cm[1]) : "";
+            var tm = li.match(/<a[^>]*class="[^"]*thm[^"]*"[^>]*>[\s\S]*?<img[^>]*data-src="([^"]*)"/i) ||
+              li.match(/<img[^>]*class="[^"]*thm[^"]*"[^>]*src="([^"]*)"/i);
+            var thumbnail = tm ? tm[1] : null;
+            r.push({ url: url, title: title, content: content, thumbnail: thumbnail });
+          }
+        }
+        var sugOl = eb(h, '<ol class="searchRightBottom"', "</ol>") ||
+          eb(h, "<ol[^>]*searchRightBottom[^>]*>", "</ol>");
+        if (sugOl) {
+          var sla = sugOl.match(/<a[^>]*>([\s\S]*?)<\/a>/gi);
+          if (sla)
+            for (var si = 0; si < sla.length; si++) {
+              var t = st(sla[si]);
+              if (t) r.push({ suggestion: t });
+            }
+        }
+        return r;
+      },
+      _deobfuscate(urlStr) {
+        if (!urlStr) return null;
+        var parts = urlStr.split("/");
+        for (var pi = 0; pi < parts.length; pi++) {
+          if (parts[pi].indexOf("RU=") === 0) {
+            try {
+              return decodeURIComponent(parts[pi].slice(3).replace(/\+/g, " "));
+            } catch {
+              return parts[pi].slice(3);
+            }
+          }
+        }
+        return urlStr;
+      },
+    };
+
+    /**
+     * about: { website: "https://www.ask.com/", wikidata_id: "Q847564",
+     *   official_api_documentation: null, use_official_api: false,
+     *   require_api_key: false, results: "HTML" }
+     */
+    EG_web.ask = {
+      name: "ask",
+      categories: ["general"],
+      shortcut: "k",
+      paging: !0,
+      maxPage: 5,
+      async request(query, params, sq) {
+        params.url = "https://www.ask.com/web?" + new URLSearchParams({ q: query, page: sq.pageno || 1 });
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [],
+          script = h.match(/<script[^>]*>([\s\S]*?)<\/script>/gi);
+        if (!script) return r;
+        for (var si = 0; si < script.length; si++) {
+          var sc = script[si];
+          if (sc.indexOf("window.MESON.initialState") === -1) continue;
+          var startTag = "window.MESON.initialState = {",
+            endTag = "}};",
+            pos = sc.indexOf(startTag);
+          if (pos === -1) continue;
+          pos += startTag.length - 1;
+          var ep = sc.indexOf(endTag, pos);
+          if (ep === -1) continue;
+          ep += endTag.length - 1;
+          var jsonStr = sc.slice(pos, ep);
+          try {
+            var data = JSON.parse(jsonStr);
+            var results = data?.search?.webResults?.results || [];
+            for (var ri = 0; ri < results.length; ri++) {
+              var item = results[ri],
+                pubdate = item.pubdate_original ? new Date(item.pubdate_original) : null,
+                meta = [item.category_l1, item.catsy].filter(Boolean).join(" | ");
+              r.push({
+                url: (item.url || "").split("&ueid")[0],
+                title: item.title || "",
+                content: item.abstract || "",
+                publishedDate: pubdate,
+                metadata: meta,
+              });
+            }
+          } catch (e) {}
+          break;
+        }
+        return r;
+      },
+    };
+  });
+var EG_science = {},
+  eG_science = j(() => {
+    "use strict";
+
+    function _extractAll(re, str) {
+      let m, r = [];
+      re.lastIndex = 0;
+      while ((m = re.exec(str)) !== null) r.push(m[1]);
+      return r;
+    }
+    function _extractFirst(re, str) {
+      re.lastIndex = 0;
+      let m = re.exec(str);
+      return m ? m[1] : null;
+    }
+    function _htmlToText(v) {
+      return v ? String(v).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").trim() : "";
+    }
+    function _getField(doc, name) {
+      let pat = new RegExp("<[a-z]+\\s+name=\"" + name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\"(?:>([\\s\\S]*?)<\\/[a-z]+>|\\s*\\/>)", "");
+      let m = pat.exec(doc);
+      return m ? m[1] || "" : "";
+    }
+
+    EG_science.wikipedia = {
+      name: "wikipedia",
+      categories: ["general", "science"],
+      shortcut: "wp",
+      paging: false,
+      async request(query, params) {
+        if (query === query.toLowerCase()) query = query.charAt(0).toUpperCase() + query.slice(1);
+        let title = encodeURIComponent(query);
+        params.url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + title;
+        params.raiseForStatus = false;
+        params.softMaxRedirects = 2;
+        return params;
+      },
+      async response(resp) {
+        let results = [];
+        if (resp.status === 404) return results;
+        if (resp.status === 400 && resp.json && resp.json.type === "https://mediawiki.org/wiki/HyperSwitch/errors/bad_request" && resp.json.detail === "title-invalid-characters") return results;
+        if (resp.status >= 400) throw new Error("HTTP " + resp.status);
+        let api = resp.json;
+        let title = _htmlToText((api.titles && api.titles.display) || api.title);
+        let wpLink = api.content_urls.desktop.page;
+        if (api.type !== "standard") results.push({ url: wpLink, title: title, content: api.description || "" });
+        if (api.type === "standard") results.push({ infobox: title, id: wpLink, content: api.extract || "", img_src: api.thumbnail && api.thumbnail.source, urls: [{ title: "Wikipedia", url: wpLink }] });
+        return results;
+      }
+    };
+
+    EG_science.arxiv = {
+      name: "arxiv",
+      categories: ["science", "scientific publications"],
+      shortcut: "ar",
+      paging: true,
+      async request(query, params, searchQuery) {
+        let pageno = (searchQuery && searchQuery.pageno) || 1;
+        let start = (pageno - 1) * 10;
+        params.url = "https://export.arxiv.org/api/query?search_query=all:" + encodeURIComponent(query) + "&start=" + start + "&max_results=10";
+        return params;
+      },
+      async response(resp) {
+        let results = [];
+        let entries = _extractAll(/<entry>([\s\S]*?)<\/entry>/g, resp.text);
+        for (let entry of entries) {
+          let title = _htmlToText(_extractFirst(/<title[^>]*>([\s\S]*?)<\/title>/, entry) || "");
+          let url = _extractFirst(/<id[^>]*>([\s\S]*?)<\/id>/, entry) || "";
+          let summary = _htmlToText(_extractFirst(/<summary[^>]*>([\s\S]*?)<\/summary>/, entry) || "");
+          let authors = _extractAll(/<author>[\s\S]*?<name>([\s\S]*?)<\/name>[\s\S]*?<\/author>/g, entry).map(_htmlToText);
+          let doi = _extractFirst(/<arxiv:doi[^>]*>([\s\S]*?)<\/arxiv:doi>/, entry) || "";
+          let pdf_url = _extractFirst(/<link[^>]*title=['"]pdf['"][^>]*href=['"]([^'"]*)/, entry) || "";
+          let published = _extractFirst(/<published[^>]*>([\s\S]*?)<\/published>/, entry) || "";
+          let journal = _extractFirst(/<arxiv:journal_ref[^>]*>([\s\S]*?)<\/arxiv:journal_ref>/, entry) || "";
+          let tags = _extractAll(/<category[^>]*term=['"]([^'"]*)/, entry);
+          let comments = _extractFirst(/<arxiv:comment[^>]*>([\s\S]*?)<\/arxiv:comment>/, entry) || "";
+          let publishedDate = published ? new Date(published) : null;
+          results.push({ url: url, title: title, content: summary, publishedDate: publishedDate, doi: doi, authors: authors, journal: journal, tags: tags, comments: comments, pdf_url: pdf_url });
+        }
+        return results;
+      }
+    };
+
+    EG_science.base = {
+      name: "base",
+      categories: ["science"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, searchQuery) {
+        let shortcutDict = { "format:": "dcformat:", "author:": "dccreator:", "collection:": "dccollection:", "hdate:": "dchdate:", "contributor:": "dccontributor:", "coverage:": "dccoverage:", "date:": "dcdate:", "abstract:": "dcdescription:", "urls:": "dcidentifier:", "language:": "dclanguage:", "publisher:": "dcpublisher:", "relation:": "dcrelation:", "rights:": "dcrights:", "source:": "dcsource:", "subject:": "dcsubject:", "title:": "dctitle:", "type:": "dcdctype:" };
+        for (let k in shortcutDict) query = query.replace(new RegExp(k.replace(":", "\\:"), "g"), shortcutDict[k]);
+        let offset = ((searchQuery && searchQuery.pageno) || 1) - 1;
+        params.url = "https://api.base-search.net/cgi-bin/BaseHttpSearchInterface.fcgi?func=PerformSearch&query=" + encodeURIComponent(query) + "&boost=oa&hits=10&offset=" + offset;
+        params.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0";
+        return params;
+      },
+      async response(resp) {
+        let results = [];
+        let docs = _extractAll(/<doc>([\s\S]*?)<\/doc>/g, resp.text);
+        for (let doc of docs) {
+          let date = _getField(doc, "dcdate");
+          let title = _getField(doc, "dctitle");
+          let url = _getField(doc, "dclink");
+          let content = _getField(doc, "dcdescription") || "No description available";
+          if (content.length > 300) content = content.substring(0, 300) + "...";
+          let publishedDate = null;
+          if (date) {
+            if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(date) || /^\d{4}-\d{2}-\d{2}$/.test(date)) { publishedDate = new Date(date); if (isNaN(publishedDate.getTime())) publishedDate = null; }
+            else if (/^\d{4}-\d{2}$/.test(date)) { publishedDate = new Date(date + "-01"); if (isNaN(publishedDate.getTime())) publishedDate = null; }
+            else if (/^\d{4}$/.test(date)) { publishedDate = new Date(date + "-01-01"); if (isNaN(publishedDate.getTime())) publishedDate = null; }
+          }
+          let item = { url: url, title: title, content: content };
+          if (publishedDate) item.publishedDate = publishedDate;
+          results.push(item);
+        }
+        return results;
+      }
+    };
+
+    EG_science.crossref = {
+      name: "crossref",
+      categories: ["science", "scientific publications"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, searchQuery) {
+        let offset = 20 * (((searchQuery && searchQuery.pageno) || 1) - 1);
+        params.url = "https://api.crossref.org/works?query=" + encodeURIComponent(query) + "&offset=" + offset;
+        return params;
+      },
+      async response(resp) {
+        let results = [];
+        let data = resp.json;
+        if (!data || !data.message || !data.message.items) return results;
+        for (let record of data.message.items) {
+          if (record.type === "component") continue;
+          let title = "", journal = "";
+          if (record.type === "book-chapter") {
+            title = (record["container-title"] && record["container-title"][0]) || "";
+            if (record.title && record.title[0].toLowerCase().trim() !== title.toLowerCase().trim()) title += " (" + record.title[0] + ")";
+          } else {
+            title = (record.title && record.title[0]) || (record["container-title"] && record["container-title"][0]) || "";
+            journal = record.title ? ((record["container-title"] && record["container-title"][0]) || "") : "";
+          }
+          let item = { title: title, journal: journal, content: record.abstract || "", doi: record.DOI || "", pages: record.page || "", publisher: record.publisher || "", tags: record.subject || [], type: record.type || "", url: record.URL || "", volume: record.volume || "" };
+          if (record.resource && record.resource.primary && record.resource.primary.URL) item.url = record.resource.primary.URL;
+          if (record.published && record.published["date-parts"]) {
+            let dp = record.published["date-parts"][0];
+            item.publishedDate = new Date(dp[0], dp.length > 1 ? dp[1] - 1 : 0, dp.length > 2 ? dp[2] : 1);
+          }
+          item.authors = (record.author || []).map(function (a) { return ((a.given || "") + " " + (a.family || "")).trim(); });
+          item.isbn = record.isbn || (record["isbn-type"] ? record["isbn-type"].map(function (i) { return i.value; }) : []);
+          results.push(item);
+        }
+        return results;
+      }
+    };
+
+    var _s2UIVersion = null;
+
+    EG_science.semantic_scholar = {
+      name: "semantic_scholar",
+      categories: ["science", "scientific publications"],
+      shortcut: "se",
+      paging: true,
+      async request(query, params, searchQuery) {
+        if (!_s2UIVersion) {
+          try {
+            let r = await fetch("https://www.semanticscholar.org", { headers: { "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0" } });
+            let t = await r.text();
+            let m = t.match(/<meta\s+name=["']s2-ui-version["']\s+content=["']([^"']*)/);
+            _s2UIVersion = m ? m[1] : "unknown";
+          } catch (e) { _s2UIVersion = "unknown"; }
+        }
+        params.url = "https://www.semanticscholar.org/api/1/search";
+        params.method = "POST";
+        params.headers["Content-Type"] = "application/json";
+        params.headers["X-S2-UI-Version"] = _s2UIVersion;
+        params.headers["X-S2-Client"] = "webapp-browser";
+        params.data = { queryString: query, page: (searchQuery && searchQuery.pageno) || 1, pageSize: 10, sort: "relevance", getQuerySuggestions: false, authors: [], coAuthors: [], venues: [], performTitleMatch: true };
+        return params;
+      },
+      async response(resp) {
+        let results = [];
+        let data = resp.json;
+        if (!data || !data.results) return results;
+        for (let result of data.results) {
+          let url = (result.primaryPaperLink && result.primaryPaperLink.url) || (result.links && result.links[0]) || null;
+          if (!url && result.alternatePaperLinks && result.alternatePaperLinks[0]) url = result.alternatePaperLinks[0].url;
+          if (!url) url = "https://www.semanticscholar.org/paper/" + result.id;
+          let publishedDate = result.pubDate ? new Date(result.pubDate) : null;
+          let authors = (result.authors || []).map(function (a) { return a[0] && a[0].name; }).filter(Boolean);
+          let pdf_url = "";
+          for (let doc of (result.alternatePaperLinks || [])) { if (doc.linkType !== "crawler" && doc.linkType !== "doi") { pdf_url = doc.url; break; } }
+          let comments = "";
+          if (result.citationStats) comments = result.citationStats.numCitations + " citations from the year " + (result.citationStats.firstCitationVelocityYear || "?") + " to " + (result.citationStats.lastCitationVelocityYear || "?");
+          results.push({ title: result.title && result.title.text || "", url: url, content: _htmlToText(result.paperAbstract && result.paperAbstract.text || ""), journal: (result.venue && result.venue.text) || (result.journal && result.journal.name) || "", doi: result.doiInfo && result.doiInfo.doi || "", tags: result.fieldsOfStudy || [], authors: authors, pdf_url: pdf_url, publishedDate: publishedDate, comments: comments });
+        }
+        return results;
+      }
+    };
+  });
+var EG_media = {},
+  eG_media = j(() => {
+    "use strict";
+
+    function eb(text, start, end) {
+      let i = text.indexOf(start);
+      if (i === -1) return null;
+      i += start.length;
+      let j = text.indexOf(end, i);
+      return j === -1 ? null : text.slice(i, j);
+    }
+
+    const TR = { day: "d", week: "w", month: "m", year: "y" };
+    const BTR = { day: 1440, week: 10080, month: 44640, year: 525600 };
+    const YTR = { day: "Ag", week: "Aw", month: "BA", year: "BQ" };
+    const GSF = { 0: "images", 1: "active", 2: "active" };
+    const YT_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8";
+
+    // ========== 1. Google Images ==========
+    EG_media.googleImages = {
+      name: "googleImages",
+      categories: ["images", "web"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let url =
+          "https://www.google.com/search?q=" +
+          encodeURIComponent(query) +
+          "&tbm=isch&hl=en&asearch=isch&async=_fmt:json,p:1,ijn:" +
+          (pn - 1);
+        if (sq.timeRange && TR[sq.timeRange])
+          url += "&tbs=qdr:" + TR[sq.timeRange];
+        if (sq.safesearch) url += "&safe=" + GSF[sq.safesearch];
+        params.url = url;
+        params.headers["User-Agent"] =
+          "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36";
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        let s = resp.text.indexOf('{"ischj":');
+        if (s === -1) return r;
+        try {
+          let d = JSON.parse(resp.text.slice(s));
+          for (let item of d.ischj?.metadata || []) {
+            let res = item.result || {};
+            let oi = item.original_image || {};
+            let th = item.thumbnail || {};
+            r.push({
+              url: res.referrer_url,
+              title: res.page_title,
+              content: item.text_in_grid?.snippet,
+              imgSrc: oi.url,
+              thumbnail: th.url,
+              resolution:
+                (oi.width || "") + " x " + (oi.height || ""),
+              source: res.site_title,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 2. Bing Images ==========
+    EG_media.bingImages = {
+      name: "bingImages",
+      categories: ["images", "web"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let first = (pn - 1) * 35 + 1;
+        let url =
+          "https://www.bing.com/images/async?q=" +
+          encodeURIComponent(query) +
+          "&async=1&first=" +
+          first +
+          "&count=35";
+        if (sq.timeRange && BTR[sq.timeRange])
+          url += "&qft=filterui:age-lt" + BTR[sq.timeRange];
+        params.url = url;
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        let ul = resp.text.match(
+          /<ul[^>]*class="[^"]*dgControl_list[^"]*"[^>]*>([\s\S]*?)<\/ul>/i
+        );
+        if (!ul) return r;
+        let liRe = /<li\b[^>]*>([\s\S]*?)<\/li>/g;
+        let lm;
+        while ((lm = liRe.exec(ul[1])) !== null) {
+          let li = lm[1];
+          let iusc = li.match(
+            /<a[^>]+class="iusc"[^>]+m="([^"]*)"/
+          );
+          if (!iusc) continue;
+          try {
+            let m = JSON.parse(iusc[1].replace(/&quot;/g, '"'));
+            let t = li.match(
+              /<div class="infnmpt">[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/
+            );
+            let title = t ? t[1].trim() : "";
+            let s = li.match(
+              /<div class="lnkw">[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/
+            );
+            let source = s ? s[1].trim() : "";
+            let fmt = li.match(
+              /<div class="imgpt">[\s\S]*?<span>([\s\S]*?)<\/span>/
+            );
+            let parts = fmt ? fmt[1].trim().split(" · ") : [];
+            r.push({
+              url: m.purl,
+              thumbnail: m.turl,
+              imgSrc: m.murl,
+              content: m.desc || "",
+              title: title,
+              source: source,
+              resolution: parts[0] || "",
+              imgFormat: parts[1] || null,
+            });
+          } catch (e) {}
+        }
+        return r;
+      },
+    };
+
+    // ========== 3. Bing Videos ==========
+    EG_media.bingVideos = {
+      name: "bingVideos",
+      categories: ["videos", "web"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let first = (pn - 1) * 35 + 1;
+        let url =
+          "https://www.bing.com/videos/asyncv2?q=" +
+          encodeURIComponent(query) +
+          "&async=content&first=" +
+          first +
+          "&count=35";
+        if (sq.timeRange && BTR[sq.timeRange]) {
+          url +=
+            "&form=VRFLTR&qft=%20filterui:videoage-lt" +
+            BTR[sq.timeRange];
+        }
+        params.url = url;
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        let dvRe =
+          /<div[^>]+id="[^"]*mc_vtvc_video[^"]*"[^>]*>([\s\S]*?)<\/div>/g;
+        let dm;
+        while ((dm = dvRe.exec(resp.text)) !== null) {
+          let dv = dm[0];
+          let vrh = dv.match(
+            /<div[^>]+class="vrhdata"[^>]+vrhm="([^"]*)"/
+          );
+          if (!vrh) continue;
+          try {
+            let m = JSON.parse(vrh[1].replace(/&quot;/g, '"'));
+            let th = dv.match(
+              /<img[^>]+class="[^"]*rms[^"]*"[^>]+data-src-hq="([^"]*)"/
+            );
+            let info = dv.match(
+              /<div class="mc_vtvc_meta_block">[\s\S]*?<span>([\s\S]*?)<\/span>/
+            );
+            r.push({
+              url: m.murl,
+              thumbnail: th ? th[1] : null,
+              title: m.vt || "",
+              content: info ? info[1].trim() : "",
+              length: m.du || "",
+            });
+          } catch (e) {}
+        }
+        return r;
+      },
+    };
+
+    // ========== 4. YouTube (no API) ==========
+    EG_media.youtubeNoapi = {
+      name: "youtubeNoapi",
+      categories: ["videos", "music"],
+      shortcut: null,
+      paging: true,
+      _nextPageToken: null,
+      async request(query, params, sq) {
+        params.cookies = params.cookies || {};
+        params.cookies.CONSENT = "YES+";
+        if (sq.pageno > 1 && this._nextPageToken) {
+          let token = this._nextPageToken;
+          this._nextPageToken = null;
+          params.url =
+            "https://www.youtube.com/youtubei/v1/search?key=" +
+            YT_KEY;
+          params.method = "POST";
+          params.data = JSON.stringify({
+            context: {
+              client: {
+                clientName: "WEB",
+                clientVersion: "2.20210310.12.01",
+              },
+            },
+            continuation: token,
+          });
+          params.headers["Content-Type"] = "application/json";
+        } else {
+          this._nextPageToken = null;
+          let url =
+            "https://www.youtube.com/results?search_query=" +
+            encodeURIComponent(query) +
+            "&page=" +
+            (sq.pageno || 1);
+          if (sq.timeRange && YTR[sq.timeRange])
+            url +=
+              "&sp=EgII" + YTR[sq.timeRange] + "%253D%253D";
+          params.url = url;
+        }
+        return params;
+      },
+      async response(resp, sq) {
+        if (resp.text.trim().startsWith("{")) {
+          return this._parseContinuation(resp.text);
+        }
+        return this._parseFirstPage(resp.text);
+      },
+      _gt(el) {
+        if (!el) return "";
+        if (el.runs) return el.runs.map((x) => x.text).join("");
+        return el.simpleText || "";
+      },
+      _parseFirstPage(html) {
+        let r = [];
+        let data = eb(html, "ytInitialData = ", ";</script>");
+        if (!data) return r;
+        try {
+          let j = JSON.parse(data);
+          let sections =
+            j?.contents?.twoColumnSearchResultsRenderer
+              ?.primaryContents?.sectionListRenderer
+              ?.contents || [];
+          for (let sec of sections) {
+            if (sec.continuationItemRenderer) {
+              let tok =
+                sec.continuationItemRenderer
+                  ?.continuationEndpoint?.continuationCommand
+                  ?.token;
+              if (tok) this._nextPageToken = tok;
+            }
+            let items =
+              sec?.itemSectionRenderer?.contents || [];
+            for (let vc of items) {
+              let v = vc.videoRenderer;
+              if (!v || !v.videoId) continue;
+              r.push({
+                url:
+                  "https://www.youtube.com/watch?v=" +
+                  v.videoId,
+                title: this._gt(v.title),
+                content: this._gt(v.descriptionSnippet),
+                author: this._gt(v.ownerText),
+                length: this._gt(v.lengthText),
+                thumbnail:
+                  "https://i.ytimg.com/vi/" +
+                  v.videoId +
+                  "/hqdefault.jpg",
+                iframeSrc:
+                  "https://www.youtube-nocookie.com/embed/" +
+                  v.videoId,
+              });
+            }
+          }
+        } catch (e) {}
+        return r;
+      },
+      _parseContinuation(text) {
+        let r = [];
+        try {
+          let j = JSON.parse(text);
+          let items =
+            j?.onResponseReceivedCommands?.[0]
+              ?.appendContinuationItemsAction
+              ?.continuationItems?.[0]
+              ?.itemSectionRenderer?.contents || [];
+          for (let sec of items) {
+            if (!sec.videoRenderer) continue;
+            let v = sec.videoRenderer;
+            let thumbs = v.thumbnail?.thumbnails || [];
+            r.push({
+              url:
+                "https://www.youtube.com/watch?v=" +
+                v.videoId,
+              title:
+                v.title?.runs
+                  ?.map((x) => x.text)
+                  .join("") || "",
+              content:
+                v.descriptionSnippet?.runs
+                  ?.map((x) => x.text)
+                  .join(" ") || "",
+              author:
+                v.ownerText?.runs?.[0]?.text || "",
+              length: v.lengthText?.simpleText || "",
+              thumbnail:
+                thumbs.length > 0
+                  ? thumbs[thumbs.length - 1].url
+                  : "",
+              iframeSrc:
+                "https://www.youtube-nocookie.com/embed/" +
+                v.videoId,
+            });
+          }
+          let tok =
+            j?.onResponseReceivedCommands?.[0]
+              ?.appendContinuationItemsAction
+              ?.continuationItems?.[1]
+              ?.continuationItemRenderer
+              ?.continuationEndpoint?.continuationCommand
+              ?.token;
+          if (tok) this._nextPageToken = tok;
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 5. Vimeo ==========
+    EG_media.vimeo = {
+      name: "vimeo",
+      categories: ["videos"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        params.url =
+          "https://vimeo.com/search/page:" +
+          (sq.pageno || 1) +
+          "?q=" +
+          encodeURIComponent(query);
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        let data = eb(resp.text, "var data = ", ";\n");
+        if (!data) return r;
+        try {
+          let j = JSON.parse(data);
+          let items = j?.filtered?.data || [];
+          for (let result of items) {
+            let type = result.type;
+            let video = result[type];
+            if (!video) continue;
+            let videoid = video.uri?.split("/").pop();
+            if (!videoid) continue;
+            let pics = video.pictures?.sizes || [];
+            r.push({
+              url: "https://vimeo.com/" + videoid,
+              title: video.name || "",
+              content: "",
+              thumbnail:
+                pics.length > 0
+                  ? pics[pics.length - 1].link
+                  : null,
+              publishedDate: video.created_time,
+              iframeSrc:
+                "https://player.vimeo.com/video/" +
+                videoid,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 6. Flickr ==========
+    EG_media.flickr = {
+      name: "flickr",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      apiKey: null,
+      async request(query, params, sq) {
+        let key = this.apiKey;
+        if (!key) return params;
+        params.url =
+          "https://api.flickr.com/services/rest/?method=flickr.photos.search" +
+          "&api_key=" +
+          key +
+          "&text=" +
+          encodeURIComponent(query) +
+          "&sort=relevance" +
+          "&extras=description%2C+owner_name%2C+url_o%2C+url_n%2C+url_z" +
+          "&per_page=15&format=json&nojsoncallback=1&page=" +
+          (sq.pageno || 1);
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          let photos = j?.photos?.photo || [];
+          for (let photo of photos) {
+            let imgSrc =
+              photo.url_o || photo.url_z || null;
+            if (!imgSrc) continue;
+            let thumbSrc =
+              photo.url_n ||
+              photo.url_z ||
+              imgSrc;
+            r.push({
+              url:
+                "https://www.flickr.com/photos/" +
+                photo.owner +
+                "/" +
+                photo.id,
+              title: photo.title || "",
+              imgSrc: imgSrc,
+              thumbnail: thumbSrc,
+              content:
+                photo.description?._content || "",
+              author: photo.ownername || "",
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 7. Unsplash ==========
+    EG_media.unsplash = {
+      name: "unsplash",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        params.url =
+          "https://unsplash.com/napi/search/photos?query=" +
+          encodeURIComponent(query) +
+          "&page=" +
+          (sq.pageno || 1) +
+          "&per_page=20";
+        params.headers["User-Agent"] =
+          "searxng-js/1.0";
+        return params;
+      },
+      _clean(url) {
+        try {
+          let u = new URL(url);
+          u.searchParams.delete("ixid");
+          return u.toString();
+        } catch (e) {
+          return url;
+        }
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          let results = j?.results || [];
+          for (let result of results) {
+            r.push({
+              url: this._clean(
+                result.links?.html
+              ),
+              thumbnail: this._clean(
+                result.urls?.thumb
+              ),
+              imgSrc: this._clean(
+                result.urls?.regular
+              ),
+              title:
+                result.alt_description ||
+                "unknown",
+              content:
+                result.description || "",
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 8. DeviantArt ==========
+    EG_media.deviantart = {
+      name: "deviantart",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      _nextPageUrl: null,
+      async request(query, params, sq) {
+        if (
+          sq.pageno > 1 &&
+          this._nextPageUrl
+        ) {
+          params.url = this._nextPageUrl;
+          this._nextPageUrl = null;
+        } else {
+          this._nextPageUrl = null;
+          params.url =
+            "https://www.deviantart.com/search?q=" +
+            encodeURIComponent(query);
+        }
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        let html = resp.text;
+        let itemRe =
+          /<div class="V_S0t_">\s*<div>\s*<div>\s*<a\s+href="([^"]*)"[^>]*aria-label="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g;
+        let im;
+        while (
+          (im = itemRe.exec(html)) !== null
+        ) {
+          let url = im[1];
+          let title = im[2];
+          let inner = im[3];
+          if (
+            /Watch the artist to view this deviation/.test(
+              inner
+            )
+          )
+            continue;
+          let thumbMatch = inner.match(
+            /<img\s+src="([^"]*)"/
+          );
+          let srcsetMatch = inner.match(
+            /<img[^>]+srcset="([^"]*)"/
+          );
+          let thumbnail = thumbMatch
+            ? thumbMatch[1]
+            : null;
+          let imgSrc = null;
+          if (srcsetMatch) {
+            imgSrc =
+              srcsetMatch[1].split(" ")[0];
+            try {
+              let u = new URL(imgSrc);
+              let p = u.pathname.split("/v1")[0];
+              u.pathname = p;
+              imgSrc = u.toString();
+            } catch (e) {}
+          }
+          r.push({
+            url: url,
+            title: title,
+            imgSrc: imgSrc,
+            thumbnail: thumbnail,
+          });
+        }
+        let cursorRe =
+          /<a\s+class="vQ2brP"[^>]*href="([^"]*)"/;
+        let cm = html.match(cursorRe);
+        if (cm) {
+          let nextUrl = cm[1].replace(
+            /^http:\/\//,
+            "https://"
+          );
+          this._nextPageUrl = nextUrl;
+        }
+        return r;
+      },
+    };
+  });
+var EG_it,
+  eG_it = j(() => {
+    "use strict";
+
+    function humanizeBytes(e) {
+      if (!e) return "0 B";
+      let t = ["B", "KB", "MB", "GB", "TB"],
+        i = 0,
+        n = e;
+      for (; n >= 1024 && i < t.length - 1; ) (n /= 1024), i++;
+      return `${n.toFixed(i > 0 ? 1 : 0)} ${t[i]}`;
+    }
+
+    EG_it.github = {
+      name: "github",
+      categories: ["general", "it", "repos"],
+      shortcut: "gh",
+      paging: !1,
+      async request(e, t, r) {
+        t.url = `https://api.github.com/search/repositories?sort=stars&order=desc&q=${encodeURIComponent(e)}`;
+        return (t.headers["Accept"] = "application/vnd.github.preview.text-match+json"), t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.items) return r;
+        for (let t of e.json.items) {
+          let n = [],
+            o = t.license || {},
+            s = null;
+          o.spdx_id && (s = `https://spdx.org/licenses/${o.spdx_id}.html`),
+            t.language && n.push(t.language),
+            t.description && n.push(t.description),
+            r.push({
+              url: t.html_url,
+              title: t.full_name,
+              content: n.join(" / "),
+              thumbnail: t.owner?.avatar_url,
+              packageName: t.name,
+              maintainer: t.owner?.login,
+              date: new Date(t.updated_at || t.created_at),
+              tags: t.topics || [],
+              popularity: t.stargazers_count,
+              licenseName: o.name,
+              licenseUrl: s,
+              homepage: t.homepage,
+              sourceCodeUrl: t.clone_url,
+            });
+        }
+        return r;
+      },
+    };
+
+    EG_it.reddit = {
+      name: "reddit",
+      categories: ["general", "social media"],
+      shortcut: "rd",
+      paging: !1,
+      async request(e, t, r) {
+        let n = new URLSearchParams({ q: e, limit: 25 });
+        return (t.url = `https://www.reddit.com/search.json?${n}`), t;
+      },
+      async response(e, t) {
+        let r = [],
+          n = [];
+        if (!e.json || !e.json.data) return [];
+        let o = e.json.data.children || [];
+        for (let e of o) {
+          let t = e.data,
+            o = { url: `https://www.reddit.com${t.permalink}`, title: t.title },
+            s = t.thumbnail || "";
+          if (s.startsWith("http://") || s.startsWith("https://"))
+            (o.imgSrc = t.url), (o.thumbnailSrc = s), (o.template = "images.html"), r.push(o);
+          else {
+            let e = t.selftext || "";
+            e.length > 500 && (e = e.slice(0, 500) + "..."),
+              (o.content = e),
+              (o.date = new Date(1e3 * t.created_utc)),
+              n.push(o);
+          }
+        }
+        return [...r, ...n];
+      },
+    };
+
+    EG_it.hackernews = {
+      name: "hackernews",
+      categories: ["general", "it"],
+      shortcut: "hn",
+      paging: !0,
+      timeRangeSupport: !0,
+      async request(e, t, r) {
+        let n = "search",
+          o = null;
+        if (!e)
+          (n = "search_by_date"),
+            (o = { tags: "front_page", page: (r.pageno || 1) - 1 });
+        else {
+          o = {
+            query: e,
+            page: (r.pageno || 1) - 1,
+            hitsPerPage: 30,
+            minWordSizefor1Typo: 4,
+            minWordSizefor2Typos: 8,
+            advancedSyntax: "true",
+            ignorePlurals: "false",
+            minProximity: 7,
+            numericFilters: "[]",
+            tagFilters: JSON.stringify(["story", []]),
+            typoTolerance: "true",
+            queryType: "prefixLast",
+            restrictSearchableAttributes: JSON.stringify(["title", "comment_text", "url", "story_text", "author"]),
+            getRankingInfo: "true",
+          };
+          if (r.timeRange) {
+            n = "search_by_date";
+            let e = { day: 864e5, week: 6048e5, month: 2592e6, year: 31536e6 },
+              t = Math.floor((Date.now() - (e[r.timeRange] || 0)) / 1e3);
+            o.numericFilters = `created_at_i>${t}`;
+          }
+        }
+        return (t.url = `https://hn.algolia.com/api/v1/${n}?${new URLSearchParams(o)}`), t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.hits) return r;
+        for (let t of e.json.hits) {
+          let n = t.objectID,
+            o = t.points || 0,
+            s = t.num_comments || 0,
+            a =
+              t.url ||
+              (t.comment_text || "").replace(/<[^>]*>/g, "") ||
+              (t.story_text || "").replace(/<[^>]*>/g, ""),
+            i = "";
+          (0 !== o || 0 !== s) && (i = `points: ${o} | comments: ${s}`),
+            r.push({
+              title: t.title || `author: ${t.author}`,
+              url: `https://news.ycombinator.com/item?id=${n}`,
+              content: a,
+              metadata: i,
+              author: t.author,
+              date: new Date(1e3 * t.created_at_i),
+            });
+        }
+        return r;
+      },
+    };
+
+    EG_it.pypi = {
+      name: "pypi",
+      categories: ["general", "it", "packages"],
+      shortcut: "py",
+      paging: !0,
+      async request(e, t, r) {
+        let n = new URLSearchParams({ q: e, page: r.pageno || 1 });
+        return (t.url = `https://pypi.org/search/?${n}`), t;
+      },
+      async response(e, t) {
+        let r = [],
+          n = e.text || "",
+          o = /<a[^>]*class="package-snippet"[^>]*>([\s\S]*?)<\/a>/gi,
+          s = null;
+        for (; null !== (s = o.exec(n)); ) {
+          let e = s[1],
+            t = s[0].match(/href="([^"]*)"/),
+            n = e.match(/<span[^>]*class="package-snippet__name"[^>]*>([^<]*)<\/span>/),
+            o = e.match(/<span[^>]*class="package-snippet__version"[^>]*>([^<]*)<\/span>/),
+            a = e.match(/<time[^>]*datetime="([^"]*)"[^>]*>/),
+            i = e.match(/<p[^>]*>([\s\S]*?)<\/p>/),
+            l = t ? "https://pypi.org" + t[1] : "",
+            u = n ? n[1].trim() : "",
+            c = o ? o[1].trim() : "",
+            d = a ? a[1] : "",
+            p = i ? i[1].replace(/<[^>]*>/g, "").trim() : "";
+          r.push({ url: l, title: u, packageName: u, content: p, version: c, date: d ? new Date(d) : null });
+        }
+        return r;
+      },
+    };
+
+    EG_it.archlinux = {
+      name: "archlinux",
+      categories: ["general", "it", "software wikis"],
+      shortcut: "arch",
+      paging: !0,
+      async request(e, t, r) {
+        let n = ((r.pageno || 1) - 1) * 20,
+          o = new URLSearchParams({ search: e, title: "Special:Search", limit: 20, offset: n, profile: "default" });
+        return (t.url = `https://wiki.archlinux.org/index.php?${o}`), t;
+      },
+      async response(e, t) {
+        let r = [],
+          n = e.text || "",
+          o = n.match(/<ul[^>]*class="mw-search-results"[^>]*>([\s\S]*?)<\/ul>/i);
+        if (!o) return r;
+        let s = /<li[^>]*>([\s\S]*?)<\/li>/gi,
+          a = null;
+        for (; null !== (a = s.exec(o[1])); ) {
+          let e = a[1],
+            t = e.match(
+              /<div[^>]*class="mw-search-result-heading"[^>]*>.*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i
+            ),
+            n = e.match(/<div[^>]*class="searchresult"[^>]*>([\s\S]*?)<\/div>/i);
+          if (!t) continue;
+          let o = t[1],
+            s = t[2].replace(/<[^>]*>/g, "").trim(),
+            a = n ? n[1].replace(/<[^>]*>/g, "").trim() : "",
+            i = o.startsWith("http") ? o : `https://wiki.archlinux.org${o.startsWith("/") ? "" : "/"}${o}`;
+          r.push({ url: i, title: s, content: a });
+        }
+        return r;
+      },
+    };
+
+    EG_it.voidlinux = {
+      name: "voidlinux",
+      categories: ["general", "it", "packages"],
+      shortcut: "vl",
+      paging: !1,
+      async request(e, t, r) {
+        let n = e.match(/(aarch64-musl|armv6l-musl|armv7l-musl|x86_64-musl|aarch64|armv6l|armv7l|i686|x86_64)/),
+          o = n ? n[1] : "x86_64";
+        return (
+          n && (e = e.replace(n[1], "").trim()),
+          (t.url = `https://xq-api.voidlinux.org/v1/query/${o}?q=${encodeURIComponent(e)}`),
+          t
+        );
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.data) return r;
+        let n = "https://github.com/void-linux/void-packages",
+          o = {};
+        for (let t of e.json.data) {
+          let e = t.name.replace(/-(32bit|dbg)$/, ""),
+            r = `${n}/tree/master/srcpkgs/${e}`;
+          o[r] || (o[r] = []),
+            o[r].push({
+              title: t.name,
+              content: `${t.short_desc} - ${humanizeBytes(t.filename_size)}`,
+              packageName: t.name,
+              version: `v${t.version}_${t.revision}`,
+              tags: t.repository,
+            });
+        }
+        for (let [e, t] of Object.entries(o))
+          r.push({
+            url: e,
+            title: t.map((e) => e.title).join(" | "),
+            content: t[0].content,
+            packageName: t.map((e) => e.packageName).join(" | "),
+            version: t[0].version,
+            tags: t.map((e) => e.tags),
+          });
+        return r;
+      },
+    };
+
+    EG_it.alpinelinux = {
+      name: "alpinelinux",
+      categories: ["general", "it", "packages"],
+      shortcut: "al",
+      paging: !0,
+      async request(e, t, r) {
+        let n = e.match(/(x86_64|x86|aarch64|armhf|ppc64le|s390x|armv7|riscv64)/),
+          o = n ? n[1] : null;
+        o && (e = e.replace(o, "").trim());
+        let s = new URLSearchParams({ name: `*${e}*`, page: r.pageno || 1, arch: o || "x86_64" });
+        return (t.url = `https://pkgs.alpinelinux.org/packages?${s}`), t;
+      },
+      async response(e, t) {
+        let r = [],
+          n = e.text || "",
+          o = n.match(/<table[\s\S]*?<tbody[\s\S]*?>([\s\S]*?)<\/tbody>/i);
+        if (!o) return r;
+        let s = /<tr[^>]*>([\s\S]*?)<\/tr>/gi,
+          a = null;
+        for (; null !== (a = s.exec(o[1])); ) {
+          let e = a[1],
+            t = (e.match(/<td/g) || []).length;
+          if (t < 9) continue;
+          let n = (cls) => {
+              let t = e.match(
+                new RegExp(`<td[^>]*class="[^"]*${cls}[^"]*"[^>]*>([\\s\\S]*?)<\\/td>`, "i")
+              );
+              return t ? t[1].replace(/<[^>]*>/g, "").trim() : "";
+            },
+            o = (cls) => {
+              let t = e.match(
+                new RegExp(
+                  `<td[^>]*class="[^"]*${cls}[^"]*"[^>]*>.*?<a[^>]*href="([^"]*)"`,
+                  "i"
+                )
+              );
+              return t ? t[1] : "";
+            },
+            s = n("package"),
+            a = o("package"),
+            i = n("bdate"),
+            l = n("version"),
+            u = o("url"),
+            c = n("maintainer"),
+            d = n("license"),
+            p = n("repo");
+          s &&
+            r.push({
+              url: a ? `https://pkgs.alpinelinux.org${a}` : "",
+              title: s,
+              packageName: s,
+              date: i ? new Date(i) : null,
+              version: l,
+              homepage: u,
+              maintainer: c,
+              licenseName: d,
+              tags: [p],
+            });
+        }
+        return r;
+      },
+    };
+  });
+var EG_shop = {},
+  eG_shop = j(() => {
+    "use strict";
+
+    function eb(s, start, end) {
+      let i = s.indexOf(start);
+      if (i === -1) return null;
+      i += start.length;
+      let j = s.indexOf(end, i);
+      return j === -1 ? null : s.slice(i, j);
+    }
+
+    function st(s) {
+      return s
+        ? s.replace(/<[^>]*>/g, "").replace(/&[^;]+;/g, " ").replace(/\s+/g, " ").trim()
+        : "";
+    }
+
+    function de(s) {
+      try {
+        return decodeURIComponent(s.replace(/\+/g, " "));
+      } catch {
+        return s;
+      }
+    }
+
+    function blk(html, tag, cls, from) {
+      var re = new RegExp(
+        "<" + tag + '\\s[^>]*class="[^"]*' + cls + '[^"]*"[^>]*>',
+        "i"
+      );
+      re.lastIndex = from || 0;
+      var m = re.exec(html);
+      if (!m) return null;
+      var d = 1,
+        p = re.lastIndex,
+        ot = "<" + tag,
+        ct = "</" + tag + ">";
+      while (d > 0 && p < html.length) {
+        var no = html.indexOf(ot, p),
+          nc = html.indexOf(ct, p);
+        if (nc === -1)
+          return {
+            html: html.slice(m.index),
+            start: m.index,
+            end: html.length,
+          };
+        if (no !== -1 && no < nc) {
+          d++;
+          p = no + ot.length;
+        } else {
+          d--;
+          p = nc + ct.length;
+        }
+      }
+      return { html: html.slice(m.index, p), start: m.index, end: p };
+    }
+
+    function allBlk(html, tag, cls) {
+      var blocks = [],
+        pos = 0,
+        b;
+      while (pos < html.length) {
+        b = blk(html, tag, cls, pos);
+        if (!b) break;
+        blocks.push(b.html);
+        pos = b.end;
+      }
+      return blocks;
+    }
+
+    EG_shop._1337x = {
+      name: "1337x",
+      categories: ["files"],
+      paging: !0,
+      async request(query, params, sq) {
+        params.url =
+          "https://1337x.to/search/" +
+          encodeURIComponent(query) +
+          "/" +
+          (sq.pageno || 1) +
+          "/";
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [],
+          rows = h.match(/<tr>[\s\S]*?<\/tr>/gi) || [];
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          if (row.indexOf('class="name"') === -1) continue;
+          var anchors = row.match(
+            /<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi
+          );
+          if (!anchors || anchors.length < 2) continue;
+          var lastA = anchors[anchors.length - 1],
+            hrefM = lastA.match(/href="([^"]*)"/),
+            titleM = lastA.match(/>([\s\S]*)<\/a>/);
+          if (!hrefM || !titleM) continue;
+          var url = hrefM[1];
+          if (url.indexOf("http") !== 0) url = "https://1337x.to" + url;
+          var title = st(titleM[1]),
+            seedM = row.match(
+              /<td[^>]*class="[^"]*seeds[^"]*"[^>]*>([\s\S]*?)<\/td>/i
+            ),
+            leechM = row.match(
+              /<td[^>]*class="[^"]*leeches[^"]*"[^>]*>([\s\S]*?)<\/td>/i
+            ),
+            sizeM = row.match(
+              /<td[^>]*class="[^"]*size[^"]*"[^>]*>([\s\S]*?)<\/td>/i
+            );
+          if (title)
+            r.push({
+              url: url,
+              title: title,
+              content: "",
+              seed: seedM ? st(seedM[1]) : "0",
+              leech: leechM ? st(leechM[1]) : "0",
+              filesize: sizeM ? st(sizeM[1]) : "",
+              template: "torrent.html",
+            });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.adobe_stock = {
+      name: "adobe_stock",
+      categories: ["images"],
+      shortcut: "asi",
+      paging: !0,
+      async request(query, params, sq) {
+        var args = {
+          k: query,
+          limit: 10,
+          order: "relevance",
+          search_page: sq.pageno || 1,
+          search_type: "pagination",
+        };
+        var types = [
+          "photo",
+          "illustration",
+          "zip_vector",
+          "template",
+          "3d",
+          "image",
+          "video",
+          "audio",
+        ];
+        for (var t = 0; t < types.length; t++)
+          args["filters[content_type:" + types[t] + "]"] = 1;
+        params.url =
+          "https://stock.adobe.com/de/Ajax/Search?" +
+          new URLSearchParams(args);
+        return params;
+      },
+      async response(resp, sq) {
+        var json, r = [];
+        try {
+          json = JSON.parse(resp.text);
+        } catch (e) {
+          return r;
+        }
+        if (!json.items || typeof json.items !== "object" || Array.isArray(json.items))
+          return r;
+        var keys = Object.keys(json.items);
+        for (var i = 0; i < keys.length; i++) {
+          var item = json.items[keys[i]];
+          r.push({
+            url: item.content_url || "",
+            title: item.title || "",
+            content: item.asset_type || "",
+            img_src: item.content_thumb_extra_large_url || item.thumbnail_url || "",
+            thumbnail_src: item.thumbnail_url || "",
+            resolution:
+              item.content_original_width && item.content_original_height
+                ? item.content_original_width + "x" + item.content_original_height
+                : "",
+            img_format: item.format || "",
+            author: item.author || "",
+            template: "images.html",
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.annas_archive = {
+      name: "annas_archive",
+      categories: ["files", "books"],
+      paging: !0,
+      base_url: "https://annas-archive.gl",
+      async request(query, params, sq) {
+        var args = {
+          q: query,
+          lang: "",
+          content: "",
+          ext: "",
+          sort: "",
+          page: sq.pageno || 1,
+        };
+        var filtered = {};
+        for (var k in args) if (args[k]) filtered[k] = args[k];
+        params.url =
+          this.base_url + "/search?" + new URLSearchParams(filtered);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [];
+        var outerDivs = allBlk(h, "div", "js-aarecord-list-outer");
+        for (var di = 0; di < outerDivs.length; di++) {
+          var outer = outerDivs[di];
+          var flexDivs =
+            outer.match(
+              /<div[^>]*class="[^"]*\bflex\b[^"]*"[^>]*>([\s\S]*?)<\/div>/gi
+            ) || [];
+          for (var fi = 0; fi < flexDivs.length; fi++) {
+            var fd = flexDivs[fi];
+            var hrefM = fd.match(/<a[^>]*href="([^"]*)"/);
+            if (!hrefM) continue;
+            var focusA = fd.match(
+              /<a[^>]*class="[^"]*js-vim-focus[^"]*"[^>]*>([\s\S]*?)<\/a>/i
+            );
+            if (!focusA) continue;
+            var title = st(focusA[1]);
+            if (!title) continue;
+            var url = hrefM[1];
+            if (url.indexOf("http") !== 0) url = this.base_url + url;
+            var contentDiv = fd.match(
+              /<div[^>]*class="relative"[^>]*>[\s\S]*?<div[^>]*class="[^"]*line-clamp[^"]*"[^>]*>([\s\S]*?)<\/div>/i
+            );
+            var content = contentDiv ? st(contentDiv[1]) : "";
+            var imgM = fd.match(/<img[^>]*src="([^"]*)"/);
+            var thumbnail = imgM ? imgM[1] : null;
+            r.push({
+              url: url,
+              title: title,
+              content: content,
+              thumbnail: thumbnail,
+            });
+          }
+        }
+        return r;
+      },
+    };
+
+    EG_shop.apkmirror = {
+      name: "apkmirror",
+      categories: ["files", "apps"],
+      paging: !0,
+      base_url: "https://www.apkmirror.com",
+      async request(query, params, sq) {
+        params.url =
+          this.base_url +
+          "/?post_type=app_release&searchtype=apk&page=" +
+          (sq.pageno || 1) +
+          "&s=" +
+          encodeURIComponent(query);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [];
+        var appRows =
+          h.match(
+            /<div[^>]*class="[^"]*appRow[^"]*"[^>]*>[\s\S]*?<\/div>\s*<\/div>/gi
+          ) || [];
+        for (var i = 0; i < appRows.length; i++) {
+          var row = appRows[i];
+          var linkM = row.match(
+            /<h5[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i
+          );
+          if (!linkM) continue;
+          var url = this.base_url + linkM[1] + "#downloads";
+          var title = st(linkM[2]);
+          var imgM = row.match(/<img[^>]*src="([^"]*)"/);
+          var thumbnail = imgM ? this.base_url + imgM[1] : "";
+          if (title)
+            r.push({
+              url: url,
+              title: title,
+              content: "",
+              thumbnail: thumbnail,
+            });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.apple_app_store = {
+      name: "apple_app_store",
+      categories: ["files", "apps"],
+      paging: !1,
+      async request(query, params, sq) {
+        var explicit = sq.safesearch > 0 ? "No" : "Yes";
+        params.url =
+          "https://itunes.apple.com/search?" +
+          new URLSearchParams({
+            term: query,
+            media: "software",
+            explicit: explicit,
+          });
+        return params;
+      },
+      async response(resp, sq) {
+        var json, r = [];
+        try {
+          json = JSON.parse(resp.text);
+        } catch (e) {
+          return r;
+        }
+        var results = json.results || [];
+        for (var i = 0; i < results.length; i++) {
+          var item = results[i];
+          r.push({
+            url: item.trackViewUrl || "",
+            title: item.trackName || "",
+            content: item.description || "",
+            thumbnail: item.artworkUrl100 || "",
+            publishedDate: item.currentVersionReleaseDate
+              ? new Date(item.currentVersionReleaseDate)
+              : null,
+            author: item.sellerName || "",
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.ebay = {
+      name: "ebay",
+      categories: ["shopping"],
+      paging: !0,
+      base_url: "https://www.ebay.com",
+      async request(query, params, sq) {
+        params.url =
+          this.base_url +
+          "/sch/i.html?_nkw=" +
+          encodeURIComponent(query) +
+          "&_sacat=" +
+          (sq.pageno || 1);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [];
+        var items = allBlk(h, "li", "s-item");
+        for (var i = 0; i < items.length; i++) {
+          var bl = items[i];
+          var urlM = bl.match(
+            /<a[^>]*class="[^"]*s-item__link[^"]*"[^>]*href="([^"]*)"/i
+          );
+          if (!urlM) continue;
+          var url = urlM[1];
+          if (url.indexOf("http") !== 0) url = this.base_url + url;
+          var titleM = bl.match(
+            /<h3[^>]*class="[^"]*s-item__title[^"]*"[^>]*>([\s\S]*?)<\/h3>/i
+          );
+          if (!titleM) continue;
+          var title = st(titleM[1]);
+          if (!title || title === "Shop on eBay") continue;
+          var contentM = bl.match(
+            /<div[^>]*span="SECONDARY_INFO"[^>]*>([\s\S]*?)<\/div>/i
+          );
+          var content = contentM ? st(contentM[1]) : "";
+          var priceM = bl.match(
+            /<span[^>]*class="[^"]*s-item__price[^"]*"[^>]*>([\s\S]*?)<\/span>/i
+          );
+          var price = priceM ? st(priceM[1]) : "";
+          var shippingM = bl.match(
+            /<span[^>]*class="[^"]*s-item__shipping[^"]*"[^>]*>([\s\S]*?)<\/span>/i
+          );
+          var shipping = shippingM ? st(shippingM[1]) : "";
+          var locM = bl.match(
+            /<span[^>]*class="[^"]*s-item__location[^"]*"[^>]*>([\s\S]*?)<\/span>/i
+          );
+          var location = locM ? st(locM[1]) : "";
+          var thumbM = bl.match(
+            /<img[^>]*class="[^"]*s-item__image-img[^"]*"[^>]*src="([^"]*)"/i
+          );
+          var thumbnail = thumbM ? thumbM[1] : "";
+          r.push({
+            url: url,
+            title: title,
+            content: content,
+            price: price,
+            shipping: shipping,
+            source_country: location,
+            thumbnail: thumbnail,
+            template: "products.html",
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.kickass = {
+      name: "kickass",
+      categories: ["files"],
+      paging: !0,
+      base_url: "https://kickasstorrents.to",
+      async request(query, params, sq) {
+        params.url =
+          this.base_url +
+          "/usearch/" +
+          encodeURIComponent(query) +
+          "/" +
+          (sq.pageno || 1) +
+          "/";
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [];
+        var table = eb(h, "<table", "</table>");
+        if (!table || table.indexOf('class="data"') === -1) return r;
+        var rows = table.match(/<tr>[\s\S]*?<\/tr>/gi) || [];
+        for (var i = 1; i < rows.length; i++) {
+          var row = rows[i];
+          if (row.indexOf("cellMainLink") === -1) continue;
+          var urlM = row.match(
+            /<a[^>]*class="[^"]*cellMainLink[^"]*"[^>]*href="([^"]*)"/i
+          );
+          if (!urlM) continue;
+          var url = this.base_url + urlM[1];
+          var titleM = row.match(
+            /<a[^>]*class="[^"]*cellMainLink[^"]*"[^>]*>([\s\S]*?)<\/a>/i
+          );
+          var title = titleM ? st(titleM[1]) : "";
+          if (!title) continue;
+          var contentM = row.match(
+            /<span[^>]*class="[^"]*font11px[^"]*lightgrey[^"]*block[^"]*"[^>]*>([\s\S]*?)<\/span>/i
+          );
+          var seedM = row.match(
+            /<td[^>]*class="[^"]*green[^"]*"[^>]*>([\s\S]*?)<\/td>/i
+          );
+          var leechM = row.match(
+            /<td[^>]*class="[^"]*red[^"]*"[^>]*>([\s\S]*?)<\/td>/i
+          );
+          var sizeM = row.match(
+            /<td[^>]*class="[^"]*nobr[^"]*"[^>]*>([\s\S]*?)<\/td>/i
+          );
+          r.push({
+            url: url,
+            title: title,
+            content: contentM ? st(contentM[1]) : "",
+            seed: seedM ? parseInt(st(seedM[1]), 10) || 0 : 0,
+            leech: leechM ? parseInt(st(leechM[1]), 10) || 0 : 0,
+            filesize: sizeM ? st(sizeM[1]) : "",
+            template: "torrent.html",
+          });
+        }
+        r.sort(function (a, b) {
+          return (b.seed || 0) - (a.seed || 0);
+        });
+        return r;
+      },
+    };
+
+    EG_shop.piratebay = {
+      name: "piratebay",
+      categories: ["files"],
+      paging: !1,
+      trackers: [
+        "udp://tracker.coppersurfer.tk:6969/announce",
+        "udp://9.rarbg.to:2920/announce",
+        "udp://tracker.opentrackr.org:1337",
+        "udp://tracker.internetwarriors.net:1337/announce",
+        "udp://tracker.leechers-paradise.org:6969/announce",
+        "udp://tracker.pirateparty.gr:6969/announce",
+        "udp://tracker.cyberia.is:6969/announce",
+      ],
+      async request(query, params, sq) {
+        params.url =
+          "https://apibay.org/q.php?q=" +
+          encodeURIComponent(query) +
+          "&cat=0";
+        return params;
+      },
+      async response(resp, sq) {
+        var json, r = [];
+        try {
+          json = JSON.parse(resp.text);
+        } catch (e) {
+          return r;
+        }
+        if (!json.length || json[0].name === "No results returned") return r;
+        for (var i = 0; i < json.length; i++) {
+          var res = json[i];
+          var magnet =
+            "magnet:?xt=urn:btih:" +
+            res.info_hash +
+            "&dn=" +
+            encodeURIComponent(res.name);
+          for (var t = 0; t < this.trackers.length; t++)
+            magnet += "&tr=" + encodeURIComponent(this.trackers[t]);
+          var link = "https://thepiratebay.org/description.php?id=" + res.id;
+          var result = {
+            url: link,
+            title: res.name || "",
+            seed: res.seeders || 0,
+            leech: res.leechers || 0,
+            magnetlink: magnet,
+            template: "torrent.html",
+          };
+          if (res.added) {
+            try {
+              result.publishedDate = new Date(
+                parseInt(res.added, 10) * 1000
+              );
+            } catch (e) {}
+          }
+          if (res.size) {
+            var sz = parseInt(res.size, 10);
+            if (sz)
+              result.filesize =
+                (sz / (1024 * 1024 * 1024)).toFixed(2) + " GiB";
+          }
+          r.push(result);
+        }
+        r.sort(function (a, b) {
+          return (b.seed || 0) - (a.seed || 0);
+        });
+        return r;
+      },
+    };
+
+    EG_shop.solidtorrents = {
+      name: "solidtorrents",
+      categories: ["files"],
+      paging: !0,
+      base_url: "https://solidtorrents.to",
+      async request(query, params, sq) {
+        params.url =
+          this.base_url +
+          "/search?" +
+          new URLSearchParams({ q: query, page: sq.pageno || 1 });
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [];
+        var results =
+          h.match(
+            /<li[^>]*class="[^"]*search-result[^"]*"[^>]*>[\s\S]*?<\/li>/gi
+          ) || [];
+        for (var i = 0; i < results.length; i++) {
+          var li = results[i];
+          var torrentM = li.match(
+            /<a[^>]*class="[^"]*dl-torrent[^"]*"[^>]*href="([^"]*)"/i
+          );
+          var magnetM = li.match(
+            /<a[^>]*class="[^"]*dl-magnet[^"]*"[^>]*href="([^"]*)"/i
+          );
+          if (!torrentM || !magnetM) continue;
+          var titleM = li.match(
+            /<h5[^>]*class="[^"]*title[^"]*"[^>]*>([\s\S]*?)<\/h5>/i
+          );
+          if (!titleM) continue;
+          var urlM = li.match(
+            /<h5[^>]*class="[^"]*title[^"]*"[^>]*>[\s\S]*?<a[^>]*href="([^"]*)"/i
+          );
+          var categM = li.match(
+            /<a[^>]*class="[^"]*category[^"]*"[^>]*>([\s\S]*?)<\/a>/i
+          );
+          var stats = li.match(
+            /<div[^>]*class="[^"]*stats[^"]*"[^>]*>[\s\S]*?<\/div>/i
+          );
+          var divs = stats
+            ? stats[0].match(/<div[^>]*>([\s\S]*?)<\/div>/gi)
+            : [];
+          var seed = divs && divs.length > 3 ? st(divs[3]) : "0";
+          var leech = divs && divs.length > 2 ? st(divs[2]) : "0";
+          var size = divs && divs.length > 1 ? st(divs[1]) : "";
+          var dateStr = divs && divs.length > 4 ? st(divs[4]) : "";
+          var result = {
+            url: this.base_url + (urlM ? urlM[1] : ""),
+            title: st(titleM[1]),
+            seed: seed,
+            leech: leech,
+            filesize: size,
+            magnetlink: magnetM[1],
+            torrentfile: torrentM[1],
+            metadata: categM ? st(categM[1]) : "",
+            template: "torrent.html",
+          };
+          if (dateStr) {
+            try {
+              result.publishedDate = new Date(dateStr);
+            } catch (e) {}
+          }
+          r.push(result);
+        }
+        return r;
+      },
+    };
+
+    EG_shop.steam = {
+      name: "steam",
+      categories: ["general"],
+      paging: !1,
+      base_url: "https://store.steampowered.com",
+      async request(query, params, sq) {
+        params.url =
+          this.base_url +
+          "/api/storesearch/?" +
+          new URLSearchParams({ term: query, cc: "us", l: "en" });
+        return params;
+      },
+      async response(resp, sq) {
+        var json, r = [];
+        try {
+          json = JSON.parse(resp.text);
+        } catch (e) {
+          return r;
+        }
+        var items = json.items || [];
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i];
+          var price = item.price || {};
+          var currency = price.currency || "USD";
+          var finalPrice = (price.final || 0) / 100;
+          var platforms = [];
+          var ps = item.platforms || {};
+          for (var p in ps) if (ps[p]) platforms.push(p);
+          var content = "Price: " + finalPrice.toFixed(2) + " " + currency;
+          if (platforms.length)
+            content += " | Platforms: " + platforms.join(", ");
+          r.push({
+            url: this.base_url + "/app/" + item.id,
+            title: item.name || "",
+            content: content,
+            thumbnail: item.tiny_image || "",
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.docker_hub = {
+      name: "docker_hub",
+      categories: ["it", "packages"],
+      paging: !0,
+      base_url: "https://hub.docker.com",
+      async request(query, params, sq) {
+        var page = sq.pageno || 1;
+        params.url =
+          this.base_url +
+          "/api/search/v3/catalog/search?" +
+          new URLSearchParams({
+            query: query,
+            from: String(10 * (page - 1)),
+            size: "10",
+          });
+        return params;
+      },
+      async response(resp, sq) {
+        var json, r = [];
+        try {
+          json = JSON.parse(resp.text);
+        } catch (e) {
+          return r;
+        }
+        var results = json.results || [];
+        for (var i = 0; i < results.length; i++) {
+          var item = results[i];
+          var source = item.source || "";
+          var isOfficial = source === "store" || source === "official";
+          var popInfo = [];
+          var pulls = "";
+          var arches = [];
+          var plans = item.rate_plans || [];
+          for (var pi = 0; pi < plans.length; pi++) {
+            var plan = plans[pi];
+            var repos = plan.repositories || [];
+            if (repos.length && repos[0].pull_count)
+              pulls = repos[0].pull_count + " pulls";
+            var archs = plan.architectures || [];
+            for (var ai = 0; ai < archs.length; ai++) {
+              if (archs[ai].name) arches.push(archs[ai].name);
+            }
+          }
+          if (pulls) popInfo.push(pulls);
+          popInfo.push((item.star_count || 0) + " stars");
+          var logo = item.logo_url || {};
+          var thumb = logo.large || logo.small || "";
+          var pDate = null;
+          try {
+            pDate = new Date(item.updated_at || item.created_at);
+          } catch (e) {}
+          r.push({
+            template: "packages.html",
+            url:
+              this.base_url +
+              (isOfficial ? "/_/" : "/r/") +
+              (item.slug || ""),
+            title: item.name || "",
+            content: item.short_description || "",
+            thumbnail: thumb,
+            package_name: item.name || "",
+            maintainer: (item.publisher || {}).name || "",
+            publishedDate: pDate,
+            popularity: popInfo.join(", "),
+            tags: arches,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.goodreads = {
+      name: "goodreads",
+      categories: ["general"],
+      paging: !0,
+      base_url: "https://www.goodreads.com",
+      async request(query, params, sq) {
+        params.url =
+          this.base_url +
+          "/search?" +
+          new URLSearchParams({ q: query, page: sq.pageno || 1 });
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [];
+        var table = eb(h, "<table", "</table>");
+        if (!table) return r;
+        var rows = table.match(/<tr>[\s\S]*?<\/tr>/gi) || [];
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var urlM = row.match(
+            /<a[^>]*class="[^"]*bookTitle[^"]*"[^>]*href="([^"]*)"/i
+          );
+          if (!urlM) continue;
+          var url = this.base_url + urlM[1];
+          var titleM = row.match(
+            /<a[^>]*class="[^"]*bookTitle[^"]*"[^>]*>([\s\S]*?)<\/a>/i
+          );
+          if (!titleM) continue;
+          var title = st(titleM[1]);
+          if (!title) continue;
+          var thumbM = row.match(
+            /<img[^>]*class="[^"]*bookCover[^"]*"[^>]*src="([^"]*)"/i
+          );
+          var thumbnail = thumbM ? thumbM[1] : "";
+          var authorM = row.match(
+            /<a[^>]*class="[^"]*authorName[^"]*"[^>]*>([\s\S]*?)<\/a>/i
+          );
+          var author = authorM ? st(authorM[1]) : "";
+          var infoM = row.match(
+            /<span[^>]*class="[^"]*uitext[^"]*"[^>]*>([\s\S]*?)<\/span>/i
+          );
+          var info = infoM ? st(infoM[1]) : "";
+          r.push({
+            url: url,
+            title: title,
+            content: info,
+            thumbnail: thumbnail,
+            metadata: author,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.imdb = {
+      name: "imdb",
+      categories: ["movies"],
+      paging: !1,
+      base_url: "https://imdb.com",
+      searchCategories: {
+        nm: "name",
+        tt: "title",
+        kw: "keyword",
+        co: "company",
+        ep: "episode",
+      },
+      async request(query, params, sq) {
+        var q = query.replace(/ /g, "_").toLowerCase();
+        params.url =
+          "https://v2.sg.media-imdb.com/suggestion/" + q[0] + "/" + q + ".json";
+        return params;
+      },
+      async response(resp, sq) {
+        var json, r = [];
+        try {
+          json = JSON.parse(resp.text);
+        } catch (e) {
+          return r;
+        }
+        var entries = json.d || [];
+        for (var i = 0; i < entries.length; i++) {
+          var entry = entries[i];
+          var eid = entry.id || "";
+          var cat = this.searchCategories[eid.slice(0, 2)];
+          if (!cat) continue;
+          var title = entry.l || "";
+          if (entry.q) title += " (" + entry.q + ")";
+          var content = "";
+          if (entry.rank) content += "(" + entry.rank + ") ";
+          if (entry.y) content += entry.y + " - ";
+          if (entry.s) content += entry.s;
+          var imageUrl = null;
+          if (entry.i && entry.i.imageUrl) {
+            var parts = entry.i.imageUrl.split(".");
+            var ext = parts.pop();
+            var base = parts.join(".");
+            if (base.indexOf("_V1_") === -1) base += "_V1_";
+            imageUrl =
+              base + "QL75_UX280_CR0,0,280,414_." + ext;
+          }
+          r.push({
+            title: title,
+            url: this.base_url + "/" + cat + "/" + eid,
+            content: content,
+            thumbnail: imageUrl,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.rottentomatoes = {
+      name: "rottentomatoes",
+      categories: ["movies"],
+      paging: !1,
+      base_url: "https://www.rottentomatoes.com",
+      async request(query, params, sq) {
+        params.url =
+          this.base_url + "/search?search=" + encodeURIComponent(query);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text,
+          r = [];
+        var rows =
+          h.match(
+            /<search-page-media-row[\s\S]*?<\/search-page-media-row>/gi
+          ) || [];
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var urlM = row.match(/<a[^>]*href="([^"]*)"/);
+          if (!urlM) continue;
+          var url = urlM[1];
+          if (url.indexOf("http") !== 0) url = this.base_url + url;
+          var titleM = row.match(
+            /<a[^>]*>[\s\S]*?<img[^>]*alt="([^"]*)"/i
+          );
+          var title = titleM ? st(titleM[1]) : "";
+          if (!title) continue;
+          var thumbM = row.match(/<img[^>]*src="([^"]*)"/i);
+          var thumbnail = thumbM ? thumbM[1] : "";
+          var year = row.match(/releaseyear="([^"]*)"/i);
+          var score = row.match(/tomatometerscore="([^"]*)"/i);
+          var cast = row.match(/cast="([^"]*)"/i);
+          var contentParts = [];
+          if (year && year[1]) contentParts.push("From " + year[1]);
+          if (score && score[1]) contentParts.push("Score: " + score[1]);
+          if (cast && cast[1]) contentParts.push("Starring " + cast[1]);
+          r.push({
+            url: url,
+            title: title,
+            content: contentParts.join(", "),
+            thumbnail: thumbnail,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_shop.openlibrary = {
+      name: "openlibrary",
+      categories: ["general", "books"],
+      paging: !0,
+      base_url: "https://openlibrary.org",
+      search_api: "https://openlibrary.org/search.json",
+      async request(query, params, sq) {
+        params.url =
+          this.search_api +
+          "?" +
+          new URLSearchParams({
+            q: query,
+            page: sq.pageno || 1,
+            limit: "10",
+            fields: "*",
+          });
+        return params;
+      },
+      async response(resp, sq) {
+        var json, r = [];
+        try {
+          json = JSON.parse(resp.text);
+        } catch (e) {
+          return r;
+        }
+        var docs = json.docs || [];
+        for (var i = 0; i < docs.length; i++) {
+          var item = docs[i];
+          var cover = "";
+          if (item.lending_identifier_s)
+            cover =
+              "https://archive.org/services/img/" + item.lending_identifier_s;
+          var published = null;
+          if (item.publish_date && item.publish_date.length) {
+            try {
+              published = new Date(item.publish_date[0]);
+            } catch (e) {}
+          }
+          if (!published && item.first_publish_year) {
+            try {
+              published = new Date(String(item.first_publish_year));
+            } catch (e) {}
+          }
+          var firstSentence = item.first_sentence || [];
+          var content = firstSentence.join(" / ");
+          r.push({
+            url: this.base_url + "/" + item.key,
+            title: item.title || "",
+            content: content,
+            isbn: (item.isbn || []).slice(0, 5),
+            authors: item.author_name || [],
+            thumbnail: cover,
+            publishedDate: published,
+            tags: (item.subject || [])
+              .slice(0, 10)
+              .concat((item.place || []).slice(0, 10)),
+          });
+        }
+        return r;
+      },
+    };
+  });
+var EG_social = {},
+  eG_social = j(() => {
+    "use strict";
+
+    function eb(s, start, end) {
+      let i = s.indexOf(start);
+      if (i === -1) return null;
+      i += start.length;
+      let j = s.indexOf(end, i);
+      return j === -1 ? null : s.slice(i, j);
+    }
+
+    function st(s) {
+      return s
+        ? s
+            .replace(/<[^>]*>/g, "")
+            .replace(/&[^;]+;/g, " ")
+            .replace(/\s+/g, " ")
+            .trim()
+        : "";
+    }
+
+    function hn(n) {
+      n = Number(n);
+      if (n >= 1e6) return (n / 1e6).toFixed(1) + "M";
+      if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
+      return String(n);
+    }
+
+    function fmtDur(sec) {
+      sec = Math.floor(Number(sec));
+      let h = Math.floor(sec / 3600);
+      let m = Math.floor((sec % 3600) / 60);
+      let s = sec % 60;
+      if (h > 0)
+        return (
+          String(h).padStart(2, "0") +
+          ":" +
+          String(m).padStart(2, "0") +
+          ":" +
+          String(s).padStart(2, "0")
+        );
+      return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+    }
+
+    // ========== 1. 9Gag ==========
+    EG_social.nineGag = {
+      name: "nineGag",
+      categories: ["social media"],
+      shortcut: null,
+      paging: true,
+      pageSize: 10,
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let qs = new URLSearchParams({
+          query: query,
+          c: (pn - 1) * this.pageSize,
+        }).toString();
+        params.url = "https://9gag.com/v1/search-posts?" + qs;
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let d = resp.json;
+          let posts = d?.data?.posts || [];
+          for (let result of posts) {
+            let type = result.type;
+            let thumb;
+            if ((result.images?.image700?.height || 0) > 400)
+              thumb = result.images?.imageFbThumbnail?.url;
+            else thumb = result.images?.image700?.url;
+            if (type === "Photo") {
+              r.push({
+                url: result.url,
+                title: result.title,
+                content: result.description,
+                publishedDate: new Date(result.creationTs * 1000).toISOString(),
+                imgSrc: result.images?.image700?.url,
+                thumbnailSrc: thumb,
+              });
+            } else if (type === "Animated") {
+              r.push({
+                url: result.url,
+                title: result.title,
+                content: result.description,
+                publishedDate: new Date(result.creationTs * 1000).toISOString(),
+                thumbnail: thumb,
+                iframeSrc: result.images?.image460sv?.url,
+              });
+            }
+          }
+          if (d?.data?.tags) {
+            for (let tag of d.data.tags) {
+              r.push({ suggestion: tag.key });
+            }
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 2. Bandcamp ==========
+    EG_social.bandcamp = {
+      name: "bandcamp",
+      categories: ["music"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        params.url =
+          "https://bandcamp.com/search?q=" +
+          encodeURIComponent(query) +
+          "&page=" +
+          (sq.pageno || 1);
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        let html = resp.text;
+        let liRe =
+          /<li[^>]*class="[^"]*searchresult[^"]*"[^>]*>([\s\S]*?)<\/li>/g;
+        let lm;
+        while ((lm = liRe.exec(html)) !== null) {
+          let li = lm[0];
+          let linkM = li.match(
+            /<div class="itemurl">\s*<a[^>]*>([\s\S]*?)<\/a>/
+          );
+          if (!linkM) continue;
+          let titleM = li.match(
+            /<div class="heading">\s*<a[^>]*>([\s\S]*?)<\/a>/
+          );
+          let contentM = li.match(
+            /<div class="subhead">([\s\S]*?)<\/div>/
+          );
+          let url = st(linkM[1]);
+          let result = {
+            url: url,
+            title: st(titleM ? titleM[1] : ""),
+            content: st(contentM ? contentM[1] : ""),
+          };
+          let dateM = li.match(
+            /<div class="released">([\s\S]*?)<\/div>/
+          );
+          if (dateM) {
+            let d = st(dateM[1]).replace(/^released\s+/i, "");
+            result.publishedDate = new Date(d).toISOString();
+          }
+          let thumbM = li.match(
+            /<div class="art">\s*<img[^>]*src="([^"]*)"/
+          );
+          if (thumbM) result.thumbnail = thumbM[1];
+          let itemtypeM = li.match(
+            /<div class="itemtype">([\s\S]*?)<\/div>/
+          );
+          if (itemtypeM && url) {
+            let it = st(itemtypeM[1]).toLowerCase();
+            let u = new URL(url);
+            let resultId = u.searchParams.get("search_item_id");
+            if (resultId) {
+              if (it === "album")
+                result.iframeSrc =
+                  "https://bandcamp.com/EmbeddedPlayer/album=" +
+                  resultId +
+                  "/size=large/bgcol=000/linkcol=fff/artwork=small";
+              else if (it === "track")
+                result.iframeSrc =
+                  "https://bandcamp.com/EmbeddedPlayer/track=" +
+                  resultId +
+                  "/size=large/bgcol=000/linkcol=fff/artwork=small";
+            }
+          }
+          r.push(result);
+        }
+        return r;
+      },
+    };
+
+    // ========== 3. BitChute ==========
+    EG_social.bitchute = {
+      name: "bitchute",
+      categories: ["videos"],
+      shortcut: null,
+      paging: true,
+      resultsPerPage: 20,
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let offset = (pn - 1) * this.resultsPerPage;
+        params.url = "https://api.bitchute.com/api/beta/search/videos";
+        params.method = "POST";
+        params.headers["content-type"] = "application/json";
+        params.data = JSON.stringify({
+          offset: offset,
+          limit: this.resultsPerPage,
+          query: query,
+          sensitivity_id: "normal",
+          sort: "new",
+        });
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          for (let item of data?.videos || []) {
+            r.push({
+              title: item.video_name,
+              url: "https://www.bitchute.com/video/" + item.video_id,
+              content: st(item.description),
+              author: item.channel?.channel_name,
+              publishedDate: new Date(
+                item.date_published
+              ).toISOString(),
+              length: item.duration,
+              views: item.view_count,
+              thumbnail: item.thumbnail_url,
+              iframeSrc:
+                "https://www.bitchute.com/embed/" + item.video_id,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 4. Mastodon ==========
+    EG_social.mastodon = {
+      name: "mastodon",
+      categories: ["social media"],
+      shortcut: null,
+      paging: false,
+      baseUrl: "https://mastodon.social",
+      mastodonType: "accounts",
+      pageSize: 40,
+      async request(query, params, sq) {
+        let qs = new URLSearchParams({
+          q: query,
+          resolve: "false",
+          type: this.mastodonType,
+          limit: this.pageSize,
+        }).toString();
+        params.url = this.baseUrl + "/api/v2/search?" + qs;
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          for (let result of data?.[this.mastodonType] || []) {
+            if (this.mastodonType === "accounts") {
+              r.push({
+                url: result.uri,
+                title:
+                  result.username +
+                  " (" +
+                  (result.followers_count || 0) +
+                  " followers)",
+                content: st(result.note),
+                thumbnail: result.avatar,
+                publishedDate: result.created_at
+                  ? new Date(
+                      result.created_at.slice(0, 10)
+                    ).toISOString()
+                  : null,
+              });
+            } else if (this.mastodonType === "hashtags") {
+              let uses = 0,
+                users = 0;
+              for (let entry of result.history || []) {
+                uses += parseInt(entry.uses, 10) || 0;
+                users += parseInt(entry.accounts, 10) || 0;
+              }
+              r.push({
+                url: result.url,
+                title: result.name,
+                content:
+                  "Hashtag has been used " +
+                  uses +
+                  " times by " +
+                  users +
+                  " different users",
+              });
+            }
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 5. Mixcloud ==========
+    EG_social.mixcloud = {
+      name: "mixcloud",
+      categories: ["music"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let offset = (pn - 1) * 10;
+        let qs = new URLSearchParams({ q: query }).toString();
+        params.url =
+          "https://api.mixcloud.com/search/?" +
+          qs +
+          "&type=cloudcast&limit=10&offset=" +
+          offset;
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          for (let result of data?.data || []) {
+            let url = result.url;
+            r.push({
+              url: url,
+              title: result.name,
+              iframeSrc:
+                "https://www.mixcloud.com/widget/iframe/?feed=" + url,
+              thumbnail: result.pictures?.medium,
+              publishedDate: new Date(
+                result.created_time
+              ).toISOString(),
+              content: result.user?.name,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 6. Niconico ==========
+    EG_social.niconico = {
+      name: "niconico",
+      categories: ["videos"],
+      shortcut: null,
+      paging: true,
+      timeRangeSupport: true,
+      timeRangeDict: { day: 1, week: 7, month: 30, year: 365 },
+      async request(query, params, sq) {
+        let qp = new URLSearchParams();
+        qp.set("page", sq.pageno || 1);
+        if (
+          sq.timeRange &&
+          this.timeRangeDict[sq.timeRange]
+        ) {
+          let d = new Date();
+          d.setDate(
+            d.getDate() - this.timeRangeDict[sq.timeRange]
+          );
+          qp.set(
+            "start",
+            d.toISOString().slice(0, 10)
+          );
+        }
+        params.url =
+          "https://www.nicovideo.jp/search/" +
+          encodeURIComponent(query) +
+          "?" +
+          qp.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        let html = resp.text;
+        let itemRe =
+          /<li[^>]*data-video-item[^>]*>([\s\S]*?)<\/li>/g;
+        let im;
+        while ((im = itemRe.exec(html)) !== null) {
+          let li = im[0];
+          let hrefM = li.match(
+            /<a[^>]*class="itemThumbWrap"[^>]*href="([^"]*)"/
+          );
+          if (!hrefM) continue;
+          let videoId = hrefM[1]
+            .split("?")[0]
+            .split("/")
+            .filter(Boolean)
+            .pop();
+          if (!videoId) continue;
+          let url =
+            "https://www.nicovideo.jp/watch/" + videoId;
+          let iframeSrc =
+            "https://embed.nicovideo.jp/watch/" + videoId;
+          let lengthM = li.match(
+            /<span[^>]*class="videoLength"[^>]*>([\s\S]*?)<\/span>/
+          );
+          let length = null;
+          if (lengthM) {
+            let parts = lengthM[1].trim().split(":");
+            if (parts.length >= 2) {
+              let mins = parseInt(parts[0], 10) || 0;
+              let secs = parseInt(parts[1], 10) || 0;
+              length =
+                String(mins).padStart(2, "0") +
+                ":" +
+                String(secs).padStart(2, "0");
+            }
+          }
+          let timeM = li.match(
+            /<p[^>]*class="itemTime"[^>]*>[\s\S]*?<span[^>]*class="time"[^>]*>([\s\S]*?)<\/span>/
+          );
+          let publishedDate = null;
+          if (timeM) {
+            let t = timeM[1].trim();
+            let parsed = new Date(t.replace(
+              /(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2})/,
+              "$1-$2-$3T$4:$5:00"
+            ));
+            if (!isNaN(parsed))
+              publishedDate = parsed.toISOString();
+          }
+          let titleM = li.match(
+            /<p[^>]*class="itemTitle"[^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/
+          );
+          let contentM = li.match(
+            /<p[^>]*class="itemDescription"[^>]*title="([^"]*)"/
+          );
+          let thumbM = li.match(
+            /<img[^>]*class="thumb"[^>]*src="([^"]*)"/
+          );
+          r.push({
+            title: st(titleM ? titleM[1] : ""),
+            content: contentM ? contentM[1] : "",
+            url: url,
+            iframeSrc: iframeSrc,
+            thumbnail: thumbM ? thumbM[1] : null,
+            length: length,
+            publishedDate: publishedDate,
+          });
+        }
+        return r;
+      },
+    };
+
+    // ========== 7. Odysee ==========
+    EG_social.odysee = {
+      name: "odysee",
+      categories: ["videos"],
+      shortcut: null,
+      paging: true,
+      timeRangeSupport: true,
+      resultsPerPage: 20,
+      timeRangeDict: {
+        day: "today",
+        week: "thisweek",
+        month: "thismonth",
+        year: "thisyear",
+      },
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let startIndex = (pn - 1) * this.resultsPerPage;
+        let qp = new URLSearchParams({
+          s: query,
+          size: this.resultsPerPage,
+          from: startIndex,
+          include:
+            "channel,thumbnail_url,title,description,duration,release_time",
+          mediaType: "video",
+        });
+        if (
+          sq.timeRange &&
+          this.timeRangeDict[sq.timeRange]
+        )
+          qp.set(
+            "time_filter",
+            this.timeRangeDict[sq.timeRange]
+          );
+        params.url =
+          "https://lighthouse.odysee.tv/search?" +
+          qp.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          for (let item of data || []) {
+            let name = item.name;
+            let claimId = item.claimId;
+            let url =
+              "https://odysee.com/" +
+              name +
+              ":" +
+              claimId;
+            let releaseDate = item.release_time
+              ? new Date(
+                  item.release_time.split("T")[0]
+                ).toISOString()
+              : null;
+            r.push({
+              title: item.title,
+              url: url,
+              content: item.description || "",
+              author: item.channel,
+              publishedDate: releaseDate,
+              length: fmtDur(item.duration),
+              thumbnail:
+                "https://thumbnails.odycdn.com/optimize/s:390:0/quality:85/plain/" +
+                (item.thumbnail_url || ""),
+              iframeSrc:
+                "https://odysee.com/$/embed/" +
+                name +
+                ":" +
+                claimId,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 8. PeerTube ==========
+    EG_social.peertube = {
+      name: "peertube",
+      categories: ["videos"],
+      shortcut: null,
+      paging: true,
+      baseUrl: "https://peer.tube",
+      timeRangeSupport: true,
+      safesearchTable: { 0: "both", 1: "false", 2: "false" },
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let qp = new URLSearchParams({
+          search: query,
+          searchTarget: "search-index",
+          resultType: "videos",
+          start: (pn - 1) * 10,
+          count: 10,
+          sort: "-match",
+          nsfw: this.safesearchTable[sq.safesearch] || "both",
+        });
+        if (sq.timeRange) {
+          let d = new Date();
+          switch (sq.timeRange) {
+            case "week":
+              d.setDate(d.getDate() - 7);
+              break;
+            case "month":
+              d.setMonth(d.getMonth() - 1);
+              break;
+            case "year":
+              d.setFullYear(d.getFullYear() - 1);
+              break;
+          }
+          qp.set("startDate", d.toISOString().slice(0, 10));
+        }
+        params.url =
+          this.baseUrl.replace(/\/+$/, "") +
+          "/api/v1/search/videos?" +
+          qp.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          for (let result of data?.data || []) {
+            let meta = [
+              result.channel?.displayName,
+              result.channel?.name +
+                "@" +
+                result.channel?.host,
+              (result.tags || []).join(", "),
+            ]
+              .filter(Boolean)
+              .join(" | ");
+            r.push({
+              url: result.url,
+              title: result.name,
+              content: st(result.description || ""),
+              author:
+                result.account?.displayName ||
+                result.channel?.displayName,
+              length: result.duration
+                ? fmtDur(result.duration)
+                : null,
+              views: hn(result.views),
+              publishedDate: result.publishedAt
+                ? new Date(
+                    result.publishedAt
+                  ).toISOString()
+                : null,
+              iframeSrc: result.embedUrl,
+              thumbnail:
+                result.thumbnailUrl ||
+                result.previewUrl ||
+                null,
+              metadata: meta,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 9. Reddit ==========
+    EG_social.reddit = {
+      name: "reddit",
+      categories: ["social media"],
+      shortcut: null,
+      paging: false,
+      pageSize: 25,
+      async request(query, params, sq) {
+        params.url =
+          "https://www.reddit.com/search.json?q=" +
+          encodeURIComponent(query) +
+          "&limit=" +
+          this.pageSize;
+        return params;
+      },
+      async response(resp, sq) {
+        let imgResults = [],
+          textResults = [];
+        try {
+          let data = resp.json;
+          if (!data?.data) return [];
+          for (let post of data.data.children || []) {
+            let d = post.data || {};
+            let params = {
+              url:
+                "https://www.reddit.com" + d.permalink,
+              title: d.title,
+            };
+            let thumb = d.thumbnail;
+            if (
+              thumb &&
+              /^https?:\/\//.test(thumb)
+            ) {
+              params.imgSrc = d.url;
+              params.thumbnailSrc = thumb;
+              imgResults.push(params);
+            } else {
+              let content = d.selftext || "";
+              if (content.length > 500)
+                content = content.slice(0, 500) + "...";
+              params.content = content;
+              params.publishedDate = d.created_utc
+                ? new Date(
+                    d.created_utc * 1000
+                  ).toISOString()
+                : null;
+              textResults.push(params);
+            }
+          }
+        } catch (e) {}
+        return imgResults.concat(textResults);
+      },
+    };
+
+    // ========== 10. SoundCloud ==========
+    EG_social.soundcloud = {
+      name: "soundcloud",
+      categories: ["music"],
+      shortcut: null,
+      paging: true,
+      _clientId: null,
+      resultsPerPage: 10,
+      soundcloudFacet: "model",
+      appLocaleMap: {
+        de: "de",
+        en: "en",
+        es: "es",
+        fr: "fr",
+        oc: "fr",
+        it: "it",
+        nl: "nl",
+        pl: "pl",
+        szl: "pl",
+        pt: "pt_BR",
+        pap: "pt_BR",
+        sv: "sv",
+      },
+      async _getClientId() {
+        try {
+          let resp = await fetch(
+            "https://soundcloud.com",
+            { signal: AbortSignal.timeout(8000) }
+          );
+          let text = await resp.text();
+          let assetRe =
+            /<script[^>]*src="([^"]*\/assets\/[^"]*)"[^>]*>/g;
+          let m,
+            urls = [];
+          while ((m = assetRe.exec(text)) !== null)
+            urls.push(m[1].startsWith("http")
+              ? m[1]
+              : "https://soundcloud.com" + m[1]);
+          for (let i = urls.length - 1; i >= 0; i--) {
+            let jsResp = await fetch(urls[i], {
+              signal: AbortSignal.timeout(8000),
+            });
+            let jsText = await jsResp.text();
+            let cid = jsText.match(
+              /client_id:"([^"]*)"/
+            );
+            if (cid) return cid[1];
+          }
+        } catch (e) {}
+        return null;
+      },
+      async request(query, params, sq) {
+        if (!this._clientId)
+          this._clientId = await this._getClientId();
+        if (!this._clientId) return params;
+        let pn = sq.pageno || 1;
+        let lang = (sq.language || "en").split("-")[0];
+        let qp = new URLSearchParams({
+          q: query,
+          offset: (pn - 1) * this.resultsPerPage,
+          limit: this.resultsPerPage,
+          facet: this.soundcloudFacet,
+          client_id: this._clientId,
+          app_locale:
+            this.appLocaleMap[lang] || "en",
+        });
+        params.url =
+          "https://api-v2.soundcloud.com/search?" +
+          qp.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          for (let result of data?.collection || []) {
+            if (
+              result.kind !== "track" &&
+              result.kind !== "playlist"
+            )
+              continue;
+            let url = result.permalink_url;
+            if (!url) continue;
+            let content = [
+              result.description,
+              result.label_name,
+            ]
+              .filter(Boolean)
+              .join(" / ");
+            let res = {
+              url: url,
+              title: result.title,
+              content: content,
+              publishedDate: result.last_modified
+                ? new Date(
+                    result.last_modified
+                  ).toISOString()
+                : null,
+              iframeSrc:
+                "https://w.soundcloud.com/player/?url=" +
+                encodeURIComponent(result.uri || ""),
+            };
+            let thumb =
+              result.artwork_url ||
+              result.user?.avatar_url;
+            if (thumb) res.thumbnail = thumb;
+            let dur = parseInt(
+              result.duration || 0,
+              10
+            );
+            if (dur > 0) res.length = fmtDur(dur / 1000);
+            res.views =
+              result.playback_count || null;
+            res.author =
+              result.user?.full_name || null;
+            r.push(res);
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 11. Spotify ==========
+    EG_social.spotify = {
+      name: "spotify",
+      categories: ["music"],
+      shortcut: null,
+      paging: true,
+      apiClientId: null,
+      apiClientSecret: null,
+      _token: null,
+      async _getToken() {
+        if (
+          !this.apiClientId ||
+          !this.apiClientSecret
+        )
+          return null;
+        try {
+          let auth = btoa(
+            this.apiClientId +
+              ":" +
+              this.apiClientSecret
+          );
+          let resp = await fetch(
+            "https://accounts.spotify.com/api/token",
+            {
+              method: "POST",
+              headers: {
+                Authorization: "Basic " + auth,
+                "Content-Type":
+                  "application/x-www-form-urlencoded",
+              },
+              body: "grant_type=client_credentials",
+              signal: AbortSignal.timeout(8000),
+            }
+          );
+          let data = await resp.json();
+          return data.access_token || null;
+        } catch (e) {
+          return null;
+        }
+      },
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let offset = (pn - 1) * 20;
+        params.url =
+          "https://api.spotify.com/v1/search?q=" +
+          encodeURIComponent(query) +
+          "&type=track&offset=" +
+          offset;
+        if (!this._token)
+          this._token = await this._getToken();
+        if (this._token)
+          params.headers["Authorization"] =
+            "Bearer " + this._token;
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          for (let result of data?.tracks?.items ||
+            []) {
+            if (result.type !== "track") continue;
+            r.push({
+              url: result.external_urls?.spotify,
+              title: result.name,
+              iframeSrc:
+                "https://embed.spotify.com/?uri=spotify:track:" +
+                result.id,
+              content:
+                (result.artists?.[0]?.name || "") +
+                " - " +
+                (result.album?.name || "") +
+                " - " +
+                result.name,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 12. Tootfinder ==========
+    EG_social.tootfinder = {
+      name: "tootfinder",
+      categories: ["social media"],
+      shortcut: null,
+      paging: false,
+      async request(query, params, sq) {
+        params.url =
+          "https://www.tootfinder.ch/rest/api/search/" +
+          encodeURIComponent(query);
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let jsonStr = "";
+          for (let line of resp.text.split("\n")) {
+            if (line.trim().startsWith("[{")) {
+              jsonStr = line;
+              break;
+            }
+          }
+          if (!jsonStr) return r;
+          let data = JSON.parse(jsonStr);
+          for (let result of data) {
+            let thumbnail = null;
+            let attachments =
+              result.media_attachments || [];
+            for (let att of attachments) {
+              if (att.type === "image") {
+                thumbnail = att.preview_url;
+                break;
+              }
+            }
+            let title =
+              result.card?.title ||
+              st(result.content).slice(0, 75);
+            r.push({
+              url: result.url,
+              title: title,
+              content: st(result.content),
+              thumbnail: thumbnail,
+              publishedDate: result.created_at
+                ? new Date(
+                    result.created_at
+                  ).toISOString()
+                : null,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 13. Rumble ==========
+    EG_social.rumble = {
+      name: "rumble",
+      categories: ["videos"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let qp = new URLSearchParams({ q: query });
+        if ((sq.pageno || 1) > 1)
+          qp.set("page", sq.pageno);
+        params.url =
+          "https://rumble.com/search/video?" +
+          qp.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        let html = resp.text;
+        let liRe =
+          /<li[^>]*class="[^"]*video-listing-entry[^"]*"[^>]*>([\s\S]*?)<\/li>/g;
+        let lm;
+        while ((lm = liRe.exec(html)) !== null) {
+          let li = lm[0];
+          let hrefM = li.match(
+            /<a[^>]*class="video-item--a"[^>]*href="([^"]*)"/
+          );
+          if (!hrefM) continue;
+          let url =
+            "https://rumble.com" + hrefM[1];
+          let thumbM = li.match(
+            /<img[^>]*class="video-item--img"[^>]*src="([^"]*)"/
+          );
+          let titleM = li.match(
+            /<h3[^>]*class="video-item--title"[^>]*>([\s\S]*?)<\/h3>/
+          );
+          let timeM = li.match(
+            /<time[^>]*class="video-item--meta video-item--time"[^>]*datetime="([^"]*)"/
+          );
+          let earnedM = li.match(
+            /<span[^>]*class="video-item--meta video-item--earned"[^>]*data-value="([^"]*)"/
+          );
+          let viewsM = li.match(
+            /<span[^>]*class="video-item--meta video-item--views"[^>]*data-value="([^"]*)"/
+          );
+          let rumblesM = li.match(
+            /<span[^>]*class="video-item--meta video-item--rumbles"[^>]*data-value="([^"]*)"/
+          );
+          let authorM = li.match(
+            /<div[^>]*class="ellipsis-1"[^>]*>([\s\S]*?)<\/div>/
+          );
+          let lengthM = li.match(
+            /<span[^>]*class="video-item--duration"[^>]*data-value="([^"]*)"/
+          );
+          let views = viewsM ? viewsM[1] : "0";
+          let rumbles = rumblesM
+            ? rumblesM[1]
+            : "0";
+          let content =
+            views +
+            " views - " +
+            rumbles +
+            " rumbles";
+          if (earnedM)
+            content +=
+              " - $" + earnedM[1];
+          let publishedDate = null;
+          if (timeM) {
+            let d = new Date(
+              timeM[1].replace(
+                /(\+\d{2})(\d{2})$/,
+                "$1:$2"
+              )
+            );
+            if (!isNaN(d))
+              publishedDate = d.toISOString();
+          }
+          r.push({
+            url: url,
+            title: st(
+              titleM ? titleM[1] : ""
+            ),
+            content: content,
+            author: st(
+              authorM ? authorM[1] : ""
+            ),
+            length: lengthM
+              ? lengthM[1]
+              : null,
+            publishedDate: publishedDate,
+            thumbnail: thumbM
+              ? thumbM[1]
+              : null,
+          });
+        }
+        return r;
+      },
+    };
+
+    // ========== 14. Invidious ==========
+    EG_social.invidious = {
+      name: "invidious",
+      categories: ["videos", "music"],
+      shortcut: null,
+      paging: true,
+      timeRangeSupport: true,
+      baseUrl: [],
+      timeRangeDict: {
+        day: "today",
+        week: "week",
+        month: "month",
+        year: "year",
+      },
+      async request(query, params, sq) {
+        let baseUrl;
+        if (Array.isArray(this.baseUrl) && this.baseUrl.length > 0)
+          baseUrl =
+            this.baseUrl[
+              Math.floor(
+                Math.random() * this.baseUrl.length
+              )
+            ];
+        else baseUrl = this.baseUrl;
+        if (!baseUrl)
+          return params;
+        params._invidiousBaseUrl = baseUrl;
+        params.url =
+          baseUrl +
+          "/api/v1/search?q=" +
+          encodeURIComponent(query) +
+          "&page=" +
+          (sq.pageno || 1);
+        if (
+          sq.timeRange &&
+          this.timeRangeDict[sq.timeRange]
+        )
+          params.url +=
+            "&date=" +
+            this.timeRangeDict[sq.timeRange];
+        if (sq.language && sq.language !== "all") {
+          let parts = sq.language.split("-");
+          if (parts.length === 2)
+            params.url +=
+              "&range=" + parts[1];
+        }
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          let baseUrl =
+            resp._invidiousBaseUrl ||
+            "https://invidious.snopyta.org";
+          for (let result of data || []) {
+            if (result.type !== "video") continue;
+            let videoId = result.videoId;
+            if (!videoId) continue;
+            let thumbs =
+              result.videoThumbnails || [];
+            let thumb =
+              thumbs.find(
+                (t) =>
+                  t.quality === "sddefault"
+              )?.url || "";
+            if (
+              thumb &&
+              !/^https?:\/\//.test(thumb)
+            )
+              thumb = baseUrl + thumb;
+            let length = null;
+            if (result.lengthSeconds) {
+              length = fmtDur(
+                result.lengthSeconds
+              );
+            }
+            r.push({
+              url:
+                baseUrl + "/watch?v=" + videoId,
+              title: result.title || "",
+              content:
+                result.description || "",
+              length: length,
+              views: hn(result.viewCount),
+              author: result.author,
+              publishedDate: result.published
+                ? new Date(
+                    result.published * 1000
+                  ).toISOString()
+                : null,
+              iframeSrc:
+                baseUrl +
+                "/embed/" +
+                videoId,
+              thumbnail: thumb,
+            });
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+
+    // ========== 15. Piped ==========
+    EG_social.piped = {
+      name: "piped",
+      categories: ["general"],
+      shortcut: null,
+      paging: true,
+      backendUrl: "https://pipedapi.kavin.rocks",
+      frontendUrl: "https://piped.video",
+      pipedFilter: "all",
+      _nextPage: null,
+      async request(query, params, sq) {
+        let pn = sq.pageno || 1;
+        let qp = new URLSearchParams({
+          q: query,
+          filter: this.pipedFilter,
+        });
+        let path = "/search";
+        if (pn > 1 && this._nextPage) {
+          let np = this._nextPage;
+          this._nextPage = null;
+          path = "/nextpage/search";
+          qp.set("nextpage", np);
+        } else {
+          this._nextPage = null;
+        }
+        params.url =
+          this.backendUrl + path + "?" + qp.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let r = [];
+        try {
+          let data = resp.json;
+          for (let result of data?.items || []) {
+            let uploaded = result.uploaded;
+            let item = {
+              url:
+                this.frontendUrl +
+                (result.url || ""),
+              title: result.title || "",
+              publishedDate:
+                uploaded !== undefined &&
+                uploaded !== null &&
+                uploaded !== -1
+                  ? new Date(uploaded).toISOString()
+                  : null,
+              iframeSrc:
+                this.frontendUrl +
+                "/embed" +
+                (result.url || ""),
+              views: hn(result.views),
+            };
+            if (result.duration)
+              item.length = fmtDur(
+                result.duration
+              );
+            if (
+              this.pipedFilter === "videos"
+            ) {
+              item.content =
+                result.shortDescription ||
+                "";
+              item.thumbnail =
+                result.thumbnail || "";
+            } else if (
+              this.pipedFilter ===
+              "music_songs"
+            ) {
+              item.thumbnail =
+                result.thumbnail || "";
+              item.content =
+                result.uploaderName || "";
+            }
+            r.push(item);
+          }
+          if (data?.nextpage) {
+            EG_social.piped._nextPage =
+              data.nextpage;
+          }
+        } catch (e) {}
+        return r;
+      },
+    };
+  });
+var EG_dev = {},
+  eG_dev = j(() => {
+    "use strict";
+
+    function eb(text, start, end) {
+      let i = text.indexOf(start);
+      if (i === -1) return null;
+      i += start.length;
+      let j = text.indexOf(end, i);
+      return j === -1 ? null : text.slice(i, j);
+    }
+
+    function st(s) {
+      return s ? s.replace(/<[^>]*>/g, "").replace(/&[^;]+;/g, " ").replace(/\s+/g, " ").trim() : "";
+    }
+
+    EG_dev.npm = {
+      name: "npm",
+      categories: ["it", "packages"],
+      shortcut: null,
+      paging: !0,
+      async request(query, params, sq) {
+        let args = new URLSearchParams({
+          from: ((sq.pageno || 1) - 1) * 25,
+          q: query,
+          size: 25,
+        });
+        params.url = "https://api.npms.io/v2/search?" + args.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!resp.json || !resp.json.results) return results;
+        for (let entry of resp.json.results) {
+          let pkg = entry.package;
+          let tags = [...Object.keys(entry.flags || {}), ...(pkg.keywords || [])];
+          results.push({
+            url: pkg.links?.npm,
+            title: pkg.name,
+            packageName: pkg.name,
+            content: pkg.description || "",
+            version: pkg.version,
+            maintainer: pkg.author?.name,
+            publishedDate: pkg.date ? new Date(pkg.date) : null,
+            tags: tags,
+            homepage: pkg.links?.homepage,
+            sourceCodeUrl: pkg.links?.repository,
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.crates = {
+      name: "crates",
+      categories: ["it", "packages", "cargo"],
+      shortcut: null,
+      paging: !0,
+      async request(query, params, sq) {
+        let args = new URLSearchParams({ page: sq.pageno || 1, q: query, per_page: 10 });
+        params.url = "https://crates.io/api/v1/crates?" + args.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!resp.json || !resp.json.crates) return results;
+        for (let pkg of resp.json.crates) {
+          let links = {};
+          let linkedTerms = { homepage: "Project homepage", documentation: "Documentation", repository: "Source code" };
+          for (let [k, v] of Object.entries(linkedTerms)) {
+            if (pkg[k]) links[v] = pkg[k];
+          }
+          results.push({
+            url: "https://crates.io/crates/" + pkg.name,
+            title: pkg.name,
+            packageName: pkg.name,
+            tags: pkg.keywords,
+            content: pkg.description,
+            version: pkg.newest_version || pkg.max_version || pkg.max_stable_version,
+            publishedDate: pkg.updated_at ? new Date(pkg.updated_at) : null,
+            links: links,
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.pkg_go_dev = {
+      name: "pkg_go_dev",
+      categories: ["packages", "it"],
+      shortcut: null,
+      paging: !1,
+      base_url: "https://pkg.go.dev",
+      async request(query, params, sq) {
+        let args = new URLSearchParams({ q: query, m: "package", limit: 50 });
+        params.url = "https://pkg.go.dev/search?" + args.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [],
+          h = resp.text || "",
+          snippetRe = /<div[^>]*class="[^"]*SearchSnippet[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<\/div>\s*<\/div>/gi,
+          m;
+        while ((m = snippetRe.exec(h)) !== null) {
+          let blk = m[1],
+            urlM = blk.match(/<a[^>]*href="([^"]*)"[^>]*>/),
+            titleM = blk.match(/<h2[^>]*>.*?<a[^>]*>([\s\S]*?)<\/a>/),
+            spanM = blk.match(/<span[^>]*>\(([^)]*)\)/),
+            versionM = blk.match(/class="[^"]*SearchSnippet-infoLabel[^"]*"[\s\S]*?<strong[^>]*>([^<]*)<\/strong>/),
+            updatedM = blk.match(/snippet-published[\s\S]*?<strong[^>]*>([^<]*)<\/strong>/),
+            contentM = blk.match(/class="SearchSnippet-synopsis"[^>]*>([\s\S]*?)<\/p>/),
+            popularityM = blk.match(/SearchSnippet-infoLabel[\s\S]*?<a[^>]*>.*?<strong[^>]*>([^<]*)<\/strong>/),
+            licenseM = blk.match(/snippet-license[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([^<]*)<\/a>/);
+          let url = urlM ? "https://pkg.go.dev" + urlM[1] : "",
+            title = titleM ? st(titleM[1]) : "",
+            pkgName = spanM ? spanM[1] : title,
+            version = versionM ? versionM[1].trim() : "",
+            updated = updatedM ? updatedM[1].trim() : "",
+            content = contentM ? st(contentM[1]) : "",
+            popularity = popularityM ? parseInt(popularityM[1].replace(/,/g, ""), 10) : null,
+            licenseName = licenseM ? licenseM[2] : "",
+            licenseUrl = licenseM ? "https://pkg.go.dev" + licenseM[1] : "";
+          if (!title) continue;
+          results.push({
+            url: url,
+            title: title,
+            packageName: pkgName,
+            content: content,
+            version: version,
+            popularity: popularity,
+            licenseName: licenseName,
+            licenseUrl: licenseUrl,
+            publishedDate: updated ? new Date(updated) : null,
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.metacpan = {
+      name: "metacpan",
+      categories: ["it", "packages"],
+      shortcut: "cpan",
+      paging: !0,
+      number_of_results: 20,
+      async request(query, params, sq) {
+        let queryData = {
+          query: {
+            multi_match: {
+              type: "most_fields",
+              fields: ["documentation", "documentation.*"],
+              analyzer: "camelcase",
+              query: query,
+            },
+          },
+          filter: {
+            bool: {
+              must: [
+                { exists: { field: "documentation" } },
+                { term: { status: "latest" } },
+                { term: { indexed: 1 } },
+                { term: { authorized: 1 } },
+              ],
+            },
+          },
+          sort: [{ _score: { order: "desc" } }, { date: { order: "desc" } }],
+          _source: ["documentation", "abstract"],
+          size: 20,
+          from: ((sq.pageno || 1) - 1) * 20,
+        };
+        params.url = "https://fastapi.metacpan.org/v1/file/_search";
+        params.method = "POST";
+        params.headers["Content-Type"] = "application/json";
+        params.data = JSON.stringify(queryData);
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!resp.json || !resp.json.hits || !resp.json.hits.hits) return results;
+        for (let hit of resp.json.hits.hits) {
+          let fields = hit._source;
+          let module = fields.documentation;
+          results.push({
+            url: "https://metacpan.org/pod/" + module,
+            title: module,
+            content: fields.abstract || "",
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.rubygems = {
+      name: "rubygems",
+      categories: ["it", "packages"],
+      shortcut: "gem",
+      paging: !1,
+      async request(query, params, sq) {
+        let args = new URLSearchParams({ query: query });
+        params.url = "https://rubygems.org/api/v1/search.json?" + args.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!Array.isArray(resp.json)) return results;
+        for (let gem of resp.json) {
+          results.push({
+            url: gem.project_uri,
+            title: gem.name,
+            packageName: gem.name,
+            content: gem.info || "",
+            version: gem.version,
+            authors: gem.authors,
+            publishedDate: gem.version_created_at ? new Date(gem.version_created_at) : null,
+            homepage: gem.homepage_uri,
+            sourceCodeUrl: gem.source_code_uri,
+            licenseName: Array.isArray(gem.licenses) ? gem.licenses.join(", ") : gem.licenses || "",
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.elasticsearch = {
+      name: "elasticsearch",
+      categories: ["general"],
+      shortcut: null,
+      paging: !0,
+      base_url: "http://localhost:9200",
+      username: "",
+      password: "",
+      index: "",
+      query_type: "match",
+      custom_query_json: {},
+      show_metadata: !1,
+      page_size: 10,
+      async request(query, params, sq) {
+        if (!this.index) return params;
+        if (this.username && this.password) {
+          params.headers["Authorization"] = "Basic " + btoa(this.username + ":" + this.password);
+        }
+        let args = { from: ((sq.pageno || 1) - 1) * this.page_size, size: this.page_size };
+        let queryBody = this._buildQuery(query);
+        Object.assign(queryBody, args);
+        params.url = this.base_url + "/" + this.index + "/_search";
+        params.method = "GET";
+        params.headers["Content-Type"] = "application/json";
+        params.data = JSON.stringify(queryBody);
+        return params;
+      },
+      _buildQuery(query) {
+        let qt = this.query_type;
+        if (qt === "match") {
+          let sep = query.indexOf(":");
+          if (sep === -1) return { query: { match: { _all: { query: query } } } };
+          let key = query.slice(0, sep),
+            value = query.slice(sep + 1);
+          return { query: { match: { [key]: { query: value } } } };
+        }
+        if (qt === "simple_query_string") {
+          return { query: { simple_query_string: { query: query } } };
+        }
+        if (qt === "term") {
+          let sep = query.indexOf(":");
+          if (sep === -1) return { query: { term: { _all: query } } };
+          let key = query.slice(0, sep),
+            value = query.slice(sep + 1);
+          return { query: { term: { [key]: value } } };
+        }
+        if (qt === "terms") {
+          let sep = query.indexOf(":");
+          if (sep === -1) return { query: { terms: { _all: [query] } } };
+          let key = query.slice(0, sep),
+            values = query.slice(sep + 1).split(",");
+          return { query: { terms: { [key]: values } } };
+        }
+        if (qt === "custom") {
+          let cq = JSON.parse(JSON.stringify(this.custom_query_json));
+          let sep = query.indexOf(":");
+          let key = sep === -1 ? query : query.slice(0, sep),
+            value = sep === -1 ? "" : query.slice(sep + 1);
+          let result = {};
+          for (let [k, v] of Object.entries(cq)) {
+            let nk = k === "{{KEY}}" ? key : k;
+            let nv = v === "{{VALUE}}" ? value : v;
+            result[nk] = nv;
+          }
+          return result;
+        }
+        return {};
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!resp.json) return results;
+        if (resp.json.error) return results;
+        if (!resp.json.hits || !resp.json.hits.hits) return results;
+        for (let hit of resp.json.hits.hits) {
+          let kvmap = {};
+          for (let [key, value] of Object.entries(hit._source)) {
+            kvmap[key] = String(value);
+          }
+          if (this.show_metadata) {
+            kvmap._metadata = JSON.stringify({ index: hit._index, id: hit._id, score: hit._score });
+          }
+          results.push({
+            title: kvmap.title || kvmap.name || kvmap._id || "",
+            url: kvmap.url || kvmap.link || "",
+            content: Object.entries(kvmap)
+              .filter(([k]) => !k.startsWith("_"))
+              .map(([k, v]) => k + ": " + v)
+              .join(" | "),
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.solr = {
+      name: "solr",
+      categories: ["general"],
+      shortcut: null,
+      paging: !0,
+      base_url: "http://localhost:8983",
+      collection: "",
+      rows: 10,
+      sort: "",
+      field_list: "name",
+      default_fields: "",
+      query_fields: "",
+      async request(query, params, sq) {
+        if (!this.collection) return params;
+        let qp = { q: query, rows: this.rows };
+        if (this.field_list) qp.fl = this.field_list;
+        if (this.query_fields) qp.qf = this.query_fields;
+        if (this.default_fields) qp.df = this.default_fields;
+        if (this.sort) qp.sort = this.sort;
+        if (sq.pageno) qp.start = this.rows * ((sq.pageno || 1) - 1);
+        params.url = this.base_url + "/solr/" + this.collection + "/select?" + new URLSearchParams(qp).toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!resp.json || resp.json.error) return results;
+        if (!resp.json.response || !resp.json.response.docs) return results;
+        for (let doc of resp.json.response.docs) {
+          let kvmap = {};
+          for (let [key, value] of Object.entries(doc)) {
+            kvmap[key] = String(value);
+          }
+          if (Object.keys(kvmap).length === 0) continue;
+          results.push({
+            title: kvmap.title || kvmap.name || kvmap.id || "",
+            url: kvmap.url || kvmap.link || "",
+            content: Object.entries(kvmap)
+              .map(([k, v]) => k + ": " + v)
+              .join(" | "),
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.meilisearch = {
+      name: "meilisearch",
+      categories: ["general"],
+      shortcut: null,
+      paging: !0,
+      base_url: "http://localhost:7700",
+      index: "",
+      auth_key: "",
+      facet_filters: [],
+      async request(query, params, sq) {
+        if (!this.index) return params;
+        if (this.auth_key) params.headers["Authorization"] = this.auth_key;
+        params.headers["Content-Type"] = "application/json";
+        params.url = this.base_url + "/indexes/" + this.index + "/search";
+        params.method = "POST";
+        let data = { q: query, offset: 10 * ((sq.pageno || 1) - 1), limit: 10 };
+        if (this.facet_filters.length > 0) data.facetFilters = this.facet_filters;
+        params.data = JSON.stringify(data);
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!resp.json || !resp.json.hits) return results;
+        for (let row of resp.json.hits) {
+          let kvmap = {};
+          for (let [key, value] of Object.entries(row)) {
+            kvmap[key] = String(value);
+          }
+          results.push({
+            title: kvmap.title || kvmap.name || kvmap.id || "",
+            url: kvmap.url || kvmap.link || "",
+            content: Object.entries(kvmap)
+              .map(([k, v]) => k + ": " + v)
+              .join(" | "),
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.mongodb = {
+      name: "mongodb",
+      categories: ["it", "db"],
+      shortcut: null,
+      paging: !0,
+      engine_type: "offline",
+      host: "127.0.0.1",
+      port: 27017,
+      username: "",
+      password: "",
+      database: "",
+      collection: "",
+      key: "",
+      exact_match_only: !1,
+      results_per_page: 20,
+      async request(query, params, sq) {
+        params.url = "data:text/plain,";
+        params._mongoQuery = query;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          const { MongoClient } = await import("mongodb");
+          let uri = "mongodb://" + this.host + ":" + this.port;
+          if (this.username && this.password) uri = "mongodb://" + encodeURIComponent(this.username) + ":" + encodeURIComponent(this.password) + "@" + this.host + ":" + this.port;
+          let client = new MongoClient(uri);
+          await client.connect();
+          let db = client.db(this.database);
+          let coll = db.collection(this.collection);
+          let filter;
+          if (this.exact_match_only) {
+            filter = { [this.key]: { $eq: params._mongoQuery } };
+          } else {
+            filter = { [this.key]: { $regex: params._mongoQuery, $options: "im" } };
+          }
+          let cursor = coll.find(filter).skip(((sq.pageno || 1) - 1) * this.results_per_page).limit(this.results_per_page);
+          let docs = await cursor.toArray();
+          for (let row of docs) {
+            delete row._id;
+            let kvmap = {};
+            for (let [k, v] of Object.entries(row)) kvmap[k] = String(v);
+            results.push({
+              title: kvmap.title || kvmap.name || "",
+              url: kvmap.url || kvmap.link || "",
+              content: Object.entries(kvmap).map(([k, v]) => k + ": " + v).join(" | "),
+            });
+          }
+          await client.close();
+        } catch (e) {
+          console.error("[mongodb] Error:", e.message);
+        }
+        return results;
+      },
+    };
+
+    EG_dev.mysql_server = {
+      name: "mysql_server",
+      categories: ["it", "db"],
+      shortcut: null,
+      paging: !0,
+      engine_type: "offline",
+      host: "127.0.0.1",
+      port: 3306,
+      database: "",
+      username: "",
+      password: "",
+      query_str: "",
+      limit: 10,
+      async request(query, params, sq) {
+        params.url = "data:text/plain,";
+        params._sqlQuery = query;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!this.query_str) return results;
+        try {
+          const mysql = await import("mysql2/promise");
+          let conn = await mysql.createConnection({
+            host: this.host,
+            port: this.port,
+            database: this.database,
+            user: this.username,
+            password: this.password,
+          });
+          let queryToRun = this.query_str + " LIMIT " + this.limit + " OFFSET " + ((sq.pageno || 1) - 1) * this.limit;
+          let [rows, fields] = await conn.execute(queryToRun, [params._sqlQuery]);
+          for (let row of rows) {
+            let kvmap = {};
+            for (let [k, v] of Object.entries(row)) kvmap[k] = String(v);
+            results.push({
+              title: kvmap.title || kvmap.name || "",
+              url: kvmap.url || kvmap.link || "",
+              content: Object.entries(kvmap).map(([k, v]) => k + ": " + v).join(" | "),
+            });
+          }
+          await conn.end();
+        } catch (e) {
+          console.error("[mysql_server] Error:", e.message);
+        }
+        return results;
+      },
+    };
+
+    EG_dev.postgresql = {
+      name: "postgresql",
+      categories: ["it", "db"],
+      shortcut: null,
+      paging: !0,
+      engine_type: "offline",
+      host: "127.0.0.1",
+      port: "5432",
+      database: "",
+      username: "",
+      password: "",
+      query_str: "",
+      limit: 10,
+      async request(query, params, sq) {
+        params.url = "data:text/plain,";
+        params._sqlQuery = query;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!this.query_str) return results;
+        try {
+          const { Pool } = await import("pg");
+          let pool = new Pool({
+            host: this.host,
+            port: parseInt(this.port),
+            database: this.database,
+            user: this.username,
+            password: this.password,
+          });
+          let queryToRun = this.query_str + " LIMIT " + this.limit + " OFFSET " + ((sq.pageno || 1) - 1) * this.limit;
+          let res = await pool.query(queryToRun, [params._sqlQuery]);
+          for (let row of res.rows) {
+            let kvmap = {};
+            for (let [k, v] of Object.entries(row)) kvmap[k] = String(v);
+            results.push({
+              title: kvmap.title || kvmap.name || "",
+              url: kvmap.url || kvmap.link || "",
+              content: Object.entries(kvmap).map(([k, v]) => k + ": " + v).join(" | "),
+            });
+          }
+          await pool.end();
+        } catch (e) {
+          console.error("[postgresql] Error:", e.message);
+        }
+        return results;
+      },
+    };
+
+    EG_dev.sqlite = {
+      name: "sqlite",
+      categories: ["it", "db"],
+      shortcut: null,
+      paging: !0,
+      engine_type: "offline",
+      database: "",
+      query_str: "",
+      result_type: "KeyValue",
+      limit: 10,
+      async request(query, params, sq) {
+        params.url = "data:text/plain,";
+        params._sqlQuery = query;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!this.database || !this.query_str) return results;
+        try {
+          const Database = (await import("better-sqlite3")).default;
+          let db = new Database(this.database, { readonly: !0 });
+          let wildcard = "%" + params._sqlQuery.replace(/ /g, "%") + "%";
+          let queryToRun = this.query_str + " LIMIT " + this.limit + " OFFSET " + ((sq.pageno || 1) - 1) * this.limit;
+          let stmt = db.prepare(queryToRun);
+          let rows = stmt.all({ query: params._sqlQuery, wildcard: wildcard });
+          for (let row of rows) {
+            let kvmap = {};
+            for (let [k, v] of Object.entries(row)) kvmap[k] = String(v);
+            if (this.result_type === "MainResult") {
+              results.push({
+                title: kvmap.title || kvmap.name || "",
+                url: kvmap.url || "",
+                content: kvmap.content || kvmap.description || "",
+              });
+            } else {
+              results.push({
+                title: kvmap.title || kvmap.name || "",
+                url: kvmap.url || kvmap.link || "",
+                content: Object.entries(kvmap).map(([k, v]) => k + ": " + v).join(" | "),
+              });
+            }
+          }
+          db.close();
+        } catch (e) {
+          console.error("[sqlite] Error:", e.message);
+        }
+        return results;
+      },
+    };
+
+    EG_dev.valkey_server = {
+      name: "valkey_server",
+      categories: ["it", "db"],
+      shortcut: null,
+      paging: !1,
+      engine_type: "offline",
+      host: "127.0.0.1",
+      port: 6379,
+      password: "",
+      db: 0,
+      exact_match_only: !0,
+      async request(query, params, sq) {
+        params.url = "data:text/plain,";
+        params._valkeyQuery = query;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          const Valkey = (await import("valkey")).default;
+          let client = new Valkey({ host: this.host, port: this.port, db: this.db, password: this.password || null });
+          await client.connect();
+          let q = params._valkeyQuery;
+          if (!this.exact_match_only) {
+            let keys = await client.scan(0, { MATCH: "*" + q + "*" });
+            for (let key of keys[1]) {
+              let type = await client.type(key);
+              let res = null;
+              if (type === "hash") res = await client.hgetall(key);
+              else if (type === "list") {
+                let items = await client.lrange(key, 0, -1);
+                res = Object.fromEntries(items.map((v, i) => [i, v]));
+              }
+              if (res) {
+                res.valkey_key = key;
+                results.push({
+                  title: key,
+                  url: "",
+                  content: Object.entries(res).map(([k, v]) => k + ": " + v).join(" | "),
+                });
+              }
+            }
+          } else {
+            let kvmap = await client.hgetall(q);
+            if (kvmap && Object.keys(kvmap).length > 0) {
+              results.push({
+                title: q,
+                url: "",
+                content: Object.entries(kvmap).map(([k, v]) => k + ": " + v).join(" | "),
+              });
+            } else if (q.includes(" ")) {
+              let parts = q.split(" ");
+              let qset = parts[0],
+                rest = parts.slice(1).join(" ");
+              let cursor = "0";
+              do {
+                let scanRes = await client.hscan(cursor, qset, { MATCH: "*" + rest + "*" });
+                cursor = scanRes[0];
+                for (let row of scanRes[1]) {
+                  results.push({
+                    title: qset + ":" + row[0],
+                    url: "",
+                    content: row[0] + ": " + row[1],
+                  });
+                }
+              } while (cursor !== "0");
+            }
+          }
+          await client.disconnect();
+        } catch (e) {
+          console.error("[valkey_server] Error:", e.message);
+        }
+        return results;
+      },
+    };
+
+    EG_dev.mariadb_server = {
+      name: "mariadb_server",
+      categories: ["it", "db"],
+      shortcut: null,
+      paging: !0,
+      engine_type: "offline",
+      host: "127.0.0.1",
+      port: 3306,
+      database: "",
+      username: "",
+      password: "",
+      query_str: "",
+      limit: 10,
+      async request(query, params, sq) {
+        params.url = "data:text/plain,";
+        params._sqlQuery = query;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!this.query_str) return results;
+        try {
+          const mariadb = await import("mariadb");
+          let conn = await mariadb.createConnection({
+            host: this.host,
+            port: this.port,
+            database: this.database,
+            user: this.username,
+            password: this.password,
+          });
+          let queryToRun = this.query_str + " LIMIT " + this.limit + " OFFSET " + ((sq.pageno || 1) - 1) * this.limit;
+          let rows = await conn.query(queryToRun, [params._sqlQuery]);
+          for (let row of rows) {
+            let kvmap = {};
+            for (let [k, v] of Object.entries(row)) kvmap[k] = String(v);
+            results.push({
+              title: kvmap.title || kvmap.name || "",
+              url: kvmap.url || kvmap.link || "",
+              content: Object.entries(kvmap).map(([k, v]) => k + ": " + v).join(" | "),
+            });
+          }
+          await conn.end();
+        } catch (e) {
+          console.error("[mariadb_server] Error:", e.message);
+        }
+        return results;
+      },
+    };
+
+    EG_dev.gitea = {
+      name: "gitea",
+      categories: ["it", "repos"],
+      shortcut: null,
+      paging: !0,
+      base_url: "",
+      sort: "updated",
+      order: "desc",
+      page_size: 10,
+      async request(query, params, sq) {
+        if (!this.base_url) return params;
+        let args = new URLSearchParams({
+          q: query,
+          limit: this.page_size,
+          sort: this.sort,
+          order: this.order,
+          page: sq.pageno || 1,
+        });
+        params.url = this.base_url + "/api/v1/repos/search?" + args.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!resp.json || !resp.json.data) return results;
+        for (let item of resp.json.data) {
+          let content = [item.language, item.description].filter(Boolean).join(" / ");
+          results.push({
+            url: item.html_url,
+            title: item.full_name,
+            content: content,
+            thumbnail: item.avatar_url || item.owner?.avatar_url,
+            packageName: item.name,
+            maintainer: item.owner?.username,
+            publishedDate: new Date(item.updated_at || item.created_at),
+            tags: item.topics || [],
+            popularity: item.stars_count,
+            homepage: item.website,
+            sourceCodeUrl: item.clone_url,
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.gitlab = {
+      name: "gitlab",
+      categories: ["it", "repos"],
+      shortcut: null,
+      paging: !0,
+      base_url: "",
+      api_path: "api/v4/projects",
+      async request(query, params, sq) {
+        if (!this.base_url) return params;
+        let args = new URLSearchParams({ search: query, page: sq.pageno || 1 });
+        params.url = this.base_url + "/" + this.api_path + "?" + args.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!Array.isArray(resp.json)) return results;
+        for (let item of resp.json) {
+          results.push({
+            url: item.web_url,
+            title: item.name,
+            content: item.description,
+            thumbnail: item.avatar_url,
+            packageName: item.name,
+            maintainer: item.namespace?.name,
+            publishedDate: new Date(item.last_activity_at || item.created_at),
+            tags: item.tag_list || [],
+            popularity: item.star_count,
+            homepage: item.readme_url,
+            sourceCodeUrl: item.http_url_to_repo,
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.sourcehut = {
+      name: "sourcehut",
+      categories: ["it", "repos"],
+      shortcut: null,
+      paging: !0,
+      base_url: "https://sr.ht/projects",
+      sourcehut_sort_order: "recently-updated",
+      async request(query, params, sq) {
+        let args = new URLSearchParams({
+          search: query,
+          page: sq.pageno || 1,
+          sort: this.sourcehut_sort_order,
+        });
+        params.url = this.base_url + "?" + args.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [],
+          h = resp.text || "",
+          eventListM = h.match(/<div[^>]*class="[^"]*event-list[^"]*"[^>]*>([\s\S]*?)<\/div>\s*$/);
+        if (!eventListM) {
+          let altM = h.match(/<div[^>]*class="[^"]*event-list[^"]*"[^>]*>([\s\S]*?)<\/div>\s*(?:<div|$)/);
+          if (!altM) return results;
+          eventListM = altM;
+        }
+        let eventRe = /<div[^>]*class="[^"]*\bevent\b[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<\/div>/gi,
+          m;
+        while ((m = eventRe.exec(eventListM[1])) !== null) {
+          let blk = m[1],
+            hrefs = blk.match(/<a[^>]*href="([^"]*)"[^>]*>/g),
+            urlM = blk.match(/<a[^>]*href="(\/[^"]*)"[^>]*>([\s\S]*?)<\/a>\s*$/m),
+            h4M = blk.match(/<h4[^>]*>([\s\S]*?)<\/h4>/),
+            pM = blk.match(/<p[^>]*>([\s\S]*?)<\/p>/),
+            tagsM = blk.match(/class="[^"]*tags[^"]*"[\s\S]*?<\/div>/);
+          if (!h4M) continue;
+          let h4 = h4M[1],
+            links = h4.match(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g);
+          if (!links) continue;
+          let maintainer = "",
+            projectName = "",
+            projectUrl = "";
+          if (links.length >= 2) {
+            let firstLink = links[0].match(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/),
+              secondLink = links[1].match(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/);
+            if (secondLink) {
+              projectUrl = this.base_url.replace("/projects", "") + secondLink[1];
+              projectName = st(secondLink[2]);
+            }
+            if (firstLink) maintainer = st(firstLink[2]).replace(/^~/, "");
+          } else if (links.length === 1) {
+            let singleLink = links[0].match(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/);
+            if (singleLink) {
+              projectUrl = this.base_url.replace("/projects", "") + singleLink[1];
+              projectName = st(singleLink[2]);
+            }
+          }
+          let content = pM ? st(pM[1]) : "",
+            tags = [];
+          if (tagsM) {
+            let tagRe = /<a[^>]*>#([^<]*)<\/a>/gi,
+              tagM;
+            while ((tagM = tagRe.exec(tagsM[0])) !== null) tags.push(tagM[1]);
+          }
+          if (!projectName) continue;
+          results.push({
+            url: projectUrl,
+            title: projectName,
+            packageName: projectName,
+            content: content,
+            maintainer: maintainer,
+            tags: tags,
+          });
+        }
+        return results;
+      },
+    };
+
+    EG_dev.docker_hub = {
+      name: "docker_hub",
+      categories: ["it", "packages"],
+      shortcut: null,
+      paging: !0,
+      base_url: "https://hub.docker.com",
+      page_size: 10,
+      async request(query, params, sq) {
+        let args = new URLSearchParams({
+          query: query,
+          from: this.page_size * ((sq.pageno || 1) - 1),
+          size: this.page_size,
+        });
+        params.url = this.base_url + "/api/search/v3/catalog/search?" + args.toString();
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (!resp.json || !resp.json.results) return results;
+        for (let item of resp.json.results) {
+          let isOfficial = item.source === "store" || item.source === "official";
+          let popInfo = [item.star_count + " stars"];
+          let archs = [];
+          for (let rp of item.rate_plans || []) {
+            let pullCount = rp.repositories?.[0]?.pull_count;
+            if (pullCount) popInfo.unshift(pullCount + " pulls");
+            for (let arch of rp.architectures || []) {
+              if (arch.name) archs.push(arch.name);
+            }
+          }
+          results.push({
+            url: this.base_url + (isOfficial ? "/_/" : "/r/") + item.slug,
+            title: item.name,
+            content: item.short_description,
+            thumbnail: item.logo_url?.large || item.logo_url?.small,
+            packageName: item.name,
+            maintainer: item.publisher?.name,
+            publishedDate: new Date(item.updated_at || item.created_at),
+            popularity: popInfo.join(", "),
+            tags: archs,
+          });
+        }
+        return results;
+      },
+    };
+  });
+var EG_news = {},
+  eG_news = j(() => {
+    "use strict";
+
+    function stripHtml(e) {
+      return e.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+    }
+
+    function yahooParseUrl(e) {
+      let t = e.indexOf("/RU=");
+      if (t === -1) return e;
+      let i = e.indexOf("http", t + 1);
+      if (i === -1) return e;
+      let n = ["/RS", "/RK"],
+        r = [];
+      for (let s of n) {
+        let o = e.lastIndexOf(s);
+        o > -1 && r.push(o);
+      }
+      return r.length === 0 ? e : decodeURIComponent(e.slice(i, Math.min(...r)));
+    }
+
+    function googleNewsDecodeUrl(e) {
+      let t = e.split("?")[0].split("/").pop();
+      if (!t) return e;
+      try {
+        let i = atob(t.replace(/-/g, "+").replace(/_/g, "/") + "====");
+        let n = i.indexOf("http");
+        if (n === -1) return e;
+        i = i.slice(n);
+        let r = i.indexOf("\xd2");
+        return r > -1 ? i.slice(0, r) : i;
+      } catch {
+        return e;
+      }
+    }
+
+    function matchAllHtml(e, t) {
+      let i = [],
+        n = new RegExp(t, "gi"),
+        r;
+      while ((r = n.exec(e)) !== null) i.push(r);
+      return i;
+    }
+
+    function humanizeBytes(e) {
+      if (!e) return "0 B";
+      let t = ["B", "KB", "MB", "GB", "TB"],
+        i = 0,
+        n = e;
+      for (; n >= 1024 && i < t.length - 1; ) (n /= 1024), i++;
+      return `${n.toFixed(i > 0 ? 1 : 0)} ${t[i]}`;
+    }
+
+    EG_news.reuters = {
+      name: "reuters",
+      categories: ["news"],
+      shortcut: "reu",
+      paging: !0,
+      timeRangeSupport: !0,
+      async request(e, t, r) {
+        let i = { keyword: e, offset: (t.pageno - 1) * 20, orderby: "relevance", size: 20, website: "reuters" };
+        if (t.timeRange) {
+          let n = { day: 1, week: 7, month: 30, year: 365 }[t.timeRange] || 7;
+          i.start_date = new Date(Date.now() - n * 864e5).toISOString();
+        }
+        t.url = `https://www.reuters.com/pf/api/v3/content/fetch/articles-by-search-v2?query=${encodeURIComponent(JSON.stringify(i))}`;
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.result) return r;
+        for (let t of e.json.result.articles || []) {
+          let i = t.thumbnail || {};
+          r.push({
+            url: "https://www.reuters.com" + t.canonical_url,
+            title: t.web,
+            content: t.description || "",
+            date: t.display_time ? new Date(t.display_time) : null,
+            thumbnail: i.resizer_url ? i.resizer_url + "&height=80" : null,
+            metadata: t.kicker?.name || null,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.yahoo_news = {
+      name: "yahoo_news",
+      categories: ["news"],
+      shortcut: null,
+      paging: !0,
+      async request(e, t, r) {
+        let i = (t.pageno - 1) * 10 + 1;
+        t.url = `https://news.search.yahoo.com/search?p=${encodeURIComponent(e)}&b=${i}`;
+        return t;
+      },
+      async response(e, t) {
+        let r = [],
+          i = e.body || "";
+        let n = matchAllHtml(i, '<ol[^>]*class="[^"]*searchCenterMiddle[^"]*"[^>]*>.*?</ol>');
+        if (n.length === 0) return r;
+        let s = matchAllHtml(n[0][0], "<li[^>]*>.*?</li>");
+        for (let e of s) {
+          let t = e[0];
+          let n = t.match(/<h4[^>]*><a[^>]*href="([^"]*)"[^>]*>/),
+            s = t.match(/<h4[^>]*><a[^>]*>(.*?)<\/a>/),
+            o = t.match(/<p[^>]*>(.*?)<\/p>/),
+            a = t.match(/<img[^>]*data-src="([^"]*)"/),
+            l = t.match(/<span[^>]*class="[^"]*s-time[^"]*"[^>]*>(.*?)<\/span>/);
+          let c = n ? yahooParseUrl(n[1]) : null;
+          if (!c) continue;
+          let u = {
+            url: c,
+            title: s ? stripHtml(s[1]) : "",
+            content: o ? stripHtml(o[1]) : "",
+            thumbnail: a ? a[1] : null,
+          };
+          if (l) {
+            let e = l[1].match(/(\d+)\s*(year|month|week|day|hour|minute)/);
+            if (e) {
+              let t = { minute: 6e4, hour: 36e5, day: 864e5, week: 6048e5, month: 2592e6, year: 31536e6 };
+              u.date = new Date(Date.now() - parseInt(e[1]) * (t[e[2]] || 864e5));
+            } else {
+              let t = new Date(l[1]);
+              if (!isNaN(t)) u.date = t;
+            }
+          }
+          r.push(u);
+        }
+        let o = matchAllHtml(i, '<div[^>]*class="[^"]*AlsoTry[^"]*"[^>]*>.*?</div>');
+        if (o.length > 0) {
+          let e = matchAllHtml(o[0][0], "<td[^>]*>(.*?)</td>");
+          for (let t of e) r.push({ suggestion: stripHtml(t[1]) });
+        }
+        return r;
+      },
+    };
+
+    EG_news.bing_news = {
+      name: "bing_news",
+      categories: ["news"],
+      shortcut: null,
+      paging: !0,
+      timeRangeSupport: !0,
+      async request(e, t, r) {
+        let i = (t.pageno - 1) * 10;
+        let n = { q: e, InfiniteScroll: 1, first: i + 1, SFX: t.pageno - 1, form: "PTFTNR" };
+        if (t.timeRange) {
+          let s = { day: 'interval="4"', week: 'interval="7"', month: 'interval="9"' };
+          n.qft = s[t.timeRange] || 'interval="9"';
+        }
+        t.url = "https://www.bing.com/news/infinitescrollajax?" + new URLSearchParams(n).toString();
+        return t;
+      },
+      async response(e, t) {
+        let r = [],
+          i = e.body || "";
+        let n = matchAllHtml(i, '<div[^>]*class="[^"]*newsitem[^"]*"[^>]*>.*?</div>\\s*</div>');
+        for (let e of n) {
+          let t = e[0];
+          let n = t.match(/<a[^>]*class="title"[^>]*href="([^"]*)"[^>]*data-author="([^"]*)"[^>]*>(.*?)<\/a>/);
+          if (!n) continue;
+          let s = n[1],
+            o = stripHtml(n[3]);
+          let a = t.match(/<div[^>]*class="snippet"[^>]*>(.*?)<\/div>/);
+          let l = a ? stripHtml(a[1]) : "";
+          let c = [];
+          let u = t.match(/<span[^>]*aria-label="([^"]*)"[^>]*>/);
+          if (u) c.push(u[1]);
+          if (n[2]) c.push(n[2]);
+          let d = null;
+          let h = t.match(/<a[^>]*class="imagelink"[^>]*>.*?<img[^>]*src="([^"]*)"[^>]*>/);
+          if (h) {
+            d = h[1];
+            if (!d.startsWith("https://www.bing.com")) d = "https://www.bing.com/" + d;
+          }
+          r.push({
+            url: s,
+            title: o,
+            content: l,
+            thumbnail: d,
+            metadata: c.filter(Boolean).join(" | "),
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.google_news = {
+      name: "google_news",
+      categories: ["news"],
+      shortcut: null,
+      paging: !1,
+      async request(e, t, r) {
+        let i = "US:en";
+        t.url = `https://news.google.com/search?q=${encodeURIComponent(e)}&hl=en&gl=US&ceid=${i}`;
+        return t;
+      },
+      async response(e, t) {
+        let r = [],
+          i = e.body || "";
+        let n = matchAllHtml(i, '<div[^>]*class="xrnccd"[^>]*>.*?</div>\\s*</div>');
+        for (let e of n) {
+          let t = e[0];
+          let n = t.match(/<article[^>]*>.*?<a[^>]*href="([^"]*)"[^>]*>/);
+          if (!n) continue;
+          let s = n[1];
+          try {
+            s = googleNewsDecodeUrl(s);
+          } catch {}
+          let o = t.match(/<h3[^>]*>(.*?)<\/h3>/);
+          let a = o ? stripHtml(o[1]) : "";
+          let l = t.match(/<time[^>]*>(.*?)<\/time>/);
+          let c = t.match(/<a[^>]*data-n-tid[^>]*>(.*?)<\/a>/);
+          let u = [c ? stripHtml(c[1]) : "", l ? stripHtml(l[1]) : ""].filter(Boolean).join(" / ");
+          let d = t.match(/<figure[^>]*>.*?<img[^>]*src="([^"]*)"[^>]*>/);
+          r.push({
+            url: s,
+            title: a,
+            content: u,
+            thumbnail: d ? d[1] : null,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.tagesschau = {
+      name: "tagesschau",
+      categories: ["general", "news"],
+      shortcut: null,
+      paging: !0,
+      async request(e, t, r) {
+        let i = new URLSearchParams({ searchText: e, pageSize: 10, resultPage: t.pageno - 1 });
+        t.url = `https://www.tagesschau.de/api2u/search?${i}`;
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.searchResults) return r;
+        for (let t of e.json.searchResults) {
+          if (t.type === "story" || t.type === "webview") {
+            let e = t.teaserImage?.imageVariants?.["16x9-256"] || null;
+            r.push({
+              url: t.shareURL || t.detailsweb,
+              title: t.title,
+              content: t.firstSentence || "",
+              date: t.date ? new Date(t.date.slice(0, 19)) : null,
+              thumbnail: e,
+            });
+          } else if (t.type === "video") {
+            let i = t.streams?.h264s || t.streams?.h264m || t.streams?.h264l || t.streams?.h264xl;
+            let n = i || `https://www.tagesschau.de/multimedia/video/${t.sophoraId}.html`;
+            let s = t.title;
+            if (s.includes("_vapp.mxf")) {
+              s = s.replace("_vapp.mxf", "").replace(/APP\d+ (FC-)?/, "");
+            }
+            r.push({
+              url: n,
+              title: s,
+              content: t.firstSentence || "",
+              date: t.date ? new Date(t.date.slice(0, 19)) : null,
+              thumbnail: t.teaserImage?.imageVariants?.["16x9-256"] || null,
+            });
+          }
+        }
+        return r;
+      },
+    };
+
+    EG_news.ansa = {
+      name: "ansa",
+      categories: ["news"],
+      shortcut: null,
+      paging: !0,
+      timeRangeSupport: !0,
+      async request(e, t, r) {
+        let i = { any: e, start: (t.pageno - 1) * 12, sort: "data:desc" };
+        if (t.timeRange) {
+          let n = { day: 1, week: 7, month: 31, year: 365 };
+          i.periodo = n[t.timeRange];
+        }
+        t.url = "https://www.ansa.it/ricerca/ansait/search.shtml?" + new URLSearchParams(i).toString();
+        return t;
+      },
+      async response(e, t) {
+        let r = [],
+          i = e.body || "";
+        let n = matchAllHtml(i, '<div[^>]*class="article"[^>]*>.*?</div>\\s*</div>');
+        for (let e of n) {
+          let t = e[0];
+          let n = t.match(/<h2[^>]*class="title"[^>]*>.*?<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/);
+          if (!n) continue;
+          let s = t.match(/<div[^>]*class="text"[^>]*>(.*?)<\/div>/);
+          let o = t.match(/<div[^>]*class="image"[^>]*>.*?<img[^>]*src="([^"]*)"[^>]*>/);
+          let a = {
+            url: "https://www.ansa.it" + n[1],
+            title: stripHtml(n[2]),
+            content: s ? stripHtml(s[1]) : "",
+          };
+          if (o && o[1]) a.thumbnail = "https://www.ansa.it" + o[1];
+          r.push(a);
+        }
+        return r;
+      },
+    };
+
+    EG_news.il_post = {
+      name: "il_post",
+      categories: ["news"],
+      shortcut: null,
+      paging: !0,
+      timeRangeSupport: !0,
+      async request(e, t, r) {
+        let i = { qs: e, pg: t.pageno, sort: "date_d", filters: "ctype:articoli" };
+        if (t.timeRange) {
+          let n = { month: "pub_date:ultimi_30_giorni", year: "pub_date:ultimo_anno" };
+          if (n[t.timeRange]) i.filters += ";" + n[t.timeRange];
+          else return null;
+        }
+        t.url = "https://api.ilpost.org/search/api/site_search/?" + new URLSearchParams(i).toString();
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.docs) return r;
+        for (let t of e.json.docs) {
+          r.push({
+            url: t.link,
+            title: t.title,
+            content: t.summary || "",
+            thumbnail: t.image || null,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.grokipedia = {
+      name: "grokipedia",
+      categories: ["general"],
+      shortcut: null,
+      paging: !0,
+      async request(e, t, r) {
+        let i = (t.pageno - 1) * 10;
+        t.url = `https://grokipedia.com/api/full-text-search?query=${encodeURIComponent(e)}&limit=10&offset=${i}`;
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.results) return r;
+        for (let t of e.json.results) {
+          r.push({
+            url: "https://grokipedia.com/page/" + t.slug,
+            title: t.title,
+            content: stripHtml(t.snippet || ""),
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.wikipedia = {
+      name: "wikipedia",
+      categories: ["general"],
+      shortcut: null,
+      paging: !1,
+      async request(e, t, r) {
+        let i = t.searxngLocale || "en";
+        let n = i.split("-")[0];
+        let s = e.charAt(0).toUpperCase() + e.slice(1);
+        let o = "en.wikipedia.org";
+        t.url = `https://${o}/api/rest_v1/page/summary/${encodeURIComponent(s)}`;
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json) return r;
+        let i = e.json;
+        if (i.type && (i.type === "https://mediawiki.org/wiki/HyperSwitch/errors/not_found" || i.status === 404))
+          return r;
+        let n = i.titles?.display || i.title || "";
+        let s = i.content_urls?.desktop?.page || "";
+        if (i.type !== "standard" || !0) {
+          r.push({ url: s, title: n, content: i.description || "" });
+        }
+        r.push({
+          title: n,
+          id: s,
+          content: i.extract || "",
+          imgSrc: i.thumbnail?.source || null,
+          urls: [{ title: "Wikipedia", url: s }],
+        });
+        return r;
+      },
+    };
+
+    EG_news.wikidata = {
+      name: "wikidata",
+      categories: ["general"],
+      shortcut: null,
+      paging: !1,
+      async request(e, t, r) {
+        let i = t.searxngLocale || "en";
+        let n = i.split("-")[0];
+        let s = e.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+        let o = `
+SELECT ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P577 ?P580 ?P582 ?P1082 ?P856 ?P18 ?P625 WHERE {
+  SERVICE wikibase:mwapi {
+    bd:serviceParam wikibase:endpoint "www.wikidata.org";
+    wikibase:api "EntitySearch";
+    wikibase:limit 1;
+    mwapi:search "${s}";
+    mwapi:language "${n}".
+    ?item wikibase:apiOutputItem mwapi:item.
+  }
+  OPTIONAL { ?item wdt:P569 ?P569 . }
+  OPTIONAL { ?item wdt:P570 ?P570 . }
+  OPTIONAL { ?item wdt:P571 ?P571 . }
+  OPTIONAL { ?item wdt:P576 ?P576 . }
+  OPTIONAL { ?item wdt:P577 ?P577 . }
+  OPTIONAL { ?item wdt:P580 ?P580 . }
+  OPTIONAL { ?item wdt:P582 ?P582 . }
+  OPTIONAL { ?item wdt:P1082 ?P1082 . }
+  OPTIONAL { ?item wdt:P856 ?P856 . }
+  OPTIONAL { ?item wdt:P18 ?P18 . }
+  OPTIONAL { ?item wdt:P625 ?P625 . }
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "${n},en".
+    ?item rdfs:label ?itemLabel .
+    ?item schema:description ?itemDescription .
+  }
+}
+GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P577 ?P580 ?P582 ?P1082 ?P856 ?P18 ?P625
+`;
+        t.method = "POST";
+        t.url = "https://query.wikidata.org/sparql";
+        t.headers = {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/sparql-results+json",
+        };
+        t.body = "query=" + encodeURIComponent(o);
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.results) return r;
+        let i = e.json.results.bindings || [];
+        for (let e of i) {
+          let t = {};
+          for (let r in e) t[r] = e[r].value;
+          let n = t.itemLabel || t.item,
+            s = t.item;
+          let o = [],
+            a = [];
+          if (t.itemDescription) a.push(t.itemDescription);
+          if (t.P569) o.push({ label: "date of birth", value: t.P569 });
+          if (t.P570) o.push({ label: "date of death", value: t.P570 });
+          if (t.P571) o.push({ label: "inception", value: t.P571 });
+          if (t.P576) o.push({ label: "dissolution", value: t.P576 });
+          if (t.P577) o.push({ label: "publication date", value: t.P577 });
+          if (t.P1082) o.push({ label: "population", value: t.P1082 });
+          r.push({
+            title: n,
+            id: s,
+            content: a.join(" "),
+            urls: [
+              ...(t.P856 ? [{ title: "official website", url: t.P856.replace(/^http:/, "https:") }] : []),
+              { title: "Wikidata", url: s },
+            ],
+            attributes: o,
+            imgSrc: t.P18 ? `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(t.P18.split("/").pop())}?width=300` : null,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.wikicommons = {
+      name: "wikicommons",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      searchType: "image",
+      async request(e, t, r) {
+        let i = t.searxngLocale || "en";
+        let n = i !== "all" ? i.split("-")[0] : "en";
+        let s = { image: "bitmap|drawing", video: "video", audio: "audio", file: "multimedia|office|archive|3d" };
+        let o = s[this.searchType] || "bitmap|drawing";
+        let a = new URLSearchParams({
+          format: "json",
+          uselang: n,
+          action: "query",
+          prop: "info|imageinfo",
+          generator: "search",
+          gsrnamespace: "6",
+          gsrprop: "snippet",
+          gsrlimit: 10,
+          gsroffset: 10 * (t.pageno - 1),
+          gsrsearch: `filetype:${o} ${e}`,
+          iiprop: "url|size|mime",
+          iiurlheight: "180",
+        });
+        t.url = "https://commons.wikimedia.org/w/api.php?" + a.toString();
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.query) return r;
+        let i = e.json.query.pages || {};
+        for (let e of Object.values(i)) {
+          if (!e.imageinfo || e.imageinfo.length === 0) continue;
+          let t = e.imageinfo[0];
+          let n = e.title.replace("File:", "").split(".").slice(0, -1).join(".");
+          let s = stripHtml(e.snippet || "");
+          let o = {
+            url: t.descriptionurl,
+            title: n,
+            content: s,
+            thumbnail: t.thumburl || null,
+          };
+          if (this.searchType === "image") {
+            o.imgSrc = t.url;
+            o.thumbnailSrc = t.thumburl;
+            o.resolution = t.width && t.height ? `${t.width} x ${t.height}` : null;
+            o.imgFormat = t.mime;
+            o.filesize = t.size ? humanizeBytes(t.size) : null;
+          } else if (this.searchType === "video") {
+            o.iframeSrc = t.url;
+          } else if (this.searchType === "audio") {
+            o.audioSrc = t.url;
+          }
+          r.push(o);
+        }
+        return r;
+      },
+    };
+
+    EG_news.bpb = {
+      name: "bpb",
+      categories: ["general"],
+      shortcut: null,
+      paging: !0,
+      async request(e, t, r) {
+        let i = new URLSearchParams({
+          "query[term]": e,
+          page: t.pageno - 1,
+          "sort[direction]": "descending",
+          "payload[nid]": 65350,
+        });
+        t.url = "https://www.bpb.de/bpbapi/filter/search?" + i.toString();
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.teaser) return r;
+        for (let t of e.json.teaser) {
+          let i = t.teaser;
+          let n = null;
+          if (i.image && i.image.sources && i.image.sources.length > 0) {
+            n = "https://www.bpb.de" + i.image.sources[i.image.sources.length - 1].url;
+          }
+          let s = t.extension?.overline || "";
+          let o = (t.extension?.authors || []).map((e) => e.name).join(", ");
+          if (o) s += " | " + o;
+          let a = null;
+          if (t.extension?.publishingDate) a = new Date(t.extension.publishingDate * 1000);
+          r.push({
+            url: "https://www.bpb.de" + i.link.url,
+            title: i.title,
+            content: i.text || "",
+            thumbnail: n,
+            date: a,
+            metadata: s,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.chefkoch = {
+      name: "chefkoch",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      async request(e, t, r) {
+        let i = { query: e, limit: 20, offset: (t.pageno - 1) * 20 };
+        t.url = "https://api.chefkoch.de/v2/search-gateway/recipes?" + new URLSearchParams(i).toString();
+        return t;
+      },
+      async response(e, t) {
+        let r = [];
+        if (!e.json || !e.json.results) return r;
+        for (let t of e.json.results) {
+          let i = t.recipe;
+          if (i.isPremium || i.isPlus) continue;
+          let n = null;
+          if (i.submissionDate) n = new Date(i.submissionDate.slice(0, 19));
+          let s = [];
+          s.push(`Schwierigkeitsstufe (1-3): ${i.difficulty}`);
+          s.push(`Zubereitungszeit: ${i.preparationTime}min`);
+          s.push(`Anzahl der Zutaten: ${i.ingredientCount}`);
+          if (i.subtitle) s.unshift(i.subtitle);
+          let o = null;
+          if (i.previewImageUrlTemplate) o = i.previewImageUrlTemplate.replace("<format>", "crop-240x300");
+          r.push({
+            url: i.siteUrl,
+            title: i.title,
+            content: s.join(" | "),
+            thumbnail: o,
+            date: n,
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.duden = {
+      name: "duden",
+      categories: ["dictionaries"],
+      shortcut: null,
+      paging: !0,
+      async request(e, t, r) {
+        let i = t.pageno - 1;
+        if (i === 0) {
+          t.url = `https://www.duden.de/suchen/dudenonline/${encodeURIComponent(e)}`;
+        } else {
+          t.url = `https://www.duden.de/suchen/dudenonline/${encodeURIComponent(e)}?search_api_fulltext=&page=${i}`;
+        }
+        return t;
+      },
+      async response(e, t) {
+        let r = [],
+          i = e.body || "";
+        let n = i.match(/<a[^>]*class="active"[^>]*href="[^"]*suchen\/dudenonline[^"]*"[^>]*>.*?<span[^>]*>.*?(\d+).*?<\/span>/);
+        if (n) r.push({ number_of_results: parseInt(n[1]) });
+        let s = matchAllHtml(i, '<section(?:[^>]*(?!class="[^"]*essay[^"]*")[^>]*)*>.*?</section>');
+        for (let e of s) {
+          if (/class="[^"]*essay[^"]*"/.test(e[0])) continue;
+          let t = e[0];
+          let n = t.match(/<h2[^>]*>.*?<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/);
+          if (!n) continue;
+          let s = t.match(/<p[^>]*>(.*?)<\/p>/);
+          let o = n[1];
+          if (!o.startsWith("http")) o = "https://www.duden.de" + o;
+          r.push({
+            url: o,
+            title: stripHtml(n[2]),
+            content: s ? stripHtml(s[1]) : "",
+          });
+        }
+        return r;
+      },
+    };
+
+    EG_news.emojipedia = {
+      name: "emojipedia",
+      categories: [],
+      shortcut: null,
+      paging: !1,
+      async request(e, t, r) {
+        t.url = `https://emojipedia.org/search?q=${encodeURIComponent(e)}`;
+        return t;
+      },
+      async response(e, t) {
+        let r = [],
+          i = e.body || "";
+        let n = matchAllHtml(i, '<div[^>]*class="EmojisList[^"]*"[^>]*>.*?</div>');
+        for (let e of n) {
+          let t = matchAllHtml(e[0], '<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>');
+          for (let e of t) {
+            r.push({
+              url: "https://emojipedia.org" + e[1],
+              title: stripHtml(e[2]),
+              content: "",
+            });
+          }
+        }
+        return r;
+      },
+    };
+  })();
+var EG_images = {},
+  eG_images = j(() => {
+    "use strict";
+
+    function eb(s, start, end) {
+      let i = s.indexOf(start);
+      if (i === -1) return null;
+      i += start.length;
+      let j = s.indexOf(end, i);
+      return j === -1 ? null : s.slice(i, j);
+    }
+
+    function st(s) {
+      return s ? s.replace(/<[^>]*>/g, "").trim() : "";
+    }
+
+    // ========== 1. Flickr (no API) ==========
+    EG_images.flickrNoapi = {
+      name: "flickrNoapi",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let url =
+          "https://www.flickr.com/search?text=" +
+          encodeURIComponent(query) +
+          "&page=" +
+          (sq.pageno || 1);
+        if (sq.timeRange) {
+          let now = Math.floor(Date.now() / 1000);
+          let tr = { day: 86400, week: 604800, month: 2419200, year: 31536000 };
+          let offset = tr[sq.timeRange] || 0;
+          url += "&min_upload_date=" + now + "&max_upload_date=" + (now - offset);
+        }
+        params.url = url;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        let match = resp.text.match(/^\s*modelExport:\s*(\{.*\}),$/m);
+        if (!match) return results;
+        let modelExport;
+        try { modelExport = JSON.parse(match[1]); } catch (e) { return results; }
+        if (!modelExport.legend || !modelExport.legend[0]) return results;
+        let imageSizes = ["o", "k", "h", "b", "c", "z", "m", "n", "t", "q", "s"];
+        for (let index of modelExport.legend) {
+          if (index.length !== 8) continue;
+          let photo = modelExport.main[index[0]][parseInt(index[1])][index[2]][index[3]][index[4]][index[5]][parseInt(index[6])][index[7]];
+          let author = photo.realname || "";
+          let source = photo.username ? photo.username + " @ Flickr" : "";
+          let title = photo.title || "";
+          let content = photo.description ? st(photo.description) : "";
+          let sizeData = null;
+          for (let size of imageSizes) {
+            if (photo.sizes && photo.sizes.data && photo.sizes.data[size]) {
+              sizeData = photo.sizes.data[size].data;
+              break;
+            }
+          }
+          if (!sizeData) continue;
+          let imgSrc = sizeData.url;
+          let resolution = (sizeData.width || "") + " x " + (sizeData.height || "");
+          let thumbnailSrc;
+          if (photo.sizes && photo.sizes.data && photo.sizes.data.n)
+            thumbnailSrc = photo.sizes.data.n.data.url;
+          else if (photo.sizes && photo.sizes.data && photo.sizes.data.z)
+            thumbnailSrc = photo.sizes.data.z.data.url;
+          else
+            thumbnailSrc = imgSrc;
+          let url = photo.ownerNsid
+            ? "https://www.flickr.com/photos/" + photo.ownerNsid + "/" + photo.id
+            : imgSrc;
+          results.push({
+            url: url,
+            imgSrc: imgSrc,
+            thumbnail: thumbnailSrc,
+            source: source,
+            resolution: resolution,
+            title: title,
+            content: content,
+            author: author,
+          });
+        }
+        return results;
+      },
+    };
+
+    // ========== 2. Openverse ==========
+    EG_images.openverse = {
+      name: "openverse",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        params.url =
+          "https://api.openverse.org/v1/images/?page=" +
+          (sq.pageno || 1) +
+          "&page_size=20&format=json&q=" +
+          encodeURIComponent(query);
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          for (let result of j.results || []) {
+            results.push({
+              url: result.foreign_landing_url,
+              title: result.title,
+              imgSrc: result.url,
+            });
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+
+    // ========== 3. Pexels ==========
+    EG_images.pexels = {
+      name: "pexels",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      _secretKey: null,
+      async request(query, params, sq) {
+        let args = { query: query, page: sq.pageno || 1, per_page: 20 };
+        if (sq.timeRange) {
+          let tr = { day: "last_24_hours", week: "last_week", month: "last_month", year: "last_year" };
+          args.date_from = tr[sq.timeRange];
+        }
+        let qs = Object.entries(args)
+          .map(([k, v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v))
+          .join("&");
+        params.url = "https://www.pexels.com/en-us/api/v3/search/photos?" + qs;
+        if (!this._secretKey) {
+          this._secretKey = "H2jk9uKnhRmL6WPwh89zBezWvr";
+        }
+        params.headers["secret-key"] = this._secretKey;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          for (let result of j.data || []) {
+            let attrs = result.attributes;
+            results.push({
+              url: "https://www.pexels.com/photo/" + attrs.slug + "-" + attrs.id + "/",
+              title: attrs.title,
+              content: attrs.description,
+              thumbnail: attrs.image.small,
+              imgSrc: attrs.image.download_link,
+              resolution: (attrs.width || "") + "x" + (attrs.height || ""),
+              author: attrs.user.username,
+            });
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+
+    // ========== 4. Pixabay ==========
+    EG_images.pixabay = {
+      name: "pixabay",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let args = { pagi: sq.pageno || 1 };
+        if (sq.timeRange) {
+          let tr = { day: "1d", week: "1w", month: "1m", year: "1y" };
+          args.date = tr[sq.timeRange];
+        }
+        let qs = Object.entries(args)
+          .map(([k, v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v))
+          .join("&");
+        params.url =
+          "https://pixabay.com/images/search/" +
+          encodeURIComponent(query) +
+          "/?" +
+          qs;
+        params.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) Pixabay";
+        params.headers["Accept"] = "application/json";
+        params.headers["x-bootstrap-cache-miss"] = "1";
+        params.headers["x-fetch-bootstrap"] = "1";
+        params.cookies = params.cookies || {};
+        params.cookies.g_rated = sq.safesearch ? "1" : "off";
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        if (resp.status === 302) return results;
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          let items = j.page?.results || [];
+          for (let result of items) {
+            if (
+              result.mediaType === "photo" ||
+              result.mediaType === "illustration" ||
+              result.mediaType === "vector"
+            ) {
+              let sources = Object.values(result.sources || {});
+              results.push({
+                url: "https://pixabay.com" + result.href,
+                thumbnail: sources[0] || null,
+                imgSrc: sources[sources.length - 1] || null,
+                title: result.name || "",
+                content: result.description || "",
+              });
+            }
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+
+    // ========== 5. Pixiv ==========
+    EG_images.pixiv = {
+      name: "pixiv",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let qp = {
+          word: query,
+          order: "date_d",
+          mode: "all",
+          p: sq.pageno || 1,
+          s_mode: "s_tag_full",
+          type: "illust_and_ugoira",
+          lang: "en",
+        };
+        let qs = Object.entries(qp)
+          .map(([k, v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v))
+          .join("&");
+        params.url =
+          "https://www.pixiv.net/ajax/search/illustrations/" +
+          encodeURIComponent(query) +
+          "?" +
+          qs;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          let items = j.body?.illust?.data || [];
+          for (let item of items) {
+            let imageUrl = item.url;
+            let proxyFullImageUrl = imageUrl
+              .replace("/c/250x250_80_a2/", "/")
+              .replace("_square1200.jpg", "_master1200.jpg")
+              .replace("custom-thumb", "img-master")
+              .replace("_custom1200.jpg", "_master1200.jpg");
+            results.push({
+              title: item.title,
+              url: proxyFullImageUrl,
+              content: item.alt,
+              author: (item.userName || "") + " (ID: " + (item.userId || "") + ")",
+              imgSrc: proxyFullImageUrl,
+              thumbnail: imageUrl,
+              source: "pixiv.net",
+            });
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+
+    // ========== 6. Wallhaven ==========
+    EG_images.wallhaven = {
+      name: "wallhaven",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let purityMap = { 0: "111", 1: "110", 2: "100" };
+        let args = { q: query, page: sq.pageno || 1, purity: purityMap[sq.safesearch] || "111" };
+        let qs = Object.entries(args)
+          .map(([k, v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v))
+          .join("&");
+        params.url = "https://wallhaven.cc/api/v1/search?" + qs;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          for (let result of j.data || []) {
+            results.push({
+              title: "",
+              content: (result.category || "") + " / " + (result.purity || ""),
+              url: result.url,
+              imgSrc: result.path,
+              thumbnail: result.thumbs?.small,
+              resolution: (result.resolution || "").replace("x", " x "),
+              imgFormat: result.file_type,
+              filesize: result.file_size,
+              publishedDate: result.created_at,
+            });
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+
+    // ========== 7. OpenClipart ==========
+    EG_images.openclipart = {
+      name: "openclipart",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        params.url =
+          "https://openclipart.org/search/?query=" +
+          encodeURIComponent(query) +
+          "&p=" +
+          (sq.pageno || 1);
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        let artworkRe =
+          /<div[^>]*class="[^"]*artwork[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<\/div>/g;
+        let am;
+        while ((am = artworkRe.exec(resp.text)) !== null) {
+          let div = am[1];
+          let aMatch = div.match(/<a\s+href="([^"]*)"/);
+          let imgMatch = div.match(/<img[^>]+src="([^"]*)"[^>]*alt="([^"]*)"/);
+          if (!aMatch || !imgMatch) continue;
+          results.push({
+            url: "https://openclipart.org" + aMatch[1],
+            title: imgMatch[2],
+            imgSrc: "https://openclipart.org" + imgMatch[1],
+          });
+        }
+        return results;
+      },
+    };
+
+    // ========== 8. SvgRepo ==========
+    EG_images.svgrepo = {
+      name: "svgrepo",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        params.url =
+          "https://www.svgrepo.com/vectors/" +
+          encodeURIComponent(query) +
+          "/" +
+          (sq.pageno || 1) +
+          "/";
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        let itemRe =
+          /<div[^>]*class="[^"]*style_nodeListing__7Nmro[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<\/div>/i;
+        let outerMatch = resp.text.match(itemRe);
+        if (!outerMatch) return results;
+        let inner = outerMatch[1];
+        let divRe = /<div[^>]*>([\s\S]*?)<\/div>\s*<\/div>/g;
+        let dm;
+        while ((dm = divRe.exec(inner)) !== null) {
+          let itemHtml = dm[1];
+          let urlMatch = itemHtml.match(/<a\s+href="([^"]*)"/);
+          let titleMatch = itemHtml.match(/<a[^>]*title="([^"]*)"/);
+          let imgMatch = itemHtml.match(/<img[^>]*src="([^"]*)"/);
+          if (!urlMatch || !imgMatch) continue;
+          let title = titleMatch
+            ? titleMatch[1].replace(" SVG File", "").replace("Show ", "")
+            : "";
+          results.push({
+            url: "https://www.svgrepo.com" + urlMatch[1],
+            title: title,
+            imgSrc: imgMatch[1],
+          });
+        }
+        return results;
+      },
+    };
+
+    // ========== 9. Imgur ==========
+    EG_images.imgur = {
+      name: "imgur",
+      categories: ["images"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let timeRange = sq.timeRange || "all";
+        let args = { q: query, qs: "thumbs", p: (sq.pageno || 1) - 1 };
+        let qs = Object.entries(args)
+          .map(([k, v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v))
+          .join("&");
+        params.url = "https://imgur.com/search/score/" + timeRange + "?" + qs;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        let cardRe =
+          /<div[^>]*class="[^"]*post[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<\/div>/g;
+        let cm;
+        while ((cm = cardRe.exec(resp.text)) !== null) {
+          let div = cm[1];
+          let hrefMatch = div.match(/<a\s+href="([^"]*)"/);
+          let imgMatch = div.match(/<img[^>]+src="([^"]*)"[^>]*alt="([^"]*)"/);
+          if (!hrefMatch || !imgMatch) continue;
+          let thumbnailSrc = imgMatch[1];
+          if (thumbnailSrc.length < 25) continue;
+          let imgSrc = thumbnailSrc.replace("b.", ".");
+          results.push({
+            url: "https://imgur.com" + hrefMatch[1],
+            title: imgMatch[2],
+            imgSrc: imgSrc,
+            thumbnail: thumbnailSrc,
+          });
+        }
+        return results;
+      },
+    };
+
+    // ========== 10. OpenStreetMap (Nominatim) ==========
+    EG_images.openstreetmap = {
+      name: "openstreetmap",
+      categories: ["map"],
+      shortcut: null,
+      paging: false,
+      async request(query, params, sq) {
+        params.url =
+          "https://nominatim.openstreetmap.org/search?q=" +
+          encodeURIComponent(query) +
+          "&polygon_geojson=1&format=jsonv2&addressdetails=1&extratags=1&dedupe=1";
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          for (let result of j) {
+            let osmType = result.osm_type || result.type;
+            let url = result.osm_id
+              ? "https://openstreetmap.org/" + osmType + "/" + result.osm_id
+              : "https://www.openstreetmap.org/?mlat=" +
+                result.lat +
+                "&mlon=" +
+                result.lon +
+                "&zoom=12&layers=M";
+            let geojson = result.geojson || null;
+            if (!geojson && osmType === "node") {
+              geojson = {
+                type: "Point",
+                coordinates: [parseFloat(result.lon), parseFloat(result.lat)],
+              };
+            }
+            let addressRaw = result.address || {};
+            let addressName = null;
+            let address = {};
+            if (
+              result.category === "amenity" ||
+              result.category === "shop" ||
+              result.category === "tourism" ||
+              result.category === "leisure"
+            ) {
+              addressName = addressRaw.address29 || addressRaw[result.category];
+            } else if (result.type && addressRaw[result.type]) {
+              addressName = addressRaw[result.type];
+            }
+            if (addressName) {
+              address = {
+                name: addressName,
+                house_number: addressRaw.house_number,
+                road: addressRaw.road,
+                locality: addressRaw.city || addressRaw.town || addressRaw.village,
+                postcode: addressRaw.postcode,
+                country: addressRaw.country,
+                country_code: addressRaw.country_code,
+              };
+            }
+            let title = addressName || result.display_name;
+            if (!title) continue;
+            results.push({
+              title: title,
+              url: url,
+              content: "",
+              longitude: result.lon,
+              latitude: result.lat,
+              boundingbox: result.boundingbox,
+              geojson: geojson,
+              address: address,
+              osm: result.osm_id
+                ? { type: osmType, id: result.osm_id }
+                : {},
+              type: result.category,
+              type_icon: result.icon,
+            });
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+
+    // ========== 11. Photon ==========
+    EG_images.photon = {
+      name: "photon",
+      categories: ["map"],
+      shortcut: null,
+      paging: false,
+      async request(query, params, sq) {
+        let url =
+          "https://photon.komoot.io/api/?q=" +
+          encodeURIComponent(query) +
+          "&limit=10";
+        if (sq.language && sq.language !== "all") {
+          let lang = sq.language.split("_")[0];
+          if (["de", "en", "fr", "it"].includes(lang))
+            url += "&lang=" + lang;
+        }
+        params.url = url;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          for (let feature of j.features || []) {
+            let props = feature.properties || {};
+            if (!props) continue;
+            let osmType =
+              props.osm_type === "N"
+                ? "node"
+                : props.osm_type === "W"
+                  ? "way"
+                  : props.osm_type === "R"
+                    ? "relation"
+                    : null;
+            if (!osmType) continue;
+            let url =
+              "https://openstreetmap.org/" + osmType + "/" + props.osm_id;
+            let geojson = feature.geometry;
+            let boundingbox;
+            if (props.extent) {
+              boundingbox = [
+                props.extent[3],
+                props.extent[1],
+                props.extent[0],
+                props.extent[2],
+              ];
+            } else if (geojson && geojson.coordinates) {
+              boundingbox = [
+                geojson.coordinates[1],
+                geojson.coordinates[1],
+                geojson.coordinates[0],
+                geojson.coordinates[0],
+              ];
+            }
+            let address = null;
+            if (
+              props.osm_key === "amenity" ||
+              props.osm_key === "shop" ||
+              props.osm_key === "tourism" ||
+              props.osm_key === "leisure"
+            ) {
+              address = { name: props.name };
+            }
+            if (address && address.name) {
+              address = {
+                name: props.name,
+                house_number: props.housenumber,
+                road: props.street,
+                locality: props.city || props.town || props.village,
+                postcode: props.postcode,
+                country: props.country,
+              };
+            } else {
+              address = null;
+            }
+            results.push({
+              title: props.name,
+              content: "",
+              longitude: geojson?.coordinates?.[0],
+              latitude: geojson?.coordinates?.[1],
+              boundingbox: boundingbox,
+              geojson: geojson,
+              address: address,
+              osm: { type: osmType, id: props.osm_id },
+              url: url,
+            });
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+
+    // ========== 12. Apple Maps ==========
+    EG_images.appleMaps = {
+      name: "appleMaps",
+      categories: ["map"],
+      shortcut: null,
+      paging: false,
+      _token: null,
+      _tokenExpiry: 0,
+      async _obtainToken() {
+        let now = Math.floor(Date.now() / 1000);
+        if (now < this._tokenExpiry && this._token) return;
+        try {
+          let tr = await fetch(
+            "https://duckduckgo.com/local.js?get_mk_token=1"
+          );
+          let tokenResponse = await tr.text();
+          let ar = await fetch(
+            "https://cdn.apple-mapkit.com/ma/bootstrap?apiVersion=2&mkjsVersion=5.72.53&poi=1",
+            { headers: { Authorization: "Bearer " + tokenResponse } }
+          );
+          let at = await ar.json();
+          this._token = at.authInfo.access_token;
+          this._tokenExpiry = now + 1800;
+        } catch (e) {}
+      },
+      async request(query, params, sq) {
+        await this._obtainToken();
+        params.url =
+          "https://api.apple-mapkit.com/v1/search?q=" +
+          encodeURIComponent(query) +
+          "&lang=" +
+          (sq.language || "en") +
+          "&mkjsVersion=5.72.53";
+        if (this._token)
+          params.headers["Authorization"] = "Bearer " + this._token;
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          for (let result of j.results || []) {
+            let boundingbox = null;
+            if (result.displayMapRegion) {
+              let box = result.displayMapRegion;
+              boundingbox = [
+                box.southLat,
+                box.northLat,
+                box.westLng,
+                box.eastLng,
+              ];
+            }
+            let links = [];
+            if (result.telephone) {
+              links.push({
+                label: "Phone",
+                url: "tel:" + result.telephone,
+                url_label: result.telephone,
+              });
+            }
+            if (result.urls && result.urls.length > 0) {
+              links.push({
+                label: "Website",
+                url: result.urls[0],
+                url_label: result.urls[0],
+              });
+            }
+            results.push({
+              type: result.poiCategory,
+              title: result.name,
+              links: links,
+              latitude: result.center?.lat,
+              longitude: result.center?.lng,
+              url: result.placecardUrl,
+              boundingbox: boundingbox,
+              geojson: {
+                type: "Point",
+                coordinates: [result.center?.lng, result.center?.lat],
+              },
+              address: {
+                name: result.name,
+                house_number: result.subThoroughfare,
+                road: result.thoroughfare,
+                locality: result.locality,
+                postcode: result.postCode,
+                country: result.country,
+              },
+            });
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+
+    // ========== 13. TinEye ==========
+    EG_images.tineye = {
+      name: "tineye",
+      categories: ["general"],
+      shortcut: null,
+      paging: true,
+      async request(query, params, sq) {
+        let urlQuery = query;
+        if (sq.search_urls) {
+          if (sq.search_urls["data:image"])
+            urlQuery = sq.search_urls["data:image"];
+          else if (sq.search_urls["http"])
+            urlQuery = sq.search_urls["http"];
+        }
+        params.url =
+          "https://tineye.com/api/v1/result_json/?page=" +
+          (sq.pageno || 1) +
+          "&url=" +
+          encodeURIComponent(urlQuery);
+        params.headers["Connection"] = "keep-alive";
+        params.headers["Host"] = "tineye.com";
+        params.headers["DNT"] = "1";
+        params.headers["TE"] = "trailers";
+        return params;
+      },
+      async response(resp, sq) {
+        let results = [];
+        try {
+          let j = resp.json || JSON.parse(resp.text);
+          if (resp.status === 400 || resp.status === 422) {
+            return results;
+          }
+          for (let match of j.matches || []) {
+            let backlinks = match.backlinks || [];
+            if (backlinks.length === 0) continue;
+            let bl = backlinks[0];
+            let crawlDate = bl.crawl_date ? new Date(bl.crawl_date) : null;
+            results.push({
+              url: bl.backlink,
+              thumbnail: match.image_url,
+              source: bl.url,
+              title: bl.image_name || "",
+              imgSrc: bl.url,
+              imgFormat: match.format,
+              width: match.width,
+              height: match.height,
+              publishedDate: crawlDate,
+            });
+          }
+          let number_of_results = j.num_matches;
+          if (number_of_results) {
+            results.number_of_results = number_of_results;
+          }
+        } catch (e) {}
+        return results;
+      },
+    };
+  });
+var EG_misc = {},
+  eG_misc = j(() => {
+    "use strict";
+
+    function eb(text, start, end) {
+      var i = text.indexOf(start);
+      if (i === -1) return null;
+      i += start.length;
+      var j = text.indexOf(end, i);
+      return j === -1 ? null : text.slice(i, j);
+    }
+
+    function st(s) {
+      return s ? s.replace(/<[^>]*>/g, "").replace(/&[^;]+;/g, " ").replace(/\s+/g, " ").trim() : "";
+    }
+
+    function dq(s) {
+      try { return decodeURIComponent(s.replace(/\+/g, " ")); } catch { return s; }
+    }
+
+    function de(s) {
+      return s.replace(/\\(x[\da-fA-F]{2}|u[\da-fA-F]{4}|.)/g, function(_, e) {
+        if (e[0] === "x" || e[0] === "u") return String.fromCharCode(parseInt(e.slice(1), 16));
+        return { n: "\n", t: "\t", r: "\r" }[e] || e;
+      });
+    }
+
+    function b64u(s) {
+      s = s.replace(/-/g, "+").replace(/_/g, "/");
+      s += "=".repeat((4 - (s.length % 4)) % 4);
+      try { return atob(s); } catch { return s; }
+    }
+
+    function blk(html, tag, cls, from) {
+      var re = new RegExp("<" + tag + '\\s[^>]*class="[^"]*' + cls + '[^"]*"[^>]*>', "i");
+      re.lastIndex = from || 0;
+      var m = re.exec(html);
+      if (!m) return null;
+      var d = 1, p = re.lastIndex, ot = "<" + tag, ct = "</" + tag + ">";
+      while (d > 0 && p < html.length) {
+        var no = html.indexOf(ot, p), nc = html.indexOf(ct, p);
+        if (nc === -1) return { html: html.slice(m.index), start: m.index, end: html.length };
+        if (no !== -1 && no < nc) { d++; p = no + ot.length; } else { d--; p = nc + ct.length; }
+      }
+      return { html: html.slice(m.index, p), start: m.index, end: p };
+    }
+
+    function allBlk(html, tag, cls) {
+      var blocks = [], pos = 0, b;
+      while (pos < html.length) {
+        b = blk(html, tag, cls, pos);
+        if (!b) break;
+        blocks.push(b.html);
+        pos = b.end;
+      }
+      return blocks;
+    }
+
+    function humanizeBytes(e) {
+      if (!e) return "0 B";
+      var t = ["B", "KB", "MB", "GB", "TB"], i = 0, n = e;
+      for (; n >= 1024 && i < t.length - 1; ) (n /= 1024), i++;
+      return n.toFixed(i > 0 ? 1 : 0) + " " + t[i];
+    }
+
+    function parseDateStr(s) {
+      if (!s) return null;
+      var d = new Date(s);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function jsObjStrToJson(s) {
+      s = s.replace(/'/g, '"');
+      s = s.replace(/(\w+):/g, '"$1":');
+      s = s.replace(/,\s*}/g, "}");
+      s = s.replace(/,\s*]/g, "]");
+      try { return JSON.parse(s); } catch { return null; }
+    }
+
+    /**
+     * about: { website: "https://www.baidu.com", wikidata_id: "Q14772",
+     *   use_official_api: false, require_api_key: false, results: "JSON", language: "zh" }
+     */
+    EG_misc.baidu = {
+      name: "baidu",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      resultsPerPage: 10,
+      baiduCategory: "general",
+      timeRangeSupport: !0,
+      timeRangeDict: { day: 86400, week: 604800, month: 2592000, year: 31536000 },
+      async request(query, params, sq) {
+        var pageNum = sq.pageno, rpp = this.resultsPerPage;
+        var catConfig = {
+          general: { endpoint: "https://www.baidu.com/s", params: { wd: query, rn: rpp, pn: (pageNum - 1) * rpp, tn: "json" } },
+          images: { endpoint: "https://image.baidu.com/search/acjson", params: { word: query, rn: rpp, pn: (pageNum - 1) * rpp, tn: "resultjson_com" } },
+          it: { endpoint: "https://kaifa.baidu.com/rest/v1/search", params: { wd: query, pageSize: rpp, pageNum: pageNum, paramList: "page_num=" + pageNum + ",page_size=" + rpp, position: 0 } },
+        };
+        var cfg = catConfig[this.baiduCategory], qp = cfg.params;
+        var tr = sq.timeRange;
+        if (tr && this.timeRangeDict[tr]) {
+          var now = Math.floor(Date.now() / 1e3), past = now - this.timeRangeDict[tr];
+          if (this.baiduCategory === "general") qp.gpc = "stf=" + past + "," + now + "|stftype=1";
+          if (this.baiduCategory === "it") qp.paramList += ",timestamp_range=" + past + "-" + now;
+        }
+        params.url = cfg.endpoint + "?" + new URLSearchParams(qp);
+        params.allowRedirects = !1;
+        return params;
+      },
+      async response(resp, sq) {
+        var text = resp.text;
+        if (resp.headers && resp.headers.Location && resp.headers.Location.indexOf("wappass.baidu.com/static/captcha") !== -1) {
+          return [{ error: "captcha" }];
+        }
+        if (this.baiduCategory === "images") {
+          text = text.replace(/\\\//g, "/").replace(/\\'/g, "'");
+        }
+        var data;
+        try { data = JSON.parse(text); } catch { return []; }
+        if (this.baiduCategory === "general") return this._parseGeneral(data);
+        if (this.baiduCategory === "images") return this._parseImages(data);
+        if (this.baiduCategory === "it") return this._parseIt(data);
+        return [];
+      },
+      _parseGeneral(data) {
+        var results = [];
+        if (!data.feed || !data.feed.entry) return results;
+        for (var i = 0; i < data.feed.entry.length; i++) {
+          var entry = data.feed.entry[i];
+          if (!entry.title || !entry.url) continue;
+          var publishedDate = null;
+          if (entry.time) {
+            var d = new Date(entry.time * 1e3);
+            if (!isNaN(d.getTime())) publishedDate = d;
+          }
+          results.push({ title: st(entry.title), url: entry.url, content: st(entry.abs || ""), publishedDate: publishedDate });
+        }
+        return results;
+      },
+      _parseImages(data) {
+        var results = [];
+        if (data.data) {
+          for (var i = 0; i < data.data.length; i++) {
+            var item = data.data[i];
+            if (!item) continue;
+            var replaceUrl = item.replaceUrl || [{}];
+            var width = item.width, height = item.height, imgDate = item.bdImgnewsDate;
+            var publishedDate = null;
+            if (imgDate) { var d = new Date(imgDate.replace(" ", "T")); if (!isNaN(d.getTime())) publishedDate = d; }
+            results.push({
+              template: "images.html", url: (replaceUrl[0] || {}).FromURL,
+              thumbnailSrc: item.thumbURL, imgSrc: (replaceUrl[0] || {}).ObjURL,
+              title: st(item.fromPageTitle), source: item.fromURLHost,
+              resolution: width + " x " + height, imgFormat: item.type,
+              filesize: item.filesize, publishedDate: publishedDate,
+            });
+          }
+        }
+        return results;
+      },
+      _parseIt(data) {
+        var results = [];
+        if (!data.data || !data.data.documents || !data.data.documents.data) return results;
+        for (var i = 0; i < data.data.documents.data.length; i++) {
+          var entry = data.data.documents.data[i];
+          results.push({ title: entry.techDocDigest.title, url: entry.techDocDigest.url, content: entry.techDocDigest.summary });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://www.sogou.com/", wikidata_id: "Q7554565",
+     *   use_official_api: false, require_api_key: false, results: "HTML", language: "zh" }
+     */
+    EG_misc.sogou = {
+      name: "sogou",
+      categories: ["general"],
+      shortcut: null,
+      paging: !0,
+      timeRangeSupport: !0,
+      baseUrl: "https://www.sogou.com",
+      timeRangeDict: { day: "inttime_day", week: "inttime_week", month: "inttime_month", year: "inttime_year" },
+      async request(query, params, sq) {
+        var qp = { query: query, page: sq.pageno };
+        var tr = sq.timeRange;
+        if (this.timeRangeDict[tr]) { qp.s_from = this.timeRangeDict[tr]; qp.tsn = 1; }
+        params.allowRedirects = !1;
+        params.url = this.baseUrl + "/web?" + new URLSearchParams(qp);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text, results = [];
+        var blocks = [];
+        var rbRe = /<div[^>]*class="[^"]*\brb\b[^"]*"[^>]*>([\s\S]*?)<\/div>/gi;
+        var vrRe = /<div[^>]*class="[^"]*\bvrwrap\b[^"]*"[^>]*>([\s\S]*?)<\/div>/gi;
+        var m;
+        while ((m = rbRe.exec(h)) !== null) blocks.push(m[1]);
+        while ((m = vrRe.exec(h)) !== null) {
+          if (/special-wrap/.test(m[1])) continue;
+          blocks.push(m[1]);
+        }
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var bl = blocks[bi], result;
+          if (/<h3[^>]*class="\s*pt\s*"[^>]*>/i.test(bl)) {
+            result = this._parseResult(bl);
+          } else if (/<h3[^>]*class="[^"]*vr-title[^"]*"[^>]*>/i.test(bl)) {
+            result = this._parseResultWithImage(bl);
+          } else continue;
+          if (result.title && result.url) results.push(result);
+        }
+        return results;
+      },
+      _extractUrl(url, html) {
+        if (url && url.indexOf("/link?url=") === 0) {
+          var m = html.match(/data-url="([^"]+)"/);
+          if (m) return m[1];
+          return this.baseUrl + url;
+        }
+        return url;
+      },
+      _parseDate(text) {
+        if (!text) return null;
+        text = text.trim().replace(/^-+/, "").trim();
+        var m = text.match(/(\d{4}-\d{1,2}-\d{1,2})/);
+        if (m) { var d = new Date(m[1]); return isNaN(d.getTime()) ? null : d; }
+        return null;
+      },
+      _parseResult(bl) {
+        var titleM = bl.match(/<h3[^>]*class="\s*pt\s*"[^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
+        var title = titleM ? st(titleM[1]) : "";
+        var hrefM = bl.match(/<h3[^>]*class="\s*pt\s*"[^>]*>[\s\S]*?<a[^>]*href="([^"]*)"/i);
+        var url = hrefM ? this._extractUrl(hrefM[1], bl) : "";
+        var contentM = bl.match(/<div[^>]*class="\s*ft\s*"[^>]*>([\s\S]*?)<\/div>/i);
+        var content = contentM ? st(contentM[1]) : "";
+        var citeM = bl.match(/<cite[^>]*>([\s\S]*?)<\/cite>/i);
+        var publishedDate = citeM ? this._parseDate(st(citeM[1])) : null;
+        return { title: title, url: url, content: content, publishedDate: publishedDate };
+      },
+      _parseResultWithImage(bl) {
+        var titleM = bl.match(/<h3[^>]*class="[^"]*vr-title[^"]*"[^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
+        var title = titleM ? st(titleM[1]) : "";
+        var hrefM = bl.match(/<h3[^>]*class="[^"]*vr-title[^"]*"[^>]*>[\s\S]*?<a[^>]*href="([^"]*)"/i);
+        var url = hrefM ? this._extractUrl(hrefM[1], bl) : "";
+        var contentM = bl.match(/<div[^>]*class="[^"]*attribute-centent[^"]*"[^>]*>([\s\S]*?)<\/div>/i) ||
+          bl.match(/<div[^>]*class="[^"]*fz-mid\s+space-txt[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+        var content = contentM ? st(contentM[1]) : "";
+        var dateM = bl.match(/<span[^>]*class="[^"]*cite-date[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
+        var publishedDate = dateM ? this._parseDate(st(dateM[1])) : null;
+        var thumbM = bl.match(/<div[^>]*class="[^"]*img-layout[^"]*"[^>]*>[\s\S]*?<img[^>]*src="([^"]*)"/i);
+        var thumbnail = null;
+        if (thumbM) thumbnail = thumbM[1].replace(/^http:\/\//i, "https://");
+        return { title: title, url: url, content: content, publishedDate: publishedDate, thumbnail: thumbnail };
+      },
+    };
+
+    /**
+     * about: { website: "https://pic.sogou.com/", wikidata_id: "Q7554565",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_misc.sogou_images = {
+      name: "sogou_images",
+      categories: ["images"],
+      shortcut: null,
+      paging: !0,
+      baseUrl: "https://pic.sogou.com",
+      async request(query, params, sq) {
+        var qp = { query: query, start: (sq.pageno - 1) * 48 };
+        params.url = this.baseUrl + "/pics?" + new URLSearchParams(qp);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text, results = [];
+        var m = h.match(/window\.__INITIAL_STATE__\s*=\s*({.*?});/s);
+        if (!m) return results;
+        var data;
+        try { data = JSON.parse(m[1]); } catch { return results; }
+        if (data.searchList && data.searchList.searchList) {
+          for (var i = 0; i < data.searchList.searchList.length; i++) {
+            var item = data.searchList.searchList[i];
+            results.push({
+              template: "images.html", url: item.url || "", thumbnailSrc: item.picUrl || "",
+              imgSrc: item.picUrl || "", content: item.content_major || "",
+              title: item.title || "", source: item.ch_site_name || "",
+            });
+          }
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://v.sogou.com/", use_official_api: false,
+     *   require_api_key: false, results: "JSON", language: "zh" }
+     */
+    EG_misc.sogou_videos = {
+      name: "sogou_videos",
+      categories: ["videos"],
+      shortcut: null,
+      paging: !0,
+      baseUrl: "https://v.sogou.com",
+      async request(query, params, sq) {
+        var qp = { page: sq.pageno, pagesize: 10, query: query };
+        params.url = this.baseUrl + "/api/video/shortVideoV2?" + new URLSearchParams(qp);
+        return params;
+      },
+      async response(resp, sq) {
+        var data = resp.json, results = [];
+        if (!data || !data.data || !data.data.list) return results;
+        for (var i = 0; i < data.data.list.length; i++) {
+          var entry = data.data.list[i];
+          if (!entry.titleEsc || !entry.url) continue;
+          var videoUrl = entry.url;
+          if (videoUrl.indexOf("/vc/np") === 0) videoUrl = this.baseUrl + videoUrl;
+          var publishedDate = null;
+          if (entry.date) { var d = new Date(entry.date); if (!isNaN(d.getTime())) publishedDate = d; }
+          var length = null;
+          if (entry.duration) {
+            var dm = entry.duration.match(/(\d+):(\d+)/);
+            if (dm) length = parseInt(dm[1], 10) * 60 + parseInt(dm[2], 10);
+          }
+          results.push({ url: videoUrl, title: entry.titleEsc, content: entry.site, length: length, template: "videos.html", publishedDate: publishedDate, thumbnail: entry.picurl });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://weixin.sogou.com/", use_official_api: false,
+     *   require_api_key: false, results: "HTML", language: "zh" }
+     */
+    EG_misc.sogou_wechat = {
+      name: "sogou_wechat",
+      categories: ["news"],
+      shortcut: null,
+      paging: !0,
+      baseUrl: "https://weixin.sogou.com",
+      async request(query, params, sq) {
+        var qp = { query: query, page: sq.pageno, type: 2 };
+        params.url = this.baseUrl + "/weixin?" + new URLSearchParams(qp);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text, results = [];
+        var liRe = /<li[^>]*id="sogou_vr_[^"]*"[^>]*>([\s\S]*?)<\/li>/gi;
+        var lm;
+        while ((lm = liRe.exec(h)) !== null) {
+          var item = lm[1];
+          var titleM = item.match(/<h3[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
+          var title = titleM ? st(titleM[1]) : "";
+          var hrefM = item.match(/<h3[\s\S]*?<a[^>]*href="([^"]*)"/i);
+          var url = hrefM ? hrefM[1] : "";
+          if (url.indexOf("/link?url=") === 0) url = this.baseUrl + url;
+          var contentM = item.match(/<p[^>]*class="\s*txt-info\s*"[^>]*>([\s\S]*?)<\/p>/i) ||
+            item.match(/<p[^>]*class="[^"]*txt-info[^"]*"[^>]*>([\s\S]*?)<\/p>/i);
+          var content = contentM ? st(contentM[1]) : "";
+          var thumbM = item.match(/<div[^>]*class="\s*img-box\s*"[^>]*>[\s\S]*?<img[^>]*src="([^"]*)"/i);
+          var thumbnail = null;
+          if (thumbM) { thumbnail = thumbM[1]; if (thumbnail.indexOf("//") === 0) thumbnail = "https:" + thumbnail; }
+          var publishedDate = null;
+          var tsM = item.match(/timeConvert\('(\d+)'\)/);
+          if (tsM) { var d = new Date(parseInt(tsM[1], 10) * 1e3); if (!isNaN(d.getTime())) publishedDate = d; }
+          if (title && url) results.push({ title: title, url: url, content: content, thumbnail: thumbnail, publishedDate: publishedDate });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://www.chinaso.com/", wikidata_id: "Q10846064",
+     *   use_official_api: false, require_api_key: false, results: "JSON", language: "zh" }
+     */
+    EG_misc.chinaso = {
+      name: "chinaso",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      timeRangeSupport: !0,
+      resultsPerPage: 10,
+      chinasoCategory: "news",
+      chinasoNewsSource: "all",
+      baseUrl: "https://www.chinaso.com",
+      timeRangeDict: { day: "24h", week: "1w", month: "1m", year: "1y" },
+      async request(query, params, sq) {
+        var qp = { q: query };
+        var tr = sq.timeRange;
+        if (this.timeRangeDict[tr]) { qp.stime = this.timeRangeDict[tr]; qp.etime = "now"; }
+        var catConfig = {
+          news: { endpoint: "/v5/general/v1/web/search", params: { pn: sq.pageno, ps: this.resultsPerPage } },
+          images: { endpoint: "/v5/general/v1/search/image", params: { start_index: (sq.pageno - 1) * this.resultsPerPage, rn: this.resultsPerPage } },
+          videos: { endpoint: "/v5/general/v1/search/video", params: { start_index: (sq.pageno - 1) * this.resultsPerPage, rn: this.resultsPerPage } },
+        };
+        var cfg = catConfig[this.chinasoCategory];
+        if (this.chinasoCategory === "news" && this.chinasoNewsSource !== "all") {
+          if (this.chinasoNewsSource === "EPAPER") cfg.params.type = "EPAPER";
+          else cfg.params.cate = this.chinasoNewsSource;
+        }
+        for (var k in cfg.params) qp[k] = cfg.params[k];
+        params.url = this.baseUrl + cfg.endpoint + "?" + new URLSearchParams(qp);
+        var buf = new Uint8Array(16);
+        crypto.getRandomValues(buf);
+        var uid = btoa(String.fromCharCode.apply(null, buf));
+        params.cookies = { uid: uid };
+        return params;
+      },
+      async response(resp, sq) {
+        var data = resp.json;
+        if (!data) return [];
+        if (this.chinasoCategory === "news") return this._parseNews(data);
+        if (this.chinasoCategory === "images") return this._parseImages(data);
+        if (this.chinasoCategory === "videos") return this._parseVideos(data);
+        return [];
+      },
+      _parseNews(data) {
+        var results = [];
+        if (!data.data || !data.data.data) return results;
+        for (var i = 0; i < data.data.data.length; i++) {
+          var entry = data.data.data[i];
+          var publishedDate = null;
+          if (entry.timestamp) { var d = new Date(parseInt(entry.timestamp, 10) * 1e3); if (!isNaN(d.getTime())) publishedDate = d; }
+          results.push({ title: st(entry.title), url: entry.url, content: st(entry.snippet), publishedDate: publishedDate });
+        }
+        return results;
+      },
+      _parseImages(data) {
+        var results = [];
+        if (!data.data || !data.data.arrRes) return results;
+        for (var i = 0; i < data.data.arrRes.length; i++) {
+          var entry = data.data.arrRes[i];
+          results.push({
+            url: entry.web_url, title: st(entry.title), content: st(entry.ImageInfo || ""),
+            template: "images.html", imgSrc: entry.url.replace(/^http:\/\//i, "https://"),
+            thumbnailSrc: entry.largeimage.replace(/^http:\/\//i, "https://"),
+          });
+        }
+        return results;
+      },
+      _parseVideos(data) {
+        var results = [];
+        if (!data.data || !data.data.arrRes) return results;
+        for (var i = 0; i < data.data.arrRes.length; i++) {
+          var entry = data.data.arrRes[i];
+          var publishedDate = null;
+          if (entry.VideoPubDate) { var d = new Date(parseInt(entry.VideoPubDate, 10) * 1e3); if (!isNaN(d.getTime())) publishedDate = d; }
+          results.push({
+            url: entry.url, title: st(entry.raw_title), template: "videos.html",
+            publishedDate: publishedDate, thumbnail: entry.image_src.replace(/^http:\/\//i, "https://"),
+          });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://search.naver.com", wikidata_id: "Q485639",
+     *   use_official_api: false, require_api_key: false, results: "HTML", language: "ko" }
+     */
+    EG_misc.naver = {
+      name: "naver",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      timeRangeSupport: !0,
+      baseUrl: "https://search.naver.com",
+      naverCategory: "general",
+      timeRangeDict: { day: "1d", week: "1w", month: "1m", year: "1y" },
+      categoryDict: { general: { start: 15, where: "web" }, images: { start: 50, where: "image" }, news: { start: 10, where: "news" }, videos: { start: 48, where: "video" } },
+      async request(query, params, sq) {
+        var qp = { query: query };
+        var cat = this.categoryDict[this.naverCategory];
+        if (cat) { qp.start = (sq.pageno - 1) * cat.start + 1; qp.where = cat.where; }
+        var tr = sq.timeRange;
+        if (this.timeRangeDict[tr]) qp.nso = "p:" + this.timeRangeDict[tr];
+        params.url = this.baseUrl + "/search.naver?" + new URLSearchParams(qp);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text;
+        if (this.naverCategory === "general") return this._parseGeneral(h);
+        if (this.naverCategory === "images") return this._parseImages(h);
+        if (this.naverCategory === "news") return this._parseNews(h);
+        if (this.naverCategory === "videos") return this._parseVideos(h);
+        return [];
+      },
+      _parseGeneral(h) {
+        var results = [];
+        var blocks = allBlk(h, "li", "bx");
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var bl = blocks[bi];
+          var titleM = bl.match(/<a[^>]*class="[^"]*link_tit[^"]*"[^>]*>([\s\S]*?)<\/a>/i);
+          var title = titleM ? st(titleM[1]) : "";
+          var urlM = bl.match(/<a[^>]*class="[^"]*link_tit[^"]*"[^>]*href="([^"]*)"/i);
+          var url = urlM ? urlM[1] : "";
+          var contentM = bl.match(/<div[^>]*class="[^"]*total_dsc_wrap[^"]*"[^>]*>[\s\S]*?<a[^>]*class="[^"]*api_txt_lines[^"]*"[^>]*>([\s\S]*?)<\/a>/i);
+          var content = contentM ? st(contentM[1]) : "";
+          var thumbM = bl.match(/<div[^>]*class="[^"]*thumb_single[^"]*"[^>]*>[\s\S]*?<img[^>]*data-lazysrc="([^"]*)"/i);
+          var thumbnail = thumbM ? thumbM[1] : null;
+          if (title && url) results.push({ title: title, url: url, content: content, thumbnail: thumbnail });
+        }
+        return results;
+      },
+      _parseImages(h) {
+        var results = [];
+        var script = eb(h, "<script>var imageSearchTabData=", "</script>");
+        if (!script) return results;
+        try {
+          var json = JSON.parse(script.trim().replace(/'/g, '"').replace(/(\w+):/g, '"$1":').replace(/,\s*}/g, "}"));
+          var items = (json.content || {}).items || [];
+          for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            results.push({
+              template: "images.html", url: item.link, thumbnailSrc: item.thumb,
+              imgSrc: item.originalUrl, title: st(item.title), source: item.source,
+              resolution: (item.orgWidth || "?") + " x " + (item.orgHeight || "?"),
+            });
+          }
+        } catch (e) {}
+        return results;
+      },
+      _parseNews(h) {
+        var results = [];
+        var blocks = allBlk(h, "div", "sds-comps-full-layout");
+        if (blocks.length === 0) blocks = allBlk(h, "div", "sds-comps-base-layout");
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var bl = blocks[bi];
+          var titleM = bl.match(/<span[^>]*class="[^"]*sds-comps-text-type-headline1[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
+          var title = titleM ? st(titleM[1]) : "";
+          var urlM = bl.match(/<a[^>]*href="([^"]*)"[^>]*nocr="1"/i);
+          var url = urlM ? urlM[1] : "";
+          var contentM = bl.match(/<span[^>]*class="[^"]*sds-comps-text-type-body1[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
+          var content = contentM ? st(contentM[1]) : "";
+          var thumbM = bl.match(/<div[^>]*class="[^"]*sds-comps-image[^"]*sds-rego-thumb-overlay[^"]*"[^>]*>[\s\S]*?<img[^>]*src="([^"]*)"/i);
+          var thumbnail = thumbM ? thumbM[1] : null;
+          if (title && content && url) results.push({ title: title, url: url, content: content, thumbnail: thumbnail });
+        }
+        return results;
+      },
+      _parseVideos(h) {
+        var results = [];
+        var blocks = allBlk(h, "li", "video_item");
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var bl = blocks[bi];
+          var titleM = bl.match(/<a[^>]*class="[^"]*info_title[^"]*"[^>]*>([\s\S]*?)<\/a>/i);
+          var title = titleM ? st(titleM[1]) : "";
+          var urlM = bl.match(/<a[^>]*class="[^"]*info_title[^"]*"[^>]*href="([^"]*)"/i);
+          var url = urlM ? urlM[1] : "";
+          var thumbM = bl.match(/<img[^>]*class="[^"]*thumb[^"]*"[^>]*src="([^"]*)"/i);
+          var thumbnail = thumbM ? thumbM[1] : null;
+          var lenM = bl.match(/<span[^>]*class="[^"]*time[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
+          var length = null;
+          if (lenM) {
+            var dm = st(lenM[1]).match(/(\d+):(\d+):(\d+)/) || st(lenM[1]).match(/(\d+):(\d+)/);
+            if (dm) length = dm[3] ? parseInt(dm[1], 10) * 3600 + parseInt(dm[2], 10) * 60 + parseInt(dm[3], 10) : parseInt(dm[1], 10) * 60 + parseInt(dm[2], 10);
+          }
+          if (title && url) results.push({ template: "videos.html", title: title, url: url, thumbnail: thumbnail, length: length });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://www.qwant.com/", wikidata_id: "Q14657870",
+     *   use_official_api: true, require_api_key: false, results: "JSON" }
+     */
+    EG_misc.qwant = {
+      name: "qwant",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      maxPage: 5,
+      qwantCateg: null,
+      safesearch: !0,
+      apiUrl: "https://api.qwant.com/v3/search/",
+      webLiteUrl: "https://lite.qwant.com/",
+      async request(query, params, sq) {
+        if (!query) return null;
+        var qLocale = sq.language || "en_US";
+        var url, args = { q: query };
+        params.raiseForHttperror = !1;
+        if (this.qwantCateg === "web-lite") {
+          url = this.webLiteUrl + "?";
+          args.locale = qLocale.toLowerCase();
+          args.l = qLocale.split("_")[0];
+          args.s = sq.safesearch;
+          args.p = sq.pageno;
+          params.raiseForHttperror = !0;
+        } else if (this.qwantCateg === "images") {
+          url = this.apiUrl + "images?";
+          args.count = 50;
+          args.locale = qLocale;
+          args.safesearch = sq.safesearch;
+          args.tgp = 3;
+          args.offset = (sq.pageno - 1) * args.count;
+        } else {
+          url = this.apiUrl + this.qwantCateg + "?";
+          args.count = 10;
+          args.locale = qLocale;
+          args.safesearch = sq.safesearch;
+          args.llm = "false";
+          args.tgp = 3;
+          args.offset = (sq.pageno - 1) * args.count;
+        }
+        params.url = url + new URLSearchParams(args);
+        return params;
+      },
+      async response(resp, sq) {
+        if (this.qwantCateg === "web-lite") return this._parseWebLite(resp);
+        return this._parseWebApi(resp, sq);
+      },
+      _parseWebLite(resp) {
+        var h = resp.text, results = [];
+        var sections = allBlk(h, "section", "");
+        if (sections.length === 0) {
+          var articleRe = /<article[^>]*>([\s\S]*?)<\/article>/gi;
+          var am;
+          while ((am = articleRe.exec(h)) !== null) sections.push(am[1]);
+        }
+        for (var si = 0; si < sections.length; si++) {
+          var bl = sections[si];
+          if (/<span[^>]*class="[^"]*tooltip[^"]*"/i.test(bl)) continue;
+          var urlM = bl.match(/<span[^>]*class="[^"]*url\s+partner[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
+          var url = urlM ? st(urlM[1]) : "";
+          var titleM = bl.match(/<h2[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
+          var title = titleM ? st(titleM[1]) : "";
+          var contentM = bl.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+          var content = contentM ? st(contentM[1]) : "";
+          results.push({ url: url, title: title, content: content });
+        }
+        return results;
+      },
+      _parseWebApi(resp, sq) {
+        var results = [], data;
+        try { data = resp.json; } catch { data = {}; }
+        if (!data) data = {};
+        if (data.status !== "success") {
+          if (data.data && data.data.error_code === 24) return [{ error: "too_many_requests" }];
+          if (data.data && data.data.error_data && data.data.error_data.captchaUrl) return [{ error: "captcha" }];
+          if (resp.status === 403) return [{ error: "access_denied" }];
+        }
+        var mainline;
+        if (this.qwantCateg === "web") {
+          mainline = ((data.data || {}).result || {}).items || {};
+          mainline = mainline.mainline || [];
+        } else {
+          mainline = ((data.data || {}).result || {}).items || [];
+          mainline = [{ type: this.qwantCateg, items: mainline }];
+        }
+        if (!mainline || mainline.length === 0) return results;
+        for (var ri = 0; ri < mainline.length; ri++) {
+          var row = mainline[ri];
+          var mainlineType = row.type || "web";
+          if (mainlineType !== this.qwantCateg || mainlineType === "ads") continue;
+          var items = row.items || [];
+          for (var ii = 0; ii < items.length; ii++) {
+            var item = items[ii];
+            var title = item.title || null;
+            var resUrl = item.url || null;
+            if (mainlineType === "web") {
+              results.push({ title: title, url: resUrl, content: item.desc || "" });
+            } else if (mainlineType === "news") {
+              var pubDate = item.date != null ? new Date(item.date * 1e3) : null;
+              var newsMedia = item.media || [];
+              var thumbnail = newsMedia.length > 0 ? ((newsMedia[0].pict || {}).url) : null;
+              results.push({ title: title, url: resUrl, publishedDate: pubDate, thumbnail: thumbnail });
+            } else if (mainlineType === "images") {
+              results.push({ title: title, url: resUrl, template: "images.html", thumbnailSrc: item.thumbnail, imgSrc: item.media, resolution: (item.width || "?") + " x " + (item.height || "?"), imgFormat: item.thumb_type });
+            } else if (mainlineType === "videos") {
+              var d = item.desc || "", s = item.source || "", c = item.channel || "";
+              var contentParts = [];
+              if (d) contentParts.push(d);
+              if (s) contentParts.push("Source: " + s);
+              if (c) contentParts.push("Channel: " + c);
+              var content = contentParts.join(" // ");
+              var length = item.duration != null ? Math.round(item.duration / 1e3) : null;
+              var vPubDate = item.date != null ? new Date(item.date * 1e3) : null;
+              var vThumb = item.thumbnail ? item.thumbnail.replace("https://s2.qwant.com", "https://s1.qwant.com") : null;
+              results.push({ title: title, url: resUrl, content: content, publishedDate: vPubDate, thumbnail: vThumb, template: "videos.html", length: length });
+            }
+          }
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://search.brave.com/", wikidata_id: "Q22906900",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_misc.brave = {
+      name: "brave",
+      categories: [],
+      shortcut: null,
+      paging: !1,
+      maxPage: 10,
+      braveCategory: "search",
+      safesearch: !0,
+      safesearchMap: { 2: "strict", 1: "moderate", 0: "off" },
+      timeRangeSupport: !1,
+      timeRangeMap: { day: "pd", week: "pw", month: "pm", year: "py" },
+      baseUrl: "https://search.brave.com/",
+      braveSpellcheck: !1,
+      async request(query, params, sq) {
+        var args = { q: query, source: "web" };
+        if (this.braveSpellcheck) args.spellcheck = "1";
+        if (this.braveCategory === "search" || this.braveCategory === "goggles") {
+          if ((sq.pageno || 1) > 1) args.offset = (sq.pageno || 1) - 1;
+          var tr = sq.timeRange;
+          if (this.timeRangeMap[tr]) args.tf = this.timeRangeMap[tr];
+        }
+        params.headers["Accept-Encoding"] = "gzip, deflate";
+        params.url = this.baseUrl + this.braveCategory + "?" + new URLSearchParams(args);
+        params.cookies = params.cookies || {};
+        params.cookies.safesearch = this.safesearchMap[sq.safesearch] || "off";
+        params.cookies.useLocation = "0";
+        params.cookies.summarizer = "0";
+        var lang = sq.language || "all";
+        if (lang !== "all") {
+          var parts = lang.split("-");
+          params.cookies.country = parts.length > 1 ? parts[1].toLowerCase() : "us";
+        } else {
+          params.cookies.country = "us";
+        }
+        params.cookies.ui_lang = lang !== "all" ? lang.toLowerCase() : "en-us";
+        return params;
+      },
+      async response(resp, sq) {
+        if (this.braveCategory === "search" || this.braveCategory === "goggles") return this._parseSearch(resp, sq);
+        if (this.braveCategory === "news") return this._parseNews(resp);
+        var jsonData = this._extractJsonData(resp.text);
+        if (!jsonData) return [];
+        var jsonResp = jsonData.data && jsonData.data[1] && jsonData.data[1].data && jsonData.data[1].data.body && jsonData.data[1].data.body.response;
+        if (!jsonResp) return [];
+        if (this.braveCategory === "images") return this._parseImages(jsonResp);
+        if (this.braveCategory === "videos") return this._parseVideos(jsonResp);
+        return [];
+      },
+      _extractJsonData(text) {
+        var scriptStart = text.indexOf("<script");
+        if (scriptStart === -1) return null;
+        var scriptEnd = text.indexOf("</script", scriptStart);
+        if (scriptEnd === -1) return null;
+        var scriptContent = text.slice(scriptStart, scriptEnd);
+        var dataStart = scriptContent.indexOf("data: [{");
+        if (dataStart === -1) return null;
+        var dataEnd = scriptContent.lastIndexOf("}}]");
+        if (dataEnd === -1) return null;
+        var jsObjStr = scriptContent.slice(dataStart, dataEnd);
+        jsObjStr = "{" + jsObjStr + "}}]}";
+        try {
+          var jsonStr = jsObjStr.replace(/'/g, '"').replace(/([{,]\s*)(\w+)(\s*:)/g, "$1\"$2\"$3");
+          return JSON.parse(jsonStr);
+        } catch { return null; }
+      },
+      _parseSearch(resp, sq) {
+        var h = resp.text, results = [];
+        var snippets = allBlk(h, "div", "snippet");
+        for (var si = 0; si < snippets.length; si++) {
+          var bl = snippets[si];
+          var urlM = bl.match(/<a[^>]*href="([^"]*)"/);
+          var url = urlM ? urlM[1] : null;
+          var titleM = bl.match(/<div[^>]*class="[^"]*title[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+          var title = titleM ? st(titleM[1]) : "";
+          if (!url || !title) continue;
+          var contentM = bl.match(/<div[^>]*class="[^"]*\scontent\s[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+          var content = "",
+            pubDate = null;
+          if (contentM) {
+            content = st(contentM[1]);
+            var dateM = contentM[1].match(/<span[^>]*class="[^"]*t-secondary[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
+            if (dateM) {
+              var dateStr = st(dateM[1]);
+              var d = new Date(dateStr);
+              if (!isNaN(d.getTime())) { pubDate = d; content = content.replace(dateStr, "").replace(/^-\s*\n?\s*/, "").trim(); }
+            }
+          }
+          var thumbM = bl.match(/<a[^>]*class="[^"]*thumbnail[^"]*"[^>]*>[\s\S]*?<img[^>]*src="([^"]*)"/i);
+          var thumbnail = thumbM ? thumbM[1] : "";
+          results.push({ url: url, title: title, content: content, publishedDate: pubDate, thumbnail: thumbnail });
+          if (/youtube\.com/.test(url)) {
+            results[results.length - 1].iframeSrc = "https://www.youtube.com/embed/" + (url.match(/(?:v=|youtu\.be\/)([\w-]+)/) || [])[1];
+          }
+        }
+        var sugRe = /<a[^>]*class="[^"]*related-query[^"]*"[^>]*>([\s\S]*?)<\/a>/gi;
+        var sm;
+        while ((sm = sugRe.exec(h)) !== null) { results.push({ suggestion: st(sm[1]) }); }
+        return results;
+      },
+      _parseNews(resp) {
+        var h = resp.text, results = [];
+        var newsItems = allBlk(h, "div", "results");
+        if (newsItems.length > 0) {
+          var newsRe = /<div[^>]*data-type="news"[^>]*>([\s\S]*?)<\/div>/gi;
+          var nm;
+          while ((nm = newsRe.exec(newsItems[0])) !== null) {
+            var bl = nm[1];
+            var urlM = bl.match(/<a[^>]*class="[^"]*result-header[^"]*"[^>]*href="([^"]*)"/i);
+            var url = urlM ? urlM[1] : null;
+            if (!url) continue;
+            var titleM = bl.match(/<span[^>]*class="[^"]*snippet-title[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
+            var title = titleM ? st(titleM[1]) : "";
+            var contentM = bl.match(/<p[^>]*class="[^"]*desc[^"]*"[^>]*>([\s\S]*?)<\/p>/i);
+            var content = contentM ? st(contentM[1]) : "";
+            var thumbM = bl.match(/<div[^>]*class="[^"]*image-wrapper[^"]*"[^>]*>[\s\S]*?<img[^>]*src="([^"]*)"/i);
+            var thumbnail = thumbM ? thumbM[1] : "";
+            results.push({ url: url, title: title, content: content, thumbnail: thumbnail });
+          }
+        }
+        return results;
+      },
+      _parseImages(jsonResp) {
+        var results = [];
+        var res = jsonResp.results || [];
+        for (var i = 0; i < res.length; i++) {
+          var r = res[i];
+          results.push({
+            template: "images.html", url: r.url, title: r.title,
+            source: r.source, imgSrc: (r.properties || {}).url,
+            thumbnailSrc: (r.thumbnail || {}).src,
+          });
+        }
+        return results;
+      },
+      _parseVideos(jsonResp) {
+        var results = [];
+        var res = jsonResp.results || [];
+        for (var i = 0; i < res.length; i++) {
+          var r = res[i];
+          var age = r.age;
+          var publishedDate = age ? parseDateStr(age) : null;
+          var thumbnail = r.thumbnail ? r.thumbnail.src : null;
+          var item = {
+            template: "videos.html", url: r.url, title: r.title,
+            content: r.description, length: (r.video || {}).duration,
+            publishedDate: publishedDate, thumbnail: thumbnail,
+          };
+          if (/youtube\.com/.test(r.url)) {
+            var idM = r.url.match(/(?:v=|youtu\.be\/)([\w-]+)/);
+            if (idM) item.iframeSrc = "https://www.youtube.com/embed/" + idM[1];
+          }
+          results.push(item);
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://api.search.brave.com/", wikidata_id: null,
+     *   official_api_documentation: "https://api-dashboard.search.brave.com/documentation",
+     *   use_official_api: true, require_api_key: true, results: "JSON" }
+     */
+    EG_misc.braveapi = {
+      name: "braveapi",
+      categories: ["general", "web"],
+      shortcut: null,
+      paging: !0,
+      safesearch: !0,
+      timeRangeSupport: !0,
+      resultsPerPage: 20,
+      baseUrl: "https://api.search.brave.com/res/v1/web/search",
+      apiKey: "",
+      timeRangeMap: { day: "past_day", week: "past_week", month: "past_month", year: "past_year" },
+      async request(query, params, sq) {
+        var args = { q: query, count: this.resultsPerPage, offset: (sq.pageno - 1) * this.resultsPerPage };
+        var tr = sq.timeRange;
+        if (tr && this.timeRangeMap[tr]) args.time_range = this.timeRangeMap[tr];
+        if (sq.safesearch) args.safesearch = "strict";
+        params.url = this.baseUrl + "?" + new URLSearchParams(args);
+        params.headers["X-Subscription-Token"] = this.apiKey;
+        return params;
+      },
+      async response(resp, sq) {
+        var results = [];
+        var data = resp.json;
+        if (!data || !data.web || !data.web.results) return results;
+        for (var i = 0; i < data.web.results.length; i++) {
+          var r = data.web.results[i];
+          results.push({
+            url: r.url, title: r.title, content: r.description || "",
+            publishedDate: r.age ? parseDateStr(r.age) : null,
+            thumbnail: (r.thumbnail || {}).src,
+          });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://mojeek.com", wikidata_id: "Q60747299",
+     *   official_api_documentation: "https://www.mojeek.com/support/api/search/request_parameters.html",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_misc.mojeek = {
+      name: "mojeek",
+      categories: ["general", "web"],
+      shortcut: null,
+      paging: !0,
+      safesearch: !0,
+      timeRangeSupport: !0,
+      maxPage: 10,
+      baseUrl: "https://www.mojeek.com",
+      searchType: "",
+      async request(query, params, sq) {
+        var args = { q: query, safe: Math.min(sq.safesearch, 1) };
+        if (this.searchType) args.fmt = this.searchType;
+        if (this.searchType === "" && sq.pageno > 1) args.s = 10 * (sq.pageno - 1);
+        if (sq.timeRange && this.searchType !== "images") {
+          var deltaMap = { day: 1, week: 7, month: 30, year: 365 };
+          var d = new Date(Date.now() - deltaMap[sq.timeRange] * 864e5);
+          args.since = d.getFullYear() + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2);
+        }
+        params.url = this.baseUrl + "/search?" + new URLSearchParams(args);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text;
+        if (this.searchType === "") return this._generalResults(h);
+        if (this.searchType === "images") return this._imageResults(h);
+        if (this.searchType === "news") return this._newsResults(h);
+        return [];
+      },
+      _generalResults(h) {
+        var results = [];
+        var liBlocks = allBlk(h, "li", "results-standard");
+        if (liBlocks.length > 0) {
+          var aRe = /<a[^>]*class="[^"]*\bob\b[^"]*"[^>]*href="([^"]*)">([\s\S]*?)<\/a>/gi;
+          var fullList = liBlocks[0];
+          var contentRe = /<p[^>]*class="\s*s\s*"[^>]*>([\s\S]*?)<\/p>/gi;
+          var contents = [];
+          var cm;
+          while ((cm = contentRe.exec(fullList)) !== null) contents.push(st(cm[1]));
+          var am;
+          var ci = 0;
+          while ((am = aRe.exec(fullList)) !== null) {
+            var url = am[1];
+            var title = "";
+            var h2M = fullList.slice(am.index).match(/<h2[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
+            if (h2M) title = st(h2M[1]);
+            if (url && !/^https?:\/\//i.test(url)) {
+              var dataHref = am[0].match(/data-href="([^"]*)"/);
+              if (dataHref) url = dataHref[1];
+            }
+            var content = ci < contents.length ? contents[ci] : "";
+            ci++;
+            if (url && title) results.push({ url: url, title: title, content: content });
+          }
+        }
+        var sugRe = /<p[^>]*class="[^"]*top-info\s+spell[^"]*"[^>]*>[\s\S]*?<em[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i;
+        var sm = sugRe.exec(h);
+        if (sm) results.push({ suggestion: st(sm[1]) });
+        return results;
+      },
+      _imageResults(h) {
+        var results = [];
+        var blocks = allBlk(h, "div", "image");
+        if (blocks.length === 0) blocks = allBlk(h, "div", "results");
+        for (var bi = 0; bi < blocks.length; bi++) {
+          var imgRe = /<div[^>]*class="[^"]*\bimage\b[^"]*"[^>]*>([\s\S]*?)<\/div>/gi;
+          var im;
+          while ((im = imgRe.exec(blocks[bi])) !== null) {
+            var bl = im[1];
+            var urlM = bl.match(/<a[^>]*href="([^"]*)"/i);
+            var url = urlM ? urlM[1] : "";
+            var title = bl.match(/data-title="([^"]*)"/i);
+            var titleStr = title ? dq(title[1]) : "";
+            var srcM = bl.match(/<img[^>]*src="([^"]*)"/i);
+            var imgSrc = srcM ? this.baseUrl + srcM[1] : "";
+            if (url) results.push({ template: "images.html", url: url, title: titleStr, imgSrc: imgSrc, content: "" });
+          }
+        }
+        return results;
+      },
+      _newsResults(h) {
+        var results = [];
+        var articles = allBlk(h, "article", "news-search-result");
+        if (articles.length === 0) {
+          var secRe = /<section[^>]*class="[^"]*news-search-result[^"]*"[^>]*>([\s\S]*?)<\/section>/gi;
+          var sm;
+          while ((sm = secRe.exec(h)) !== null) articles.push(sm[1]);
+        }
+        for (var ai = 0; ai < articles.length; ai++) {
+          var bl = articles[ai];
+          var urlM = bl.match(/<h2[\s\S]*?<a[^>]*href="([^"]*)"/i);
+          var url = urlM ? urlM[1] : "";
+          var titleM = bl.match(/<h2[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
+          var title = titleM ? st(titleM[1]) : "";
+          var contentM = bl.match(/<p[^>]*class="\s*s\s*"[^>]*>([\s\S]*?)<\/p>/i);
+          var content = contentM ? st(contentM[1]) : "";
+          if (url) results.push({ url: url, title: title, content: content });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://startpage.com", wikidata_id: "Q2333295",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_misc.startpage = {
+      name: "startpage",
+      categories: ["general", "web"],
+      shortcut: null,
+      paging: !0,
+      maxPage: 18,
+      timeRangeSupport: !0,
+      safesearch: !0,
+      startpageCateg: "web",
+      baseUrl: "https://www.startpage.com",
+      searchUrl: "https://www.startpage.com/sp/search",
+      timeRangeDict: { day: "d", week: "w", month: "m", year: "y" },
+      safesearchDict: { 0: "1", 1: "0", 2: "0" },
+      _scCode: null,
+      _scCodeTime: 0,
+      _scCodeCacheSec: 3600,
+      async _getScCode(params) {
+        if (this._scCode && Date.now() - this._scCodeTime < this._scCodeCacheSec * 1e3) return this._scCode;
+        var resp;
+        try { resp = await fetch(this.baseUrl + "/", { headers: params.headers || {} }); } catch { return null; }
+        var text = await resp.text();
+        if (resp.url && resp.url.indexOf("/sp/captcha") !== -1) return null;
+        var m = text.match(/<input[^>]*name="sc"[^>]*value="([^"]*)"/i);
+        if (!m) return null;
+        this._scCode = m[1];
+        this._scCodeTime = Date.now();
+        return this._scCode;
+      },
+      async request(query, params, sq) {
+        var engineRegion = sq.language || "en-US";
+        var engineLanguage = (sq.language || "en").split("-")[0];
+        var scCode = await this._getScCode(params);
+        if (!scCode) return params;
+        params.headers["Origin"] = this.baseUrl;
+        params.headers["Referer"] = this.baseUrl + "/";
+        var args = {
+          query: query, cat: this.startpageCateg, t: "device", sc: scCode,
+          with_date: this.timeRangeDict[sq.timeRange] || "",
+          abp: "1", abd: "1", abe: "1",
+        };
+        if (engineLanguage) { args.language = engineLanguage; args.lui = engineLanguage; }
+        if (sq.pageno > 1) { args.page = sq.pageno; args.segment = "startpage.udog"; }
+        var cookie = {
+          date_time: "world", disable_family_filter: this.safesearchDict[sq.safesearch],
+          disable_open_in_new_window: "0", enable_post_method: "1",
+          enable_proxy_safety_suggest: "1", enable_stay_control: "1",
+          instant_answers: "1", lang_homepage: "s/device/en/",
+          num_of_results: "10", suggestions: "1", wt_unit: "celsius",
+        };
+        if (engineLanguage) { cookie.language = engineLanguage; cookie.language_ui = engineLanguage; }
+        if (engineRegion) cookie.search_results_region = engineRegion;
+        var cookieStr = Object.keys(cookie).map(function(k) { return k + "EEE" + cookie[k]; }).join("N1N");
+        params.cookies = params.cookies || {};
+        params.cookies.preferences = cookieStr;
+        params.data = args;
+        params.method = "POST";
+        params.url = this.searchUrl;
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text;
+        if (resp.headers && resp.headers.Location && resp.headers.Location.indexOf("/sp/captcha") !== -1) return [];
+        var categ = this.startpageCateg.charAt(0).toUpperCase() + this.startpageCateg.slice(1);
+        var startStr = 'React.createElement(UIStartpage.AppSerp' + categ + ', {';
+        var startI = h.indexOf(startStr);
+        if (startI === -1) return [];
+        startI += startStr.length;
+        var depth = 1, pos = startI;
+        while (depth > 0 && pos < h.length) {
+          if (h[pos] === '{') depth++;
+          else if (h[pos] === '}') depth--;
+          pos++;
+        }
+        var jsonStr;
+        try {
+          jsonStr = h.slice(startI - 1, pos);
+          var resultsJson = JSON.parse(jsonStr);
+          var regions = ((resultsJson.render || {}).presenter || {}).regions || {};
+          var mainline = regions.mainline || [];
+          var results = [];
+          for (var mi = 0; mi < mainline.length; mi++) {
+            var mainlineItems = mainline[mi].results || [];
+            var displayType = mainline[mi].display_type || "";
+            for (var ri = 0; ri < mainlineItems.length; ri++) {
+              var item = mainlineItems[ri];
+              if (displayType === "web-google") {
+                var content = st(item.description || "");
+                var pDate = null;
+                var dM = content.match(/^(\d{1,2}\s+[A-Z][a-z]{2}\s+\d{4})\s*\.\.\.\s*/);
+                if (dM) { pDate = parseDateStr(dM[1]); content = content.slice(content.indexOf("...") + 4); }
+                results.push({ url: item.clickUrl, title: st(item.title), content: content, publishedDate: pDate });
+              } else if (displayType === "news-bing") {
+                var newsDate = item.date ? new Date(parseInt(item.date, 10) / 1e3) : null;
+                var newsThumb = item.thumbnailUrl ? this.baseUrl + item.thumbnailUrl : null;
+                results.push({ url: item.clickUrl, title: st(item.title), content: st(item.description || ""), publishedDate: newsDate, thumbnail: newsThumb });
+              } else if (displayType.indexOf("images") !== -1) {
+                if (!item.altClickUrl) continue;
+                var imgThumb = item.thumbnailUrl ? this.baseUrl + item.thumbnailUrl : null;
+                var resolution = item.width && item.height ? item.width + "x" + item.height : null;
+                results.push({ template: "images.html", url: item.altClickUrl, title: st(item.title), content: "", imgSrc: item.rawImageUrl, thumbnailSrc: imgThumb, resolution: resolution, imgFormat: item.format });
+              }
+            }
+          }
+          return results;
+        } catch { return []; }
+      },
+    };
+
+    /**
+     * about: { website: "https://yandex.com/", wikidata_id: "Q5281",
+     *   use_official_api: false, require_api_key: false, results: "HTML" }
+     */
+    EG_misc.yandex = {
+      name: "yandex",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      searchType: "",
+      baseUrlWeb: "https://yandex.com/search/site/",
+      baseUrlImages: "https://yandex.com/images/search",
+      supportedLangs: ["ru", "en", "be", "fr", "de", "id", "kk", "tt", "tr", "uk"],
+      async request(query, params, sq) {
+        var queryParamsWeb = { tmpl_version: "releases", text: query, web: "1", frame: "1", searchid: "3131712" };
+        var lang = (sq.language || "en").split("-")[0];
+        if (this.supportedLangs.indexOf(lang) !== -1) queryParamsWeb.lang = lang;
+        var queryParamsImages = { text: query, uinfo: "sw-1920-sh-1080-ww-1125-wh-999" };
+        if (sq.pageno > 1) {
+          queryParamsWeb.p = sq.pageno - 1;
+          queryParamsImages.p = sq.pageno - 1;
+        }
+        params.cookies = { cookie: "yp=1716337604.sp.family%3A0#1685406411.szm.1:1920x1080:1920x999" };
+        if (this.searchType === "web") params.url = this.baseUrlWeb + "?" + new URLSearchParams(queryParamsWeb);
+        else if (this.searchType === "images") params.url = this.baseUrlImages + "?" + new URLSearchParams(queryParamsImages);
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text;
+        if (resp.headers && resp.headers["x-yandex-captcha"] === "captcha") return [{ error: "captcha" }];
+        if (this.searchType === "web") return this._parseWeb(h);
+        if (this.searchType === "images") return this._parseImages(h);
+        return [];
+      },
+      _parseWeb(h) {
+        var results = [];
+        var items = allBlk(h, "li", "serp-item");
+        for (var i = 0; i < items.length; i++) {
+          var bl = items[i];
+          var urlM = bl.match(/<a[^>]*class="b-serp-item__title-link"[^>]*href="([^"]*)"/i);
+          var url = urlM ? urlM[1] : "";
+          var titleM = bl.match(/<h3[^>]*class="b-serp-item__title"[^>]*>[\s\S]*?<a[^>]*class="b-serp-item__title-link"[^>]*>[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/i);
+          var title = titleM ? st(titleM[1]) : "";
+          var contentM = bl.match(/<div[^>]*class="b-serp-item__content"[^>]*>[\s\S]*?<div[^>]*class="b-serp-item__text"[^>]*>([\s\S]*?)<\/div>/i);
+          var content = contentM ? st(contentM[1]) : "";
+          if (url) results.push({ url: url, title: title, content: content });
+        }
+        return results;
+      },
+      _parseImages(h) {
+        var results = [];
+        var jsonStr = eb(h, '{"location":"/images/search/', 'advRsyaSearchColumn":null}}');
+        if (!jsonStr) jsonStr = eb(h, '{"location":"/images/search/', 'false}}}');
+        if (!jsonStr) return results;
+        try {
+          jsonStr = '{"location":"/images/search/' + jsonStr + (jsonStr.indexOf('advRsyaSearchColumn') !== -1 ? 'advRsyaSearchColumn":null}}' : 'false}}}');
+          var data = JSON.parse(jsonStr);
+          var entities = (data.initialState || {}).serpList || {};
+          entities = entities.items || {};
+          entities = entities.entities || {};
+          for (var key in entities) {
+            var item = entities[key];
+            if (!item.snippet) continue;
+            var snippet = item.snippet;
+            var viewerData = item.viewerData || {};
+            var dups = viewerData.dups || [];
+            var dup = dups[0] || {};
+            results.push({
+              title: snippet.title, url: snippet.url, imgSrc: dup.url,
+              filesize: humanizeBytes(dup.fileSizeInBytes),
+              thumbnailSrc: item.image, template: "images.html",
+              resolution: (dup.w || "?") + " x " + (dup.h || "?"),
+            });
+          }
+        } catch {}
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://music.yandex.ru", wikidata_id: "Q4537983",
+     *   use_official_api: false, require_api_key: false, results: "JSON" }
+     */
+    EG_misc.yandex_music = {
+      name: "yandex_music",
+      categories: ["music"],
+      shortcut: null,
+      paging: !0,
+      url: "https://music.yandex.ru",
+      searchUrl: "https://music.yandex.ru/handlers/music-search.jsx",
+      async request(query, params, sq) {
+        var args = { text: query, page: sq.pageno - 1 };
+        params.url = this.searchUrl + "?" + new URLSearchParams(args);
+        return params;
+      },
+      async response(resp, sq) {
+        var results = [];
+        var data = resp.json;
+        if (!data || !data.tracks || !data.tracks.items) return results;
+        for (var i = 0; i < data.tracks.items.length; i++) {
+          var result = data.tracks.items[i];
+          if (result.type === "music") {
+            var trackId = result.id;
+            var albumId = result.albums[0].id;
+            results.push({
+              url: this.url + "/album/" + albumId + "/track/" + trackId,
+              title: result.title,
+              content: "[" + result.albums[0].title + "] " + result.artists[0].name + " - " + result.title,
+              iframeSrc: this.url + "/iframe/track/" + trackId + "/" + albumId,
+            });
+          }
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://www.seznam.cz/", wikidata_id: "Q3490485",
+     *   use_official_api: false, require_api_key: false, results: "HTML", language: "cz" }
+     */
+    EG_misc.seznam = {
+      name: "seznam",
+      categories: ["general", "web"],
+      shortcut: null,
+      paging: !1,
+      baseUrl: "https://search.seznam.cz/",
+      async request(query, params, sq) {
+        var resp;
+        try { resp = await fetch(this.baseUrl, { headers: params.headers || {} }); } catch { return params; }
+        var text = await resp.text();
+        var args = { q: query, oq: query };
+        var hiddenRe = /<input[^>]*type="hidden"[^>]*name="([^"]*)"[^>]*value="([^"]*)"[^>]*>/gi;
+        var m;
+        while ((m = hiddenRe.exec(text)) !== null) args[m[1]] = m[2];
+        params.url = this.baseUrl + "?" + new URLSearchParams(args);
+        var setCookie = resp.headers.get("set-cookie");
+        if (setCookie) params.headers = params.headers || {};
+        return params;
+      },
+      async response(resp, sq) {
+        var h = resp.text, results = [];
+        if (resp.url && resp.url.indexOf("/verify") !== -1) return results;
+        var rootDiv = eb(h, '<div id="searchpage-root"', '<div class="Layout--left"');
+        if (!rootDiv) return results;
+        var resultBlocks = allBlk(h, "div", "f2c528");
+        if (resultBlocks.length === 0) resultBlocks = allBlk(h, "div", "Layout--left");
+        for (var bi = 0; bi < resultBlocks.length; bi++) {
+          var bl = resultBlocks[bi];
+          var titleM = bl.match(/<h3[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/i);
+          if (!titleM) continue;
+          var url = titleM[1], title = st(titleM[2]);
+          var contentM = bl.match(/<div[^>]*class="[^"]*(?:c8774a|e69e8d|a11657)[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+          var content = contentM ? st(contentM[1]) : "";
+          results.push({ url: url, title: title, content: content });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://presearch.io", wikidata_id: "Q7240905",
+     *   use_official_api: false, require_api_key: false, results: "JSON" }
+     */
+    EG_misc.presearch = {
+      name: "presearch",
+      categories: ["general", "web"],
+      shortcut: null,
+      paging: !0,
+      safesearch: !0,
+      timeRangeSupport: !0,
+      searchType: "search",
+      baseUrl: "https://presearch.com",
+      safesearchMap: { 0: "false", 1: "true", 2: "true" },
+      async request(query, params, sq) {
+        var args = { q: query, page: sq.pageno };
+        if (sq.timeRange) args.time = sq.timeRange;
+        var url = this.baseUrl + "/" + this.searchType + "?" + new URLSearchParams(args);
+        var headers = {
+          "User-Agent": "Mozilla/5.0",
+          Cookie: "b=1; presearch_session=; use_local_search_results=false; use_safe_search=" + this.safesearchMap[sq.safesearch],
+        };
+        var lang = sq.language || "all";
+        if (lang !== "all") {
+          var pts = lang.split("-");
+          if (pts.length > 1) headers["Accept-Language"] = pts[0] + "-" + pts[1] + "," + pts[0] + ";q=0.9,*;q=0.5";
+        }
+        var resp;
+        try { resp = await fetch(url, { headers: headers }); } catch { return params; }
+        var text = await resp.text();
+        var lines = text.split("\n");
+        var requestId = null;
+        for (var li = 0; li < lines.length; li++) {
+          if (lines[li].indexOf("window.searchId = ") !== -1) {
+            requestId = lines[li].split("= ")[1].replace(/[";]/g, "").trim();
+            break;
+          }
+        }
+        if (!requestId) return params;
+        params.headers["Accept"] = "application/json";
+        params.url = this.baseUrl + "/results?id=" + requestId;
+        return params;
+      },
+      async response(resp, sq) {
+        var data = resp.json;
+        if (!data) return [];
+        if (this.searchType === "search") return this._parseSearch(data);
+        if (this.searchType === "images") return this._parseImages(data);
+        if (this.searchType === "videos") return this._parseVideos(data);
+        if (this.searchType === "news") return this._parseNews(data);
+        return [];
+      },
+      _htmlToText(s) { return s ? s.replace(/<[^>]*>/g, "").trim() : ""; },
+      _fixTitle(title, url) {
+        title = this._htmlToText(title);
+        try {
+          var domain = new URL(url).hostname;
+          if (title.indexOf(domain) === 0 && title.length > domain.length && title[domain.length] !== "/" && title[domain.length] !== " ") {
+            title = title.slice(domain.length);
+          }
+        } catch {}
+        return title;
+      },
+      _parseSearch(json) {
+        var results = [];
+        var specialSections = (json.specialSections || {}).topStoriesCompact || {};
+        var stories = specialSections.data || [];
+        for (var si = 0; si < stories.length; si++) {
+          var s = stories[si];
+          results.push({ url: s.link, title: this._fixTitle(s.title, s.link), thumbnail: s.image, content: "", metadata: s.source });
+        }
+        var standard = json.standardResults || [];
+        for (var i = 0; i < standard.length; i++) {
+          var item = standard[i];
+          results.push({ url: item.link, title: this._fixTitle(item.title, item.link), content: this._htmlToText(item.description) });
+        }
+        var info = (json.infoSection || {}).data;
+        if (info) {
+          var attributes = [], aboutItems = info.about || [];
+          for (var ai = 0; ai < aboutItems.length; ai++) {
+            var text = this._htmlToText(aboutItems[ai]);
+            var colonIdx = text.indexOf(":");
+            if (colonIdx !== -1) {
+              var label = text.slice(0, colonIdx).trim();
+              var value = text.slice(colonIdx + 1).trim();
+              for (var xi = 0; xi < ["wikipedia", "google"].length; xi++) {
+                var x = ["wikipedia", "google"][xi];
+                if (value.toLowerCase().indexOf(x) === value.length - x.length) value = value.slice(0, -x.length).trim();
+              }
+              attributes.push({ label: label, value: value });
+            }
+          }
+          var contentParts = [];
+          if (info.subtitle) contentParts.push(this._htmlToText(info.subtitle));
+          if (info.description) contentParts.push(this._htmlToText(info.description));
+          results.push({ infobox: info.title, id: info.title, imgSrc: info.image, content: contentParts.join(" | "), attributes: attributes });
+        }
+        return results;
+      },
+      _parseImages(data) {
+        var results = [];
+        var images = data.images || [];
+        for (var i = 0; i < images.length; i++) {
+          var item = images[i];
+          results.push({ template: "images.html", title: this._htmlToText(item.title), url: item.link, imgSrc: item.image, thumbnailSrc: item.thumbnail });
+        }
+        return results;
+      },
+      _parseVideos(data) {
+        var results = [];
+        var videos = data.videos || [];
+        for (var i = 0; i < videos.length; i++) {
+          var item = videos[i];
+          var duration = item.duration;
+          var seconds = null;
+          if (duration) {
+            var dm = duration.match(/(\d+):(\d+):(\d+)/) || duration.match(/(\d+):(\d+)/);
+            if (dm) seconds = dm[3] ? parseInt(dm[1], 10) * 3600 + parseInt(dm[2], 10) * 60 + parseInt(dm[3], 10) : parseInt(dm[1], 10) * 60 + parseInt(dm[2], 10);
+          }
+          results.push({ title: this._htmlToText(item.title), url: item.link, content: item.description || "", thumbnail: item.image, length: seconds });
+        }
+        return results;
+      },
+      _parseNews(data) {
+        var results = [];
+        var news = data.news || [];
+        for (var i = 0; i < news.length; i++) {
+          var item = news[i];
+          var source = item.source || "";
+          var time = this._htmlToText(item.time || "").replace("</a>", "").trim();
+          var metadata = [source];
+          if (time) metadata.push(time);
+          results.push({ title: this._htmlToText(item.title), url: item.link, content: this._htmlToText(item.description || ""), metadata: metadata.join(" / "), thumbnail: item.image });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://karmasearch.org", use_official_api: false,
+     *   require_api_key: false, results: "JSON" }
+     */
+    EG_misc.karmasearch = {
+      name: "karmasearch",
+      categories: ["web", "general"],
+      shortcut: null,
+      paging: !0,
+      safesearch: !0,
+      timeRangeSupport: !0,
+      searchType: "web",
+      baseUrl: "https://api.karmasearch.org",
+      safeSearchMap: { 0: "off", 1: "moderate", 2: "strict" },
+      timeRangeMap: { day: "Day", week: "Week", month: "Month", year: "Year" },
+      async request(query, params, sq) {
+        var lang = sq.language || "en-US";
+        var pts = lang.split("-");
+        var country = pts.length > 1 ? pts[1] : "US";
+        var args = {
+          searchTerm: query, adultFilter: this.safeSearchMap[sq.safesearch],
+          pageNumber: sq.pageno, country: country,
+          userLanguage: "en", market: lang,
+        };
+        var tr = sq.timeRange;
+        if (tr && this.timeRangeMap[tr]) args.freshness = this.timeRangeMap[tr];
+        params.headers["Referer"] = "https://karmasearch.org";
+        params.url = this.baseUrl + "/search/" + this.searchType + "?" + new URLSearchParams(args);
+        return params;
+      },
+      async response(resp, sq) {
+        var results = [];
+        var data = resp.json;
+        if (!data || !data.results) return results;
+        for (var i = 0; i < data.results.length; i++) {
+          var r = data.results[i];
+          if (r.sponsored) continue;
+          if (r.videos) { for (var vi = 0; vi < r.videos.length; vi++) results.push(this._parseVideo(r.videos[vi])); continue; }
+          if (r.news) { for (var ni = 0; ni < r.news.length; ni++) results.push(this._parseNews(r.news[ni])); continue; }
+          if (this.searchType === "news") results.push(this._parseNews(r));
+          else if (this.searchType === "videos") results.push(this._parseVideo(r));
+          else if (this.searchType === "images") results.push(this._parseImage(r));
+          else results.push(this._parseGeneral(r));
+        }
+        return results;
+      },
+      _parseGeneral(r) { return { url: r.url, title: r.title, content: st(r.description), thumbnail: r.thumbnail || "" }; },
+      _parseNews(r) { return { url: r.url, title: r.title, content: st(r.description), thumbnail: r.thumbnail, publishedDate: parseDateStr(r.age || "") }; },
+      _parseVideo(r) {
+        return { template: "videos.html", url: r.url, title: r.title, content: st(r.description), thumbnail: r.thumbnail, publishedDate: parseDateStr(r.age || ""), length: ((r.video || {}).duration) };
+      },
+      _parseImage(r) {
+        return { template: "images.html", url: r.url, title: r.title, content: "", imgSrc: ((r.properties || {}).url), thumbnailSrc: ((r.thumbnail || {}).src) };
+      },
+    };
+
+    /**
+     * about: { website: "https://marginalia.nu", wikidata_id: null,
+     *   use_official_api: true, require_api_key: true, results: "JSON" }
+     */
+    EG_misc.marginalia = {
+      name: "marginalia",
+      categories: ["general"],
+      shortcut: null,
+      paging: !1,
+      resultsPerPage: 20,
+      baseUrl: "https://api2.marginalia-search.com",
+      apiKey: "",
+      async request(query, params, sq) {
+        var qp = { count: this.resultsPerPage, nsfw: Math.min(sq.safesearch, 1), query: query };
+        params.url = this.baseUrl + "/search?" + new URLSearchParams(qp);
+        params.headers["User-Agent"] = "searxng/" + "1.0";
+        params.headers["API-Key"] = this.apiKey;
+        return params;
+      },
+      async response(resp, sq) {
+        var results = [];
+        var data = resp.json;
+        if (!data || !data.results) return results;
+        for (var i = 0; i < data.results.length; i++) {
+          var item = data.results[i];
+          results.push({ title: item.title, url: item.url, content: item.description || "" });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://github.com/mwmbl/mwmbl",
+     *   use_official_api: true, require_api_key: false, results: "JSON" }
+     */
+    EG_misc.mwmbl = {
+      name: "mwmbl",
+      categories: ["general"],
+      shortcut: null,
+      paging: !1,
+      apiUrl: "https://api.mwmbl.org/api/v1",
+      async request(query, params, sq) {
+        params.url = this.apiUrl + "/search/?" + new URLSearchParams({ s: query });
+        return params;
+      },
+      async response(resp, sq) {
+        var results = [];
+        var data = resp.json;
+        if (!data) return results;
+        for (var i = 0; i < data.length; i++) {
+          var r = data[i];
+          var titleParts = (r.title || []).map(function(t) { return t.value || ""; });
+          var extractParts = (r.extract || []).map(function(e) { return e.value || ""; });
+          results.push({ url: r.url, title: titleParts.join(""), content: extractParts.join("") });
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://yacy.net/", wikidata_id: "Q1759675",
+     *   use_official_api: true, require_api_key: false, results: "JSON" }
+     */
+    EG_misc.yacy = {
+      name: "yacy",
+      categories: ["general"],
+      shortcut: null,
+      paging: !0,
+      numberOfResults: 10,
+      searchMode: "global",
+      searchType: "text",
+      baseUrl: ["https://yacy.searchlab.eu"],
+      async request(query, params, sq) {
+        var offset = (sq.pageno - 1) * this.numberOfResults;
+        var args = {
+          query: query, startRecord: offset,
+          maximumRecords: this.numberOfResults,
+          contentdom: this.searchType, resource: this.searchMode,
+        };
+        var lang = (sq.language || "all").split("-")[0];
+        if (lang !== "all") args.lr = "lang_" + lang;
+        var baseUrl = Array.isArray(this.baseUrl) ? this.baseUrl[Math.floor(Math.random() * this.baseUrl.length)] : this.baseUrl;
+        if (baseUrl.endsWith("/")) baseUrl = baseUrl.slice(0, -1);
+        params.url = baseUrl + "/yacysearch.json?" + new URLSearchParams(args);
+        return params;
+      },
+      async response(resp, sq) {
+        var results = [];
+        var data = resp.json;
+        if (!data) return results;
+        var channels = data.channels || [];
+        if (channels.length === 0) return results;
+        var items = channels[0].items || [];
+        for (var i = 0; i < items.length; i++) {
+          var r = items[i];
+          if (this.searchType === "image") {
+            var imgUrl = r.url || r.link || "";
+            if (!imgUrl) continue;
+            results.push({ url: imgUrl, title: r.title, content: "", imgSrc: r.image, template: "images.html" });
+          } else {
+            var pubDate = r.pubDate ? parseDateStr(r.pubDate) : null;
+            results.push({ url: r.link || "", title: r.title, content: st(r.description), publishedDate: pubDate });
+          }
+        }
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: "https://github.com/searxng/searxng", wikidata_id: "Q17639196",
+     *   use_official_api: true, require_api_key: false, results: "JSON" }
+     */
+    EG_misc.searx_engine = {
+      name: "searx_engine",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      instanceUrls: [],
+      instanceIndex: 0,
+      async request(query, params, sq) {
+        if (this.instanceUrls.length === 0) return params;
+        var url = this.instanceUrls[this.instanceIndex % this.instanceUrls.length];
+        this.instanceIndex++;
+        params.url = url;
+        params.method = "POST";
+        params.data = {
+          q: query, pageno: sq.pageno, language: sq.language || "all",
+          time_range: sq.timeRange || "", category: sq.category || "",
+          format: "json",
+        };
+        return params;
+      },
+      async response(resp, sq) {
+        var data = resp.json;
+        if (!data) return [];
+        var results = data.results || [];
+        var extraTypes = ["answers", "infoboxes"];
+        for (var ei = 0; ei < extraTypes.length; ei++) {
+          var arr = data[extraTypes[ei]] || [];
+          for (var ai = 0; ai < arr.length; ai++) results.push(arr[ai]);
+        }
+        var suggestions = data.suggestions || [];
+        for (var si = 0; si < suggestions.length; si++) results.push({ suggestion: suggestions[si] });
+        if (data.number_of_results != null) results.push({ number_of_results: data.number_of_results });
+        return results;
+      },
+    };
+
+    /**
+     * about: { website: null, wikidata_id: "Q15735774",
+     *   use_official_api: true, require_api_key: false, results: "JSON" }
+     */
+    EG_misc.recoll = {
+      name: "recoll",
+      categories: [],
+      shortcut: null,
+      paging: !0,
+      timeRangeSupport: !0,
+      baseUrl: "",
+      mountPrefix: "",
+      dlPrefix: "",
+      searchDir: "",
+      _s2i: { day: 1, week: 7, month: 30, year: 365 },
+      async request(query, params, sq) {
+        var offset = this._s2i[sq.timeRange] || 0;
+        var after = "";
+        if (offset) {
+          var d = new Date(Date.now() - offset * 864e5);
+          after = d.toISOString().split("T")[0];
+        }
+        var args = { query: query, page: sq.pageno, after: after, dir: this.searchDir, highlight: 0 };
+        params.url = this.baseUrl + "/json?" + new URLSearchParams(args);
+        return params;
+      },
+      async response(resp, sq) {
+        var results = [];
+        var data = resp.json;
+        if (!data || !data.results) return results;
+        for (var i = 0; i < data.results.length; i++) {
+          var r = data.results[i];
+          var url = (r.url || "").replace("file://" + this.mountPrefix, this.dlPrefix);
+          var mtype = r.mtype || "", subtype = "";
+          if (mtype) { var sp = mtype.split("/"); mtype = sp[0]; subtype = sp[1] || ""; }
+          var thumbnail = "", embedded = "";
+          if (mtype === "audio" || mtype === "video") embedded = url;
+          if (mtype === "image" && ["bmp", "gif", "jpeg", "png"].indexOf(subtype) !== -1) thumbnail = url;
+          results.push({
+            title: r.label || "", url: url, content: st(r.snippet || ""),
+            size: r.size, filename: r.filename, abstract: r.abstract,
+            author: r.author, mtype: mtype, subtype: subtype,
+            time: r.time, embedded: embedded, thumbnail: thumbnail,
+          });
+        }
+        return results;
+      },
+    };
+  });
+
 var yoo,
   _oo,
   n5u,

@@ -1,5 +1,5 @@
 {
-  "total": 1990,
+  "total": 2001,
   "order": [
     {
       "name": "cSr",
@@ -9950,6 +9950,61 @@
       "name": "Uio",
       "category": "unknown",
       "label": "unknown"
+    },
+    {
+      "name": "SearchCore",
+      "category": "app/search",
+      "label": "search-core"
+    },
+    {
+      "name": "SearchEnginesWeb",
+      "category": "app/search",
+      "label": "engines-web"
+    },
+    {
+      "name": "SearchEnginesScience",
+      "category": "app/search",
+      "label": "engines-science"
+    },
+    {
+      "name": "SearchEnginesMedia",
+      "category": "app/search",
+      "label": "engines-media"
+    },
+    {
+      "name": "SearchEnginesIT",
+      "category": "app/search",
+      "label": "engines-it"
+    },
+    {
+      "name": "SearchEnginesShop",
+      "category": "app/search",
+      "label": "engines-shop"
+    },
+    {
+      "name": "SearchEnginesSocial",
+      "category": "app/search",
+      "label": "engines-social"
+    },
+    {
+      "name": "SearchEnginesDev",
+      "category": "app/search",
+      "label": "engines-dev"
+    },
+    {
+      "name": "SearchEnginesNews",
+      "category": "app/search",
+      "label": "engines-news"
+    },
+    {
+      "name": "SearchEnginesImages",
+      "category": "app/search",
+      "label": "engines-images"
+    },
+    {
+      "name": "SearchEnginesMisc",
+      "category": "app/search",
+      "label": "engines-misc"
     }
   ]
 }
