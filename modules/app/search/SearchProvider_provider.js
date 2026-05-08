@@ -23,6 +23,13 @@ var SearchProvider,
           [EG_news, eG_news],
           [EG_images, eG_images],
           [EG_misc, eG_misc],
+          [EG_b2, eG_b2],
+          [EG_b3, eG_b3],
+          [EG_b4, eG_b4],
+          [EG_b5, eG_b5],
+          [EG_b6, eG_b6],
+          [EG_b7, eG_b7],
+          [EG_b8, eG_b8],
         ];
         for (let [n, o] of r) {
           try {
