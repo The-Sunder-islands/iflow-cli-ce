@@ -183,5 +183,17 @@ var SearchCore,
       EngineRegistry,
       NetworkClient,
       SearchOrchestrator,
+      SearchInit: {
+        _provider: null,
+        getInstance() {
+          return this._provider;
+        },
+        init(e) {
+          if (this._provider) return;
+          let r = new SearchProvider();
+          this._provider = r;
+          if (e?.setSearchProvider) e.setSearchProvider(r);
+        },
+      },
     };
   });

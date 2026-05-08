@@ -399348,6 +399348,10 @@ var dn,
         return this.fetchEndpoint ?? process.env.IFLOW_FETCH_ENDPOINT ?? "https://platform.iflow.cn/api/search/webFetch";
       }
       getSearchProvider() {
+        if (this.searchProvider) return this.searchProvider;
+        try {
+          if (SearchCore?.SearchInit) SearchCore.SearchInit.init(this);
+        } catch {}
         return this.searchProvider || null;
       }
       setSearchProvider(e) {
@@ -472412,6 +472416,18 @@ var Uio = T((ROl, Fio) => {
       EngineRegistry,
       NetworkClient,
       SearchOrchestrator,
+      SearchInit: {
+        _provider: null,
+        getInstance() {
+          return this._provider;
+        },
+        init(e) {
+          if (this._provider) return;
+          let r = new SearchProvider();
+          this._provider = r;
+          if (e?.setSearchProvider) e.setSearchProvider(r);
+        },
+      },
     };
   });
 var EG_web = {},
@@ -480222,6 +480238,261 @@ var EG_misc = {},
           });
         }
         return results;
+      },
+    };
+  });
+var SearchPipeline,
+  sP = j(() => {
+    "use strict";
+    const pipelineDefaultConfig = {
+      mode: "balanced",
+      sources: ["web"],
+      systemInstructions: "",
+    };
+    function formatChatHistory(e) {
+      if (!e || e.length === 0) return "(no prior conversation)";
+      return e
+        .map((r) => {
+          if (typeof r === "string") return r;
+          if (r.role === "user") return `User: ${r.content}`;
+          if (r.role === "assistant") return `Assistant: ${r.content}`;
+          return `${r.role}: ${r.content}`;
+        })
+        .join("\n");
+    }
+    function extractUrls(e) {
+      let r = [];
+      let n = /https?:\/\/[^\s<>"']+/g;
+      let o;
+      while ((o = n.exec(e)) !== null) r.push(o[0]);
+      return r;
+    }
+    const classifierPrompt = `You are a search query classifier. Analyze the user's query and conversation history to determine the search strategy.
+
+    CLASSIFICATION RULES:
+    1. skipSearch: TRUE only if the query is a simple greeting, thank you, or conversational response that needs no external information
+    2. personalSearch: TRUE if the query asks about the user's own data, files, or projects
+    3. academicSearch: TRUE if the query is about scientific papers, citations, or scholarly topics
+    4. discussionSearch: TRUE if asking for opinions, discussions, forums, or community content
+
+    CLASSIFY the query and reformulate it as a standalone question that doesn't depend on context.`;
+
+    const writerPromptTemplate = (e, r, n) => `You are a helpful assistant. Answer the user's question based on the search results provided.
+
+    CONTEXT FROM SEARCH:
+    ${e}
+
+    ${r ? `SYSTEM INSTRUCTIONS: ${r}` : ""}
+
+    MODE: ${n}
+    - speed: brief, direct answer
+    - balanced: moderate detail with citations
+    - quality: comprehensive with thorough citations
+
+    Use the search results to inform your answer. Cite sources by referencing their titles or URLs where appropriate. If the search results don't contain enough information, say so.`;
+
+    class SearchPipeline {
+      constructor(e) {
+        this.config = e;
+        this.searchApi = null;
+      }
+      setSearchApi(e) {
+        this.searchApi = e;
+      }
+      async run(e, r = {}) {
+        let n = { ...pipelineDefaultConfig, ...r };
+        let o = n.chatHistory || [];
+        let s = e;
+        let a = { skipSearch: false, personalSearch: false, academicSearch: false, discussionSearch: false, showWeatherWidget: false, showStockWidget: false, showCalculationWidget: false };
+        let c = null;
+        if (this.config?.getChatModel) {
+          let l = this.config.getChatModel();
+          let u = await l.sendMessage([
+            { role: "system", content: classifierPrompt },
+            { role: "user", content: `<conversation_history>\n${formatChatHistory(o)}\n</conversation_history>\n<user_query>\n${e}\n</user_query>` },
+          ]);
+          try {
+            let d = typeof u === "string" ? u : u.text || "";
+            let f = d.match(/\{[\s\S]*\}/);
+            if (f) c = JSON.parse(f[0]);
+            if (c?.standaloneFollowUp) s = c.standaloneFollowUp;
+            if (c?.classification) Object.assign(a, c.classification);
+          } catch {}
+        }
+        let p = [];
+        let h = null;
+        if (!a.skipSearch && this.searchApi) {
+          let l = [];
+          if (a.academicSearch) l.push("science");
+          if (a.discussionSearch) l.push("social");
+          if (!a.personalSearch) l.push("web", "general");
+          let u = await this.searchApi.search({
+            query: s,
+            categories: l.length > 0 ? l : ["general", "web"],
+            pageno: 1,
+          });
+          p = u;
+          h = u;
+        }
+        let g = "";
+        for (let l of p.slice(0, 15)) {
+          g += `<result index="${l.index || p.indexOf(l) + 1}" title="${(l.title || "").replace(/</g, "&lt;")}">\n`;
+          g += `URL: ${l.url || ""}\n`;
+          g += `Content: ${(l.content || l.snippet || "").slice(0, 3000)}\n`;
+          g += `</result>\n`;
+        }
+        let b = null;
+        if (this.config?.getChatModel && g) {
+          let l = this.config.getChatModel();
+          let u = writerPromptTemplate(g, n.systemInstructions, n.mode);
+          let d = await l.sendMessage([
+            { role: "system", content: u },
+            ...o,
+            { role: "user", content: e },
+          ]);
+          b = typeof d === "string" ? d : d.text || "";
+        }
+        return { message: b, sources: p, classification: a };
+      }
+    }
+    SearchPipeline = SearchPipeline;
+  });
+var SearchProvider,
+  sR = j(() => {
+    "use strict";
+    class SearchProvider {
+      registry;
+      orchestrator;
+      pipeline;
+      initialized;
+      constructor() {
+        this.initialized = false;
+      }
+      async init(e) {
+        if (this.initialized) return;
+        this.registry = new SearchCore.EngineRegistry();
+        for (let r of [
+          EG_web,
+          EG_science,
+          EG_media,
+          EG_it,
+          EG_shop,
+          EG_social,
+          EG_dev,
+          EG_news,
+          EG_images,
+          EG_misc,
+        ])
+          if (r) this.registry.registerCategory(r);
+        let n = new SearchCore.NetworkClient({
+          timeout: e?.timeout || 15000,
+          proxy: e?.proxy || null,
+        });
+        this.orchestrator = new SearchCore.SearchOrchestrator(this.registry, n);
+        this.pipeline = new SearchPipeline(e?.config || null);
+        this.pipeline.setSearchApi(this);
+        this.initialized = true;
+        console.log(`[Search] Initialized with ${this.registry.all().length} engines`);
+      }
+      async webSearch(e, r, n) {
+        if (!this.initialized) await this.init();
+        let o = typeof r === "number" ? r : 10;
+        try {
+          let s = await this.orchestrator.search(
+            new SearchCore.SearchQuery({
+              query: e,
+              categories: ["general", "web"],
+              pageno: 1,
+            }),
+          );
+          return { results: s.slice(0, o) };
+        } catch (s) {
+          console.error("[SearchProvider] webSearch error:", s);
+          return { results: [] };
+        }
+      }
+      async webFetch(e, r) {
+        try {
+          if (SearchRenderer) {
+            let n = await SearchRenderer.fetch(e, 10000);
+            if (n?.content) return { title: n.title || "", content: n.content, url: e };
+          }
+          let n = await fetch(e, { signal: r, timeout: 10000 });
+          let o = await n.text();
+          let s = o.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().slice(0, 50000);
+          let a = "";
+          let c = o.match(/<title>([^<]*)<\/title>/i);
+          if (c) a = c[1];
+          return { title: a, content: s, url: e };
+        } catch (n) {
+          console.error("[SearchProvider] webFetch error:", n);
+          return { title: "", content: "", url: e };
+        }
+      }
+      async fullSearch(e, r) {
+        if (!this.initialized) await this.init();
+        return this.pipeline.run(e, r || {});
+      }
+    }
+    SearchProvider = SearchProvider;
+  });
+var SearchRenderer,
+  sR = j(() => {
+    "use strict";
+    const RENDERER_LIGHT = "lightpanda";
+    const RENDERER_CHROME = "chromium";
+    let _activeRenderer = RENDERER_LIGHT;
+    let _chromiumPath = null;
+    async function fetchLightpanda(e, r) {
+      try {
+        let { lightpanda: n } = await import("@lightpanda/browser");
+        let o = await n.fetch(e, { dump: true, dumpOptions: { type: "html" } });
+        return o || "";
+      } catch (n) {
+        console.error("[Renderer] Lightpanda error:", n.message);
+        return null;
+      }
+    }
+    async function fetchChromium(e, r) {
+      try {
+        let { chromium: n } = await import("playwright");
+        let o = await n.launch({ headless: true, executablePath: _chromiumPath || undefined });
+        let s = await o.newPage();
+        await s.goto(e, { waitUntil: "networkidle", timeout: (r || 15000) });
+        let a = await s.content();
+        await o.close();
+        return a;
+      } catch (n) {
+        console.error("[Renderer] Chromium error:", n.message);
+        return null;
+      }
+    }
+    async function fetchWithRenderer(e, r) {
+      let n = _activeRenderer === RENDERER_CHROME ? await fetchChromium(e, r) : await fetchLightpanda(e, r);
+      if (n === null && _activeRenderer !== RENDERER_CHROME) {
+        console.warn("[Renderer] Lightpanda failed, trying Chromium fallback...");
+        n = await fetchChromium(e, r);
+      }
+      if (n === null) return { title: "", content: "", url: e };
+      let o = "";
+      let s = n.match(/<title>([^<]*)<\/title>/i);
+      if (s) o = s[1];
+      let a = n.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "").replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "");
+      a = a.replace(/<[^>]*>/g, " ").replace(/&[^;]+;/g, " ").replace(/\s+/g, " ").trim().slice(0, 50000);
+      return { title: o, content: a, url: e, rawHtml: n };
+    }
+    SearchRenderer = {
+      RENDERER_LIGHT,
+      RENDERER_CHROME,
+      get activeRenderer() { return _activeRenderer; },
+      setRenderer(e) {
+        _activeRenderer = e;
+      },
+      setChromiumPath(e) {
+        _chromiumPath = e;
+      },
+      async fetch(e, r) {
+        return fetchWithRenderer(e, r);
       },
     };
   });

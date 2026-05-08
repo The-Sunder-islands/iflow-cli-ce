@@ -4665,6 +4665,10 @@ var dn,
         return this.fetchEndpoint ?? process.env.IFLOW_FETCH_ENDPOINT ?? "https://platform.iflow.cn/api/search/webFetch";
       }
       getSearchProvider() {
+        if (this.searchProvider) return this.searchProvider;
+        try {
+          if (SearchCore?.SearchInit) SearchCore.SearchInit.init(this);
+        } catch {}
         return this.searchProvider || null;
       }
       setSearchProvider(e) {

@@ -34,6 +34,7 @@
   "dependencies": {
     "@google/genai": ">=1.0.0",
     "@grpc/proto-loader": ">=0.7.0",
+    "@lightpanda/browser": "^1.2.0",
     "@lydell/node-pty": ">=1.1.0",
     "archiver": ">=7.0.0",
     "asciify-image": ">=0.1.10",
