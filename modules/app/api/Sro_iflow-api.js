@@ -847,6 +847,8 @@ async function CAt() {
     }
     return null;
   } catch (t) {
+    let e = t?.message || String(t);
+    if (e.includes("PackageNotFoundError") || e.includes("is not found in the npm registry") || e.includes("iflow-cli-ce")) return null;
     return (console.warn("Failed to check for updates: " + t), null);
   }
 }
