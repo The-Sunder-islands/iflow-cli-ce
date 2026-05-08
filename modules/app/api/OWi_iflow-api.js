@@ -801,7 +801,33 @@ var rKi,
       action: (t, e) => ({ type: "dialog", dialog: "cleanup-history" }),
     };
   });
-import nP from "fs/promises";
+var renderCmd,
+  renderCmdInit = j(() => {
+    "use strict";
+    Qs();
+    Ot();
+    renderCmd = {
+      name: "render",
+      description: "Switch web page renderer. Usage: /render lightpanda | /render chromium",
+      kind: "built-in",
+      action: (t, e) => {
+        var r = (e || "").trim().toLowerCase();
+        if (r === "chromium" || r === "chrome") {
+          if (globalThis.SearchRenderer) {
+            globalThis.SearchRenderer.setRenderer("chromium");
+            return { type: "status", message: "Renderer switched to Chromium. Install playwright if not already installed." };
+          }
+        } else {
+          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
+          return { type: "status", message: "Renderer switched to Lightpanda (default)." };
+        }
+        return {
+          type: "status",
+          message: 'Usage: /render lightpanda (default) | /render chromium (requires "npx playwright install chromium")',
+        };
+      },
+    };
+  });
 import Gj from "path";
 function aKi(t, e) {
   if (t === "global") return Gj.join(Tn(), "commands");
