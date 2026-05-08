@@ -5616,15 +5616,15 @@ ${x}
 - Use appropriate path separators (backslash \\) but remember that many tools also accept forward slash /.`;
           })()
         : "",
-    g = t.getModel()?.toLowerCase() || "",
-    b = A2.supportsThinking(g),
-    A = t.getThinkingModeEnabled(),
-    y;
+    modelName = t.getModel()?.toLowerCase() || "",
+    supportsThinking = A2.supportsThinking(modelName),
+    thinkingEnabled = t.getThinkingModeEnabled(),
+    systemPrompt;
   n
-    ? (y = N0e.readFileSync(o, "utf8"))
+    ? (systemPrompt = N0e.readFileSync(o, "utf8"))
     : d
-      ? (y = t.getAgentCoreSystemPrompt() || "")
-      : (y = b && A ? Nui(a, u, c, f, t, r) : Oui(a, u, c, f, t, r));
+      ? (systemPrompt = t.getAgentCoreSystemPrompt() || "")
+      : (systemPrompt = selectSystemPrompt(a, u, c, f, t, r));
   let E = z2.env.IFLOW_WRITE_SYSTEM_MD;
   if (E) {
     let C = E.toLowerCase();
@@ -5658,7 +5658,13 @@ function v9a() {
 This session is being continued from a previous conversation that ran out of context. The conversation is summarized below:
 `.trim();
 }
-function Oui(t, e, r, n, o, s) {
+function selectSystemPrompt(t, e, r, n, o, s) {
+  var effort = o.getReasoningEffort();
+  return effort === "max" || effort === "high"
+    ? buildShortSystemPrompt(t, e, r, n, o, s)
+    : buildFullSystemPrompt(t, e, r, n, o, s);
+}
+function buildFullSystemPrompt(t, e, r, n, o, s) {
   return `
 You are iFlow CLI, an interactive CLI agent with a Chinese name of \u5FC3\u6D41 CLI, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
 
@@ -5957,7 +5963,7 @@ Current branch: ${git()}}
 Your core function is efficient and safe assistance. Balance extreme conciseness with the crucial need for clarity, especially regarding safety and potential system modifications. Always prioritize user control and project conventions. Never make assumptions about the contents of files; instead use '${ma.Name}' to ensure you aren't making broad assumptions. Finally, you are an agent - please keep going until the user's query is completely resolved.
 `.trim();
 }
-function Nui(t, e, r, n, o, s) {
+function buildShortSystemPrompt(t, e, r, n, o, s) {
   return `
 You are iFlow CLI, an interactive CLI agent with a Chinese name of \u5FC3\u6D41 CLI, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
 
