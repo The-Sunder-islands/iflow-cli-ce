@@ -1,6 +1,7 @@
 var EG_web = {},
   eG_web = j(() => {
     "use strict";
+    const cheerio = require("cheerio");
 
     function eb(text, start, end) {
       let i = text.indexOf(start);
