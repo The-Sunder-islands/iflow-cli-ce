@@ -190,9 +190,16 @@ var SearchCore,
         },
         init(e) {
           if (this._provider) return;
-          let r = new SearchProvider();
-          this._provider = r;
-          if (e?.setSearchProvider) e.setSearchProvider(r);
+          if (typeof sR === "function") sR();
+          if (typeof sP === "function") sP();
+          try {
+            let r = new SearchProvider();
+            r.init();
+            this._provider = r;
+            if (e?.setSearchProvider) e.setSearchProvider(r);
+          } catch (t) {
+            console.error("[SearchInit] Failed:", t);
+          }
         },
       },
     };
