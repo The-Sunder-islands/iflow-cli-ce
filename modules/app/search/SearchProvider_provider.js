@@ -12,19 +12,26 @@ var SearchProvider,
       async init(e) {
         if (this.initialized) return;
         this.registry = new SearchCore.EngineRegistry();
-        for (let r of [
-          EG_web,
-          EG_science,
-          EG_media,
-          EG_it,
-          EG_shop,
-          EG_social,
-          EG_dev,
-          EG_news,
-          EG_images,
-          EG_misc,
-        ])
-          if (r) this.registry.registerCategory(r);
+        let r = [
+          [EG_web, eG_web],
+          [EG_science, eG_science],
+          [EG_media, eG_media],
+          [EG_it, eG_it],
+          [EG_shop, eG_shop],
+          [EG_social, eG_social],
+          [EG_dev, eG_dev],
+          [EG_news, eG_news],
+          [EG_images, eG_images],
+          [EG_misc, eG_misc],
+        ];
+        for (let [n, o] of r) {
+          try {
+            if (typeof o === "function") o();
+          } catch (s) {
+            console.error(`[Search] Engine init error:`, s);
+          }
+          if (n) this.registry.registerCategory(n);
+        }
         let n = new SearchCore.NetworkClient({
           timeout: e?.timeout || 15000,
           proxy: e?.proxy || null,

@@ -1,4 +1,4 @@
-var EG_it,
+var EG_it = {},
   eG_it = j(() => {
     "use strict";
 
