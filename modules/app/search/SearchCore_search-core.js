@@ -183,6 +183,10 @@ var SearchCore,
       EngineRegistry,
       NetworkClient,
       SearchOrchestrator,
+      ExtraTools: [],
+      registerTool(e) {
+        SearchCore.ExtraTools.push(e);
+      },
       SearchInit: {
         _provider: null,
         getInstance() {

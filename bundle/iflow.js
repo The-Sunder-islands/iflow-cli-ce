@@ -399645,6 +399645,7 @@ var dn,
           r(U4e, this),
           this.lspManager &&
             (r(Vut, this, this.lspManager), r(Wut, this, this.lspManager), r(zut, this, this.lspManager)),
+          SearchCore?.ExtraTools?.forEach((n) => r(n, this)),
           await e.discoverAllTools(this.isNonInteractive),
           e
         );
@@ -472422,6 +472423,10 @@ var Uio = T((ROl, Fio) => {
       EngineRegistry,
       NetworkClient,
       SearchOrchestrator,
+      ExtraTools: [],
+      registerTool(e) {
+        SearchCore.ExtraTools.push(e);
+      },
       SearchInit: {
         _provider: null,
         getInstance() {
