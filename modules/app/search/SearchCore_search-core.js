@@ -169,7 +169,11 @@ var SearchCore,
           let o;
           if (e.useRenderer && typeof SearchRenderer?.fetch === "function") {
             let s = await SearchRenderer.fetch(n.url, this.network.defaults.timeout);
-            o = new SearchResponse({ status: 200, text: s.content || "", finalUrl: n.url });
+            if (s?.content) {
+              o = new SearchResponse({ status: 200, text: s.content, finalUrl: n.url });
+            } else {
+              o = await this.network.request(n);
+            }
           } else {
             o = await this.network.request(n);
           }

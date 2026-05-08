@@ -8,6 +8,7 @@ var EG_b7 = {},
     function _htmlToText(v) { return v ? String(v).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").trim() : ""; }
 
     EG_b7.openalex = { name:"openalex", categories:["science","scientific publications"], shortcut:"oa", paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let args = { search: query, page: (sq&&sq.pageno)||1, "per-page": 10, sort: "relevance_score:desc" };
         let lang = sq&&sq.language;
@@ -82,6 +83,7 @@ var EG_b7 = {},
     };
 
     EG_b7.opensemantic = { name:"opensemantic", categories:["general"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params){
         params.url = "http://localhost:8983/solr/opensemanticsearch/query?q=" + encodeURIComponent(query);
         return params;
@@ -101,6 +103,7 @@ var EG_b7 = {},
     };
 
     EG_b7.pdbe = { name:"pdbe", categories:["science"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params){
         params.url = "https://www.ebi.ac.uk/pdbe/search/pdb/select?";
         params.method = "POST";
@@ -142,6 +145,7 @@ var EG_b7 = {},
     };
 
     EG_b7.pinterest = { name:"pinterest", categories:["images"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let options = { query: query, bookmarks: [""] };
         let data = { options, context: {} };
@@ -176,6 +180,7 @@ var EG_b7 = {},
     };
 
     EG_b7.podcastindex = { name:"podcastindex", categories:["general"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params){
         params.url = "https://podcastindex.org/api/search/byterm?q=" + encodeURIComponent(query);
         return params;
@@ -199,6 +204,7 @@ var EG_b7 = {},
     };
 
     EG_b7.public_domain_image_archive = { name:"public_domain_image_archive", categories:["images"], shortcut:null, paging:true,
+          useRenderer: !0,
       _cachedApiUrl: null,
       async request(query,params,sq){
         let url = await _getApiUrl.call(this);
@@ -259,6 +265,7 @@ var EG_b7 = {},
     }
 
     EG_b7.pubmed = { name:"pubmed", categories:["science","scientific publications"], shortcut:"pub", paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let pageno = (sq&&sq.pageno)||1;
         let searchArgs = new URLSearchParams({ db: "pubmed", term: query, retstart: (pageno-1)*10, hits: 10 });
@@ -308,6 +315,7 @@ var EG_b7 = {},
     };
 
     EG_b7.quark = { name:"quark", categories:["general"], shortcut:null, paging:true,
+          useRenderer: !0,
       timeRangeDict: { day:"4", week:"3", month:"2", year:"1" },
       async request(query,params,sq){
         let pageno = (sq&&sq.pageno)||1;
@@ -423,6 +431,7 @@ var EG_b7 = {},
     };
 
     EG_b7.radio_browser = { name:"radio_browser", categories:["music","radio"], shortcut:null, paging:true,
+          useRenderer: !0,
       _servers: ["https://de1.api.radio-browser.info","https://de2.api.radio-browser.info","https://at1.api.radio-browser.info"],
       async request(query,params,sq){
         let servers = EG_b7.radio_browser._servers;
@@ -454,6 +463,7 @@ var EG_b7 = {},
     };
 
     EG_b7.repology = { name:"repology", categories:["packages","it"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params){
         params.url = "https://repology.org/api/v1/projects/?" + new URLSearchParams({ search: query }).toString();
         return params;
@@ -497,6 +507,7 @@ var EG_b7 = {},
     };
 
     EG_b7.scanr_structures = { name:"scanr_structures", categories:["science"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         params.url = "https://scanr.enseignementsup-recherche.gouv.fr/api/structures/search";
         params.method = "POST";
@@ -522,6 +533,7 @@ var EG_b7 = {},
     };
 
     EG_b7.selfhst = { name:"selfhst", categories:["images","icons"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params,sq){
         params.url = "https://cdn.jsdelivr.net/gh/selfhst/icons/index.json";
         return params;
@@ -554,6 +566,7 @@ var EG_b7 = {},
     };
 
     EG_b7.senscritique = { name:"senscritique", categories:["movies"], shortcut:null, paging:true,
+          useRenderer: !0,
       _graphqlQuery: "query SearchProductExplorer($query: String, $offset: Int, $limit: Int, $sortBy: SearchProductExplorerSort) { searchProductExplorer(query: $query, filters: [], sortBy: $sortBy, offset: $offset, limit: $limit) { items { category dateRelease duration id originalTitle rating title url yearOfProduction medias { picture } countries { name } genresInfos { label } directors { name } stats { ratingCount } } } }",
       async request(query,params,sq){
         let pageno = (sq&&sq.pageno)||1;
@@ -596,6 +609,7 @@ var EG_b7 = {},
     };
 
     EG_b7.sepiasearch = { name:"sepiasearch", categories:["videos"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         if (!query) { params.url = null; return params; }
         let pageno = (sq&&sq.pageno)||1;
@@ -641,6 +655,7 @@ var EG_b7 = {},
     };
 
     EG_b7.springer = { name:"springer", categories:["science","scientific publications"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let pageno = (sq&&sq.pageno)||1;
         let args = { q: query, s: 10*(pageno-1), p: 10 };
@@ -690,6 +705,7 @@ var EG_b7 = {},
     };
 
     EG_b7.stackexchange = { name:"stackexchange", categories:["general"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let args = { q: query, page: (sq&&sq.pageno)||1, pagesize: 10, site: "stackoverflow", sort: "activity", order: "desc" };
         params.url = "https://api.stackexchange.com/2.3/search/advanced?" + new URLSearchParams(args).toString();

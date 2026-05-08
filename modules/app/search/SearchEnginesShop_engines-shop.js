@@ -73,6 +73,7 @@ var EG_shop = {},
       name: "1337x",
       categories: ["files"],
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://1337x.to/search/" +
@@ -128,7 +129,9 @@ var EG_shop = {},
       name: "adobe_stock",
       categories: ["images"],
       shortcut: "asi",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         var args = {
           k: query,
@@ -189,6 +192,7 @@ var EG_shop = {},
       name: "annas_archive",
       categories: ["files", "books"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://annas-archive.gl",
       async request(query, params, sq) {
         var args = {
@@ -249,6 +253,7 @@ var EG_shop = {},
       name: "apkmirror",
       categories: ["files", "apps"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://www.apkmirror.com",
       async request(query, params, sq) {
         params.url =
@@ -292,6 +297,7 @@ var EG_shop = {},
       name: "apple_app_store",
       categories: ["files", "apps"],
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         var explicit = sq.safesearch > 0 ? "No" : "Yes";
         params.url =
@@ -332,6 +338,7 @@ var EG_shop = {},
       name: "ebay",
       categories: ["shopping"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://www.ebay.com",
       async request(query, params, sq) {
         params.url =
@@ -399,6 +406,7 @@ var EG_shop = {},
       name: "kickass",
       categories: ["files"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://kickasstorrents.to",
       async request(query, params, sq) {
         params.url =
@@ -462,6 +470,7 @@ var EG_shop = {},
       name: "piratebay",
       categories: ["files"],
       paging: !1,
+          useRenderer: !0,
       trackers: [
         "udp://tracker.coppersurfer.tk:6969/announce",
         "udp://9.rarbg.to:2920/announce",
@@ -530,6 +539,7 @@ var EG_shop = {},
       name: "solidtorrents",
       categories: ["files"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://solidtorrents.to",
       async request(query, params, sq) {
         params.url =
@@ -600,6 +610,7 @@ var EG_shop = {},
       name: "steam",
       categories: ["general"],
       paging: !1,
+          useRenderer: !0,
       base_url: "https://store.steampowered.com",
       async request(query, params, sq) {
         params.url =
@@ -642,6 +653,7 @@ var EG_shop = {},
       name: "docker_hub",
       categories: ["it", "packages"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://hub.docker.com",
       async request(query, params, sq) {
         var page = sq.pageno || 1;
@@ -713,6 +725,7 @@ var EG_shop = {},
       name: "goodreads",
       categories: ["general"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://www.goodreads.com",
       async request(query, params, sq) {
         params.url =
@@ -768,6 +781,7 @@ var EG_shop = {},
       name: "imdb",
       categories: ["movies"],
       paging: !1,
+          useRenderer: !0,
       base_url: "https://imdb.com",
       searchCategories: {
         nm: "name",
@@ -825,6 +839,7 @@ var EG_shop = {},
       name: "rottentomatoes",
       categories: ["movies"],
       paging: !1,
+          useRenderer: !0,
       base_url: "https://www.rottentomatoes.com",
       async request(query, params, sq) {
         params.url =
@@ -873,6 +888,7 @@ var EG_shop = {},
       name: "openlibrary",
       categories: ["general", "books"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://openlibrary.org",
       search_api: "https://openlibrary.org/search.json",
       async request(query, params, sq) {

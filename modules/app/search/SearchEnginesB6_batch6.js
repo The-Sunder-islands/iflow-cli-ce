@@ -23,7 +23,9 @@ var EG_b6 = {},
       name: "lemmy",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let lt = sq.lemmy_type || "Communities";
         let a = new URLSearchParams({ q: query, page: sq.pageno || 1, type_: lt });
@@ -88,7 +90,9 @@ var EG_b6 = {},
       name: "lib_rs",
       categories: ["it", "packages"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://lib.rs/search?q=" + encodeURIComponent(query);
         return params;
@@ -130,7 +134,9 @@ var EG_b6 = {},
       name: "libretranslate",
       categories: ["general", "translate"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         let base_url = sq.base_url || "https://libretranslate.com";
         if (base_url.indexOf("libretranslate.com") !== -1 && !sq.api_key) return null;
@@ -160,7 +166,9 @@ var EG_b6 = {},
       name: "lingva",
       categories: ["general", "translate"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         let base_url = sq.base_url || "https://lingva.ml";
         let fl = sq.from_lang ? sq.from_lang[1] : 'auto';
@@ -207,7 +215,9 @@ var EG_b6 = {},
       name: "loc",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let sp = "/" + (sq.endpoint || "photos") + "/?sp=" + (sq.pageno || 1) + "&" + new URLSearchParams({ q: query }) + "&fo=json";
         params.url = "https://www.loc.gov" + sp;
@@ -248,7 +258,9 @@ var EG_b6 = {},
       name: "lucide",
       categories: ["images", "icons"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://cdn.jsdelivr.net/npm/lucide-static/tags.json";
         params.query = query;
@@ -278,7 +290,9 @@ var EG_b6 = {},
       name: "material_icons",
       categories: ["images", "icons"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://fonts.google.com/metadata/icons?key=material_symbols&incomplete=true";
         params.query = query;
@@ -317,7 +331,9 @@ var EG_b6 = {},
       name: "mediathekviewweb",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url = "https://mediathekviewweb.de/api/query";
         params.method = "POST";
@@ -357,7 +373,9 @@ var EG_b6 = {},
       name: "mediawiki",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let lang = sq.language === 'all' ? 'en' : (sq.language || '').split('-')[0] || 'en';
         let base_url = "https://" + lang + ".wikipedia.org/";
@@ -408,7 +426,9 @@ var EG_b6 = {},
       name: "microsoft_learn",
       categories: ["it"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let lang = sq.language === 'all' ? 'en-us' : (sq.language || 'en-us');
         let skip = ((sq.pageno || 1) - 1) * 10;
@@ -443,7 +463,9 @@ var EG_b6 = {},
       name: "moviepilot",
       categories: ["movies"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let filter_types = ["fsk","genre","jahr","jahrzehnt","land","online","stimmung","person"];
         let parts = query.split(" ");
@@ -486,7 +508,9 @@ var EG_b6 = {},
       name: "mozhi",
       categories: ["general", "translate"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         let base_url = sq.base_url || "https://mozhi.aryak.me";
         let engine = sq.mozhi_engine || "google";
@@ -520,7 +544,9 @@ var EG_b6 = {},
       name: "mrs",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let base_url = sq.base_url || "";
         let ps = sq.page_size || 20;
@@ -547,7 +573,9 @@ var EG_b6 = {},
       name: "nvd",
       categories: ["it"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pp = 10;
         let offset = ((sq.pageno || 1) - 1) * pp;
@@ -585,7 +613,9 @@ var EG_b6 = {},
       name: "nyaa",
       categories: ["files"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let a = new URLSearchParams({ q: query, p: sq.pageno || 1 });
         params.url = "https://nyaa.si/?" + a;
@@ -641,7 +671,9 @@ var EG_b6 = {},
       name: "ollama",
       categories: ["it", "repos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://ollama.com/search?" + new URLSearchParams({ q: query });
         return params;
@@ -679,7 +711,9 @@ var EG_b6 = {},
       name: "open_meteo",
       categories: ["weather"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(query) + "&count=5&format=json";
         return params;

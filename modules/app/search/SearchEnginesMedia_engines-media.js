@@ -21,7 +21,9 @@ var EG_media = {},
       name: "googleImages",
       categories: ["images", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
         let url =
@@ -68,7 +70,9 @@ var EG_media = {},
       name: "bingImages",
       categories: ["images", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
         let first = (pn - 1) * 35 + 1;
@@ -132,7 +136,9 @@ var EG_media = {},
       name: "bingVideos",
       categories: ["videos", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
         let first = (pn - 1) * 35 + 1;
@@ -187,7 +193,9 @@ var EG_media = {},
       name: "youtubeNoapi",
       categories: ["videos", "music"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       _nextPageToken: null,
       async request(query, params, sq) {
         params.cookies = params.cookies || {};
@@ -333,7 +341,9 @@ var EG_media = {},
       name: "vimeo",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://vimeo.com/search/page:" +
@@ -380,7 +390,9 @@ var EG_media = {},
       name: "flickr",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       apiKey: null,
       async request(query, params, sq) {
         let key = this.apiKey;
@@ -434,7 +446,9 @@ var EG_media = {},
       name: "unsplash",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://unsplash.com/napi/search/photos?query=" +
@@ -488,7 +502,9 @@ var EG_media = {},
       name: "deviantart",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       _nextPageUrl: null,
       async request(query, params, sq) {
         if (

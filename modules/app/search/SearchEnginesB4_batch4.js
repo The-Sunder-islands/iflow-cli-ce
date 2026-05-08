@@ -15,11 +15,13 @@ var EG_b4 = {},
     };
 
     EG_b4.destatis = { name:"destatis", categories:[], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let args=new URLSearchParams({templateQueryString:query,gtp:"474_list%3D"+(sq.pageno||1)});params.url="https://www.destatis.de/SiteGlobals/Forms/Suche/Expertensuche_Formular.html?"+args.toString();return params;},
       async response(resp,sq){let results=[];let parts=resp.text.split('class="c-result');let pageno=sq.pageno||1;for(let i=1;i<parts.length;i++){let block=parts[i];if(pageno>1&&block.indexOf('c-result--recommended')!==-1)continue;let href=eb(block,'href="','"');let title=eb(block,'">','</a>');let content=eb(block,'<p>','</p>');if(!href)continue;let doctype=eb(block,'c-result__doctype','</div>');let dt=doctype?st(eb(doctype,'<p>','</p>')):'';let date=eb(block,'c-result__date','</span>');let d=date?st(date.substring(date.indexOf('>')+1)):'';let meta=[dt,d].filter(Boolean);results.push({url:"https://www.destatis.de/"+href,title:st(title)||"",content:content?st(content):"",metadata:meta.join(', ')});}return results;},
     };
 
     EG_b4.devicons = { name:"devicons", categories:["images","icons"], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){params.url="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.json";params.query=query;return params;},
       async response(resp,sq){let results=[];let qparts=(resp.search_params?.query||sq.query||"").toLowerCase().split(" ").filter(Boolean);let json=resp.json;if(!Array.isArray(json))return results;for(let r of json){let match=qparts.length===0||qparts.some(p=>r.name.indexOf(p)!==-1||(r.altnames||[]).concat(r.tags||[]).some(t=>t.indexOf(p)!==-1));if(!match)continue;for(let imgType of(r.versions?.svg||[])){let src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/"+r.name+"/"+r.name+"-"+imgType+".svg";results.push({template:"images.html",url:src,title:r.name,content:"Base color: "+r.color,img_src:src,img_format:"SVG"});}}return results;},
     };
@@ -30,6 +32,7 @@ var EG_b4 = {},
     };
 
     EG_b4.digbt = { name:"digbt", categories:["videos","music","files"], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){params.url="https://digbt.org/search/"+query+"-time-"+(sq.pageno||1);return params;},
       async response(resp,sq){let results=[];let parts=resp.text.split('<td class="x-item">');if(parts.length<2)return results;for(let i=1;i<parts.length;i++){let block=parts[i];let href=eb(block,'<a href="','"');if(!href)continue;let titleSt=eb(block,'<a','</a>');let title=titleSt?st(titleSt.substring(titleSt.lastIndexOf('>')+1)):"";let content=eb(block,'<div class="files">','</div>');let tail=eb(block,'<div class="tail">','</div>');let fdata=tail?tail.split(/<[^>]+>/g).filter(Boolean).map(s=>s.trim()).filter(Boolean):[];let filesize="";if(fdata.length>=6)filesize=fdata[2]+" "+fdata[5];let magnet=eb(block,'href="','"');results.push({url:"https://digbt.org"+href,title:title,content:st(content),filesize:filesize,magnetlink:magnet||"",seed:"N/A",leech:"N/A",template:"torrent.html"});}return results;},
     };
@@ -45,6 +48,7 @@ var EG_b4 = {},
     };
 
     EG_b4.duckduckgo_definitions = { name:"duckduckgo_definitions", categories:[], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){params.url="https://api.duckduckgo.com/?q="+encodeURIComponent(query)+"&format=json&pretty=0&no_redirect=1&d=1";return params;},
       async response(resp,sq){let results=[];let json=resp.json;if(!json)return results;let heading=json.Heading||"";let content=(json.Definition||"")+(json.Abstract||"");let image=json.Image;if(image&&!image.startsWith("http"))image="https://duckduckgo.com"+image;if(json.Answer&&typeof json.Answer==="string"&&json.AnswerType!=="calc"&&json.AnswerType!=="ip"){results.push({title:"Answer",url:json.AbstractURL||"",content:st(json.Answer)});}for(let r of json.Results||[]){if(r.FirstURL&&r.Text)results.push({url:r.FirstURL,title:heading||r.Text,content:r.Text});}for(let r of json.RelatedTopics||[]){if(r.FirstURL&&r.Text&&!r.Text.startsWith("http"))results.push({suggestion:r.Text});else if(r.Topics){for(let t of r.Topics||[]){let txt=t.Text||"";if(!txt.startsWith("http"))results.push({suggestion:txt});}}}if(json.AbstractURL){results.push({url:json.AbstractURL,title:heading,content:content,infobox:heading,img_src:image||undefined});}return results;},
     };
@@ -55,31 +59,37 @@ var EG_b4 = {},
     };
 
     EG_b4.duckduckgo_weather = { name:"duckduckgo_weather", categories:["weather"], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){let engLang=params.searxng_locale?.split("_")[0]?.split("-")[0]||"en";let engRegion=params.searxng_locale?.replace("_","-")||"us-en";params.cookies=params.cookies||{};params.cookies["ad"]=engLang;params.cookies["ah"]=engRegion;params.cookies["l"]=engRegion;params.url="https://duckduckgo.com/js/spice/forecast/"+encodeURIComponent(query)+"/"+engLang;return params;},
       async response(resp,sq){let results=[];let txt=resp.text.trim();if(txt==="ddg_spice_forecast();")return results;let nl=txt.indexOf("\n");if(nl===-1)return results;let jsonTxt=txt.substring(nl+1,txt.lastIndexOf("\n")-2);let json;try{json=JSON.parse(jsonTxt);}catch(e){return results;}let current=json.currentWeather;if(!current)return results;let condMap={BlowingDust:"fog",Clear:"clear sky",Cloudy:"cloudy",Foggy:"fog",Haze:"fog",MostlyClear:"clear sky",MostlyCloudy:"partly cloudy",PartlyCloudy:"partly cloudy",Smoky:"fog",Breezy:"partly cloudy",Windy:"partly cloudy",Drizzle:"light rain",HeavyRain:"heavy rain",IsolatedThunderstorms:"rain and thunder",Rain:"rain",SunShowers:"rain",ScatteredThunderstorms:"heavy rain and thunder",StrongStorms:"heavy rain and thunder",Thunderstorms:"rain and thunder",Frigid:"clear sky",Hail:"heavy rain",Hot:"clear sky",Flurries:"light snow",Sleet:"sleet",Snow:"light snow",SunFlurries:"light snow",WintryMix:"sleet",Blizzard:"heavy snow",BlowingSnow:"heavy snow",FreezingDrizzle:"light sleet",FreezingRain:"sleet",HeavySnow:"heavy snow",Hurricane:"rain and thunder",TropicalStorm:"rain and thunder"};let item={temperature:{val:current.temperature,unit:"°C"},condition:condMap[current.conditionCode]||current.conditionCode,feels_like:{val:current.temperatureApparent,unit:"°C"},wind_from:current.windDirection,wind_speed:{val:current.windSpeed,unit:"mi/h"},pressure:{val:current.pressure,unit:"hPa"},humidity:current.humidity*100,cloud_cover:current.cloudCover*100};let forecasts=[];for(let f of json.forecastHourly?.hours||[]){let fitem={temperature:{val:f.temperature,unit:"°C"},condition:condMap[f.conditionCode]||f.conditionCode,feels_like:{val:f.temperatureApparent,unit:"°C"},wind_from:f.windDirection,wind_speed:{val:f.windSpeed,unit:"mi/h"},pressure:{val:f.pressure,unit:"hPa"},humidity:f.humidity*100,cloud_cover:f.cloudCover*100,datetime:f.forecastStart?new Date(f.forecastStart):null};forecasts.push(fitem);}results.push({weather:{current:item,forecasts:forecasts,service:"duckduckgo weather",location:sq.query},title:"Weather for "+sq.query,url:"",content:""});return results;},
     };
 
     EG_b4.dummy = { name:"dummy", categories:[], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){return params;},
       async response(resp,sq){return[];},
     };
 
     EG_b4.dummy_offline = { name:"dummy_offline", categories:[], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){return params;},
       async response(resp,sq){return[{title:"Result",content:"this is what you get",url:""}];},
     };
 
     EG_b4.fdroid = { name:"fdroid", categories:["files","apps"], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let args=new URLSearchParams({q:query,page:sq.pageno||1,lang:""});params.url="https://search.f-droid.org/?"+args.toString();return params;},
       async response(resp,sq){let results=[];let parts=resp.text.split('<a class="package-header"');for(let i=1;i<parts.length;i++){let block=parts[i];let href=eb(block,'href="','"');let title=eb(block,'class="package-name">','</h4>');let summary=eb(block,'class="package-summary">','</span>');let license=eb(block,'class="package-license">','</span>');let thumb=eb(block,'<img class="package-icon" src="','"');if(!href)continue;let content="";if(summary)content+=st(summary);if(license){if(content)content+=" - ";content+=st(license);}results.push({url:href,title:title?st(title):"",content:content,thumbnail:thumb||""});}return results;},
     };
 
     EG_b4.findthatmeme = { name:"findthatmeme", categories:["images"], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let offset=((sq.pageno||1)-1)*50;params.url="https://findthatmeme.com/api/v1/search";params.method="POST";params.headers=params.headers||{};params.headers["content-type"]="application/json";params.data=JSON.stringify({search:query,offset:offset});return params;},
       async response(resp,sq){let results=[];let json=resp.json;if(!Array.isArray(json))return results;for(let item of json){let img="https://s3.thehackerblog.com/findthatmeme/"+item.image_path;let thumb=item.thumbnail?"https://s3.thehackerblog.com/findthatmeme/thumb/"+item.thumbnail:img;let date=null;if(item.updated_at){let d=item.updated_at.split("T")[0];if(d)date=new Date(d+"T00:00:00");}let fs=item.meme_file_size;let fsize="";if(fs!==undefined&&fs!==null){let units=["B","KB","MB","GB"];let sz=fs;let ui=0;while(sz>=1024&&ui<units.length-1){sz/=1024;ui++}fsize=sz.toFixed(1)+" "+units[ui];}results.push({url:item.source_page_url||"",title:item.source_site||"",img_src:item.type==="IMAGE"?img:thumb,filesize:fsize,publishedDate:date,template:"images.html"});}return results;},
     };
 
     EG_b4.flickr_noapi = { name:"flickr_noapi", categories:["images"], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let args=new URLSearchParams({text:query});let url="https://www.flickr.com/search?"+args.toString()+"&page="+(sq.pageno||1);let tr=sq.time_range;if(tr){let now=Math.floor(Date.now()/1000);let ranges={day:86400,week:604800,month:2419200,year:31536000};let secs=ranges[tr];if(secs)url+="&min_upload_date="+now+"&max_upload_date="+(now-secs);}params.url=url;return params;},
       async response(resp,sq){let results=[];let m=resp.text.match(/^\s*modelExport:\s*(\{.*\}),$/m);if(!m)return results;let model;try{model=JSON.parse(m[1]);}catch(e){return results;}if(!model||!model.legend||!model.legend[0])return results;let imgSizes=["o","k","h","b","c","z","m","n","t","q","s"];for(let idx of model.legend){if(idx.length!==8)continue;try{let photo=model.main[idx[0]][parseInt(idx[1])][idx[2]][idx[3]][idx[4]][idx[5]][parseInt(idx[6])][idx[7]];if(!photo)continue;let title=photo.title||"";let content=photo.description?st(photo.description):"";let imgSrc=null;let sizeData=null;for(let sz of imgSizes){if(photo.sizes?.data?.[sz]?.data){sizeData=photo.sizes.data[sz].data;break}}if(!sizeData)continue;imgSrc=sizeData.url;let resolution=sizeData.width+" x "+sizeData.height;let thumbSrc=photo.sizes?.data?.n?.data?.url||photo.sizes?.data?.z?.data?.url||imgSrc;let url=photo.ownerNsid?"https://www.flickr.com/photos/"+photo.ownerNsid+"/"+photo.id:imgSrc;results.push({url:url,img_src:imgSrc,thumbnail_src:thumbSrc,source:(photo.username||"")+" @ Flickr",resolution:resolution,template:"images.html",title:title,content:content,author:photo.realname||""});}catch(e){continue}}return results;},
     };
@@ -90,11 +100,13 @@ var EG_b4 = {},
     };
 
     EG_b4.frinkiac = { name:"frinkiac", categories:["images"], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){params.url="https://frinkiac.com/api/search?"+new URLSearchParams({q:query}).toString();return params;},
       async response(resp,sq){let results=[];let json=resp.json;if(!Array.isArray(json))return results;for(let r of json){let ep=r.Episode;let ts=r.Timestamp;results.push({template:"images.html",url:"https://frinkiac.com/?"+new URLSearchParams({p:"caption",e:ep,t:ts}).toString(),title:ep,content:"",thumbnail_src:"https://frinkiac.com/img/"+ep+"/"+ts+"/medium.jpg",img_src:"https://frinkiac.com/img/"+ep+"/"+ts+".jpg"});}return results;},
     };
 
     EG_b4.fyyd = { name:"fyyd", categories:[], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let args=new URLSearchParams({term:query,count:10,page:(sq.pageno||1)-1});params.url="https://api.fyyd.de/0.2/search/podcast?"+args.toString();return params;},
       async response(resp,sq){let results=[];let json=resp.json;if(!json||!json.data)return results;for(let r of json.data){let pd=null;if(r.status_since){let parts=r.status_since.split(/[- :]/);if(parts.length===6)pd=new Date(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]);}results.push({url:r.htmlURL,title:r.title,content:r.description,thumbnail:r.smallImageURL||r.imageURL,publishedDate:pd,metadata:"Rank: "+r.rank+" || "+r.episode_count+" episodes"});}return results;},
     };

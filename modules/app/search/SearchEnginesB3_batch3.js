@@ -70,6 +70,7 @@ var EG_b3 = {},
     };
 
     EG_b3.btdigg = { name:"btdigg", categories:["files"], shortcut:"btd", paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){
         params.url="https://btdig.com/search?q="+encodeURIComponent(query)+"&p="+(sq.pageno-1);
         return params;
@@ -94,6 +95,7 @@ var EG_b3 = {},
     };
 
     EG_b3.cachy_os = { name:"cachy_os", categories:["packages","it"], shortcut:"co", paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){
         var qp={search:query,page_size:15,current_page:sq.pageno};
         params.url="https://packages.cachyos.org/api/search?"+new URLSearchParams(qp).toString();
@@ -111,6 +113,7 @@ var EG_b3 = {},
     };
 
     EG_b3.ccc_media = { name:"ccc_media", categories:["videos"], shortcut:"ccc", paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){
         var args={q:query,page:sq.pageno};
         params.url="https://api.media.ccc.de/public/events/search?"+new URLSearchParams(args).toString();
@@ -135,6 +138,7 @@ var EG_b3 = {},
     };
 
     EG_b3.cloudflareai = { name:"cloudflareai", categories:["general","ai"], shortcut:"cfai", paging:!1,
+          useRenderer: !0,
       cf_account_id:"",cf_ai_api:"",cf_ai_gateway:"",cf_ai_model:"",cf_ai_model_display_name:"Cloudflare AI",
       cf_ai_model_assistant:"Keep your answers as short and effective as possible.",
       cf_ai_model_system:"You are a self-aware language model who is honest and direct about any question from the user.",
@@ -153,6 +157,7 @@ var EG_b3 = {},
     };
 
     EG_b3.core = { name:"core", categories:["science","scientific publications"], shortcut:"core", paging:!0,
+          useRenderer: !0,
       api_key:"",
       async request(query,params,sq){
         var qp={q:query,offset:(sq.pageno-1)*10,limit:10,sort:"relevance"};
@@ -183,6 +188,7 @@ var EG_b3 = {},
     };
 
     EG_b3.currency_convert = { name:"currency_convert", categories:["currency","general"], shortcut:"cc", paging:!1,
+          useRenderer: !0,
       base_url:"https://duckduckgo.com/js/spice/currency/1/%(from)s/%(to)s",
       ddg_link_url:"https://duckduckgo.com/?q=%(from)s+to+%(to)s",
       async request(query,params,sq){
@@ -238,6 +244,7 @@ var EG_b3 = {},
     };
 
     EG_b3.deepl = { name:"deepl", categories:["general","translate"], shortcut:"dl", paging:!1,
+          useRenderer: !0,
       api_key:"",
       async request(query,params,sq){
         params.method="POST";
@@ -254,6 +261,7 @@ var EG_b3 = {},
     };
 
     EG_b3.deezer = { name:"deezer", categories:["music"], shortcut:"dz", paging:!0,
+          useRenderer: !0,
       iframeSrc:"https://www.deezer.com/plugins/player?type=tracks&id={audioid}",
       async request(query,params,sq){
         var offset=(sq.pageno-1)*25;

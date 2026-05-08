@@ -26,7 +26,9 @@ var EG_science = {},
       name: "wikipedia",
       categories: ["general", "science"],
       shortcut: "wp",
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params) {
         if (query === query.toLowerCase()) query = query.charAt(0).toUpperCase() + query.slice(1);
         let title = encodeURIComponent(query);
@@ -53,7 +55,9 @@ var EG_science = {},
       name: "arxiv",
       categories: ["science", "scientific publications"],
       shortcut: "ar",
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, searchQuery) {
         let pageno = (searchQuery && searchQuery.pageno) || 1;
         let start = (pageno - 1) * 10;
@@ -85,7 +89,9 @@ var EG_science = {},
       name: "base",
       categories: ["science"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, searchQuery) {
         let shortcutDict = { "format:": "dcformat:", "author:": "dccreator:", "collection:": "dccollection:", "hdate:": "dchdate:", "contributor:": "dccontributor:", "coverage:": "dccoverage:", "date:": "dcdate:", "abstract:": "dcdescription:", "urls:": "dcidentifier:", "language:": "dclanguage:", "publisher:": "dcpublisher:", "relation:": "dcrelation:", "rights:": "dcrights:", "source:": "dcsource:", "subject:": "dcsubject:", "title:": "dctitle:", "type:": "dcdctype:" };
         for (let k in shortcutDict) query = query.replace(new RegExp(k.replace(":", "\\:"), "g"), shortcutDict[k]);
@@ -121,7 +127,9 @@ var EG_science = {},
       name: "crossref",
       categories: ["science", "scientific publications"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, searchQuery) {
         let offset = 20 * (((searchQuery && searchQuery.pageno) || 1) - 1);
         params.url = "https://api.crossref.org/works?query=" + encodeURIComponent(query) + "&offset=" + offset;
@@ -161,7 +169,9 @@ var EG_science = {},
       name: "semantic_scholar",
       categories: ["science", "scientific publications"],
       shortcut: "se",
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, searchQuery) {
         if (!_s2UIVersion) {
           try {

@@ -19,7 +19,9 @@ var EG_images = {},
       name: "flickrNoapi",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let url =
           "https://www.flickr.com/search?text=" +
@@ -90,7 +92,9 @@ var EG_images = {},
       name: "openverse",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://api.openverse.org/v1/images/?page=" +
@@ -120,7 +124,9 @@ var EG_images = {},
       name: "pexels",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       _secretKey: null,
       async request(query, params, sq) {
         let args = { query: query, page: sq.pageno || 1, per_page: 20 };
@@ -164,7 +170,9 @@ var EG_images = {},
       name: "pixabay",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let args = { pagi: sq.pageno || 1 };
         if (sq.timeRange) {
@@ -219,7 +227,9 @@ var EG_images = {},
       name: "pixiv",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let qp = {
           word: query,
@@ -272,7 +282,9 @@ var EG_images = {},
       name: "wallhaven",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let purityMap = { 0: "111", 1: "110", 2: "100" };
         let args = { q: query, page: sq.pageno || 1, purity: purityMap[sq.safesearch] || "111" };
@@ -309,7 +321,9 @@ var EG_images = {},
       name: "openclipart",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://openclipart.org/search/?query=" +
@@ -343,7 +357,9 @@ var EG_images = {},
       name: "svgrepo",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://www.svgrepo.com/vectors/" +
@@ -386,7 +402,9 @@ var EG_images = {},
       name: "imgur",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let timeRange = sq.timeRange || "all";
         let args = { q: query, qs: "thumbs", p: (sq.pageno || 1) - 1 };
@@ -425,7 +443,9 @@ var EG_images = {},
       name: "openstreetmap",
       categories: ["map"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://nominatim.openstreetmap.org/search?q=" +
@@ -505,7 +525,9 @@ var EG_images = {},
       name: "photon",
       categories: ["map"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params, sq) {
         let url =
           "https://photon.komoot.io/api/?q=" +
@@ -597,7 +619,9 @@ var EG_images = {},
       name: "appleMaps",
       categories: ["map"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       _token: null,
       _tokenExpiry: 0,
       async _obtainToken() {
@@ -691,7 +715,9 @@ var EG_images = {},
       name: "tineye",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let urlQuery = query;
         if (sq.search_urls) {

@@ -56,7 +56,9 @@ var EG_news = {},
       name: "reuters",
       categories: ["news"],
       shortcut: "reu",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let i = { keyword: e, offset: (t.pageno - 1) * 20, orderby: "relevance", size: 20, website: "reuters" };
@@ -89,7 +91,9 @@ var EG_news = {},
       name: "yahoo_news",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = (t.pageno - 1) * 10 + 1;
         t.url = `https://news.search.yahoo.com/search?p=${encodeURIComponent(e)}&b=${i}`;
@@ -141,7 +145,9 @@ var EG_news = {},
       name: "bing_news",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let i = (t.pageno - 1) * 10;
@@ -191,7 +197,9 @@ var EG_news = {},
       name: "google_news",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = "US:en";
         t.url = `https://news.google.com/search?q=${encodeURIComponent(e)}&hl=en&gl=US&ceid=${i}`;
@@ -230,7 +238,9 @@ var EG_news = {},
       name: "tagesschau",
       categories: ["general", "news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = new URLSearchParams({ searchText: e, pageSize: 10, resultPage: t.pageno - 1 });
         t.url = `https://www.tagesschau.de/api2u/search?${i}`;
@@ -273,7 +283,9 @@ var EG_news = {},
       name: "ansa",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let i = { any: e, start: (t.pageno - 1) * 12, sort: "data:desc" };
@@ -310,7 +322,9 @@ var EG_news = {},
       name: "il_post",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let i = { qs: e, pg: t.pageno, sort: "date_d", filters: "ctype:articoli" };
@@ -341,7 +355,9 @@ var EG_news = {},
       name: "grokipedia",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = (t.pageno - 1) * 10;
         t.url = `https://grokipedia.com/api/full-text-search?query=${encodeURIComponent(e)}&limit=10&offset=${i}`;
@@ -365,7 +381,9 @@ var EG_news = {},
       name: "wikipedia",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = t.searxngLocale || "en";
         let n = i.split("-")[0];
@@ -400,7 +418,9 @@ var EG_news = {},
       name: "wikidata",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = t.searxngLocale || "en";
         let n = i.split("-")[0];
@@ -481,7 +501,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "wikicommons",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       searchType: "image",
       async request(e, t, r) {
         let i = t.searxngLocale || "en";
@@ -541,7 +563,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "bpb",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = new URLSearchParams({
           "query[term]": e,
@@ -583,7 +607,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "chefkoch",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = { query: e, limit: 20, offset: (t.pageno - 1) * 20 };
         t.url = "https://api.chefkoch.de/v2/search-gateway/recipes?" + new URLSearchParams(i).toString();
@@ -620,7 +646,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "duden",
       categories: ["dictionaries"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = t.pageno - 1;
         if (i === 0) {
@@ -658,7 +686,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "emojipedia",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         t.url = `https://emojipedia.org/search?q=${encodeURIComponent(e)}`;
         return t;

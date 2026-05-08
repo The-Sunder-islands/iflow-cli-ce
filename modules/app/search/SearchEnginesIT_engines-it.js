@@ -15,7 +15,9 @@ var EG_it = {},
       name: "github",
       categories: ["general", "it", "repos"],
       shortcut: "gh",
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         t.url = `https://api.github.com/search/repositories?sort=stars&order=desc&q=${encodeURIComponent(e)}`;
         return (t.headers["Accept"] = "application/vnd.github.preview.text-match+json"), t;
@@ -54,7 +56,9 @@ var EG_it = {},
       name: "reddit",
       categories: ["general", "social media"],
       shortcut: "rd",
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = new URLSearchParams({ q: e, limit: 25 });
         return (t.url = `https://www.reddit.com/search.json?${n}`), t;
@@ -86,7 +90,9 @@ var EG_it = {},
       name: "hackernews",
       categories: ["general", "it"],
       shortcut: "hn",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let n = "search",
@@ -150,7 +156,9 @@ var EG_it = {},
       name: "pypi",
       categories: ["general", "it", "packages"],
       shortcut: "py",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = new URLSearchParams({ q: e, page: r.pageno || 1 });
         return (t.url = `https://pypi.org/search/?${n}`), t;
@@ -182,7 +190,9 @@ var EG_it = {},
       name: "archlinux",
       categories: ["general", "it", "software wikis"],
       shortcut: "arch",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = ((r.pageno || 1) - 1) * 20,
           o = new URLSearchParams({ search: e, title: "Special:Search", limit: 20, offset: n, profile: "default" });
@@ -216,7 +226,9 @@ var EG_it = {},
       name: "voidlinux",
       categories: ["general", "it", "packages"],
       shortcut: "vl",
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = e.match(/(aarch64-musl|armv6l-musl|armv7l-musl|x86_64-musl|aarch64|armv6l|armv7l|i686|x86_64)/),
           o = n ? n[1] : "x86_64";
@@ -260,7 +272,9 @@ var EG_it = {},
       name: "alpinelinux",
       categories: ["general", "it", "packages"],
       shortcut: "al",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = e.match(/(x86_64|x86|aarch64|armhf|ppc64le|s390x|armv7|riscv64)/),
           o = n ? n[1] : null;

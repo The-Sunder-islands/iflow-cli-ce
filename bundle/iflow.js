@@ -472409,7 +472409,11 @@ var Uio = T((ROl, Fio) => {
           let o;
           if (e.useRenderer && typeof SearchRenderer?.fetch === "function") {
             let s = await SearchRenderer.fetch(n.url, this.network.defaults.timeout);
-            o = new SearchResponse({ status: 200, text: s.content || "", finalUrl: n.url });
+            if (s?.content) {
+              o = new SearchResponse({ status: 200, text: s.content, finalUrl: n.url });
+            } else {
+              o = await this.network.request(n);
+            }
           } else {
             o = await this.network.request(n);
           }
@@ -473000,7 +473004,9 @@ var EG_science = {},
       name: "wikipedia",
       categories: ["general", "science"],
       shortcut: "wp",
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params) {
         if (query === query.toLowerCase()) query = query.charAt(0).toUpperCase() + query.slice(1);
         let title = encodeURIComponent(query);
@@ -473027,7 +473033,9 @@ var EG_science = {},
       name: "arxiv",
       categories: ["science", "scientific publications"],
       shortcut: "ar",
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, searchQuery) {
         let pageno = (searchQuery && searchQuery.pageno) || 1;
         let start = (pageno - 1) * 10;
@@ -473059,7 +473067,9 @@ var EG_science = {},
       name: "base",
       categories: ["science"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, searchQuery) {
         let shortcutDict = { "format:": "dcformat:", "author:": "dccreator:", "collection:": "dccollection:", "hdate:": "dchdate:", "contributor:": "dccontributor:", "coverage:": "dccoverage:", "date:": "dcdate:", "abstract:": "dcdescription:", "urls:": "dcidentifier:", "language:": "dclanguage:", "publisher:": "dcpublisher:", "relation:": "dcrelation:", "rights:": "dcrights:", "source:": "dcsource:", "subject:": "dcsubject:", "title:": "dctitle:", "type:": "dcdctype:" };
         for (let k in shortcutDict) query = query.replace(new RegExp(k.replace(":", "\\:"), "g"), shortcutDict[k]);
@@ -473095,7 +473105,9 @@ var EG_science = {},
       name: "crossref",
       categories: ["science", "scientific publications"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, searchQuery) {
         let offset = 20 * (((searchQuery && searchQuery.pageno) || 1) - 1);
         params.url = "https://api.crossref.org/works?query=" + encodeURIComponent(query) + "&offset=" + offset;
@@ -473135,7 +473147,9 @@ var EG_science = {},
       name: "semantic_scholar",
       categories: ["science", "scientific publications"],
       shortcut: "se",
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, searchQuery) {
         if (!_s2UIVersion) {
           try {
@@ -473196,7 +473210,9 @@ var EG_media = {},
       name: "googleImages",
       categories: ["images", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
         let url =
@@ -473243,7 +473259,9 @@ var EG_media = {},
       name: "bingImages",
       categories: ["images", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
         let first = (pn - 1) * 35 + 1;
@@ -473307,7 +473325,9 @@ var EG_media = {},
       name: "bingVideos",
       categories: ["videos", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
         let first = (pn - 1) * 35 + 1;
@@ -473362,7 +473382,9 @@ var EG_media = {},
       name: "youtubeNoapi",
       categories: ["videos", "music"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       _nextPageToken: null,
       async request(query, params, sq) {
         params.cookies = params.cookies || {};
@@ -473508,7 +473530,9 @@ var EG_media = {},
       name: "vimeo",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://vimeo.com/search/page:" +
@@ -473555,7 +473579,9 @@ var EG_media = {},
       name: "flickr",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       apiKey: null,
       async request(query, params, sq) {
         let key = this.apiKey;
@@ -473609,7 +473635,9 @@ var EG_media = {},
       name: "unsplash",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://unsplash.com/napi/search/photos?query=" +
@@ -473663,7 +473691,9 @@ var EG_media = {},
       name: "deviantart",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       _nextPageUrl: null,
       async request(query, params, sq) {
         if (
@@ -473756,7 +473786,9 @@ var EG_it = {},
       name: "github",
       categories: ["general", "it", "repos"],
       shortcut: "gh",
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         t.url = `https://api.github.com/search/repositories?sort=stars&order=desc&q=${encodeURIComponent(e)}`;
         return (t.headers["Accept"] = "application/vnd.github.preview.text-match+json"), t;
@@ -473795,7 +473827,9 @@ var EG_it = {},
       name: "reddit",
       categories: ["general", "social media"],
       shortcut: "rd",
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = new URLSearchParams({ q: e, limit: 25 });
         return (t.url = `https://www.reddit.com/search.json?${n}`), t;
@@ -473827,7 +473861,9 @@ var EG_it = {},
       name: "hackernews",
       categories: ["general", "it"],
       shortcut: "hn",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let n = "search",
@@ -473891,7 +473927,9 @@ var EG_it = {},
       name: "pypi",
       categories: ["general", "it", "packages"],
       shortcut: "py",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = new URLSearchParams({ q: e, page: r.pageno || 1 });
         return (t.url = `https://pypi.org/search/?${n}`), t;
@@ -473923,7 +473961,9 @@ var EG_it = {},
       name: "archlinux",
       categories: ["general", "it", "software wikis"],
       shortcut: "arch",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = ((r.pageno || 1) - 1) * 20,
           o = new URLSearchParams({ search: e, title: "Special:Search", limit: 20, offset: n, profile: "default" });
@@ -473957,7 +473997,9 @@ var EG_it = {},
       name: "voidlinux",
       categories: ["general", "it", "packages"],
       shortcut: "vl",
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = e.match(/(aarch64-musl|armv6l-musl|armv7l-musl|x86_64-musl|aarch64|armv6l|armv7l|i686|x86_64)/),
           o = n ? n[1] : "x86_64";
@@ -474001,7 +474043,9 @@ var EG_it = {},
       name: "alpinelinux",
       categories: ["general", "it", "packages"],
       shortcut: "al",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let n = e.match(/(x86_64|x86|aarch64|armhf|ppc64le|s390x|armv7|riscv64)/),
           o = n ? n[1] : null;
@@ -474135,6 +474179,7 @@ var EG_shop = {},
       name: "1337x",
       categories: ["files"],
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://1337x.to/search/" +
@@ -474190,7 +474235,9 @@ var EG_shop = {},
       name: "adobe_stock",
       categories: ["images"],
       shortcut: "asi",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         var args = {
           k: query,
@@ -474251,6 +474298,7 @@ var EG_shop = {},
       name: "annas_archive",
       categories: ["files", "books"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://annas-archive.gl",
       async request(query, params, sq) {
         var args = {
@@ -474311,6 +474359,7 @@ var EG_shop = {},
       name: "apkmirror",
       categories: ["files", "apps"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://www.apkmirror.com",
       async request(query, params, sq) {
         params.url =
@@ -474354,6 +474403,7 @@ var EG_shop = {},
       name: "apple_app_store",
       categories: ["files", "apps"],
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         var explicit = sq.safesearch > 0 ? "No" : "Yes";
         params.url =
@@ -474394,6 +474444,7 @@ var EG_shop = {},
       name: "ebay",
       categories: ["shopping"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://www.ebay.com",
       async request(query, params, sq) {
         params.url =
@@ -474461,6 +474512,7 @@ var EG_shop = {},
       name: "kickass",
       categories: ["files"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://kickasstorrents.to",
       async request(query, params, sq) {
         params.url =
@@ -474524,6 +474576,7 @@ var EG_shop = {},
       name: "piratebay",
       categories: ["files"],
       paging: !1,
+          useRenderer: !0,
       trackers: [
         "udp://tracker.coppersurfer.tk:6969/announce",
         "udp://9.rarbg.to:2920/announce",
@@ -474592,6 +474645,7 @@ var EG_shop = {},
       name: "solidtorrents",
       categories: ["files"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://solidtorrents.to",
       async request(query, params, sq) {
         params.url =
@@ -474662,6 +474716,7 @@ var EG_shop = {},
       name: "steam",
       categories: ["general"],
       paging: !1,
+          useRenderer: !0,
       base_url: "https://store.steampowered.com",
       async request(query, params, sq) {
         params.url =
@@ -474704,6 +474759,7 @@ var EG_shop = {},
       name: "docker_hub",
       categories: ["it", "packages"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://hub.docker.com",
       async request(query, params, sq) {
         var page = sq.pageno || 1;
@@ -474775,6 +474831,7 @@ var EG_shop = {},
       name: "goodreads",
       categories: ["general"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://www.goodreads.com",
       async request(query, params, sq) {
         params.url =
@@ -474830,6 +474887,7 @@ var EG_shop = {},
       name: "imdb",
       categories: ["movies"],
       paging: !1,
+          useRenderer: !0,
       base_url: "https://imdb.com",
       searchCategories: {
         nm: "name",
@@ -474887,6 +474945,7 @@ var EG_shop = {},
       name: "rottentomatoes",
       categories: ["movies"],
       paging: !1,
+          useRenderer: !0,
       base_url: "https://www.rottentomatoes.com",
       async request(query, params, sq) {
         params.url =
@@ -474935,6 +474994,7 @@ var EG_shop = {},
       name: "openlibrary",
       categories: ["general", "books"],
       paging: !0,
+          useRenderer: !0,
       base_url: "https://openlibrary.org",
       search_api: "https://openlibrary.org/search.json",
       async request(query, params, sq) {
@@ -475043,7 +475103,9 @@ var EG_social = {},
       name: "nineGag",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       pageSize: 10,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
@@ -475100,7 +475162,9 @@ var EG_social = {},
       name: "bandcamp",
       categories: ["music"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://bandcamp.com/search?q=" +
@@ -475175,7 +475239,9 @@ var EG_social = {},
       name: "bitchute",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       resultsPerPage: 20,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
@@ -475222,7 +475288,9 @@ var EG_social = {},
       name: "mastodon",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       baseUrl: "https://mastodon.social",
       mastodonType: "accounts",
       pageSize: 40,
@@ -475286,7 +475354,9 @@ var EG_social = {},
       name: "mixcloud",
       categories: ["music"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pn = sq.pageno || 1;
         let offset = (pn - 1) * 10;
@@ -475326,7 +475396,9 @@ var EG_social = {},
       name: "niconico",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       timeRangeSupport: true,
       timeRangeDict: { day: 1, week: 7, month: 30, year: 365 },
       async request(query, params, sq) {
@@ -475430,7 +475502,9 @@ var EG_social = {},
       name: "odysee",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       timeRangeSupport: true,
       resultsPerPage: 20,
       timeRangeDict: {
@@ -475507,7 +475581,9 @@ var EG_social = {},
       name: "peertube",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       baseUrl: "https://peer.tube",
       timeRangeSupport: true,
       safesearchTable: { 0: "both", 1: "false", 2: "false" },
@@ -475591,7 +475667,9 @@ var EG_social = {},
       name: "reddit",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       pageSize: 25,
       async request(query, params, sq) {
         params.url =
@@ -475645,7 +475723,9 @@ var EG_social = {},
       name: "soundcloud",
       categories: ["music"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       _clientId: null,
       resultsPerPage: 10,
       soundcloudFacet: "model",
@@ -475767,7 +475847,9 @@ var EG_social = {},
       name: "spotify",
       categories: ["music"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       apiClientId: null,
       apiClientSecret: null,
       _token: null,
@@ -475848,7 +475930,9 @@ var EG_social = {},
       name: "tootfinder",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://www.tootfinder.ch/rest/api/search/" +
@@ -475902,7 +475986,9 @@ var EG_social = {},
       name: "rumble",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let qp = new URLSearchParams({ q: query });
         if ((sq.pageno || 1) > 1)
@@ -476000,7 +476086,9 @@ var EG_social = {},
       name: "invidious",
       categories: ["videos", "music"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       timeRangeSupport: true,
       baseUrl: [],
       timeRangeDict: {
@@ -476103,7 +476191,9 @@ var EG_social = {},
       name: "piped",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       backendUrl: "https://pipedapi.kavin.rocks",
       frontendUrl: "https://piped.video",
       pipedFilter: "all",
@@ -476202,7 +476292,9 @@ var EG_dev = {},
       name: "npm",
       categories: ["it", "packages"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let args = new URLSearchParams({
           from: ((sq.pageno || 1) - 1) * 25,
@@ -476239,7 +476331,9 @@ var EG_dev = {},
       name: "crates",
       categories: ["it", "packages", "cargo"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let args = new URLSearchParams({ page: sq.pageno || 1, q: query, per_page: 10 });
         params.url = "https://crates.io/api/v1/crates?" + args.toString();
@@ -476273,7 +476367,9 @@ var EG_dev = {},
       name: "pkg_go_dev",
       categories: ["packages", "it"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       base_url: "https://pkg.go.dev",
       async request(query, params, sq) {
         let args = new URLSearchParams({ q: query, m: "package", limit: 50 });
@@ -476325,7 +476421,9 @@ var EG_dev = {},
       name: "metacpan",
       categories: ["it", "packages"],
       shortcut: "cpan",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       number_of_results: 20,
       async request(query, params, sq) {
         let queryData = {
@@ -476378,7 +476476,9 @@ var EG_dev = {},
       name: "rubygems",
       categories: ["it", "packages"],
       shortcut: "gem",
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         let args = new URLSearchParams({ query: query });
         params.url = "https://rubygems.org/api/v1/search.json?" + args.toString();
@@ -476409,7 +476509,9 @@ var EG_dev = {},
       name: "elasticsearch",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "http://localhost:9200",
       username: "",
       password: "",
@@ -476503,7 +476605,9 @@ var EG_dev = {},
       name: "solr",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "http://localhost:8983",
       collection: "",
       rows: 10,
@@ -476548,7 +476652,9 @@ var EG_dev = {},
       name: "meilisearch",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "http://localhost:7700",
       index: "",
       auth_key: "",
@@ -476588,7 +476694,9 @@ var EG_dev = {},
       name: "mongodb",
       categories: ["it", "db"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       engine_type: "offline",
       host: "127.0.0.1",
       port: 27017,
@@ -476644,7 +476752,9 @@ var EG_dev = {},
       name: "mysql_server",
       categories: ["it", "db"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       engine_type: "offline",
       host: "127.0.0.1",
       port: 3306,
@@ -476693,7 +476803,9 @@ var EG_dev = {},
       name: "postgresql",
       categories: ["it", "db"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       engine_type: "offline",
       host: "127.0.0.1",
       port: "5432",
@@ -476742,7 +476854,9 @@ var EG_dev = {},
       name: "sqlite",
       categories: ["it", "db"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       engine_type: "offline",
       database: "",
       query_str: "",
@@ -476792,7 +476906,9 @@ var EG_dev = {},
       name: "valkey_server",
       categories: ["it", "db"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       engine_type: "offline",
       host: "127.0.0.1",
       port: 6379,
@@ -476868,7 +476984,9 @@ var EG_dev = {},
       name: "mariadb_server",
       categories: ["it", "db"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       engine_type: "offline",
       host: "127.0.0.1",
       port: 3306,
@@ -476917,7 +477035,9 @@ var EG_dev = {},
       name: "gitea",
       categories: ["it", "repos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "",
       sort: "updated",
       order: "desc",
@@ -476961,7 +477081,9 @@ var EG_dev = {},
       name: "gitlab",
       categories: ["it", "repos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "",
       api_path: "api/v4/projects",
       async request(query, params, sq) {
@@ -476996,7 +477118,9 @@ var EG_dev = {},
       name: "sourcehut",
       categories: ["it", "repos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "https://sr.ht/projects",
       sourcehut_sort_order: "recently-updated",
       async request(query, params, sq) {
@@ -477073,7 +477197,9 @@ var EG_dev = {},
       name: "docker_hub",
       categories: ["it", "packages"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "https://hub.docker.com",
       page_size: 10,
       async request(query, params, sq) {
@@ -477173,7 +477299,9 @@ var EG_news = {},
       name: "reuters",
       categories: ["news"],
       shortcut: "reu",
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let i = { keyword: e, offset: (t.pageno - 1) * 20, orderby: "relevance", size: 20, website: "reuters" };
@@ -477206,7 +477334,9 @@ var EG_news = {},
       name: "yahoo_news",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = (t.pageno - 1) * 10 + 1;
         t.url = `https://news.search.yahoo.com/search?p=${encodeURIComponent(e)}&b=${i}`;
@@ -477258,7 +477388,9 @@ var EG_news = {},
       name: "bing_news",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let i = (t.pageno - 1) * 10;
@@ -477308,7 +477440,9 @@ var EG_news = {},
       name: "google_news",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = "US:en";
         t.url = `https://news.google.com/search?q=${encodeURIComponent(e)}&hl=en&gl=US&ceid=${i}`;
@@ -477347,7 +477481,9 @@ var EG_news = {},
       name: "tagesschau",
       categories: ["general", "news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = new URLSearchParams({ searchText: e, pageSize: 10, resultPage: t.pageno - 1 });
         t.url = `https://www.tagesschau.de/api2u/search?${i}`;
@@ -477390,7 +477526,9 @@ var EG_news = {},
       name: "ansa",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let i = { any: e, start: (t.pageno - 1) * 12, sort: "data:desc" };
@@ -477427,7 +477565,9 @@ var EG_news = {},
       name: "il_post",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       async request(e, t, r) {
         let i = { qs: e, pg: t.pageno, sort: "date_d", filters: "ctype:articoli" };
@@ -477458,7 +477598,9 @@ var EG_news = {},
       name: "grokipedia",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = (t.pageno - 1) * 10;
         t.url = `https://grokipedia.com/api/full-text-search?query=${encodeURIComponent(e)}&limit=10&offset=${i}`;
@@ -477482,7 +477624,9 @@ var EG_news = {},
       name: "wikipedia",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = t.searxngLocale || "en";
         let n = i.split("-")[0];
@@ -477517,7 +477661,9 @@ var EG_news = {},
       name: "wikidata",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = t.searxngLocale || "en";
         let n = i.split("-")[0];
@@ -477598,7 +477744,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "wikicommons",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       searchType: "image",
       async request(e, t, r) {
         let i = t.searxngLocale || "en";
@@ -477658,7 +477806,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "bpb",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = new URLSearchParams({
           "query[term]": e,
@@ -477700,7 +477850,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "chefkoch",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = { query: e, limit: 20, offset: (t.pageno - 1) * 20 };
         t.url = "https://api.chefkoch.de/v2/search-gateway/recipes?" + new URLSearchParams(i).toString();
@@ -477737,7 +477889,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "duden",
       categories: ["dictionaries"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(e, t, r) {
         let i = t.pageno - 1;
         if (i === 0) {
@@ -477775,7 +477929,9 @@ GROUP BY ?item ?itemLabel ?itemDescription ?lat ?long ?P569 ?P570 ?P571 ?P576 ?P
       name: "emojipedia",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(e, t, r) {
         t.url = `https://emojipedia.org/search?q=${encodeURIComponent(e)}`;
         return t;
@@ -477819,7 +477975,9 @@ var EG_images = {},
       name: "flickrNoapi",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let url =
           "https://www.flickr.com/search?text=" +
@@ -477890,7 +478048,9 @@ var EG_images = {},
       name: "openverse",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://api.openverse.org/v1/images/?page=" +
@@ -477920,7 +478080,9 @@ var EG_images = {},
       name: "pexels",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       _secretKey: null,
       async request(query, params, sq) {
         let args = { query: query, page: sq.pageno || 1, per_page: 20 };
@@ -477964,7 +478126,9 @@ var EG_images = {},
       name: "pixabay",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let args = { pagi: sq.pageno || 1 };
         if (sq.timeRange) {
@@ -478019,7 +478183,9 @@ var EG_images = {},
       name: "pixiv",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let qp = {
           word: query,
@@ -478072,7 +478238,9 @@ var EG_images = {},
       name: "wallhaven",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let purityMap = { 0: "111", 1: "110", 2: "100" };
         let args = { q: query, page: sq.pageno || 1, purity: purityMap[sq.safesearch] || "111" };
@@ -478109,7 +478277,9 @@ var EG_images = {},
       name: "openclipart",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://openclipart.org/search/?query=" +
@@ -478143,7 +478313,9 @@ var EG_images = {},
       name: "svgrepo",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://www.svgrepo.com/vectors/" +
@@ -478186,7 +478358,9 @@ var EG_images = {},
       name: "imgur",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let timeRange = sq.timeRange || "all";
         let args = { q: query, qs: "thumbs", p: (sq.pageno || 1) - 1 };
@@ -478225,7 +478399,9 @@ var EG_images = {},
       name: "openstreetmap",
       categories: ["map"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://nominatim.openstreetmap.org/search?q=" +
@@ -478305,7 +478481,9 @@ var EG_images = {},
       name: "photon",
       categories: ["map"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params, sq) {
         let url =
           "https://photon.komoot.io/api/?q=" +
@@ -478397,7 +478575,9 @@ var EG_images = {},
       name: "appleMaps",
       categories: ["map"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       _token: null,
       _tokenExpiry: 0,
       async _obtainToken() {
@@ -478491,7 +478671,9 @@ var EG_images = {},
       name: "tineye",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         let urlQuery = query;
         if (sq.search_urls) {
@@ -478631,7 +478813,9 @@ var EG_misc = {},
       name: "baidu",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       resultsPerPage: 10,
       baiduCategory: "general",
       timeRangeSupport: !0,
@@ -478724,7 +478908,9 @@ var EG_misc = {},
       name: "sogou",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       baseUrl: "https://www.sogou.com",
       timeRangeDict: { day: "inttime_day", week: "inttime_week", month: "inttime_month", year: "inttime_year" },
@@ -478809,7 +478995,9 @@ var EG_misc = {},
       name: "sogou_images",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       baseUrl: "https://pic.sogou.com",
       async request(query, params, sq) {
         var qp = { query: query, start: (sq.pageno - 1) * 48 };
@@ -478844,7 +479032,9 @@ var EG_misc = {},
       name: "sogou_videos",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       baseUrl: "https://v.sogou.com",
       async request(query, params, sq) {
         var qp = { page: sq.pageno, pagesize: 10, query: query };
@@ -478880,7 +479070,9 @@ var EG_misc = {},
       name: "sogou_wechat",
       categories: ["news"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       baseUrl: "https://weixin.sogou.com",
       async request(query, params, sq) {
         var qp = { query: query, page: sq.pageno, type: 2 };
@@ -478921,7 +479113,9 @@ var EG_misc = {},
       name: "chinaso",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       resultsPerPage: 10,
       chinasoCategory: "news",
@@ -479006,7 +479200,9 @@ var EG_misc = {},
       name: "naver",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       baseUrl: "https://search.naver.com",
       naverCategory: "general",
@@ -479113,7 +479309,9 @@ var EG_misc = {},
       name: "qwant",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       maxPage: 5,
       qwantCateg: null,
       safesearch: !0,
@@ -479237,7 +479435,9 @@ var EG_misc = {},
       name: "brave",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       maxPage: 10,
       braveCategory: "search",
       safesearch: !0,
@@ -479399,7 +479599,9 @@ var EG_misc = {},
       name: "braveapi",
       categories: ["general", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       safesearch: !0,
       timeRangeSupport: !0,
       resultsPerPage: 20,
@@ -479440,7 +479642,9 @@ var EG_misc = {},
       name: "mojeek",
       categories: ["general", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       safesearch: !0,
       timeRangeSupport: !0,
       maxPage: 10,
@@ -479546,7 +479750,9 @@ var EG_misc = {},
       name: "startpage",
       categories: ["general", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       maxPage: 18,
       timeRangeSupport: !0,
       safesearch: !0,
@@ -479658,7 +479864,9 @@ var EG_misc = {},
       name: "yandex",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       searchType: "",
       baseUrlWeb: "https://yandex.com/search/site/",
       baseUrlImages: "https://yandex.com/images/search",
@@ -479737,7 +479945,9 @@ var EG_misc = {},
       name: "yandex_music",
       categories: ["music"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       url: "https://music.yandex.ru",
       searchUrl: "https://music.yandex.ru/handlers/music-search.jsx",
       async request(query, params, sq) {
@@ -479774,7 +479984,9 @@ var EG_misc = {},
       name: "seznam",
       categories: ["general", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       baseUrl: "https://search.seznam.cz/",
       async request(query, params, sq) {
         var resp;
@@ -479817,7 +480029,9 @@ var EG_misc = {},
       name: "presearch",
       categories: ["general", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       safesearch: !0,
       timeRangeSupport: !0,
       searchType: "search",
@@ -479955,7 +480169,9 @@ var EG_misc = {},
       name: "karmasearch",
       categories: ["web", "general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       safesearch: !0,
       timeRangeSupport: !0,
       searchType: "web",
@@ -480011,7 +480227,9 @@ var EG_misc = {},
       name: "marginalia",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       resultsPerPage: 20,
       baseUrl: "https://api2.marginalia-search.com",
       apiKey: "",
@@ -480042,7 +480260,9 @@ var EG_misc = {},
       name: "mwmbl",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       apiUrl: "https://api.mwmbl.org/api/v1",
       async request(query, params, sq) {
         params.url = this.apiUrl + "/search/?" + new URLSearchParams({ s: query });
@@ -480070,7 +480290,9 @@ var EG_misc = {},
       name: "yacy",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       numberOfResults: 10,
       searchMode: "global",
       searchType: "text",
@@ -480119,7 +480341,9 @@ var EG_misc = {},
       name: "searx_engine",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       instanceUrls: [],
       instanceIndex: 0,
       async request(query, params, sq) {
@@ -480159,7 +480383,9 @@ var EG_misc = {},
       name: "recoll",
       categories: [],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       timeRangeSupport: !0,
       baseUrl: "",
       mountPrefix: "",
@@ -480498,7 +480724,9 @@ var EG_b2 = {},
       name: "360search",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       time_range_support: !0,
       time_range_dict: { day: "d", week: "w", month: "m", year: "y" },
       async request(query, params, sq) {
@@ -480530,7 +480758,9 @@ var EG_b2 = {},
       name: "360search_videos",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let qp = new URLSearchParams({ count: "10", q: query, start: ((sq.pageno || 1) * 10).toString() });
         params.url = "https://tv.360kan.com/v1/video/list?" + qp.toString();
@@ -480561,7 +480791,9 @@ var EG_b2 = {},
       name: "9gag",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       page_size: 10,
       async request(query, params, sq) {
         let qp = new URLSearchParams({ query, c: ((sq.pageno || 1) - 1) * this.page_size });
@@ -480587,7 +480819,9 @@ var EG_b2 = {},
       name: "acfun",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "https://www.acfun.cn",
       async request(query, params, sq) {
         let qp = new URLSearchParams({ keyword: query, pCursor: sq.pageno || 1 });
@@ -480632,7 +480866,9 @@ var EG_b2 = {},
       name: "ahmia",
       categories: ["onions"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       page_size: 10,
       time_range_support: !0,
       time_range_dict: { day: 1, week: 7, month: 30 },
@@ -480666,7 +480902,9 @@ var EG_b2 = {},
       name: "apple_maps",
       categories: ["map"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         let qp = new URLSearchParams({ q: query, lang: params.language || "en" });
         params.url = "https://api.apple-mapkit.com/v1/search?" + qp.toString() + "&mkjsVersion=5.72.53";
@@ -480702,7 +480940,9 @@ var EG_b2 = {},
       name: "artic",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       nb_per_page: 20,
       image_api: "https://www.artic.edu/iiif/2/",
       async request(query, params, sq) {
@@ -480732,7 +480972,9 @@ var EG_b2 = {},
       name: "artstation",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       results_per_page: 20,
       base_url: "https://www.artstation.com/api/v2/search/projects.json",
       async request(query, params, sq) {
@@ -480766,7 +481008,9 @@ var EG_b2 = {},
       name: "astrophysics_data_system",
       categories: ["science", "scientific publications"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "https://api.adsabs.harvard.edu/v1/search/query",
       ads_field_list: "abstract,author,bibcode,comment,date,doi,isbn,issn,keyword,page,page_count,page_range,pub,pubdate,pubnote,read_count,title,volume,year",
       ads_rows: 10,
@@ -480814,7 +481058,9 @@ var EG_b2 = {},
       name: "azure",
       categories: ["it", "cloud"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       azure_batch_endpoint: "https://management.azure.com/batch?api-version=2020-06-01",
       async request(query, params, sq) {
         params.url = this.azure_batch_endpoint;
@@ -480862,7 +481108,9 @@ var EG_b2 = {},
       name: "bilibili",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       results_per_page: 20,
       base_url: "https://api.bilibili.com/x/web-interface/search/type",
       async request(query, params, sq) {
@@ -480897,7 +481145,9 @@ var EG_b2 = {},
       name: "bing_images",
       categories: ["images", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       safesearch: !0,
       time_range_support: !0,
       time_map: { day: 1440, week: 10080, month: 44640, year: 525600 },
@@ -481009,6 +481259,7 @@ var EG_b3 = {},
     };
 
     EG_b3.btdigg = { name:"btdigg", categories:["files"], shortcut:"btd", paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){
         params.url="https://btdig.com/search?q="+encodeURIComponent(query)+"&p="+(sq.pageno-1);
         return params;
@@ -481033,6 +481284,7 @@ var EG_b3 = {},
     };
 
     EG_b3.cachy_os = { name:"cachy_os", categories:["packages","it"], shortcut:"co", paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){
         var qp={search:query,page_size:15,current_page:sq.pageno};
         params.url="https://packages.cachyos.org/api/search?"+new URLSearchParams(qp).toString();
@@ -481050,6 +481302,7 @@ var EG_b3 = {},
     };
 
     EG_b3.ccc_media = { name:"ccc_media", categories:["videos"], shortcut:"ccc", paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){
         var args={q:query,page:sq.pageno};
         params.url="https://api.media.ccc.de/public/events/search?"+new URLSearchParams(args).toString();
@@ -481074,6 +481327,7 @@ var EG_b3 = {},
     };
 
     EG_b3.cloudflareai = { name:"cloudflareai", categories:["general","ai"], shortcut:"cfai", paging:!1,
+          useRenderer: !0,
       cf_account_id:"",cf_ai_api:"",cf_ai_gateway:"",cf_ai_model:"",cf_ai_model_display_name:"Cloudflare AI",
       cf_ai_model_assistant:"Keep your answers as short and effective as possible.",
       cf_ai_model_system:"You are a self-aware language model who is honest and direct about any question from the user.",
@@ -481092,6 +481346,7 @@ var EG_b3 = {},
     };
 
     EG_b3.core = { name:"core", categories:["science","scientific publications"], shortcut:"core", paging:!0,
+          useRenderer: !0,
       api_key:"",
       async request(query,params,sq){
         var qp={q:query,offset:(sq.pageno-1)*10,limit:10,sort:"relevance"};
@@ -481122,6 +481377,7 @@ var EG_b3 = {},
     };
 
     EG_b3.currency_convert = { name:"currency_convert", categories:["currency","general"], shortcut:"cc", paging:!1,
+          useRenderer: !0,
       base_url:"https://duckduckgo.com/js/spice/currency/1/%(from)s/%(to)s",
       ddg_link_url:"https://duckduckgo.com/?q=%(from)s+to+%(to)s",
       async request(query,params,sq){
@@ -481177,6 +481433,7 @@ var EG_b3 = {},
     };
 
     EG_b3.deepl = { name:"deepl", categories:["general","translate"], shortcut:"dl", paging:!1,
+          useRenderer: !0,
       api_key:"",
       async request(query,params,sq){
         params.method="POST";
@@ -481193,6 +481450,7 @@ var EG_b3 = {},
     };
 
     EG_b3.deezer = { name:"deezer", categories:["music"], shortcut:"dz", paging:!0,
+          useRenderer: !0,
       iframeSrc:"https://www.deezer.com/plugins/player?type=tracks&id={audioid}",
       async request(query,params,sq){
         var offset=(sq.pageno-1)*25;
@@ -481232,11 +481490,13 @@ var EG_b4 = {},
     };
 
     EG_b4.destatis = { name:"destatis", categories:[], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let args=new URLSearchParams({templateQueryString:query,gtp:"474_list%3D"+(sq.pageno||1)});params.url="https://www.destatis.de/SiteGlobals/Forms/Suche/Expertensuche_Formular.html?"+args.toString();return params;},
       async response(resp,sq){let results=[];let parts=resp.text.split('class="c-result');let pageno=sq.pageno||1;for(let i=1;i<parts.length;i++){let block=parts[i];if(pageno>1&&block.indexOf('c-result--recommended')!==-1)continue;let href=eb(block,'href="','"');let title=eb(block,'">','</a>');let content=eb(block,'<p>','</p>');if(!href)continue;let doctype=eb(block,'c-result__doctype','</div>');let dt=doctype?st(eb(doctype,'<p>','</p>')):'';let date=eb(block,'c-result__date','</span>');let d=date?st(date.substring(date.indexOf('>')+1)):'';let meta=[dt,d].filter(Boolean);results.push({url:"https://www.destatis.de/"+href,title:st(title)||"",content:content?st(content):"",metadata:meta.join(', ')});}return results;},
     };
 
     EG_b4.devicons = { name:"devicons", categories:["images","icons"], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){params.url="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.json";params.query=query;return params;},
       async response(resp,sq){let results=[];let qparts=(resp.search_params?.query||sq.query||"").toLowerCase().split(" ").filter(Boolean);let json=resp.json;if(!Array.isArray(json))return results;for(let r of json){let match=qparts.length===0||qparts.some(p=>r.name.indexOf(p)!==-1||(r.altnames||[]).concat(r.tags||[]).some(t=>t.indexOf(p)!==-1));if(!match)continue;for(let imgType of(r.versions?.svg||[])){let src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/"+r.name+"/"+r.name+"-"+imgType+".svg";results.push({template:"images.html",url:src,title:r.name,content:"Base color: "+r.color,img_src:src,img_format:"SVG"});}}return results;},
     };
@@ -481247,6 +481507,7 @@ var EG_b4 = {},
     };
 
     EG_b4.digbt = { name:"digbt", categories:["videos","music","files"], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){params.url="https://digbt.org/search/"+query+"-time-"+(sq.pageno||1);return params;},
       async response(resp,sq){let results=[];let parts=resp.text.split('<td class="x-item">');if(parts.length<2)return results;for(let i=1;i<parts.length;i++){let block=parts[i];let href=eb(block,'<a href="','"');if(!href)continue;let titleSt=eb(block,'<a','</a>');let title=titleSt?st(titleSt.substring(titleSt.lastIndexOf('>')+1)):"";let content=eb(block,'<div class="files">','</div>');let tail=eb(block,'<div class="tail">','</div>');let fdata=tail?tail.split(/<[^>]+>/g).filter(Boolean).map(s=>s.trim()).filter(Boolean):[];let filesize="";if(fdata.length>=6)filesize=fdata[2]+" "+fdata[5];let magnet=eb(block,'href="','"');results.push({url:"https://digbt.org"+href,title:title,content:st(content),filesize:filesize,magnetlink:magnet||"",seed:"N/A",leech:"N/A",template:"torrent.html"});}return results;},
     };
@@ -481262,6 +481523,7 @@ var EG_b4 = {},
     };
 
     EG_b4.duckduckgo_definitions = { name:"duckduckgo_definitions", categories:[], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){params.url="https://api.duckduckgo.com/?q="+encodeURIComponent(query)+"&format=json&pretty=0&no_redirect=1&d=1";return params;},
       async response(resp,sq){let results=[];let json=resp.json;if(!json)return results;let heading=json.Heading||"";let content=(json.Definition||"")+(json.Abstract||"");let image=json.Image;if(image&&!image.startsWith("http"))image="https://duckduckgo.com"+image;if(json.Answer&&typeof json.Answer==="string"&&json.AnswerType!=="calc"&&json.AnswerType!=="ip"){results.push({title:"Answer",url:json.AbstractURL||"",content:st(json.Answer)});}for(let r of json.Results||[]){if(r.FirstURL&&r.Text)results.push({url:r.FirstURL,title:heading||r.Text,content:r.Text});}for(let r of json.RelatedTopics||[]){if(r.FirstURL&&r.Text&&!r.Text.startsWith("http"))results.push({suggestion:r.Text});else if(r.Topics){for(let t of r.Topics||[]){let txt=t.Text||"";if(!txt.startsWith("http"))results.push({suggestion:txt});}}}if(json.AbstractURL){results.push({url:json.AbstractURL,title:heading,content:content,infobox:heading,img_src:image||undefined});}return results;},
     };
@@ -481272,31 +481534,37 @@ var EG_b4 = {},
     };
 
     EG_b4.duckduckgo_weather = { name:"duckduckgo_weather", categories:["weather"], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){let engLang=params.searxng_locale?.split("_")[0]?.split("-")[0]||"en";let engRegion=params.searxng_locale?.replace("_","-")||"us-en";params.cookies=params.cookies||{};params.cookies["ad"]=engLang;params.cookies["ah"]=engRegion;params.cookies["l"]=engRegion;params.url="https://duckduckgo.com/js/spice/forecast/"+encodeURIComponent(query)+"/"+engLang;return params;},
       async response(resp,sq){let results=[];let txt=resp.text.trim();if(txt==="ddg_spice_forecast();")return results;let nl=txt.indexOf("\n");if(nl===-1)return results;let jsonTxt=txt.substring(nl+1,txt.lastIndexOf("\n")-2);let json;try{json=JSON.parse(jsonTxt);}catch(e){return results;}let current=json.currentWeather;if(!current)return results;let condMap={BlowingDust:"fog",Clear:"clear sky",Cloudy:"cloudy",Foggy:"fog",Haze:"fog",MostlyClear:"clear sky",MostlyCloudy:"partly cloudy",PartlyCloudy:"partly cloudy",Smoky:"fog",Breezy:"partly cloudy",Windy:"partly cloudy",Drizzle:"light rain",HeavyRain:"heavy rain",IsolatedThunderstorms:"rain and thunder",Rain:"rain",SunShowers:"rain",ScatteredThunderstorms:"heavy rain and thunder",StrongStorms:"heavy rain and thunder",Thunderstorms:"rain and thunder",Frigid:"clear sky",Hail:"heavy rain",Hot:"clear sky",Flurries:"light snow",Sleet:"sleet",Snow:"light snow",SunFlurries:"light snow",WintryMix:"sleet",Blizzard:"heavy snow",BlowingSnow:"heavy snow",FreezingDrizzle:"light sleet",FreezingRain:"sleet",HeavySnow:"heavy snow",Hurricane:"rain and thunder",TropicalStorm:"rain and thunder"};let item={temperature:{val:current.temperature,unit:"°C"},condition:condMap[current.conditionCode]||current.conditionCode,feels_like:{val:current.temperatureApparent,unit:"°C"},wind_from:current.windDirection,wind_speed:{val:current.windSpeed,unit:"mi/h"},pressure:{val:current.pressure,unit:"hPa"},humidity:current.humidity*100,cloud_cover:current.cloudCover*100};let forecasts=[];for(let f of json.forecastHourly?.hours||[]){let fitem={temperature:{val:f.temperature,unit:"°C"},condition:condMap[f.conditionCode]||f.conditionCode,feels_like:{val:f.temperatureApparent,unit:"°C"},wind_from:f.windDirection,wind_speed:{val:f.windSpeed,unit:"mi/h"},pressure:{val:f.pressure,unit:"hPa"},humidity:f.humidity*100,cloud_cover:f.cloudCover*100,datetime:f.forecastStart?new Date(f.forecastStart):null};forecasts.push(fitem);}results.push({weather:{current:item,forecasts:forecasts,service:"duckduckgo weather",location:sq.query},title:"Weather for "+sq.query,url:"",content:""});return results;},
     };
 
     EG_b4.dummy = { name:"dummy", categories:[], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){return params;},
       async response(resp,sq){return[];},
     };
 
     EG_b4.dummy_offline = { name:"dummy_offline", categories:[], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){return params;},
       async response(resp,sq){return[{title:"Result",content:"this is what you get",url:""}];},
     };
 
     EG_b4.fdroid = { name:"fdroid", categories:["files","apps"], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let args=new URLSearchParams({q:query,page:sq.pageno||1,lang:""});params.url="https://search.f-droid.org/?"+args.toString();return params;},
       async response(resp,sq){let results=[];let parts=resp.text.split('<a class="package-header"');for(let i=1;i<parts.length;i++){let block=parts[i];let href=eb(block,'href="','"');let title=eb(block,'class="package-name">','</h4>');let summary=eb(block,'class="package-summary">','</span>');let license=eb(block,'class="package-license">','</span>');let thumb=eb(block,'<img class="package-icon" src="','"');if(!href)continue;let content="";if(summary)content+=st(summary);if(license){if(content)content+=" - ";content+=st(license);}results.push({url:href,title:title?st(title):"",content:content,thumbnail:thumb||""});}return results;},
     };
 
     EG_b4.findthatmeme = { name:"findthatmeme", categories:["images"], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let offset=((sq.pageno||1)-1)*50;params.url="https://findthatmeme.com/api/v1/search";params.method="POST";params.headers=params.headers||{};params.headers["content-type"]="application/json";params.data=JSON.stringify({search:query,offset:offset});return params;},
       async response(resp,sq){let results=[];let json=resp.json;if(!Array.isArray(json))return results;for(let item of json){let img="https://s3.thehackerblog.com/findthatmeme/"+item.image_path;let thumb=item.thumbnail?"https://s3.thehackerblog.com/findthatmeme/thumb/"+item.thumbnail:img;let date=null;if(item.updated_at){let d=item.updated_at.split("T")[0];if(d)date=new Date(d+"T00:00:00");}let fs=item.meme_file_size;let fsize="";if(fs!==undefined&&fs!==null){let units=["B","KB","MB","GB"];let sz=fs;let ui=0;while(sz>=1024&&ui<units.length-1){sz/=1024;ui++}fsize=sz.toFixed(1)+" "+units[ui];}results.push({url:item.source_page_url||"",title:item.source_site||"",img_src:item.type==="IMAGE"?img:thumb,filesize:fsize,publishedDate:date,template:"images.html"});}return results;},
     };
 
     EG_b4.flickr_noapi = { name:"flickr_noapi", categories:["images"], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let args=new URLSearchParams({text:query});let url="https://www.flickr.com/search?"+args.toString()+"&page="+(sq.pageno||1);let tr=sq.time_range;if(tr){let now=Math.floor(Date.now()/1000);let ranges={day:86400,week:604800,month:2419200,year:31536000};let secs=ranges[tr];if(secs)url+="&min_upload_date="+now+"&max_upload_date="+(now-secs);}params.url=url;return params;},
       async response(resp,sq){let results=[];let m=resp.text.match(/^\s*modelExport:\s*(\{.*\}),$/m);if(!m)return results;let model;try{model=JSON.parse(m[1]);}catch(e){return results;}if(!model||!model.legend||!model.legend[0])return results;let imgSizes=["o","k","h","b","c","z","m","n","t","q","s"];for(let idx of model.legend){if(idx.length!==8)continue;try{let photo=model.main[idx[0]][parseInt(idx[1])][idx[2]][idx[3]][idx[4]][idx[5]][parseInt(idx[6])][idx[7]];if(!photo)continue;let title=photo.title||"";let content=photo.description?st(photo.description):"";let imgSrc=null;let sizeData=null;for(let sz of imgSizes){if(photo.sizes?.data?.[sz]?.data){sizeData=photo.sizes.data[sz].data;break}}if(!sizeData)continue;imgSrc=sizeData.url;let resolution=sizeData.width+" x "+sizeData.height;let thumbSrc=photo.sizes?.data?.n?.data?.url||photo.sizes?.data?.z?.data?.url||imgSrc;let url=photo.ownerNsid?"https://www.flickr.com/photos/"+photo.ownerNsid+"/"+photo.id:imgSrc;results.push({url:url,img_src:imgSrc,thumbnail_src:thumbSrc,source:(photo.username||"")+" @ Flickr",resolution:resolution,template:"images.html",title:title,content:content,author:photo.realname||""});}catch(e){continue}}return results;},
     };
@@ -481307,11 +481575,13 @@ var EG_b4 = {},
     };
 
     EG_b4.frinkiac = { name:"frinkiac", categories:["images"], shortcut:null, paging:!1,
+          useRenderer: !0,
       async request(query,params,sq){params.url="https://frinkiac.com/api/search?"+new URLSearchParams({q:query}).toString();return params;},
       async response(resp,sq){let results=[];let json=resp.json;if(!Array.isArray(json))return results;for(let r of json){let ep=r.Episode;let ts=r.Timestamp;results.push({template:"images.html",url:"https://frinkiac.com/?"+new URLSearchParams({p:"caption",e:ep,t:ts}).toString(),title:ep,content:"",thumbnail_src:"https://frinkiac.com/img/"+ep+"/"+ts+"/medium.jpg",img_src:"https://frinkiac.com/img/"+ep+"/"+ts+".jpg"});}return results;},
     };
 
     EG_b4.fyyd = { name:"fyyd", categories:[], shortcut:null, paging:!0,
+          useRenderer: !0,
       async request(query,params,sq){let args=new URLSearchParams({term:query,count:10,page:(sq.pageno||1)-1});params.url="https://api.fyyd.de/0.2/search/podcast?"+args.toString();return params;},
       async response(resp,sq){let results=[];let json=resp.json;if(!json||!json.data)return results;for(let r of json.data){let pd=null;if(r.status_since){let parts=r.status_since.split(/[- :]/);if(parts.length===6)pd=new Date(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]);}results.push({url:r.htmlURL,title:r.title,content:r.description,thumbnail:r.smallImageURL||r.imageURL,publishedDate:pd,metadata:"Rank: "+r.rank+" || "+r.episode_count+" episodes"});}return results;},
     };
@@ -481338,7 +481608,9 @@ var EG_b5 = {},
       name: "geizhals",
       categories: ["shopping"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "https://geizhals.de",
       async request(query, params, sq) {
         let sort = null;
@@ -481398,7 +481670,9 @@ var EG_b5 = {},
       name: "genius",
       categories: ["music", "lyrics"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       page_size: 5,
       music_player: "https://genius.com{api_path}/apple_music_player",
       async request(query, params, sq) {
@@ -481458,7 +481732,9 @@ var EG_b5 = {},
       name: "githubCode",
       categories: ["code"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       search_url: "https://api.github.com/search/code?sort=indexed&{query}&{page}",
       ghc_auth_type: "none",
       ghc_auth_token: "",
@@ -481546,7 +481822,9 @@ var EG_b5 = {},
       name: "gmx",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "https://search.gmx.com",
       time_range_map: { day: "d", week: "w", month: "m", year: "y" },
       async request(query, params, sq) {
@@ -481600,7 +481878,9 @@ var EG_b5 = {},
       name: "googleImages",
       categories: ["images", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       max_page: 50,
       time_range_support: !0,
       safesearch: !0,
@@ -481662,7 +481942,9 @@ var EG_b5 = {},
       name: "googlePlay",
       categories: ["shopping"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       base_url: "https://play.google.com",
       play_categ: null,
       async request(query, params, sq) {
@@ -481754,7 +482036,9 @@ var EG_b5 = {},
       name: "googleScholar",
       categories: ["science", "scientific publications"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       max_page: 50,
       time_range_support: !0,
       async request(query, params, sq) {
@@ -481859,7 +482143,9 @@ var EG_b5 = {},
       name: "googleVideos",
       categories: ["videos", "web"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       max_page: 50,
       time_range_support: !0,
       safesearch: !0,
@@ -481966,7 +482252,9 @@ var EG_b5 = {},
       name: "hex",
       categories: ["it", "packages"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       search_url: "https://hex.pm/api/packages/",
       sort_criteria: "recent_downloads",
       page_size: 10,
@@ -482035,7 +482323,9 @@ var EG_b5 = {},
       name: "huggingface",
       categories: ["it", "repos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       base_url: "https://huggingface.co",
       huggingface_endpoint: "models",
       async request(query, params, sq) {
@@ -482078,7 +482368,9 @@ var EG_b5 = {},
       name: "ina",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       page_size: 12,
       base_url: "https://www.ina.fr",
       async request(query, params, sq) {
@@ -482127,7 +482419,9 @@ var EG_b5 = {},
       name: "ipernity",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       base_url: "https://www.ipernity.com",
       page_size: 10,
       async request(query, params, sq) {
@@ -482196,7 +482490,9 @@ var EG_b5 = {},
       name: "iqiyi",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       time_range_support: !0,
       base_url: "https://mesh.if.iqiyi.com",
       time_range_dict: { day: "1", week: "2", month: "3" },
@@ -482252,7 +482548,9 @@ var EG_b5 = {},
       name: "jisho",
       categories: ["dictionaries"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       URL: "https://jisho.org",
       BASE_URL: "https://jisho.org/word/",
       SEARCH_URL: "https://jisho.org/api/v1/search/words?{query}",
@@ -482368,7 +482666,9 @@ var EG_b5 = {},
       name: "lemmy",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let lt = sq.lemmy_type || "Communities";
         let a = new URLSearchParams({ q: query, page: sq.pageno || 1, type_: lt });
@@ -482433,7 +482733,9 @@ var EG_b5 = {},
       name: "lib_rs",
       categories: ["it", "packages"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://lib.rs/search?q=" + encodeURIComponent(query);
         return params;
@@ -482475,7 +482777,9 @@ var EG_b5 = {},
       name: "libretranslate",
       categories: ["general", "translate"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         let base_url = sq.base_url || "https://libretranslate.com";
         if (base_url.indexOf("libretranslate.com") !== -1 && !sq.api_key) return null;
@@ -482505,7 +482809,9 @@ var EG_b5 = {},
       name: "lingva",
       categories: ["general", "translate"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         let base_url = sq.base_url || "https://lingva.ml";
         let fl = sq.from_lang ? sq.from_lang[1] : 'auto';
@@ -482552,7 +482858,9 @@ var EG_b5 = {},
       name: "loc",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let sp = "/" + (sq.endpoint || "photos") + "/?sp=" + (sq.pageno || 1) + "&" + new URLSearchParams({ q: query }) + "&fo=json";
         params.url = "https://www.loc.gov" + sp;
@@ -482593,7 +482901,9 @@ var EG_b5 = {},
       name: "lucide",
       categories: ["images", "icons"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://cdn.jsdelivr.net/npm/lucide-static/tags.json";
         params.query = query;
@@ -482623,7 +482933,9 @@ var EG_b5 = {},
       name: "material_icons",
       categories: ["images", "icons"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://fonts.google.com/metadata/icons?key=material_symbols&incomplete=true";
         params.query = query;
@@ -482662,7 +482974,9 @@ var EG_b5 = {},
       name: "mediathekviewweb",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url = "https://mediathekviewweb.de/api/query";
         params.method = "POST";
@@ -482702,7 +483016,9 @@ var EG_b5 = {},
       name: "mediawiki",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let lang = sq.language === 'all' ? 'en' : (sq.language || '').split('-')[0] || 'en';
         let base_url = "https://" + lang + ".wikipedia.org/";
@@ -482753,7 +483069,9 @@ var EG_b5 = {},
       name: "microsoft_learn",
       categories: ["it"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let lang = sq.language === 'all' ? 'en-us' : (sq.language || 'en-us');
         let skip = ((sq.pageno || 1) - 1) * 10;
@@ -482788,7 +483106,9 @@ var EG_b5 = {},
       name: "moviepilot",
       categories: ["movies"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let filter_types = ["fsk","genre","jahr","jahrzehnt","land","online","stimmung","person"];
         let parts = query.split(" ");
@@ -482831,7 +483151,9 @@ var EG_b5 = {},
       name: "mozhi",
       categories: ["general", "translate"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params, sq) {
         let base_url = sq.base_url || "https://mozhi.aryak.me";
         let engine = sq.mozhi_engine || "google";
@@ -482865,7 +483187,9 @@ var EG_b5 = {},
       name: "mrs",
       categories: ["social media"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let base_url = sq.base_url || "";
         let ps = sq.page_size || 20;
@@ -482892,7 +483216,9 @@ var EG_b5 = {},
       name: "nvd",
       categories: ["it"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let pp = 10;
         let offset = ((sq.pageno || 1) - 1) * pp;
@@ -482930,7 +483256,9 @@ var EG_b5 = {},
       name: "nyaa",
       categories: ["files"],
       shortcut: null,
+          useRenderer: !0,
       paging: !0,
+          useRenderer: !0,
       async request(query, params, sq) {
         let a = new URLSearchParams({ q: query, p: sq.pageno || 1 });
         params.url = "https://nyaa.si/?" + a;
@@ -482986,7 +483314,9 @@ var EG_b5 = {},
       name: "ollama",
       categories: ["it", "repos"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://ollama.com/search?" + new URLSearchParams({ q: query });
         return params;
@@ -483024,7 +483354,9 @@ var EG_b5 = {},
       name: "open_meteo",
       categories: ["weather"],
       shortcut: null,
+          useRenderer: !0,
       paging: !1,
+          useRenderer: !0,
       async request(query, params) {
         params.url = "https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(query) + "&count=5&format=json";
         return params;
@@ -483056,6 +483388,7 @@ var EG_b7 = {},
     function _htmlToText(v) { return v ? String(v).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").trim() : ""; }
 
     EG_b7.openalex = { name:"openalex", categories:["science","scientific publications"], shortcut:"oa", paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let args = { search: query, page: (sq&&sq.pageno)||1, "per-page": 10, sort: "relevance_score:desc" };
         let lang = sq&&sq.language;
@@ -483130,6 +483463,7 @@ var EG_b7 = {},
     };
 
     EG_b7.opensemantic = { name:"opensemantic", categories:["general"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params){
         params.url = "http://localhost:8983/solr/opensemanticsearch/query?q=" + encodeURIComponent(query);
         return params;
@@ -483149,6 +483483,7 @@ var EG_b7 = {},
     };
 
     EG_b7.pdbe = { name:"pdbe", categories:["science"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params){
         params.url = "https://www.ebi.ac.uk/pdbe/search/pdb/select?";
         params.method = "POST";
@@ -483190,6 +483525,7 @@ var EG_b7 = {},
     };
 
     EG_b7.pinterest = { name:"pinterest", categories:["images"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let options = { query: query, bookmarks: [""] };
         let data = { options, context: {} };
@@ -483224,6 +483560,7 @@ var EG_b7 = {},
     };
 
     EG_b7.podcastindex = { name:"podcastindex", categories:["general"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params){
         params.url = "https://podcastindex.org/api/search/byterm?q=" + encodeURIComponent(query);
         return params;
@@ -483247,6 +483584,7 @@ var EG_b7 = {},
     };
 
     EG_b7.public_domain_image_archive = { name:"public_domain_image_archive", categories:["images"], shortcut:null, paging:true,
+          useRenderer: !0,
       _cachedApiUrl: null,
       async request(query,params,sq){
         let url = await _getApiUrl.call(this);
@@ -483307,6 +483645,7 @@ var EG_b7 = {},
     }
 
     EG_b7.pubmed = { name:"pubmed", categories:["science","scientific publications"], shortcut:"pub", paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let pageno = (sq&&sq.pageno)||1;
         let searchArgs = new URLSearchParams({ db: "pubmed", term: query, retstart: (pageno-1)*10, hits: 10 });
@@ -483356,6 +483695,7 @@ var EG_b7 = {},
     };
 
     EG_b7.quark = { name:"quark", categories:["general"], shortcut:null, paging:true,
+          useRenderer: !0,
       timeRangeDict: { day:"4", week:"3", month:"2", year:"1" },
       async request(query,params,sq){
         let pageno = (sq&&sq.pageno)||1;
@@ -483471,6 +483811,7 @@ var EG_b7 = {},
     };
 
     EG_b7.radio_browser = { name:"radio_browser", categories:["music","radio"], shortcut:null, paging:true,
+          useRenderer: !0,
       _servers: ["https://de1.api.radio-browser.info","https://de2.api.radio-browser.info","https://at1.api.radio-browser.info"],
       async request(query,params,sq){
         let servers = EG_b7.radio_browser._servers;
@@ -483502,6 +483843,7 @@ var EG_b7 = {},
     };
 
     EG_b7.repology = { name:"repology", categories:["packages","it"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params){
         params.url = "https://repology.org/api/v1/projects/?" + new URLSearchParams({ search: query }).toString();
         return params;
@@ -483545,6 +483887,7 @@ var EG_b7 = {},
     };
 
     EG_b7.scanr_structures = { name:"scanr_structures", categories:["science"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         params.url = "https://scanr.enseignementsup-recherche.gouv.fr/api/structures/search";
         params.method = "POST";
@@ -483570,6 +483913,7 @@ var EG_b7 = {},
     };
 
     EG_b7.selfhst = { name:"selfhst", categories:["images","icons"], shortcut:null, paging:false,
+          useRenderer: !0,
       async request(query,params,sq){
         params.url = "https://cdn.jsdelivr.net/gh/selfhst/icons/index.json";
         return params;
@@ -483602,6 +483946,7 @@ var EG_b7 = {},
     };
 
     EG_b7.senscritique = { name:"senscritique", categories:["movies"], shortcut:null, paging:true,
+          useRenderer: !0,
       _graphqlQuery: "query SearchProductExplorer($query: String, $offset: Int, $limit: Int, $sortBy: SearchProductExplorerSort) { searchProductExplorer(query: $query, filters: [], sortBy: $sortBy, offset: $offset, limit: $limit) { items { category dateRelease duration id originalTitle rating title url yearOfProduction medias { picture } countries { name } genresInfos { label } directors { name } stats { ratingCount } } } }",
       async request(query,params,sq){
         let pageno = (sq&&sq.pageno)||1;
@@ -483644,6 +483989,7 @@ var EG_b7 = {},
     };
 
     EG_b7.sepiasearch = { name:"sepiasearch", categories:["videos"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         if (!query) { params.url = null; return params; }
         let pageno = (sq&&sq.pageno)||1;
@@ -483689,6 +484035,7 @@ var EG_b7 = {},
     };
 
     EG_b7.springer = { name:"springer", categories:["science","scientific publications"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let pageno = (sq&&sq.pageno)||1;
         let args = { q: query, s: 10*(pageno-1), p: 10 };
@@ -483738,6 +484085,7 @@ var EG_b7 = {},
     };
 
     EG_b7.stackexchange = { name:"stackexchange", categories:["general"], shortcut:null, paging:true,
+          useRenderer: !0,
       async request(query,params,sq){
         let args = { q: query, page: (sq&&sq.pageno)||1, pagesize: 10, site: "stackoverflow", sort: "activity", order: "desc" };
         params.url = "https://api.stackexchange.com/2.3/search/advanced?" + new URLSearchParams(args).toString();
@@ -483850,7 +484198,9 @@ var EG_b8 = {},
       name: "tokyotoshokan",
       categories: ["files"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url =
           "https://www.tokyotosho.info/search.php?page=" + (sq.pageno || 1) + "&terms=" + encodeURIComponent(query);
@@ -483916,7 +484266,9 @@ var EG_b8 = {},
       name: "torznab",
       categories: ["files"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       baseUrl: "",
       apiKey: "",
       torznabCategories: [],
@@ -484001,7 +484353,9 @@ var EG_b8 = {},
       name: "translated",
       categories: ["general", "translate"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       apiKey: "",
       async request(query, params, sq) {
         let args = { q: params.query, langpair: params.fromLang + "|" + params.toLang };
@@ -484036,7 +484390,9 @@ var EG_b8 = {},
       name: "tubearchivist",
       categories: ["videos"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       baseUrl: "",
       taToken: "",
       taLinkToMp4: false,
@@ -484091,7 +484447,9 @@ var EG_b8 = {},
       name: "uxwing",
       categories: ["images", "icons"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url = "https://uxwing.com/?s=" + encodeURIComponent(query);
         return params;
@@ -484133,7 +484491,9 @@ var EG_b8 = {},
       name: "wolframalphaApi",
       categories: ["science"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       apiKey: "",
       imagePods: ["VisualRepresentation", "Illustration"],
       async request(query, params, sq) {
@@ -484205,7 +484565,9 @@ var EG_b8 = {},
       name: "wolframalphaNoapi",
       categories: ["science"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       _token: null,
       _tokenTime: 0,
       imagePods: ["VisualRepresentation", "Illustration", "Symbol"],
@@ -484295,7 +484657,9 @@ var EG_b8 = {},
       name: "wordnik",
       categories: ["dictionaries", "define"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url = "https://www.wordnik.com/words/" + encodeURIComponent(query);
         return params;
@@ -484343,7 +484707,9 @@ var EG_b8 = {},
       name: "wttr",
       categories: ["weather"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       wwoToCondition: {
         "113": "clear sky",
         "116": "partly cloudy",
@@ -484442,7 +484808,9 @@ var EG_b8 = {},
       name: "www1x",
       categories: ["images"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       async request(query, params, sq) {
         params.url = "https://1x.com/backend/search.php?" + new URLSearchParams({ q: query });
         return params;
@@ -484483,7 +484851,9 @@ var EG_b8 = {},
       name: "yep",
       categories: ["general"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       safesearch: true,
       safesearchMap: { 0: "off", 1: "moderate", 2: "strict" },
       resultsPerPage: 20,
@@ -484521,7 +484891,9 @@ var EG_b8 = {},
       name: "youtubeApi",
       categories: ["videos", "music"],
       shortcut: null,
+          useRenderer: !0,
       paging: false,
+          useRenderer: !0,
       apiKey: null,
       async request(query, params, sq) {
         let url =
@@ -484564,7 +484936,9 @@ var EG_b8 = {},
       name: "youtubeNoapi",
       categories: ["videos", "music"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       timeRangeSupport: true,
       _nextPageToken: null,
       timeRangeMap: { day: "Ag", week: "Aw", month: "BA", year: "BQ" },
@@ -484672,7 +485046,9 @@ var EG_b8 = {},
       name: "zlibrary",
       categories: ["files", "books"],
       shortcut: null,
+          useRenderer: !0,
       paging: true,
+          useRenderer: !0,
       baseUrl: "https://zlibrary-global.se",
       zlibYearFrom: "",
       zlibYearTo: "",
