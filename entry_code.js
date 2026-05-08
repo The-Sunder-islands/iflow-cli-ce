@@ -32260,7 +32260,7 @@ var oio = (t, e, r, n) => {
         let { authType: H, scope: U, extraData: Y } = K;
         if (
           (t.setValue(U, "selectedAuthType", H),
-          A6.includes(H) && Y?.apiKey && t.setValue(U, "apiKey", Y.apiKey),
+          (A6.includes(H) || (typeof H == "string" && H.startsWith("provider:"))) && Y?.apiKey && t.setValue(U, "apiKey", Y.apiKey),
           H === Kt.IFLOW && Y?.baseUrl)
         ) {
           let X = vX(Y.baseUrl);
@@ -32270,7 +32270,7 @@ var oio = (t, e, r, n) => {
           let X = vX(Y.baseUrl);
           t.setValue(U, "baseUrl", X);
         }
-        if (H === Kt.OPENAI_COMPATIBLE && Y?.apiKey && Y?.baseUrl) {
+        if (H === Kt.OPENAI_COMPATIBLE || (typeof H == "string" && H.startsWith("provider:"))) {
           t.setValue(U, "apiKey", Y.apiKey);
           let X = vX(Y.baseUrl);
           t.setValue(U, "baseUrl", X);

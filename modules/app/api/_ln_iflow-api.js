@@ -3831,11 +3831,11 @@ async function KOt(t, e, r) {
   }
   return e === Kt.LOGIN_WITH_AONE
     ? ((m.baseUrl = u || Rqe), (m.multimodalModelName = "Qwen2.5-VL-72B_aone"), a && (m.apiKey = a), m)
-    : ([...A6, Kt.OPENAI_COMPATIBLE].includes(e) && a && ((m.apiKey = a), (m.baseUrl = u), (m.model = c)), m);
+    : (([...A6, Kt.OPENAI_COMPATIBLE].includes(e) || (typeof e == "string" && e.startsWith("provider:"))) && a && ((m.apiKey = a), (m.baseUrl = u), (m.model = c)), m);
 }
 async function JOt(t, e, r, n) {
   let s = { headers: { "User-Agent": `iFlowCLI/0.5.19 (${process.platform}; ${process.arch})` } };
-  if ((t.authType && [...A6, Kt.IDEA_LAB].includes(t.authType)) || t.authType === Kt.OPENAI_COMPATIBLE)
+  if ((t.authType && [...A6, Kt.IDEA_LAB].includes(t.authType)) || t.authType === Kt.OPENAI_COMPATIBLE || (typeof t.authType == "string" && t.authType.startsWith("provider:")))
     return new gH({ ...t, config: e });
   if (t.authType === Kt.LOGIN_WITH_IFLOW || t.authType === Kt.LOGIN_WITH_AONE || t.authType === Kt.CLOUD_SHELL)
     return VOt(s, t.authType, e, r, n);
