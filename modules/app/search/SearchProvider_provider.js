@@ -1,7 +1,7 @@
 var SearchProvider,
-  sR = j(() => {
+  searchProviderInit = j(() => {
     "use strict";
-    class SearchProvider {
+    SearchProvider = class {
       registry;
       orchestrator;
       pipeline;

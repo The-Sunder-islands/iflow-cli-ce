@@ -1,5 +1,5 @@
 var SearchRenderer,
-  sR = j(() => {
+  searchRendererInit = j(() => {
     "use strict";
     const RENDERER_LIGHT = "lightpanda";
     const RENDERER_CHROME = "chromium";
@@ -47,14 +47,8 @@ var SearchRenderer,
       RENDERER_LIGHT,
       RENDERER_CHROME,
       get activeRenderer() { return _activeRenderer; },
-      setRenderer(e) {
-        _activeRenderer = e;
-      },
-      setChromiumPath(e) {
-        _chromiumPath = e;
-      },
-      async fetch(e, r) {
-        return fetchWithRenderer(e, r);
-      },
+      setRenderer(e) { _activeRenderer = e; },
+      setChromiumPath(e) { _chromiumPath = e; },
+      async fetch(e, r) { return fetchWithRenderer(e, r); },
     };
   });

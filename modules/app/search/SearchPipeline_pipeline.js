@@ -1,5 +1,5 @@
 var SearchPipeline,
-  sP = j(() => {
+  searchPipelineInit = j(() => {
     "use strict";
     const pipelineDefaultConfig = {
       mode: "balanced",
@@ -48,7 +48,7 @@ var SearchPipeline,
 
     Use the search results to inform your answer. Cite sources by referencing their titles or URLs where appropriate. If the search results don't contain enough information, say so.`;
 
-    class SearchPipeline {
+    SearchPipeline = class {
       constructor(e) {
         this.config = e;
         this.searchApi = null;

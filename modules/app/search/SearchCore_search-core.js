@@ -190,8 +190,9 @@ var SearchCore,
         },
         init(e) {
           if (this._provider) return;
-          if (typeof sR === "function") sR();
-          if (typeof sP === "function") sP();
+          if (typeof searchProviderInit === "function") searchProviderInit();
+          if (typeof searchPipelineInit === "function") searchPipelineInit();
+          if (typeof searchRendererInit === "function") searchRendererInit();
           try {
             let r = new SearchProvider();
             r.init();

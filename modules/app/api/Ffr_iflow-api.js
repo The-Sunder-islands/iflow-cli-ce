@@ -4667,8 +4667,14 @@ var dn,
       getSearchProvider() {
         if (this.searchProvider) return this.searchProvider;
         try {
+          if (typeof sC === "function") sC();
+          if (typeof searchProviderInit === "function") searchProviderInit();
+          if (typeof searchPipelineInit === "function") searchPipelineInit();
+          if (typeof searchRendererInit === "function") searchRendererInit();
           if (SearchCore?.SearchInit) SearchCore.SearchInit.init(this);
-        } catch {}
+        } catch (t) {
+          console.error("[Config] SearchInit failed:", t);
+        }
         return this.searchProvider || null;
       }
       setSearchProvider(e) {

@@ -399350,8 +399350,14 @@ var dn,
       getSearchProvider() {
         if (this.searchProvider) return this.searchProvider;
         try {
+          if (typeof sC === "function") sC();
+          if (typeof searchProviderInit === "function") searchProviderInit();
+          if (typeof searchPipelineInit === "function") searchPipelineInit();
+          if (typeof searchRendererInit === "function") searchRendererInit();
           if (SearchCore?.SearchInit) SearchCore.SearchInit.init(this);
-        } catch {}
+        } catch (t) {
+          console.error("[Config] SearchInit failed:", t);
+        }
         return this.searchProvider || null;
       }
       setSearchProvider(e) {
@@ -472423,8 +472429,9 @@ var Uio = T((ROl, Fio) => {
         },
         init(e) {
           if (this._provider) return;
-          if (typeof sR === "function") sR();
-          if (typeof sP === "function") sP();
+          if (typeof searchProviderInit === "function") searchProviderInit();
+          if (typeof searchPipelineInit === "function") searchPipelineInit();
+          if (typeof searchRendererInit === "function") searchRendererInit();
           try {
             let r = new SearchProvider();
             r.init();
@@ -480249,7 +480256,7 @@ var EG_misc = {},
     };
   });
 var SearchPipeline,
-  sP = j(() => {
+  searchPipelineInit = j(() => {
     "use strict";
     const pipelineDefaultConfig = {
       mode: "balanced",
@@ -480298,7 +480305,7 @@ var SearchPipeline,
 
     Use the search results to inform your answer. Cite sources by referencing their titles or URLs where appropriate. If the search results don't contain enough information, say so.`;
 
-    class SearchPipeline {
+    SearchPipeline = class {
       constructor(e) {
         this.config = e;
         this.searchApi = null;
@@ -480365,9 +480372,9 @@ var SearchPipeline,
     SearchPipeline = SearchPipeline;
   });
 var SearchProvider,
-  sR = j(() => {
+  searchProviderInit = j(() => {
     "use strict";
-    class SearchProvider {
+    SearchProvider = class {
       registry;
       orchestrator;
       pipeline;
@@ -480458,7 +480465,7 @@ var SearchProvider,
     SearchProvider = SearchProvider;
   });
 var SearchRenderer,
-  sR = j(() => {
+  searchRendererInit = j(() => {
     "use strict";
     const RENDERER_LIGHT = "lightpanda";
     const RENDERER_CHROME = "chromium";
@@ -480506,15 +480513,9 @@ var SearchRenderer,
       RENDERER_LIGHT,
       RENDERER_CHROME,
       get activeRenderer() { return _activeRenderer; },
-      setRenderer(e) {
-        _activeRenderer = e;
-      },
-      setChromiumPath(e) {
-        _chromiumPath = e;
-      },
-      async fetch(e, r) {
-        return fetchWithRenderer(e, r);
-      },
+      setRenderer(e) { _activeRenderer = e; },
+      setChromiumPath(e) { _chromiumPath = e; },
+      async fetch(e, r) { return fetchWithRenderer(e, r); },
     };
   });
 var EG_b2 = {},
