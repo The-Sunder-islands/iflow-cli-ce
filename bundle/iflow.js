@@ -49200,18 +49200,7 @@ var uNr,
         networkError: "Network error. Please check your internet connection",
         failedToLoadServers: "Failed to load servers",
       },
-      mcpAoneDialog: {
-        title: "Aone Marketplace",
-        description: "Access Aone marketplace to browse and explore MCP servers and tools.",
-        loading: "Opening Aone marketplace in your browser...",
-        sandboxRedirect: "Please visit: {{url}}",
-        openingBrowser: "Opening {{url}} in your browser...",
-        redirectSuccess: "Redirected to Aone marketplace successfully",
-        redirectError: "Failed to open browser: {{error}}",
-        actions: "Actions:",
-        pressEnterToOpen: "Enter or o - Open in browser",
-        pressEscToExit: "ESC or q - Exit",
-      },
+
       toolStatsDisplay: {
         title: "Tool Stats For Nerds",
         noToolCalls: "No tool calls have been made in this session.",
@@ -49964,20 +49953,18 @@ var uNr,
         getStarted: "Get started",
         iflowAuth: "iFlow Authentication",
         iflowOAuthLogin: "iFlow OAuth Login",
-        aoneAuth: "Aone Authentication",
+
         modelConfig: "Model Configuration",
         openaiConfig: "OpenAI Compatible API Configuration",
         loginWithIFlowRecommend: "Login with iFlow(recommend)",
         loginWithIFlowApiKey: "Login with iFlow ApiKey",
         loginWithIFlowApiKeyRecommend: "Login with iFlow ApiKey(recommend)",
-        loginWithAoneRecommend: "Login with Aone(recommend)",
-        loginWithAoneApiKey: "Login with Aone Code Private Token",
+
         openaiCompatibleApi: "OpenAI Compatible API",
         howToAuth: "How would you like to authenticate for this project?",
-        migrationWarning:
-          "\u26A0 iFlow login methods will be retired on {{deadline}}. Only OpenAI Compatible API will be supported. Please migrate early.",
+
         enterIFlowApiKey: "Please enter your iFlow API key. See: https://docs.iflow.cn/docs/",
-        enterAoneApiKey: "Please enter your Aone Private Token. See: https://code.alibaba-inc.com/profile/account",
+
         selectModel: "Please select the model you want to use.",
         enterModelName: "Please enter the model name you want to use.",
         defaultSelection: "Enter To Use Default selection: GLM 4.7",
@@ -49996,7 +49983,7 @@ var uNr,
         baseUrlLabel: "Base URL:",
         current: "Current: {{value}}",
         apiKeyPlaceholder: "Enter your iFlow API key...",
-        privateTokenPlaceholder: "Enter your Aone Private Token...",
+
         modelNamePlaceholder: "Enter model name (e.g. Qwen3-Coder-Plus)",
         openaiModelPlaceholder: "Enter model name (e.g. gpt-4)",
         baseUrlPlaceholder: "https://api.openai.com/v1",
@@ -52469,53 +52456,6 @@ Error: {{error}}`,
         taskCompletedWithPrompt: "Task completed: {{prompt}}",
         close: "Close",
       },
-      farewellLetterDisplay: {
-        title: "Dear iFlow CLI Developers,",
-        greeting: "",
-        announcement: "We regret to announce the discontinuation of iFlow CLI services in the coding scenario.",
-        journey:
-          "From our very first release, we have been committed to providing completely free services to individual developers\u2014bringing the benefits of AI to every coder and doing our small part on the road to AGI.",
-        growth:
-          "This journey has been made all the more vibrant by your brilliant ideas and generous support, which gave this little experimental project a life of its own.",
-        shutdownPrefix:
-          "To deliver a more unified and premium experience, we will be consolidating our AI coding resources. Consequently, ",
-        shutdownBold1: "iFlow CLI will enter its sunset phase: active maintenance will conclude on ",
-        shutdownDate1: "March 20, 2026",
-        shutdownBold2:
-          ", followed by a full decommissioning of the service\u2014including the API and Model Library\u2014on ",
-        shutdownDate2: "April 17, 2026",
-        shutdownBold3: ".",
-        shutdownSuffix:
-          " To avoid service disruptions, we encourage all affected developers to plan ahead and migrate projects at your earliest convenience.",
-        migrationInvitePrefix: "To help everyone transition smoothly, we ",
-        migrationInviteBold: "warmly invite you to migrate to Qoder",
-        migrationInviteSuffix:
-          ", Alibaba's premier agent-native programming platform, integrating the world's top coding models and available across IDE, CLI, JetBrains plugins, and desktop agents environments.",
-        migrationBenefitPrefix: "To facilitate a smooth transition, ",
-        migrationBenefitQoder: "Qoder",
-        migrationBenefitMid: " is offering a ",
-        migrationBenefitBold: "300-Credit Migration Reward",
-        migrationBenefitSuffix: " for all iFlow CLI users.",
-        migrationClaimBoldLabel: "\u2705 How to Claim: ",
-        migrationClaimPre: "Click ",
-        migrationClaimLink: "Registration Link",
-        migrationClaimPost: " and submit your Qoder-registered email. Credits will be issued within ",
-        migrationClaimT2: "T+2",
-        migrationClaimSuffix: " business days upon verification.",
-        migrationGuide: "Guide: ",
-        migrationGuideLink: "View the iFlow CLI \u2192 Qoder CLI Migration Guide",
-        agentFuture:
-          "Looking ahead, the iFlow Team will be pivoting to focus on Agent-specific scenarios. We believe it won't be long before we meet again in an entirely new form\u2014please stay tuned.",
-        communityPrefix: "Additionally, ",
-        communityLink: "VibeX",
-        communitySuffix:
-          " will remain active with a fresh new look. The community you helped grow is here to stay\u2014a space for inspiration, knowledge sharing, and open dialogue as we navigate the AGI era together.",
-        closing:
-          "Thank you for keeping iFlow CLI in your terminal. We will always cherish the journey we shared on the road to AGI.",
-        signatureName: "The iFlow CLI Team",
-        signatureDate: "March 20, 2026",
-        continueInstructions: "Press Enter or Space to continue \u2192",
-      },
       offlineOutput: {
         message:
           "Note: We have stopped supporting the /output-style command. We recommend defining output styles by modifying IFLOW.md for more flexible configuration.",
@@ -52782,19 +52722,7 @@ var lNr,
         networkError: "\u7F51\u7EDC\u9519\u8BEF\u3002\u8BF7\u68C0\u67E5\u60A8\u7684\u7F51\u7EDC\u8FDE\u63A5",
         failedToLoadServers: "\u52A0\u8F7D\u670D\u52A1\u5668\u5931\u8D25",
       },
-      mcpAoneDialog: {
-        title: "\u963F\u91CC MCP \u5E02\u573A",
-        description:
-          "\u8BBF\u95EE\u963F\u91CC MCP \u5E02\u573A\uFF0C\u6D4F\u89C8\u548C\u63A2\u7D22 MCP \u670D\u52A1\u5668\u548C\u5DE5\u5177\u3002",
-        loading: "\u6B63\u5728\u6D4F\u89C8\u5668\u4E2D\u6253\u5F00\u963F\u91CC MCP \u5E02\u573A...",
-        sandboxRedirect: "\u8BF7\u8BBF\u95EE\uFF1A{{url}}",
-        openingBrowser: "\u6B63\u5728\u6D4F\u89C8\u5668\u4E2D\u6253\u5F00 {{url}}...",
-        redirectSuccess: "\u6210\u529F\u8DF3\u8F6C\u5230\u963F\u91CC MCP \u5E02\u573A",
-        redirectError: "\u6253\u5F00\u6D4F\u89C8\u5668\u5931\u8D25\uFF1A{{error}}",
-        actions: "\u64CD\u4F5C\uFF1A",
-        pressEnterToOpen: "Enter \u6216 o - \u5728\u6D4F\u89C8\u5668\u4E2D\u6253\u5F00",
-        pressEscToExit: "ESC \u6216 q - \u9000\u51FA",
-      },
+
       toolStatsDisplay: {
         title: "\u5DE5\u5177\u7EDF\u8BA1\uFF08\u6280\u672F\u4EBA\u5458\u4E13\u7528\uFF09",
         noToolCalls: "\u672C\u6B21\u4F1A\u8BDD\u4E2D\u672A\u8FDB\u884C\u5DE5\u5177\u8C03\u7528\u3002",
@@ -53443,22 +53371,19 @@ var lNr,
         getStarted: "\u5F00\u59CB\u4F7F\u7528",
         iflowAuth: "iFlow \u8EAB\u4EFD\u9A8C\u8BC1",
         iflowOAuthLogin: "iFlow OAuth \u767B\u5F55",
-        aoneAuth: "Aone \u8EAB\u4EFD\u9A8C\u8BC1",
+
         modelConfig: "\u6A21\u578B\u914D\u7F6E",
         openaiConfig: "OpenAI \u517C\u5BB9 API \u914D\u7F6E",
         loginWithIFlowRecommend: "\u4F7F\u7528 iFlow \u767B\u5F55\uFF08\u63A8\u8350\uFF09",
         loginWithIFlowApiKey: "\u4F7F\u7528 iFlow API \u5BC6\u94A5\u767B\u5F55",
         loginWithIFlowApiKeyRecommend: "\u4F7F\u7528 iFlow API \u5BC6\u94A5\u767B\u5F55\uFF08\u63A8\u8350\uFF09",
-        loginWithAoneRecommend: "\u4F7F\u7528 Aone \u767B\u5F55\uFF08\u63A8\u8350\uFF09",
-        loginWithAoneApiKey: "\u4F7F\u7528 Aone Private Token\u767B\u5F55",
+
         openaiCompatibleApi: "OpenAI \u517C\u5BB9 API",
         howToAuth: "\u60A8\u5E0C\u671B\u5982\u4F55\u4E3A\u6B64\u9879\u76EE\u8FDB\u884C\u8EAB\u4EFD\u9A8C\u8BC1\uFF1F",
-        migrationWarning:
-          "\u26A0 iFlow \u767B\u5F55\u65B9\u5F0F\u5C06\u4E8E {{deadline}} \u4E0B\u7EBF\uFF0C\u5C4A\u65F6\u4EC5\u652F\u6301 OpenAI Compatible API \u65B9\u5F0F\u3002\u8BF7\u5C3D\u65E9\u8FC1\u79FB\u3002",
+
         enterIFlowApiKey:
           "\u8BF7\u8F93\u5165\u60A8\u7684 iFlow API \u5BC6\u94A5\u3002\u8BF7\u53C2\u9605\uFF1Ahttps://docs.iflow.cn/docs/",
-        enterAoneApiKey:
-          "\u8BF7\u8F93\u5165\u60A8\u7684 Aone Private Token\u3002\u8BF7\u53C2\u9605\uFF1Ahttps://code.alibaba-inc.com/profile/account",
+
         selectModel: "\u8BF7\u9009\u62E9\u60A8\u8981\u4F7F\u7528\u7684\u6A21\u578B\u3002",
         enterModelName: "\u8BF7\u8F93\u5165\u60A8\u8981\u4F7F\u7528\u7684\u6A21\u578B\u540D\u79F0\u3002",
         defaultSelection: "\u6309\u56DE\u8F66\u4F7F\u7528\u9ED8\u8BA4\u9009\u62E9\uFF1AGLM 4.7",
@@ -56277,56 +56202,7 @@ var lNr,
       systemNotification: {
         appName: "\u201CiFlow CLI\u201D \u901A\u77E5",
         taskCompleted: "\u4EFB\u52A1\u5DF2\u5B8C\u6210",
-        taskCompletedWithPrompt: "\u4EFB\u52A1\u5DF2\u5B8C\u6210: {{prompt}}",
-        close: "\u5173\u95ED",
-      },
-      farewellLetterDisplay: {
-        title: "\u81F4 iFlow CLI \u7684\u5F00\u53D1\u8005\u670B\u53CB\u4EEC\uFF1A",
-        greeting: "\u2764\uFE0F \u89C1\u4FE1\u5982\u9762\u3002",
-        announcement:
-          "\u5F88\u9057\u61BE\u8981\u5411\u5927\u5BB6\u5BA3\u5E03\uFF1AiFlow CLI \u5373\u5C06\u505C\u6B62\u5728 Coding \u573A\u666F\u7684\u670D\u52A1\u3002",
-        journey:
-          "\u4ECE\u7B2C\u4E00\u4E2A\u7248\u672C\u53D1\u5E03\u81F3\u4ECA\uFF0C\u6211\u4EEC\u575A\u6301\u9762\u5411\u4E2A\u4EBA\u7528\u6237\u63D0\u4F9B\u5B8C\u5168\u514D\u8D39\u7684\u670D\u52A1\uFF0C\u5E0C\u671B\u5C06 AI \u7EA2\u5229\u5E26\u7ED9\u6BCF\u4F4D\u5F00\u53D1\u8005\uFF0C\u5E76\u80FD\u591F\u5728\u901A\u5F80AGI\u7684\u8DEF\u4E0A\u4F5C\u51FA\u4E00\u4E9B\u5C0F\u5C0F\u7684\u8D21\u732E\u3002",
-        growth:
-          "\u800C\u8FD9\u6BB5\u8DEF\uFF0C\u4E5F\u56E0\u4E3A\u6709\u5927\u5BB6\u7684\u5947\u601D\u5999\u601D\u4E0E\u5305\u5BB9\u63A5\u7EB3\uFF0C\u8D4B\u4E88\u4E86\u8FD9\u4E2A\u5C0F\u5C0F\u5B9E\u9A8C\u9879\u76EE\u84EC\u52C3\u7684\u751F\u547D\u529B\uFF01",
-        shutdownPrefix:
-          "\u4E3A\u4E86\u63D0\u4F9B\u66F4\u4F18\u8D28\u3001\u66F4\u7EDF\u4E00\u7684\u5DE5\u5177\u4F53\u9A8C\uFF0C\u6211\u4EEC\u5C06\u5BF9\u65D7\u4E0B AI \u7F16\u7A0B\u8D44\u6E90\u8FDB\u884C\u6DF1\u5EA6\u6574\u5408\u3002",
-        shutdownBold1: "iFlow CLI \u4EA7\u54C1\u5C06\u4E8E",
-        shutdownDate1: "2026 \u5E74 3 \u6708 20 \u65E5",
-        shutdownBold2: "\u8D77\u505C\u6B62\u7EF4\u62A4\uFF0C\u5E76\u4E8E",
-        shutdownDate2: "4 \u6708 17 \u65E5",
-        shutdownBold3:
-          "\u6B63\u5F0F\u5173\u95ED\uFF0CiFlow API \u670D\u52A1\u3001\u6A21\u578B\u5E93\u5C06\u540C\u6B65\u5173\u505C\uFF0C",
-        shutdownSuffix:
-          "\u8BF7\u76F8\u5173\u5F00\u53D1\u8005\u63D0\u524D\u505A\u597D\u89C4\u5212\uFF0C\u907F\u514D\u4E1A\u52A1\u4E2D\u65AD\u3002",
-        migrationInvitePrefix: "\u4E3A\u5E2E\u52A9\u5927\u5BB6\u5E73\u7A33\u8FC7\u6E21\uFF0C",
-        migrationInviteBold: "\u8BDA\u9080\u5927\u5BB6\u8FC1\u79FB\u81F3 Qoder \u5E73\u53F0",
-        migrationInviteSuffix:
-          "\u3002Qoder \u662F\u963F\u91CC\u63A8\u51FA\u7684\u6700\u5F3A\u667A\u80FD\u4F53\u7F16\u7A0B\u5E73\u53F0\uFF0C\u96C6\u6210\u5168\u7403\u9876\u5C16\u7F16\u7A0B\u6A21\u578B\uFF0C\u62E5\u6709 IDE/CLI/JetBrains \u63D2\u4EF6/\u684C\u9762\u667A\u80FD\u4F53\u7B49\u591A\u79CD\u4EA7\u54C1\u5F62\u6001\u3002",
-        migrationBenefitPrefix: "\u63A5\u529B\u4F19\u4F34 ",
-        migrationBenefitQoder: "Qoder",
-        migrationBenefitMid: " \u5C06\u4E3A iFlow CLI \u7684\u670B\u53CB\u4EEC\u51C6\u5907 \u{1F381} ",
-        migrationBenefitBold: "300 credits \u7684\u8FC1\u79FB\u798F\u5229",
-        migrationBenefitSuffix: "\uFF0C\u6B22\u8FCE\u5927\u5BB6\u6CE8\u518C\u4F53\u9A8C\u3002",
-        migrationClaimBoldLabel: "\u2705 \u9886\u53D6\u65B9\u5F0F\uFF1A",
-        migrationClaimPre: "\u8BF7\u70B9\u51FB ",
-        migrationClaimLink: "\u767B\u8BB0\u94FE\u63A5",
-        migrationClaimPost: " \u63D0\u4EA4 Qoder \u6CE8\u518C\u90AE\u7BB1\uFF0C\u6211\u4EEC\u5C06\u5728 ",
-        migrationClaimT2: "T+2",
-        migrationClaimSuffix:
-          " \u4E2A\u5DE5\u4F5C\u65E5\u5185\u5BA1\u6838\u53D1\u653E\u81F3\u767B\u8BB0\u90AE\u7BB1\u3002",
-        migrationGuide: "\u9644 >",
-        migrationGuideLink: "iFlow CLI \u2192 Qoder CLI \u8FC1\u79FB\u6307\u5357",
-        agentFuture:
-          "\u63A5\u4E0B\u6765\uFF0C\u5FC3\u6D41\u56E2\u961F\u5C06\u805A\u7126Agent\u573A\u666F\uFF0C\u76F8\u4FE1\u5F88\u5FEB\uFF0C\u6211\u4EEC\u5C31\u4F1A\u4EE5\u5168\u65B0\u7684\u4EA7\u54C1\u5F62\u6001\u548C\u5927\u5BB6\u518D\u6B21\u89C1\u9762\uFF0C\u656C\u8BF7\u671F\u5F85 :)",
-        communityPrefix: "\u540C\u65F6\uFF0C\u{1F4EE} ",
-        communityLink: "VibeX\u8BBA\u575B",
-        communitySuffix:
-          " \u5C06\u4EE5\u5168\u65B0\u9762\u8C8C\u6301\u7EED\u966A\u4F34\u5927\u5BB6\u3002\u5927\u5BB6\u4EB2\u624B\u6D47\u704C\u7684\u793E\u533A\u751F\u751F\u4E0D\u606F\uFF0C\u8FD9\u91CC\u4F9D\u7136\u7075\u611F\u5E38\u5728\u3002\u6B22\u8FCE\u5404\u4F4D\u597D\u670B\u53CB\u5728\u793E\u533A\u7545\u6240\u6B32\u8A00\uFF0C\u5206\u4EAB\u7ECF\u9A8C~",
-        closing:
-          "\u611F\u8C22\u4F60\u628A iFlow CLI \u7559\u5728\u7EC8\u7AEF\uFF0C\u6211\u4EEC\u4F1A\u6C38\u8FDC\u8BB0\u5F97\uFF0C\u5728\u901A\u5F80 AGI \u7684\u8DEF\u4E0A\uFF0C\u66FE\u4E0E\u4F60\u5E76\u80A9\u540C\u884C\u2764\uFE0F",
-        signatureName: "iFlow CLI \u56E2\u961F",
-        signatureDate: "2026\u5E743\u670820\u65E5",
+
         continueInstructions: "\u6309\u56DE\u8F66\u6216\u7A7A\u683C\u7EE7\u7EED \u2192",
       },
       offlineOutput: {
@@ -476554,22 +476430,14 @@ import * as d2t from "fs";
 import rC from "node:process";
 Ot();
 dc();
-var I8r = new Date("2099-01-01T00:00:00.000Z"); // was 2026-04-16 — sunset removed for CE
-function R8r() {
-  return Date.now() >= I8r.getTime();
-}
 var pj = (t) => (
   qht(),
-  R8r()
-    ? t === Kt.OPENAI_COMPATIBLE || t === Kt.CLOUD_SHELL
-      ? null
-      : "Auth method has been deprecated. Please reconfigure with OpenAI Compatible API."
-    : t === Kt.LOGIN_WITH_IFLOW ||
-        t === Kt.LOGIN_WITH_AONE ||
-        t === Kt.CLOUD_SHELL ||
-        [...A6, Kt.OPENAI_COMPATIBLE].includes(t)
-      ? null
-      : "Invalid auth method selected."
+  t === Kt.LOGIN_WITH_IFLOW ||
+    t === Kt.LOGIN_WITH_AONE ||
+    t === Kt.CLOUD_SHELL ||
+    [...A6, Kt.OPENAI_COMPATIBLE].includes(t)
+    ? null
+    : "Invalid auth method selected."
 );
 import * as k6r from "fs";
 import * as O6r from "path";
@@ -481980,7 +481848,7 @@ function fetchDsModels(key, onDone, onError) {
 }
 function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
   let { t: n } = rr(),
-    o = R8r(),
+    o = !1,
     [s, a] = (0, mw.useState)(o ? "input-openai-config" : "select"),
     [u, c] = (0, mw.useState)(o ? Kt.OPENAI_COMPATIBLE : null),
     [m, d] = (0, mw.useState)({ baseUrl: "", apiKey: "" }),
@@ -482000,8 +481868,7 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
     O = [
       !o && D === "global" && { label: n("authDialog.loginWithIFlowRecommend"), value: Kt.LOGIN_WITH_IFLOW },
       !o && D === "global" && { label: n("authDialog.loginWithIFlowApiKey"), value: Kt.IFLOW },
-      !o && D === "aone" && { label: n("authDialog.loginWithAoneRecommend"), value: Kt.LOGIN_WITH_AONE },
-      !o && D === "aone" && { label: n("authDialog.loginWithAoneApiKey"), value: Kt.AONE },
+
       !o && D === "global" && { label: "\u{1F916} DeepSeek API Key", value: Kt.DEEPSEEK },
       { label: n("authDialog.openaiCompatibleApi"), value: Kt.OPENAI_COMPATIBLE },
     ].filter(Boolean),
@@ -482010,7 +481877,7 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
       O.findIndex((J) => {
         if (e.merged.selectedAuthType) return J.value === e.merged.selectedAuthType;
         let q = bqi(process.env.GEMINI_DEFAULT_AUTH_TYPE);
-        return q ? J.value === q : D === "aone" ? J.value === Kt.LOGIN_WITH_AONE : J.value === Kt.LOGIN_WITH_IFLOW;
+        return q ? J.value === q : J.value === Kt.LOGIN_WITH_IFLOW;
       }),
     ),
     F = (J) => {
@@ -482253,31 +482120,7 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
                 }),
               ],
             })
-          : (0, ai.jsxs)(ie, {
-              borderStyle: "round",
-              borderColor: ae.Gray,
-              flexDirection: "column",
-              padding: 1,
-              width: "100%",
-              children: [
-                (0, ai.jsx)(W, { bold: !0, children: n("authDialog.aoneAuth") }),
-                (0, ai.jsx)(ie, {
-                  marginTop: 1,
-                  children: (0, ai.jsx)(W, { children: n("authDialog.enterAoneApiKey") }),
-                }),
-                (0, ai.jsx)(ie, {
-                  marginTop: 1,
-                  children: (0, ai.jsx)(U1e, {
-                    onSubmit: B,
-                    onCancel: G,
-                    label: n("authDialog.apiKeyLabel"),
-                    placeholder: n("authDialog.privateTokenPlaceholder"),
-                    isFocused: !0,
-                    validateApiKey: !0,
-                  }),
-                }),
-              ],
-            })
+          : null
         : s === "input-model-name"
           ? u === Kt.IFLOW || u === Kt.AONE
             ? x
@@ -482418,21 +482261,6 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
                 children: [
                   (0, ai.jsx)(W, { bold: !0, children: n("authDialog.getStarted") }),
                   (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.howToAuth") }) }),
-                  !o &&
-                    (0, ai.jsx)(ie, {
-                      marginTop: 1,
-                      children: (0, ai.jsx)(W, {
-                        color: ae.AccentYellow,
-                        children: n("authDialog.migrationWarning", {
-                          deadline: I8r.toLocaleDateString("zh-CN", {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            timeZone: "Asia/Shanghai",
-                          }),
-                        }),
-                      }),
-                    }),
                   (0, ai.jsx)(ie, {
                     marginTop: 1,
                     children: (0, ai.jsx)(yl, { items: O, initialIndex: N, onSelect: F, isFocused: !0 }),
@@ -500193,80 +500021,6 @@ await Yr();
 vn();
 Hn();
 dte();
-var I9 = Se(Rt(), 1);
-function Jzi({ onExit: t, onStatusUpdate: e }) {
-  let { t: r } = rr(),
-    [n, o] = (0, Kzi.useState)(!1),
-    s = async () => {
-      if (!n) {
-        o(!0);
-        try {
-          let a = "https://open.aone.alibaba-inc.com/market";
-          process.env.SANDBOX && process.env.SANDBOX !== "sandbox-exec"
-            ? (e?.(r("mcpAoneDialog.sandboxRedirect", { url: a })),
-              setTimeout(() => {
-                t();
-              }, 3e3))
-            : (e?.(r("mcpAoneDialog.openingBrowser", { url: a })),
-              await bR(a),
-              e?.(r("mcpAoneDialog.redirectSuccess")),
-              setTimeout(() => {
-                t();
-              }, 1500));
-        } catch (a) {
-          (e?.(r("mcpAoneDialog.redirectError", { error: a instanceof Error ? a.message : String(a) })),
-            setTimeout(() => {
-              t();
-            }, 3e3));
-        }
-      }
-    };
-  return (
-    pn(
-      (a) => {
-        if (a.name === "escape" || a.sequence === "q") {
-          t();
-          return;
-        }
-        (a.name === "return" || a.sequence === "o") && s();
-      },
-      { isActive: !0 },
-    ),
-    (0, I9.jsxs)(ie, {
-      borderStyle: "round",
-      borderColor: ae.Gray,
-      flexDirection: "column",
-      padding: 1,
-      width: "100%",
-      children: [
-        (0, I9.jsx)(W, { bold: !0, children: r("mcpAoneDialog.title") }),
-        (0, I9.jsx)(ie, {
-          marginTop: 1,
-          children: (0, I9.jsx)(W, { color: ae.AccentCyan, children: r("mcpAoneDialog.description") }),
-        }),
-        (0, I9.jsx)(ie, {
-          marginTop: 1,
-          children: (0, I9.jsx)(W, { color: ae.AccentBlue, children: "https://open.aone.alibaba-inc.com/market" }),
-        }),
-        !n &&
-          (0, I9.jsxs)(ie, {
-            marginTop: 1,
-            flexDirection: "column",
-            children: [
-              (0, I9.jsx)(W, { color: ae.AccentYellow, children: r("mcpAoneDialog.actions") }),
-              (0, I9.jsxs)(W, { color: ae.Gray, children: ["  \u2022 ", r("mcpAoneDialog.pressEnterToOpen")] }),
-              (0, I9.jsxs)(W, { color: ae.Gray, children: ["  \u2022 ", r("mcpAoneDialog.pressEscToExit")] }),
-            ],
-          }),
-        n &&
-          (0, I9.jsx)(ie, {
-            marginTop: 1,
-            children: (0, I9.jsx)(W, { color: ae.Gray, children: r("mcpAoneDialog.loading") }),
-          }),
-      ],
-    })
-  );
-}
 var w5 = Se(Yt(), 1);
 await Yr();
 dte();
@@ -503438,172 +503192,9 @@ vn();
 Hn();
 dc();
 var ns = Se(Rt(), 1);
-function A_r(t) {
-  return !t;
-}
-function SYi({ onContinue: t, settings: e }) {
-  let { t: r, i18n: n } = rr(),
-    o = n.language?.startsWith("zh"),
-    s = (u) => (o ? u.replace(/ /g, "\xA0") : u);
-  pn(
-    (u) => {
-      (u.name === "return" || u.sequence === " ") && a();
-    },
-    { isActive: !0 },
-  );
-  let a = () => {
-    try {
-      e.setValue("User", "hasViewedFarewellLetter", !0);
-    } catch (u) {
-      console.error("Failed to save farewell letter viewed status:", u);
-    }
-    t();
-  };
-  return (0, ns.jsxs)(ie, {
-    borderStyle: "round",
-    borderColor: ae.AccentBlue,
-    flexDirection: "column",
-    padding: 1,
-    width: "100%",
-    children: [
-      (0, ns.jsx)(W, { bold: !0, color: ae.AccentBlue, children: s(r("farewellLetterDisplay.title")) }),
-      r("farewellLetterDisplay.greeting")
-        ? (0, ns.jsx)(ie, {
-            marginTop: 1,
-            children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.greeting")) }),
-          })
-        : null,
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.announcement")) }),
-      }),
-      (0, ns.jsx)(ie, { marginTop: 1, children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.journey")) }) }),
-      (0, ns.jsx)(ie, { marginTop: 1, children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.growth")) }) }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.shutdownPrefix")),
-            (0, ns.jsxs)(W, {
-              bold: !0,
-              children: [
-                s(r("farewellLetterDisplay.shutdownBold1")),
-                (0, ns.jsx)(W, { color: ae.AccentRed, children: s(r("farewellLetterDisplay.shutdownDate1")) }),
-                s(r("farewellLetterDisplay.shutdownBold2")),
-                (0, ns.jsx)(W, { color: ae.AccentRed, children: s(r("farewellLetterDisplay.shutdownDate2")) }),
-                s(r("farewellLetterDisplay.shutdownBold3")),
-              ],
-            }),
-            s(r("farewellLetterDisplay.shutdownSuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.migrationInvitePrefix")),
-            (0, ns.jsx)(W, { bold: !0, children: s(r("farewellLetterDisplay.migrationInviteBold")) }),
-            s(r("farewellLetterDisplay.migrationInviteSuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.migrationBenefitPrefix")),
-            (0, ns.jsx)(W, { bold: !0, children: s(r("farewellLetterDisplay.migrationBenefitQoder")) }),
-            s(r("farewellLetterDisplay.migrationBenefitMid")),
-            (0, ns.jsx)(W, { bold: !0, children: s(r("farewellLetterDisplay.migrationBenefitBold")) }),
-            s(r("farewellLetterDisplay.migrationBenefitSuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            (0, ns.jsx)(W, { bold: !0, children: s(r("farewellLetterDisplay.migrationClaimBoldLabel")) }),
-            s(r("farewellLetterDisplay.migrationClaimPre")),
-            (0, ns.jsx)(jI, {
-              url: "https://platform.iflow.cn/email-collect",
-              fallback: (u, c) => `${u}(${c})`,
-              children: (0, ns.jsx)(W, {
-                bold: !0,
-                color: ae.AccentBlue,
-                children: s(r("farewellLetterDisplay.migrationClaimLink")),
-              }),
-            }),
-            s(r("farewellLetterDisplay.migrationClaimPost")),
-            (0, ns.jsx)(W, { bold: !0, color: ae.AccentRed, children: s(r("farewellLetterDisplay.migrationClaimT2")) }),
-            s(r("farewellLetterDisplay.migrationClaimSuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.migrationGuide")),
-            (0, ns.jsx)(jI, {
-              url: "https://vibex.iflow.cn/t/topic/4714",
-              fallback: (u, c) => `${u}(${c})`,
-              children: (0, ns.jsx)(W, {
-                bold: !0,
-                color: ae.AccentBlue,
-                children: s(r("farewellLetterDisplay.migrationGuideLink")),
-              }),
-            }),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.agentFuture")) }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.communityPrefix")),
-            (0, ns.jsx)(jI, {
-              url: "https://vibex.iflow.cn/",
-              fallback: (u, c) => `${u}(${c})`,
-              children: (0, ns.jsx)(W, {
-                bold: !0,
-                color: ae.AccentBlue,
-                children: s(r("farewellLetterDisplay.communityLink")),
-              }),
-            }),
-            s(r("farewellLetterDisplay.communitySuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsx)(W, { bold: !0, color: ae.AccentPurple, children: s(r("farewellLetterDisplay.closing")) }),
-      }),
-      (0, ns.jsxs)(ie, {
-        marginTop: 1,
-        alignItems: "flex-end",
-        flexDirection: "column",
-        children: [
-          (0, ns.jsx)(W, { bold: !0, children: r("farewellLetterDisplay.signatureName") }),
-          (0, ns.jsx)(W, { bold: !0, children: r("farewellLetterDisplay.signatureDate") }),
-        ],
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 2,
-        children: (0, ns.jsx)(W, {
-          bold: !0,
-          color: ae.AccentGreen,
-          children: r("farewellLetterDisplay.continueInstructions"),
-        }),
-      }),
-    ],
-  });
-}
+
+
+
 var Abt = Se(Yt(), 1);
 await Yr();
 vn();
@@ -504818,7 +504409,7 @@ var iio = (t, e, r, n, o, s, a, u, c, m, d, f, p, h, g, b, A, y, E, v, C, x, k, 
                     case "mcp-list":
                       return (b(), { type: "handled" });
                     case "mcp-aone":
-                      return (A(), { type: "handled" });
+                      return { type: "handled" };
                     case "skills-list":
                       return (y(), { type: "handled" });
                     case "agents-online":
@@ -504937,7 +504528,7 @@ function vX(t) {
 var oio = (t, e, r, n) => {
   let { t: o } = rr(),
     [s, a] = (0, R1.useState)(t.merged.selectedAuthType === void 0),
-    [u, c] = (0, R1.useState)(t.merged.selectedAuthType !== void 0 && A_r(t.merged.hasViewedFarewellLetter)),
+    [u, c] = (0, R1.useState)(!1),
     [m, d] = (0, R1.useState)(t.merged.selectedAuthType !== void 0 && b_r()),
     [f, p] = (0, R1.useState)(!1),
     [h, g] = (0, R1.useState)(!1),
@@ -505125,10 +504716,7 @@ var oio = (t, e, r, n) => {
           }
         }
         (a(!1), e(null));
-        let X = A_r(t.merged.hasViewedFarewellLetter);
-        K && X
-          ? c(!0)
-          : K && b_r()
+        K && b_r()
             ? (d(!0), bbt(t.merged.hasViewedAnnualReport) && E(!0), Y && g(!0))
             : K && bbt(t.merged.hasViewedAnnualReport)
               ? (A(!0), Y && C(!0))
@@ -512068,13 +511656,8 @@ ${Hm}`,
                                                       initialErrorMessage: Te,
                                                     }),
                                                   })
-                                                : k5
+                                                : bP
                                                   ? (0, yr.jsx)(ie, {
-                                                      flexDirection: "column",
-                                                      children: (0, yr.jsx)(SYi, { onContinue: Iw, settings: r }),
-                                                    })
-                                                  : bP
-                                                    ? (0, yr.jsx)(ie, {
                                                         flexDirection: "column",
                                                         children: (0, yr.jsx)(EYi, { onContinue: EQ }),
                                                       })
@@ -512154,17 +511737,7 @@ ${Hm}`,
                                                                             onStatusUpdate: pp,
                                                                           }),
                                                                         })
-                                                                      : _e
-                                                                        ? (0, yr.jsx)(ie, {
-                                                                            flexDirection: "column",
-                                                                            children: (0, yr.jsx)(Jzi, {
-                                                                              settings: r,
-                                                                              config: e,
-                                                                              onExit: () => Ie(!1),
-                                                                              onStatusUpdate: sm,
-                                                                            }),
-                                                                          })
-                                                                        : ke
+                                                                      : ke
                                                                           ? (0, yr.jsx)(ie, {
                                                                               flexDirection: "column",
                                                                               children: (0, yr.jsx)(tYi, {

@@ -4291,22 +4291,14 @@ import * as d2t from "fs";
 import rC from "node:process";
 Ot();
 dc();
-var I8r = new Date("2099-01-01T00:00:00.000Z"); // was 2026-04-16 — sunset removed for CE
-function R8r() {
-  return Date.now() >= I8r.getTime();
-}
 var pj = (t) => (
   qht(),
-  R8r()
-    ? t === Kt.OPENAI_COMPATIBLE || t === Kt.CLOUD_SHELL
-      ? null
-      : "Auth method has been deprecated. Please reconfigure with OpenAI Compatible API."
-    : t === Kt.LOGIN_WITH_IFLOW ||
-        t === Kt.LOGIN_WITH_AONE ||
-        t === Kt.CLOUD_SHELL ||
-        [...A6, Kt.OPENAI_COMPATIBLE].includes(t)
-      ? null
-      : "Invalid auth method selected."
+  t === Kt.LOGIN_WITH_IFLOW ||
+    t === Kt.LOGIN_WITH_AONE ||
+    t === Kt.CLOUD_SHELL ||
+    [...A6, Kt.OPENAI_COMPATIBLE].includes(t)
+    ? null
+    : "Invalid auth method selected."
 );
 import * as k6r from "fs";
 import * as O6r from "path";
@@ -9717,7 +9709,7 @@ function fetchDsModels(key, onDone, onError) {
 }
 function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
   let { t: n } = rr(),
-    o = R8r(),
+    o = !1,
     [s, a] = (0, mw.useState)(o ? "input-openai-config" : "select"),
     [u, c] = (0, mw.useState)(o ? Kt.OPENAI_COMPATIBLE : null),
     [m, d] = (0, mw.useState)({ baseUrl: "", apiKey: "" }),
@@ -9737,8 +9729,7 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
     O = [
       !o && D === "global" && { label: n("authDialog.loginWithIFlowRecommend"), value: Kt.LOGIN_WITH_IFLOW },
       !o && D === "global" && { label: n("authDialog.loginWithIFlowApiKey"), value: Kt.IFLOW },
-      !o && D === "aone" && { label: n("authDialog.loginWithAoneRecommend"), value: Kt.LOGIN_WITH_AONE },
-      !o && D === "aone" && { label: n("authDialog.loginWithAoneApiKey"), value: Kt.AONE },
+
       !o && D === "global" && { label: "\u{1F916} DeepSeek API Key", value: Kt.DEEPSEEK },
       { label: n("authDialog.openaiCompatibleApi"), value: Kt.OPENAI_COMPATIBLE },
     ].filter(Boolean),
@@ -9747,7 +9738,7 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
       O.findIndex((J) => {
         if (e.merged.selectedAuthType) return J.value === e.merged.selectedAuthType;
         let q = bqi(process.env.GEMINI_DEFAULT_AUTH_TYPE);
-        return q ? J.value === q : D === "aone" ? J.value === Kt.LOGIN_WITH_AONE : J.value === Kt.LOGIN_WITH_IFLOW;
+        return q ? J.value === q : J.value === Kt.LOGIN_WITH_IFLOW;
       }),
     ),
     F = (J) => {
@@ -9990,31 +9981,7 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
                 }),
               ],
             })
-          : (0, ai.jsxs)(ie, {
-              borderStyle: "round",
-              borderColor: ae.Gray,
-              flexDirection: "column",
-              padding: 1,
-              width: "100%",
-              children: [
-                (0, ai.jsx)(W, { bold: !0, children: n("authDialog.aoneAuth") }),
-                (0, ai.jsx)(ie, {
-                  marginTop: 1,
-                  children: (0, ai.jsx)(W, { children: n("authDialog.enterAoneApiKey") }),
-                }),
-                (0, ai.jsx)(ie, {
-                  marginTop: 1,
-                  children: (0, ai.jsx)(U1e, {
-                    onSubmit: B,
-                    onCancel: G,
-                    label: n("authDialog.apiKeyLabel"),
-                    placeholder: n("authDialog.privateTokenPlaceholder"),
-                    isFocused: !0,
-                    validateApiKey: !0,
-                  }),
-                }),
-              ],
-            })
+          : null
         : s === "input-model-name"
           ? u === Kt.IFLOW || u === Kt.AONE
             ? x
@@ -10155,21 +10122,6 @@ function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
                 children: [
                   (0, ai.jsx)(W, { bold: !0, children: n("authDialog.getStarted") }),
                   (0, ai.jsx)(ie, { marginTop: 1, children: (0, ai.jsx)(W, { children: n("authDialog.howToAuth") }) }),
-                  !o &&
-                    (0, ai.jsx)(ie, {
-                      marginTop: 1,
-                      children: (0, ai.jsx)(W, {
-                        color: ae.AccentYellow,
-                        children: n("authDialog.migrationWarning", {
-                          deadline: I8r.toLocaleDateString("zh-CN", {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            timeZone: "Asia/Shanghai",
-                          }),
-                        }),
-                      }),
-                    }),
                   (0, ai.jsx)(ie, {
                     marginTop: 1,
                     children: (0, ai.jsx)(yl, { items: O, initialIndex: N, onSelect: F, isFocused: !0 }),
@@ -27930,80 +27882,6 @@ await Yr();
 vn();
 Hn();
 dte();
-var I9 = Se(Rt(), 1);
-function Jzi({ onExit: t, onStatusUpdate: e }) {
-  let { t: r } = rr(),
-    [n, o] = (0, Kzi.useState)(!1),
-    s = async () => {
-      if (!n) {
-        o(!0);
-        try {
-          let a = "https://open.aone.alibaba-inc.com/market";
-          process.env.SANDBOX && process.env.SANDBOX !== "sandbox-exec"
-            ? (e?.(r("mcpAoneDialog.sandboxRedirect", { url: a })),
-              setTimeout(() => {
-                t();
-              }, 3e3))
-            : (e?.(r("mcpAoneDialog.openingBrowser", { url: a })),
-              await bR(a),
-              e?.(r("mcpAoneDialog.redirectSuccess")),
-              setTimeout(() => {
-                t();
-              }, 1500));
-        } catch (a) {
-          (e?.(r("mcpAoneDialog.redirectError", { error: a instanceof Error ? a.message : String(a) })),
-            setTimeout(() => {
-              t();
-            }, 3e3));
-        }
-      }
-    };
-  return (
-    pn(
-      (a) => {
-        if (a.name === "escape" || a.sequence === "q") {
-          t();
-          return;
-        }
-        (a.name === "return" || a.sequence === "o") && s();
-      },
-      { isActive: !0 },
-    ),
-    (0, I9.jsxs)(ie, {
-      borderStyle: "round",
-      borderColor: ae.Gray,
-      flexDirection: "column",
-      padding: 1,
-      width: "100%",
-      children: [
-        (0, I9.jsx)(W, { bold: !0, children: r("mcpAoneDialog.title") }),
-        (0, I9.jsx)(ie, {
-          marginTop: 1,
-          children: (0, I9.jsx)(W, { color: ae.AccentCyan, children: r("mcpAoneDialog.description") }),
-        }),
-        (0, I9.jsx)(ie, {
-          marginTop: 1,
-          children: (0, I9.jsx)(W, { color: ae.AccentBlue, children: "https://open.aone.alibaba-inc.com/market" }),
-        }),
-        !n &&
-          (0, I9.jsxs)(ie, {
-            marginTop: 1,
-            flexDirection: "column",
-            children: [
-              (0, I9.jsx)(W, { color: ae.AccentYellow, children: r("mcpAoneDialog.actions") }),
-              (0, I9.jsxs)(W, { color: ae.Gray, children: ["  \u2022 ", r("mcpAoneDialog.pressEnterToOpen")] }),
-              (0, I9.jsxs)(W, { color: ae.Gray, children: ["  \u2022 ", r("mcpAoneDialog.pressEscToExit")] }),
-            ],
-          }),
-        n &&
-          (0, I9.jsx)(ie, {
-            marginTop: 1,
-            children: (0, I9.jsx)(W, { color: ae.Gray, children: r("mcpAoneDialog.loading") }),
-          }),
-      ],
-    })
-  );
-}
 var w5 = Se(Yt(), 1);
 await Yr();
 dte();
@@ -31175,172 +31053,9 @@ vn();
 Hn();
 dc();
 var ns = Se(Rt(), 1);
-function A_r(t) {
-  return !t;
-}
-function SYi({ onContinue: t, settings: e }) {
-  let { t: r, i18n: n } = rr(),
-    o = n.language?.startsWith("zh"),
-    s = (u) => (o ? u.replace(/ /g, "\xA0") : u);
-  pn(
-    (u) => {
-      (u.name === "return" || u.sequence === " ") && a();
-    },
-    { isActive: !0 },
-  );
-  let a = () => {
-    try {
-      e.setValue("User", "hasViewedFarewellLetter", !0);
-    } catch (u) {
-      console.error("Failed to save farewell letter viewed status:", u);
-    }
-    t();
-  };
-  return (0, ns.jsxs)(ie, {
-    borderStyle: "round",
-    borderColor: ae.AccentBlue,
-    flexDirection: "column",
-    padding: 1,
-    width: "100%",
-    children: [
-      (0, ns.jsx)(W, { bold: !0, color: ae.AccentBlue, children: s(r("farewellLetterDisplay.title")) }),
-      r("farewellLetterDisplay.greeting")
-        ? (0, ns.jsx)(ie, {
-            marginTop: 1,
-            children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.greeting")) }),
-          })
-        : null,
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.announcement")) }),
-      }),
-      (0, ns.jsx)(ie, { marginTop: 1, children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.journey")) }) }),
-      (0, ns.jsx)(ie, { marginTop: 1, children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.growth")) }) }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.shutdownPrefix")),
-            (0, ns.jsxs)(W, {
-              bold: !0,
-              children: [
-                s(r("farewellLetterDisplay.shutdownBold1")),
-                (0, ns.jsx)(W, { color: ae.AccentRed, children: s(r("farewellLetterDisplay.shutdownDate1")) }),
-                s(r("farewellLetterDisplay.shutdownBold2")),
-                (0, ns.jsx)(W, { color: ae.AccentRed, children: s(r("farewellLetterDisplay.shutdownDate2")) }),
-                s(r("farewellLetterDisplay.shutdownBold3")),
-              ],
-            }),
-            s(r("farewellLetterDisplay.shutdownSuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.migrationInvitePrefix")),
-            (0, ns.jsx)(W, { bold: !0, children: s(r("farewellLetterDisplay.migrationInviteBold")) }),
-            s(r("farewellLetterDisplay.migrationInviteSuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.migrationBenefitPrefix")),
-            (0, ns.jsx)(W, { bold: !0, children: s(r("farewellLetterDisplay.migrationBenefitQoder")) }),
-            s(r("farewellLetterDisplay.migrationBenefitMid")),
-            (0, ns.jsx)(W, { bold: !0, children: s(r("farewellLetterDisplay.migrationBenefitBold")) }),
-            s(r("farewellLetterDisplay.migrationBenefitSuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            (0, ns.jsx)(W, { bold: !0, children: s(r("farewellLetterDisplay.migrationClaimBoldLabel")) }),
-            s(r("farewellLetterDisplay.migrationClaimPre")),
-            (0, ns.jsx)(jI, {
-              url: "https://platform.iflow.cn/email-collect",
-              fallback: (u, c) => `${u}(${c})`,
-              children: (0, ns.jsx)(W, {
-                bold: !0,
-                color: ae.AccentBlue,
-                children: s(r("farewellLetterDisplay.migrationClaimLink")),
-              }),
-            }),
-            s(r("farewellLetterDisplay.migrationClaimPost")),
-            (0, ns.jsx)(W, { bold: !0, color: ae.AccentRed, children: s(r("farewellLetterDisplay.migrationClaimT2")) }),
-            s(r("farewellLetterDisplay.migrationClaimSuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.migrationGuide")),
-            (0, ns.jsx)(jI, {
-              url: "https://vibex.iflow.cn/t/topic/4714",
-              fallback: (u, c) => `${u}(${c})`,
-              children: (0, ns.jsx)(W, {
-                bold: !0,
-                color: ae.AccentBlue,
-                children: s(r("farewellLetterDisplay.migrationGuideLink")),
-              }),
-            }),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsx)(W, { children: s(r("farewellLetterDisplay.agentFuture")) }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsxs)(W, {
-          children: [
-            s(r("farewellLetterDisplay.communityPrefix")),
-            (0, ns.jsx)(jI, {
-              url: "https://vibex.iflow.cn/",
-              fallback: (u, c) => `${u}(${c})`,
-              children: (0, ns.jsx)(W, {
-                bold: !0,
-                color: ae.AccentBlue,
-                children: s(r("farewellLetterDisplay.communityLink")),
-              }),
-            }),
-            s(r("farewellLetterDisplay.communitySuffix")),
-          ],
-        }),
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 1,
-        children: (0, ns.jsx)(W, { bold: !0, color: ae.AccentPurple, children: s(r("farewellLetterDisplay.closing")) }),
-      }),
-      (0, ns.jsxs)(ie, {
-        marginTop: 1,
-        alignItems: "flex-end",
-        flexDirection: "column",
-        children: [
-          (0, ns.jsx)(W, { bold: !0, children: r("farewellLetterDisplay.signatureName") }),
-          (0, ns.jsx)(W, { bold: !0, children: r("farewellLetterDisplay.signatureDate") }),
-        ],
-      }),
-      (0, ns.jsx)(ie, {
-        marginTop: 2,
-        children: (0, ns.jsx)(W, {
-          bold: !0,
-          color: ae.AccentGreen,
-          children: r("farewellLetterDisplay.continueInstructions"),
-        }),
-      }),
-    ],
-  });
-}
+
+
+
 var Abt = Se(Yt(), 1);
 await Yr();
 vn();
@@ -32555,7 +32270,7 @@ var iio = (t, e, r, n, o, s, a, u, c, m, d, f, p, h, g, b, A, y, E, v, C, x, k, 
                     case "mcp-list":
                       return (b(), { type: "handled" });
                     case "mcp-aone":
-                      return (A(), { type: "handled" });
+                      return { type: "handled" };
                     case "skills-list":
                       return (y(), { type: "handled" });
                     case "agents-online":
@@ -32674,7 +32389,7 @@ function vX(t) {
 var oio = (t, e, r, n) => {
   let { t: o } = rr(),
     [s, a] = (0, R1.useState)(t.merged.selectedAuthType === void 0),
-    [u, c] = (0, R1.useState)(t.merged.selectedAuthType !== void 0 && A_r(t.merged.hasViewedFarewellLetter)),
+    [u, c] = (0, R1.useState)(!1),
     [m, d] = (0, R1.useState)(t.merged.selectedAuthType !== void 0 && b_r()),
     [f, p] = (0, R1.useState)(!1),
     [h, g] = (0, R1.useState)(!1),
@@ -32862,10 +32577,7 @@ var oio = (t, e, r, n) => {
           }
         }
         (a(!1), e(null));
-        let X = A_r(t.merged.hasViewedFarewellLetter);
-        K && X
-          ? c(!0)
-          : K && b_r()
+        K && b_r()
             ? (d(!0), bbt(t.merged.hasViewedAnnualReport) && E(!0), Y && g(!0))
             : K && bbt(t.merged.hasViewedAnnualReport)
               ? (A(!0), Y && C(!0))
@@ -39805,13 +39517,8 @@ ${Hm}`,
                                                       initialErrorMessage: Te,
                                                     }),
                                                   })
-                                                : k5
+                                                : bP
                                                   ? (0, yr.jsx)(ie, {
-                                                      flexDirection: "column",
-                                                      children: (0, yr.jsx)(SYi, { onContinue: Iw, settings: r }),
-                                                    })
-                                                  : bP
-                                                    ? (0, yr.jsx)(ie, {
                                                         flexDirection: "column",
                                                         children: (0, yr.jsx)(EYi, { onContinue: EQ }),
                                                       })
@@ -39891,17 +39598,7 @@ ${Hm}`,
                                                                             onStatusUpdate: pp,
                                                                           }),
                                                                         })
-                                                                      : _e
-                                                                        ? (0, yr.jsx)(ie, {
-                                                                            flexDirection: "column",
-                                                                            children: (0, yr.jsx)(Jzi, {
-                                                                              settings: r,
-                                                                              config: e,
-                                                                              onExit: () => Ie(!1),
-                                                                              onStatusUpdate: sm,
-                                                                            }),
-                                                                          })
-                                                                        : ke
+                                                                      : ke
                                                                           ? (0, yr.jsx)(ie, {
                                                                               flexDirection: "column",
                                                                               children: (0, yr.jsx)(tYi, {
