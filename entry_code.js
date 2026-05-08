@@ -9707,7 +9707,7 @@ function fetchDsModels(key, onDone, onError) {
     }).catch(function (e) { onError(e); });
   } catch (e) { onError(e); }
 }
-function Aqi({ onSelect: t, settings: e, initialErrorMessage: r }) {
+function AuthSetupDialog({ onSelect: t, settings: e, initialErrorMessage: r }) {
   let { t: n } = rr(),
     o = !1,
     [s, a] = (0, mw.useState)(o ? "input-openai-config" : "select"),
@@ -39511,7 +39511,7 @@ ${Hm}`,
                                               : j9
                                                 ? (0, yr.jsx)(ie, {
                                                     flexDirection: "column",
-                                                    children: (0, yr.jsx)(Aqi, {
+                                                    children: (0, yr.jsx)(AuthSetupDialog, {
                                                       onSelect: Dw,
                                                       settings: r,
                                                       initialErrorMessage: Te,
