@@ -4544,7 +4544,7 @@ var pA,
         return `agent_${Date.now()}_${d9a().substring(0, 8)}`;
       }
       getDefaultLimits() {
-        return { maxExecutionTime: 3e5, maxTokens: 1e5, maxToolCalls: 50 };
+        return { maxExecutionTime: 6e5, maxTokens: 5e5, maxToolCalls: 200 };
       }
       createIsolatedContext(e, r) {
         let n = new AbortController();
