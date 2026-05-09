@@ -42,6 +42,8 @@ var ConfigModel,
         for (var n in KNOWN_DEFAULTS) {
           if (_cache[n] === void 0) _cache[n] = KNOWN_DEFAULTS[n];
         }
+        // Keytar is async; apiKey will be populated by KOt() at auth time.
+        // If already in settings.json (from migration run in same session), it's in cache.
         return _cache;
       },
       get(e) { return _cache[e]; },

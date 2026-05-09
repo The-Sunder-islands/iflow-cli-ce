@@ -6,10 +6,11 @@ var MigrateConfig,
     var home = process.env.HOME || process.env.USERPROFILE || "";
     var OLD_DIR = path.join(home, ".iflow");
     var OLD_SETTINGS = path.join(OLD_DIR, "settings.json");
+    var NEW_FILE = Persistence ? Persistence.filePath() : path.join(home, ".iflow-ce", "settings.json");
     MigrateConfig = {
-      status: null, // null=no action, "done"=migrated, "iflow"=old iflow login, "error"=failed
+      status: null,
       needsMigration() {
-        try { return fs.existsSync(OLD_SETTINGS) && !fs.existsSync(ConfigModel.filePath()); } catch (e) { return !1; }
+        try { return fs.existsSync(OLD_SETTINGS) && !fs.existsSync(NEW_FILE); } catch (e) { return !1; }
       },
       run() {
         if (this.status) return this.status;
@@ -21,19 +22,23 @@ var MigrateConfig,
           if (isIFlow) {
             this.status = "iflow";
             console.log("");
-            console.log("  iFlow CLI 原版已停运。请自行准备 API Key 以继续使用。");
-            console.log("  Use /language zh-CN for Chinese interface.");
+            console.log("  Detected original iFlow CLI configuration (iFlow login).");
+            console.log("  iFlow platform has been shut down, please bring your own API key.");
             console.log("");
             return "iflow";
           }
-          var nu = ConfigModel.translate(old, !0);
-          ConfigModel.save(nu);
-          this.status = "done";
-          console.log("");
-          console.log("  Configuration migrated from ~/.iflow to ~/.iflow-ce");
-          console.log("  API keys securely stored in system keychain.");
-          console.log("");
-          return "done";
+          if (typeof ConfigModel?.migrate == "function") {
+            ConfigModel.migrate(old);
+            this.status = "done";
+            console.log("");
+            console.log("  Configuration migrated from ~/.iflow to ~/.iflow-ce");
+            console.log("  API keys securely stored in system keychain.");
+            console.log("  You can safely delete ~/.iflow.");
+            console.log("");
+            return "done";
+          }
+          this.status = "error";
+          return "error";
         } catch (e) {
           this.status = "error";
           console.warn("  Config migration failed:", e.message);

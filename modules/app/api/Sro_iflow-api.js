@@ -1799,8 +1799,8 @@ var zj,
     renderCmdInit();
     providerRegistryInit();
     keychainInit();
-    configModelInit();
     persistenceInit();
+    configModelInit();
     reactAdapterInit();
     migrateConfigInit();
     if (typeof MigrateConfig?.run == "function") MigrateConfig.run();
