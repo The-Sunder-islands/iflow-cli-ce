@@ -806,25 +806,36 @@ var renderCmd,
     "use strict";
     Qs();
     Ot();
+    var _installing = !1;
     renderCmd = {
       name: "render",
-      description: "Switch web page renderer. Usage: /render lightpanda | /render chromium",
+      description: "Switch web page renderer. Usage: /render lightpanda | /render chromium | /render status",
       kind: "built-in",
       action: (t, e) => {
         var r = (e || "").trim().toLowerCase();
+        if (r === "status") {
+          var s = globalThis.SearchRenderer;
+          if (!s) return { type: "status", message: "SearchRenderer not available." };
+          return { type: "status", message: "Renderer: " + s.activeRenderer + (_installing ? " (Chromium installing...)" : "") };
+        }
         if (r === "chromium" || r === "chrome") {
-          if (globalThis.SearchRenderer) {
-            globalThis.SearchRenderer.setRenderer("chromium");
-            return { type: "status", message: "Renderer switched to Chromium. Install playwright if not already installed." };
+          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
+          if (!_installing) {
+            _installing = !0;
+            var cp = require("child_process");
+            cp.exec("npx playwright install chromium 2>&1", { maxBuffer: 1024 * 1024 }, function (err, stdout) {
+              _installing = !1;
+              if (err) console.error("[Render] Playwright install failed:", stdout);
+              else console.log("[Render] Chromium installed successfully");
+            });
           }
-        } else {
+          return { type: "status", message: _installing ? "Chromium installing in background... Use /render status to check." : "Renderer switched to Chromium." };
+        }
+        if (r === "lightpanda") {
           if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
           return { type: "status", message: "Renderer switched to Lightpanda (default)." };
         }
-        return {
-          type: "status",
-          message: 'Usage: /render lightpanda (default) | /render chromium (requires "npx playwright install chromium")',
-        };
+        return { type: "status", message: "Usage: /render lightpanda | /render chromium | /render status" };
       },
     };
   });
