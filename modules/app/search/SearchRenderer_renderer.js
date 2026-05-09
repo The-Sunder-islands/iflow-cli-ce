@@ -78,6 +78,24 @@ var SearchRenderer,
         } catch (n) { return null; }
       },
     });
+    // ── Backend: browser39 (Rust headless browser) ──
+    register({
+      id: "browser39",
+      label: "browser39",
+      available: !0,
+      async fetch(e, r) {
+        try {
+          var cp = require("child_process");
+          var o = await new Promise(function (resolve, reject) {
+            cp.exec("npx --yes browser39 fetch " + JSON.stringify(e) + " 2>&1", { maxBuffer: 5 * 1024 * 1024, timeout: r || 15000 }, function (err, stdout) {
+              if (err) { resolve(null); return; }
+              resolve(stdout || null);
+            });
+          });
+          return o;
+        } catch (n) { return null; }
+      },
+    });
     // Auto-detect best default for platform
     if (!_activeId || !find(_activeId)) {
       if (process.platform === "win32") _activeId = "happy-dom";

@@ -32,6 +32,7 @@
     "build": "node build.js"
   },
   "dependencies": {
+    "@aquintanar/browser39": "^1.7.1",
     "@google/genai": ">=1.0.0",
     "@grpc/proto-loader": ">=0.7.0",
     "@lydell/node-pty": ">=1.1.0",
@@ -62,7 +63,8 @@
     "zip-stream": ">=6.0.0"
   },
   "optionalDependencies": {
-    "@lightpanda/browser": "^1.2.0"
+    "@lightpanda/browser": "^1.2.0",
+    "@aquintanar/browser39": "^1.7.1"
   },
   "keywords": [
     "ai",
