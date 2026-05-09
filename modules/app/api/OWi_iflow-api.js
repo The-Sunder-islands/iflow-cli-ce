@@ -809,7 +809,9 @@ var renderCmd,
     var _installing = !1;
     renderCmd = {
       name: "render",
-      description: "Switch web page renderer. Usage: /render lightpanda | /render chromium | /render status",
+      get description() {
+        try { return I.t ? I.t("renderCommand.description") : "Switch renderer"; } catch { return "Switch renderer"; }
+      },
       kind: "built-in",
       action: (t, e) => {
         var r = (e || "").trim().toLowerCase();

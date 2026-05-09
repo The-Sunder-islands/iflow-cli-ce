@@ -2241,6 +2241,9 @@ Error: {{error}}`,
         exampleName: "Add workflow by name",
       },
       skillCommand: { description: "Manage skills", demandCommand: "You need to specify a subcommand." },
+      renderCommand: {
+        description: "Switch web page renderer. Usage: /render lightpanda | /render chromium | /render status",
+      },
       skillAdd: {
         description: "Add a skill from online repository",
         pleaseAuthenticate: "Please authenticate first by running the auth command",
@@ -5812,6 +5815,9 @@ var lNr,
       skillCommand: {
         description: "\u7BA1\u7406\u6280\u80FD",
         demandCommand: "\u60A8\u9700\u8981\u6307\u5B9A\u4E00\u4E2A\u5B50\u547D\u4EE4\u3002",
+      },
+      renderCommand: {
+        description: "\u5207\u6362\u7F51\u9875\u6E32\u67D3\u5668\u3002\u7528\u6CD5\uFF1A/render lightpanda | /render chromium | /render status",
       },
       skillAdd: {
         description: "\u4ECE\u5728\u7EBF\u4ED3\u5E93\u6DFB\u52A0\u6280\u80FD",
