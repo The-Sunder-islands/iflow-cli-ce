@@ -1,15 +1,8 @@
 var ConfigModel,
   configModelInit = j(() => {
     "use strict";
-    var fs = require("fs");
-    var path = require("path");
-    var home = process.env.HOME || process.env.USERPROFILE || "";
-    var CONFIG_DIR = path.join(home, ".iflow-ce");
-    var CONFIG_PATH = path.join(CONFIG_DIR, "settings.json");
-    function dir() { return CONFIG_DIR; }
-    function filePath() { return CONFIG_PATH; }
-    function ensureDir() { try { fs.mkdirSync(CONFIG_DIR, { recursive: !0 }); } catch (e) {} }
-    // Legacy field map: old_key → { target, hasDefault, defaultVal, isSecret, migrate }
+    var _listeners = {};
+    var _cache = {};
     var LEGACY_FIELDS = {
       cna:                  { target: "cna" },
       bootAnimationShown:   { target: "bootAnimationShown" },
@@ -26,56 +19,72 @@ var ConfigModel,
       bootAnimationShown: !1,
       hasViewedAnnualReport: {},
     };
+    function notify(e, r) {
+      var n = _listeners[e];
+      if (n) for (var o = 0; o < n.length; o++) try { n[o](r); } catch (s) {}
+      var t = _listeners["*"];
+      if (t) for (var o = 0; o < t.length; o++) try { t[o](e, r); } catch (s) {}
+    }
     ConfigModel = {
-      dir,
-      filePath,
-      ensureDir,
-      detectLegacy() {
-        var oldPath = path.join(home, ".iflow", "settings.json");
-        var newPath = CONFIG_PATH;
-        if (fs.existsSync(newPath)) return null;
-        if (!fs.existsSync(oldPath)) return null;
-        try { return JSON.parse(fs.readFileSync(oldPath, "utf8")); } catch { return null; }
-      },
-      hasLegacy() { return !!this.detectLegacy(); },
-      /**
-       * @param {object} old - 原版 settings.json 的解析结果
-       * @param {boolean} migrateSecrets - 是否迁移 apiKey 到 keytar
-       * @returns {object} 迁移后的新配置对象
-       */
-      translate(old, migrateSecrets) {
-        var result = {};
-        for (var oldKey in old) {
-          var def = LEGACY_FIELDS[oldKey];
-          if (!def) continue;
-          var val = old[oldKey];
-          if (val === void 0 || val === null) continue;
-          if (def.isSecret) {
-            if (migrateSecrets && val && typeof Keychain?.saveApiKey == "function") {
-              var auth = old.selectedAuthType || "default";
-              Keychain.saveApiKey(auth, String(val)).catch(function () {});
-            }
-            continue;
-          }
-          result[def.target] = val;
-        }
-        // Apply defaults for new fields
-        for (var key in KNOWN_DEFAULTS) {
-          if (result[key] === void 0) result[key] = KNOWN_DEFAULTS[key];
-        }
-        return result;
-      },
-      save(config) {
-        ensureDir();
-        var existing = {};
-        try { existing = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8")); } catch (e) {}
-        var merged = {};
-        for (var key in existing) merged[key] = existing[key];
-        for (var key in config) merged[key] = config[key];
-        fs.writeFileSync(CONFIG_PATH, JSON.stringify(merged, null, 2) + "\n");
+      LEGACY_FIELDS,
+      KNOWN_DEFAULTS,
+      subscribe(e, r) {
+        if (!_listeners[e]) _listeners[e] = [];
+        _listeners[e].push(r);
+        return function () {
+          var n = _listeners[e];
+          if (n) { var o = n.indexOf(r); if (o >= 0) n.splice(o, 1); }
+        };
       },
       load() {
-        try { return JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8")) || {}; } catch { return {}; }
+        var e = Persistence ? Persistence.read() : {};
+        for (var r in e) _cache[r] = e[r];
+        for (var n in KNOWN_DEFAULTS) {
+          if (_cache[n] === void 0) _cache[n] = KNOWN_DEFAULTS[n];
+        }
+        return _cache;
+      },
+      get(e) { return _cache[e]; },
+      getAll() { return Object.assign({}, _cache); },
+      set(e, r) {
+        _cache[e] = r;
+        if (Persistence) Persistence.write({ [e]: r });
+        notify(e, r);
+      },
+      setMulti(e) {
+        for (var r in e) { _cache[r] = e[r]; }
+        if (Persistence) Persistence.write(e);
+        for (var r in e) notify(r, e[r]);
+      },
+      delete(e) {
+        delete _cache[e];
+        if (Persistence) Persistence.deleteKey(e);
+        notify(e, void 0);
+      },
+      detectLegacy() {
+        return Persistence ? Persistence.hasLegacy() : !1;
+      },
+      translateLegacy(e, r) {
+        return Persistence ? Persistence.readLegacy() : null;
+      },
+      migrate(e) {
+        var r = e || (Persistence ? Persistence.readLegacy() : null);
+        if (!r) return null;
+        var n = {};
+        for (var o in r) {
+          var s = LEGACY_FIELDS[o];
+          if (!s) continue;
+          var a = r[o];
+          if (a === void 0 || a === null) continue;
+          if (s.isSecret) {
+            if (a && Persistence) Persistence.keytarSave(r.selectedAuthType || "default", String(a));
+            continue;
+          }
+          n[s.target] = a;
+        }
+        for (var l in KNOWN_DEFAULTS) { if (n[l] === void 0) n[l] = KNOWN_DEFAULTS[l]; }
+        if (Persistence) Persistence.write(n);
+        return n;
       },
     };
   });

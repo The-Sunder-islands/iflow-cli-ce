@@ -1,5 +1,5 @@
 {
-  "total": 2017,
+  "total": 2019,
   "order": [
     {
       "name": "cSr",
@@ -10085,6 +10085,16 @@
       "name": "ConfigModel",
       "category": "app/search",
       "label": "config"
+    },
+    {
+      "name": "Persistence",
+      "category": "app/search",
+      "label": "persistence"
+    },
+    {
+      "name": "ReactAdapter",
+      "category": "app/search",
+      "label": "react"
     }
   ]
 }

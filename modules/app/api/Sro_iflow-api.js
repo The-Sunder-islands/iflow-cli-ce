@@ -1800,8 +1800,12 @@ var zj,
     providerRegistryInit();
     keychainInit();
     configModelInit();
+    persistenceInit();
+    reactAdapterInit();
     migrateConfigInit();
     if (typeof MigrateConfig?.run == "function") MigrateConfig.run();
+    // Load config into ConfigModel
+    if (typeof ConfigModel?.load == "function") ConfigModel.load();
     tKi();
     nKi();
     cKi();
