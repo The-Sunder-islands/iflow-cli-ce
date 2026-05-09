@@ -819,7 +819,7 @@ var renderCmd,
           cmds.push({
             name: backendId,
             get description() {
-              try { return I.t ? I.t("renderCommand." + backendId.replace("-","")) : backendId; } catch { return backendId; }
+              try { return I.t ? I.t("renderCommand." + backendId.replace(/-/g, "")) : backendId; } catch { return backendId; }
             },
             kind: "built-in",
             action: async (t, e) => {
