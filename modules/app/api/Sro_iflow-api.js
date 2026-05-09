@@ -1799,6 +1799,7 @@ var zj,
     renderCmdInit();
     providerRegistryInit();
     keychainInit();
+    configModelInit();
     migrateConfigInit();
     if (typeof MigrateConfig?.run == "function") MigrateConfig.run();
     tKi();

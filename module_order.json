@@ -1,5 +1,5 @@
 {
-  "total": 2016,
+  "total": 2017,
   "order": [
     {
       "name": "cSr",
@@ -10080,6 +10080,11 @@
       "name": "MigrateConfig",
       "category": "app/search",
       "label": "migrate"
+    },
+    {
+      "name": "ConfigModel",
+      "category": "app/search",
+      "label": "config"
     }
   ]
 }
