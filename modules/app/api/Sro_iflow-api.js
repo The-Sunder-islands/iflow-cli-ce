@@ -1798,6 +1798,9 @@ var zj,
     ZYi();
     renderCmdInit();
     providerRegistryInit();
+    keychainInit();
+    migrateConfigInit();
+    if (typeof MigrateConfig?.run == "function") MigrateConfig.run();
     tKi();
     nKi();
     cKi();

@@ -32196,10 +32196,8 @@ var oio = (t, e, r, n) => {
         let { authType: H, scope: U, extraData: Y } = K;
         if (
           (t.setValue(U, "selectedAuthType", H),
-          (A6.includes(H) || (typeof H == "string" && H.startsWith("provider:"))) && Y?.apiKey && t.setValue(U, "apiKey", Y.apiKey),
           H === Kt.OPENAI_COMPATIBLE || (typeof H == "string" && H.startsWith("provider:")))
         ) {
-          t.setValue(U, "apiKey", Y.apiKey);
           let X = vX(Y.baseUrl);
           t.setValue(U, "baseUrl", X);
         }
@@ -42139,7 +42137,6 @@ var mIe = class t {
       ((this.authOptions = a),
         await this.config.refreshAuth(o, a, this.onAuthUrlReady),
         this.settings.setValue("User", "selectedAuthType", o),
-        this.settings.setValue("User", "apiKey", this.config.getApiKey()),
         this.settings.setValue("User", "searchApiKey", this.config.getSearchApiKey()),
         this.settings.setValue("User", "baseUrl", this.config.getBaseUrl()),
         this.settings.setValue("User", "modelName", this.config.getModel()));

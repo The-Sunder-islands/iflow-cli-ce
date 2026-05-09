@@ -3808,7 +3808,7 @@ async function KOt(t, e, r) {
     o = f2e(),
     s = p2e(),
     a = r?.apiKey || n;
-  if (!a && typeof Keychain?.getApiKey == "function") try { a = await Keychain.getApiKey(e); } catch {}
+  if (typeof Keychain?.getApiKey == "function") try { a = await Keychain.getApiKey(e); } catch {}
   let u = r?.baseUrl || o || Nis[e];
   c = r?.modelName || t.getModel() || s || Np;
   let m = { model: c, authType: e, proxy: t?.getProxy(), debugMode: t?.getDebugMode(), config: t };

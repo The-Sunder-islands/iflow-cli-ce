@@ -4658,6 +4658,10 @@ var dn,
       getSearchApiKey() {
         return this.searchApiKey ?? this.contentGeneratorConfig?.apiKey;
       }
+      getKeychainApiKey(e) {
+        if (typeof Keychain?.getApiKey != "function") return null;
+        try { var r = require("keytar"); return null; } catch { return null; }
+      }
       getSearchEndpoint() {
         return this.searchEndpoint ?? process.env.IFLOW_SEARCH_ENDPOINT ?? "https://platform.iflow.cn/api/search/webSearch";
       }

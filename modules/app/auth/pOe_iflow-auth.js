@@ -376,7 +376,7 @@ var wG,
   w3e,
   Pa = j(() => {
     "use strict";
-    ((wG = ".iflow"), (bOr = ".iflow-aone"), (I_t = "google_accounts.json"), (Ugo = "tmp"), (AOr = "commands"));
+    ((wG = ".iflow-ce"), (bOr = ".iflow-aone"), (I_t = "google_accounts.json"), (Ugo = "tmp"), (AOr = "commands"));
     w3e = ui();
   });
 import * as Sp from "node:path";

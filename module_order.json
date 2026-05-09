@@ -1,5 +1,5 @@
 {
-  "total": 2015,
+  "total": 2016,
   "order": [
     {
       "name": "cSr",
@@ -10075,6 +10075,11 @@
       "name": "Keychain",
       "category": "app/search",
       "label": "keychain"
+    },
+    {
+      "name": "MigrateConfig",
+      "category": "app/search",
+      "label": "migrate"
     }
   ]
 }
