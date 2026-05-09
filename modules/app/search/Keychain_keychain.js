@@ -1,21 +1,34 @@
 var Keychain,
   keychainInit = j(() => {
     "use strict";
-    const SERVICE = "iflow-cli-ce";
     var _kt = null;
-    async function kt() {
-      if (!_kt) _kt = require("keytar");
-      return _kt;
-    }
+    var _ktAvailable = !1;
+    try {
+      _kt = require("keytar");
+      _ktAvailable = !0;
+    } catch (e) { _ktAvailable = !1; }
     Keychain = {
+      get available() { return _ktAvailable; },
       async saveApiKey(e, r) {
-        try { let n = await kt(); await n.setPassword(SERVICE, e, r); } catch (n) { console.warn("[Keychain] Save failed:", n.message); }
+        if (_ktAvailable) {
+          try { await _kt.setPassword("iflow-cli-ce", e, r); return; } catch (n) {}
+        }
+        // Fallback: store in persistence (less secure)
+        if (typeof ConfigModel?.set == "function") ConfigModel.set("_key_" + e, r);
       },
       async getApiKey(e) {
-        try { let n = await kt(); return await n.getPassword(SERVICE, e); } catch (n) { console.warn("[Keychain] Get failed:", n.message); return null; }
+        if (_ktAvailable) {
+          try { var r = await _kt.getPassword("iflow-cli-ce", e); if (r) return r; } catch (n) {}
+        }
+        // Fallback: read from persistence
+        if (typeof ConfigModel?.get == "function") return ConfigModel.get("_key_" + e);
+        return null;
       },
       async deleteApiKey(e) {
-        try { let n = await kt(); await n.deletePassword(SERVICE, e); } catch (n) { console.warn("[Keychain] Delete failed:", n.message); }
+        if (_ktAvailable) {
+          try { await _kt.deletePassword("iflow-cli-ce", e); } catch (n) {}
+        }
+        if (typeof ConfigModel?.set == "function") ConfigModel.set("_key_" + e, void 0);
       },
     };
   });

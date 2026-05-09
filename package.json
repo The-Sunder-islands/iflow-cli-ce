@@ -32,7 +32,6 @@
     "build": "node build.js"
   },
   "dependencies": {
-    "@aquintanar/browser39": "^1.7.1",
     "@google/genai": ">=1.0.0",
     "@grpc/proto-loader": ">=0.7.0",
     "@lydell/node-pty": ">=1.1.0",
@@ -45,9 +44,7 @@
     "express": "^5.2.1",
     "fzf": ">=0.5.0",
     "gifuct-js": ">=2.1.2",
-    "happy-dom": "^20.9.0",
     "ink": ">=6.5.0",
-    "keytar": "^7.9.0",
     "ky": ">=1.0.0",
     "linkedom": "^0.18.12",
     "long": ">=5.0.0",
@@ -64,7 +61,8 @@
   },
   "optionalDependencies": {
     "@lightpanda/browser": "^1.2.0",
-    "@aquintanar/browser39": "^1.7.1"
+    "@aquintanar/browser39": "^1.7.1",
+    "keytar": "^7.9.0"
   },
   "keywords": [
     "ai",
