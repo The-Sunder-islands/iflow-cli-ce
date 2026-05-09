@@ -817,23 +817,74 @@ var renderCmd,
         t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingLightpanda") }, Date.now());
       },
     };
+    var renderChromiumStep = 0; // global install step tracker
     var renderChromium = {
       name: "chromium",
       get description() { try { return I.t ? I.t("renderCommand.chromium") : "Chromium (auto-installs Playwright)"; } catch { return "Chromium (auto-installs Playwright)"; } },
       kind: "built-in",
       action: async (t, e) => {
         if (typeof searchRendererInit == "function") searchRendererInit();
-        if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
-        if (!_installing) {
-          _installing = !0;
-          t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingChromium") }, Date.now());
-          var cp = require("child_process");
-          cp.exec("npx playwright install chromium 2>&1", { maxBuffer: 1024 * 1024 }, function (err, stdout) {
-            _installing = !1;
-            if (err) { console.error("[Render] Playwright install failed:", stdout); return; }
-            console.log("[Render] Chromium installed successfully. Use /render status to verify.");
+        var cp = require("child_process");
+        var ui = t.ui;
+
+        // Step 0: check if Chromium is already installed
+        renderChromiumStep = 1;
+        ui.addItem({ type: "info", text: I.t("renderCommand.checking") }, Date.now());
+        var installed = await new Promise(function (resolve) {
+          cp.exec("npx playwright install --dry-run chromium 2>&1", { maxBuffer: 1024 * 1024 }, function (err, stdout) {
+            // If dry-run says "already installed" or similar, treat as installed
+            resolve(!err && (stdout.includes("already") || stdout.includes("Skipping")));
           });
-        } else t.ui.addItem({ type: "info", text: I.t("renderCommand.alreadyInstalling") }, Date.now());
+          // If the command fails entirely, just try checking for the cache directory
+          setTimeout(function () { resolve(false); }, 5000);
+        });
+
+        // Check by looking for ms-playwright directory
+        if (!installed) {
+          try {
+            var home = process.env.HOME || "";
+            var fs = require("fs");
+            var playwrightDir = home + "/.cache/ms-playwright";
+            if (fs.existsSync(playwrightDir)) {
+              var dirs = fs.readdirSync(playwrightDir);
+              installed = dirs.some(function (d) { return d.toLowerCase().includes("chromium"); });
+            }
+          } catch (e) {}
+        }
+
+        if (installed) {
+          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
+          ui.addItem({ type: "info", text: I.t("renderCommand.switchingChromium") }, Date.now());
+          renderChromiumStep = 0;
+          return;
+        }
+
+        // Install Chromium
+        renderChromiumStep = 2;
+        ui.addItem({ type: "info", text: I.t("renderCommand.downloading") }, Date.now());
+
+        try {
+          await new Promise(function (resolve, reject) {
+            cp.exec("npx playwright install chromium 2>&1", { maxBuffer: 10 * 1024 * 1024 }, function (err, stdout) {
+              if (err) reject(new Error(stdout || err.message));
+              else resolve();
+            });
+          });
+
+          // Verify
+          renderChromiumStep = 3;
+          ui.addItem({ type: "info", text: I.t("renderCommand.verifying") }, Date.now());
+
+          // Switch to chromium
+          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
+          renderChromiumStep = 0;
+          ui.addItem({ type: "info", text: I.t("renderCommand.installDone") }, Date.now());
+        } catch (err) {
+          // Installation failed - switch back to lightpanda
+          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
+          renderChromiumStep = 0;
+          ui.addItem({ type: "error", text: I.t("renderCommand.installFailed") }, Date.now());
+        }
       },
     };
     var renderStatus = {
