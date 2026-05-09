@@ -814,7 +814,7 @@ var renderCmd,
       action: async (t, e) => {
         if (typeof searchRendererInit == "function") searchRendererInit();
         if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
-        t.ui.addItem({ type: "info", text: "Renderer switched to Lightpanda (default)." }, Date.now());
+        t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingLightpanda") }, Date.now());
       },
     };
     var renderChromium = {
@@ -826,14 +826,14 @@ var renderCmd,
         if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
         if (!_installing) {
           _installing = !0;
-          t.ui.addItem({ type: "info", text: "Installing Chromium in background... (npx playwright install chromium)" }, Date.now());
+          t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingChromium") }, Date.now());
           var cp = require("child_process");
           cp.exec("npx playwright install chromium 2>&1", { maxBuffer: 1024 * 1024 }, function (err, stdout) {
             _installing = !1;
             if (err) { console.error("[Render] Playwright install failed:", stdout); return; }
             console.log("[Render] Chromium installed successfully. Use /render status to verify.");
           });
-        } else t.ui.addItem({ type: "info", text: "Chromium installation already in progress. Run /render status to check." }, Date.now());
+        } else t.ui.addItem({ type: "info", text: I.t("renderCommand.alreadyInstalling") }, Date.now());
       },
     };
     var renderStatus = {
@@ -843,8 +843,8 @@ var renderCmd,
       action: async (t, e) => {
         if (typeof searchRendererInit == "function") searchRendererInit();
         var s = globalThis.SearchRenderer;
-        if (!s) t.ui.addItem({ type: "info", text: "SearchRenderer not available." }, Date.now());
-        else t.ui.addItem({ type: "info", text: "Renderer: " + s.activeRenderer + (_installing ? " (Chromium installing...)" : "") }, Date.now());
+        if (!s) t.ui.addItem({ type: "info", text: I.t("renderCommand.notAvailable") }, Date.now());
+        else t.ui.addItem({ type: "info", text: I.t("renderCommand.statusLine", { renderer: s.activeRenderer + (_installing ? " (Chromium installing...)" : "") }) }, Date.now());
       },
     };
     renderCmd = {
