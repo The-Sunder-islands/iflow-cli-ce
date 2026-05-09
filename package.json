@@ -1,6 +1,6 @@
 {
   "name": "iflow-cli-ce",
-  "version": "0.6.0-ce.1",
+  "version": "0.6.1-ce.1",
   "description": "iFlow CLI Community Edition - A powerful AI assistant for your terminal",
   "engines": {
     "node": ">=20.0.0"
@@ -44,6 +44,7 @@
     "express": "^5.2.1",
     "fzf": ">=0.5.0",
     "gifuct-js": ">=2.1.2",
+    "happy-dom": "^20.9.0",
     "ink": ">=6.5.0",
     "keytar": "^7.9.0",
     "ky": ">=1.0.0",
@@ -62,6 +63,7 @@
   },
   "optionalDependencies": {
     "@lightpanda/browser": "^1.2.0"
+  },
   "keywords": [
     "ai",
     "cli",

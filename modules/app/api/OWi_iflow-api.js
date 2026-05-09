@@ -809,13 +809,24 @@ var renderCmd,
     var _installing = !1;
     var renderLightpanda = {
       name: "lightpanda",
-      get description() { try { return I.t ? I.t("renderCommand.lightpanda") : "Lightpanda (default)"; } catch { return "Lightpanda (default)"; } },
+      get description() { try { return I.t ? I.t("renderCommand.lightpanda") : "Lightpanda (default on Linux)"; } catch { return "Lightpanda (default on Linux)"; } },
       kind: "built-in",
       action: async (t, e) => {
         if (typeof searchRendererInit == "function") searchRendererInit();
         if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
         try { t.settings.setValue("User", "renderer", "lightpanda"); } catch (n) {}
         t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingLightpanda") }, Date.now());
+      },
+    };
+    var renderHappyDom = {
+      name: "happy-dom",
+      get description() { try { return I.t ? I.t("renderCommand.happyDom") : "HappyDOM (default on Windows)"; } catch { return "HappyDOM (default on Windows)"; } },
+      kind: "built-in",
+      action: async (t, e) => {
+        if (typeof searchRendererInit == "function") searchRendererInit();
+        if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("happy-dom");
+        try { t.settings.setValue("User", "renderer", "happy-dom"); } catch (n) {}
+        t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingHappyDom") }, Date.now());
       },
     };
     var renderChromiumStep = 0; // global install step tracker
@@ -908,7 +919,7 @@ var renderCmd,
         try { return I.t ? I.t("renderCommand.description") : "Switch renderer"; } catch { return "Switch renderer"; }
       },
       kind: "built-in",
-      subCommands: [renderLightpanda, renderChromium, renderStatus],
+      subCommands: [renderLightpanda, renderHappyDom, renderChromium, renderStatus],
       action: async (t, e) => { renderLightpanda.action(t, e); },
     };
   });
