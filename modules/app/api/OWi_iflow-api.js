@@ -807,120 +807,65 @@ var renderCmd,
     Qs();
     Ot();
     var _installing = !1;
-    var renderLightpanda = {
-      name: "lightpanda",
-      get description() { try { return I.t ? I.t("renderCommand.lightpanda") : "Lightpanda (default on Linux)"; } catch { return "Lightpanda (default on Linux)"; } },
-      kind: "built-in",
-      action: async (t, e) => {
-        if (typeof searchRendererInit == "function") searchRendererInit();
-        if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
-        try { t.settings.setValue("User", "renderer", "lightpanda"); } catch (n) {}
-        t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingLightpanda") }, Date.now());
-      },
-    };
-    var renderHappyDom = {
-      name: "happy-dom",
-      get description() { try { return I.t ? I.t("renderCommand.happyDom") : "HappyDOM (default on Windows)"; } catch { return "HappyDOM (default on Windows)"; } },
-      kind: "built-in",
-      action: async (t, e) => {
-        if (typeof searchRendererInit == "function") searchRendererInit();
-        if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("happy-dom");
-        try { t.settings.setValue("User", "renderer", "happy-dom"); } catch (n) {}
-        t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingHappyDom") }, Date.now());
-      },
-    };
-    var renderChromiumStep = 0; // global install step tracker
-    var renderChromium = {
-      name: "chromium",
-      get description() { try { return I.t ? I.t("renderCommand.chromium") : "Chromium (auto-installs Playwright)"; } catch { return "Chromium (auto-installs Playwright)"; } },
-      kind: "built-in",
-      action: async (t, e) => {
-        if (typeof searchRendererInit == "function") searchRendererInit();
-        var cp = require("child_process");
-        var ui = t.ui;
-
-        // Step 0: check if Chromium is already installed
-        renderChromiumStep = 1;
-        ui.addItem({ type: "info", text: I.t("renderCommand.checking") }, Date.now());
-        var installed = await new Promise(function (resolve) {
-          cp.exec("npx playwright install --dry-run chromium 2>&1", { maxBuffer: 1024 * 1024 }, function (err, stdout) {
-            // If dry-run says "already installed" or similar, treat as installed
-            resolve(!err && (stdout.includes("already") || stdout.includes("Skipping")));
+    // Dynamically build subCommands from SearchRenderer backends
+    function buildRenderSubCommands() {
+      var cmds = [];
+      if (typeof searchRendererInit == "function") searchRendererInit();
+      var backends = globalThis.SearchRenderer?.backends || [];
+      for (var i = 0; i < backends.length; i++) {
+        var b = backends[i];
+        if (b.id === "http") continue; // http is internal fallback, not user-selectable
+        (function (backendId) {
+          cmds.push({
+            name: backendId,
+            get description() {
+              try { return I.t ? I.t("renderCommand." + backendId.replace("-","")) : backendId; } catch { return backendId; }
+            },
+            kind: "built-in",
+            action: async (t, e) => {
+              if (typeof searchRendererInit == "function") searchRendererInit();
+              if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer(backendId);
+              try { t.settings.setValue("User", "renderer", backendId); } catch (n) {}
+              t.ui.addItem({ type: "info", text: "Switched to " + backendId + " renderer." }, Date.now());
+            },
           });
-          // If the command fails entirely, just try checking for the cache directory
-          setTimeout(function () { resolve(false); }, 5000);
-        });
-
-        // Check by looking for ms-playwright directory
-        if (!installed) {
-          try {
-            var home = process.env.HOME || "";
-            var fs = require("fs");
-            var playwrightDir = home + "/.cache/ms-playwright";
-            if (fs.existsSync(playwrightDir)) {
-              var dirs = fs.readdirSync(playwrightDir);
-              installed = dirs.some(function (d) { return d.toLowerCase().includes("chromium"); });
+        })(b.id);
+      }
+      // Add status command
+      cmds.push({
+        name: "status",
+        get description() { try { return I.t ? I.t("renderCommand.status") : "Show renderer status"; } catch { return "Show renderer status"; } },
+        kind: "built-in",
+        action: async (t, e) => {
+          if (typeof searchRendererInit == "function") searchRendererInit();
+          var s = globalThis.SearchRenderer;
+          if (!s) t.ui.addItem({ type: "info", text: I.t("renderCommand.notAvailable") }, Date.now());
+          else {
+            var info = s.activeRenderer;
+            // Show all backends with active marker
+            var backends = s.backends || [];
+            for (var i = 0; i < backends.length; i++) {
+              var b = backends[i];
+              if (b.id === "http") continue;
+              info += " " + (b.id === s.activeRenderer ? "[" + b.id + "]" : b.id);
             }
-          } catch (e) {}
-        }
-
-        if (installed) {
-          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
-          try { t.settings.setValue("User", "renderer", "chromium"); } catch (n) {}
-          ui.addItem({ type: "info", text: I.t("renderCommand.switchingChromium") }, Date.now());
-          renderChromiumStep = 0;
-          return;
-        }
-
-        // Install Chromium
-        renderChromiumStep = 2;
-        ui.addItem({ type: "info", text: I.t("renderCommand.downloading") }, Date.now());
-
-        try {
-          await new Promise(function (resolve, reject) {
-            cp.exec("npx playwright install chromium 2>&1", { maxBuffer: 10 * 1024 * 1024 }, function (err, stdout) {
-              if (err) reject(new Error(stdout || err.message));
-              else resolve();
-            });
-          });
-
-          // Verify
-          renderChromiumStep = 3;
-          ui.addItem({ type: "info", text: I.t("renderCommand.verifying") }, Date.now());
-
-          // Switch to chromium
-          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
-          try { t.settings.setValue("User", "renderer", "chromium"); } catch (n) {}
-          renderChromiumStep = 0;
-          ui.addItem({ type: "info", text: I.t("renderCommand.installDone") }, Date.now());
-        } catch (err) {
-          // Installation failed - switch back to lightpanda
-          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
-          try { t.settings.setValue("User", "renderer", "lightpanda"); } catch (n) {}
-          renderChromiumStep = 0;
-          ui.addItem({ type: "error", text: I.t("renderCommand.installFailed") }, Date.now());
-        }
-      },
-    };
-    var renderStatus = {
-      name: "status",
-      get description() { try { return I.t ? I.t("renderCommand.status") : "Show renderer status"; } catch { return "Show renderer status"; } },
-      kind: "built-in",
-      action: async (t, e) => {
-        if (typeof searchRendererInit == "function") searchRendererInit();
-        var s = globalThis.SearchRenderer;
-        if (!s) t.ui.addItem({ type: "info", text: I.t("renderCommand.notAvailable") }, Date.now());
-        else t.ui.addItem({ type: "info", text: I.t("renderCommand.statusLine", { renderer: s.activeRenderer + (_installing ? " (Chromium installing...)" : "") }) }, Date.now());
-      },
-    };
+            t.ui.addItem({ type: "info", text: "Renderer: " + info + (_installing ? " (Chromium installing...)" : "") }, Date.now());
+          }
+        },
+      });
+      return cmds;
+    }
     renderCmd = {
       name: "render",
       get description() {
         try { return I.t ? I.t("renderCommand.description") : "Switch renderer"; } catch { return "Switch renderer"; }
       },
       kind: "built-in",
-      subCommands: [renderLightpanda, renderHappyDom, renderChromium, renderStatus],
-      action: async (t, e) => { renderLightpanda.action(t, e); },
+      get subCommands() { return buildRenderSubCommands(); },
+      action: async (t, e) => {
+        var cmds = buildRenderSubCommands();
+        if (cmds.length > 0) cmds[0].action(t, e);
+      },
     };
   });
 import Gj from "path";
