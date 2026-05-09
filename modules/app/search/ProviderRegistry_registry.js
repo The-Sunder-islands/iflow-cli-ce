@@ -33,5 +33,5 @@ var ProviderRegistry,
       // ─── 网关/聚合 ───
       { id:"openrouter",      name:"OpenRouter",            apiType:"openai", baseUrl:"https://openrouter.ai/api/v1",               docsUrl:"https://openrouter.ai/keys",                                defaultModel:"openai/gpt-4.1",  modelsUrl:"/api/v1/models", thinking:!0, tools:!0, reasoningLevels:null },
     ];
-    ProviderRegistry = { list: PROVIDERS };
+    ProviderRegistry = { list: PROVIDERS, _ready: !0 };
   });

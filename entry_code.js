@@ -43547,7 +43547,7 @@ function c9u() {
           platform: process.platform,
           arch: process.arch,
           uptime: process.uptime(),
-          env: { NODE_ENV: "production", SANDBOX: process.env.SANDBOX, CLI_VERSION: "0.6.3" },
+          env: { NODE_ENV: "production", SANDBOX: process.env.SANDBOX, CLI_VERSION: "0.6.4" },
         },
         r = `crash-${Date.now()}-${process.pid}.json`,
         n = t9u.join(process.cwd(), r);

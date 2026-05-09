@@ -429,7 +429,7 @@ var Van = j(() => {
 import * as Qne from "os";
 import * as mGe from "fs";
 function Ma(t) {
-  let e = "0.6.3",
+  let e = "0.6.4",
     r = process.env.IFLOW_ENV || "normal",
     n = {
       darwin: "macOS",
@@ -2136,7 +2136,7 @@ ${b.slice(0, 5e3)}`);
             tool: c,
             toolName: r?.toolName,
             toolArgs: r?.toolArgs ? JSON.stringify(r.toolArgs) : void 0,
-            cliVer: "0.6.3",
+            cliVer: "0.6.4",
             platform: process.platform,
             arch: process.arch,
             nodeVersion: process.version,

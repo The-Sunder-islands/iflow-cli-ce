@@ -2198,7 +2198,7 @@ ${"=".repeat(80)}
             O = Bln(k, R, P, this.apiKey);
           (O && ((D["x-iflow-signature"] = O), (D["x-iflow-timestamp"] = P.toString())),
             x && (D = { ...D, traceparent: x }),
-            y === "aone" && (D = { ...D, "X-Client-Type": "iflow-cli-ce", "X-Client-Version": "0.6.3" }),
+            y === "aone" && (D = { ...D, "X-Client-Type": "iflow-cli-ce", "X-Client-Version": "0.6.4" }),
             vqe(this.config, new Kne(this.baseUrl, a, JSON.stringify(p), r, JSON.stringify(e.contents))));
           let N = await fetch(`${E}/chat/completions`, {
               signal: e.config?.abortSignal,
@@ -3809,6 +3809,7 @@ async function KOt(t, e, r) {
     s = p2e(),
     a = r?.apiKey || n;
   if (typeof Keychain?.getApiKey == "function") try { a = await Keychain.getApiKey(e); } catch {}
+  if (!a && typeof Keychain?.available && typeof process !== "undefined" && process.env?.HOME?.includes("com.termux") && typeof ConfigModel?.get == "function") { a = ConfigModel.get("_key_" + e); }
   let u = r?.baseUrl || o || Nis[e];
   c = r?.modelName || t.getModel() || s || Np;
   let m = { model: c, authType: e, proxy: t?.getProxy(), debugMode: t?.getDebugMode(), config: t };

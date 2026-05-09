@@ -3,21 +3,22 @@ var Keychain,
     "use strict";
     var _kt = null;
     try { _kt = require("keytar"); } catch (e) { _kt = null; }
-    if (!_kt) console.warn("[Keychain] keytar not installed. API keys stored in settings file (less secure). To fix: npm install keytar");
+    var _isTermux = typeof process !== "undefined" && process.env?.HOME?.includes("com.termux");
     function kt() { return _kt; }
     Keychain = {
-      get available() { return !!_kt; },
+      get available() { return !!_kt || _isTermux; },
       async saveApiKey(e, r) {
-        if (!_kt) { console.warn("[Keychain] keytar not available, API key not stored."); return; }
-        try { await _kt.setPassword("iflow-cli-ce", e, r); } catch (n) { console.warn("[Keychain] Save failed:", n.message); }
+        if (_kt) { try { await _kt.setPassword("iflow-cli-ce", e, r); return; } catch (n) {} }
+        if (_isTermux && typeof ConfigModel?.set == "function") { ConfigModel.set("_key_" + e, r); return; }
       },
       async getApiKey(e) {
-        if (!_kt) return null;
-        try { return await _kt.getPassword("iflow-cli-ce", e); } catch (n) { return null; }
+        if (_kt) { try { var r = await _kt.getPassword("iflow-cli-ce", e); if (r) return r; } catch (n) {} }
+        if (_isTermux && typeof ConfigModel?.get == "function") { return ConfigModel.get("_key_" + e); }
+        return null;
       },
       async deleteApiKey(e) {
-        if (!_kt) return;
-        try { await _kt.deletePassword("iflow-cli-ce", e); } catch (n) {}
+        if (_kt) { try { await _kt.deletePassword("iflow-cli-ce", e); } catch (n) {} }
+        if (_isTermux && typeof ConfigModel?.set == "function") { ConfigModel.set("_key_" + e, void 0); }
       },
     };
   });
