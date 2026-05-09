@@ -5,6 +5,16 @@ var SearchRenderer,
     const RENDERER_CHROME = "chromium";
     let _activeRenderer = RENDERER_LIGHT;
     let _chromiumPath = null;
+    // Load persisted renderer from settings
+    try {
+      var _fs = require("fs"), _path = require("path");
+      var _home = process.env.HOME || process.env.USERPROFILE || "";
+      var _settingsPath = _path.join(_home, ".iflow", "settings.json");
+      if (_fs.existsSync(_settingsPath)) {
+        var _settings = JSON.parse(_fs.readFileSync(_settingsPath, "utf8"));
+        if (_settings.renderer === "chromium") _activeRenderer = RENDERER_CHROME;
+      }
+    } catch (e) {}
     async function fetchLightpanda(e, r) {
       try {
         let { lightpanda: n } = await import("@lightpanda/browser");

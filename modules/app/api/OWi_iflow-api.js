@@ -814,6 +814,7 @@ var renderCmd,
       action: async (t, e) => {
         if (typeof searchRendererInit == "function") searchRendererInit();
         if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
+        try { t.settings.setValue("User", "renderer", "lightpanda"); } catch (n) {}
         t.ui.addItem({ type: "info", text: I.t("renderCommand.switchingLightpanda") }, Date.now());
       },
     };
@@ -854,6 +855,7 @@ var renderCmd,
 
         if (installed) {
           if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
+          try { t.settings.setValue("User", "renderer", "chromium"); } catch (n) {}
           ui.addItem({ type: "info", text: I.t("renderCommand.switchingChromium") }, Date.now());
           renderChromiumStep = 0;
           return;
@@ -877,11 +879,13 @@ var renderCmd,
 
           // Switch to chromium
           if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
+          try { t.settings.setValue("User", "renderer", "chromium"); } catch (n) {}
           renderChromiumStep = 0;
           ui.addItem({ type: "info", text: I.t("renderCommand.installDone") }, Date.now());
         } catch (err) {
           // Installation failed - switch back to lightpanda
           if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
+          try { t.settings.setValue("User", "renderer", "lightpanda"); } catch (n) {}
           renderChromiumStep = 0;
           ui.addItem({ type: "error", text: I.t("renderCommand.installFailed") }, Date.now());
         }
