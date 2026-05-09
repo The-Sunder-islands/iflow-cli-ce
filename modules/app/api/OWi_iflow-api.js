@@ -809,18 +809,20 @@ var renderCmd,
     var _installing = !1;
     var renderLightpanda = {
       name: "lightpanda",
-      description: "Switch to Lightpanda renderer (default)",
+      get description() { try { return I.t ? I.t("renderCommand.lightpanda") : "Lightpanda (default)"; } catch { return "Lightpanda (default)"; } },
       kind: "built-in",
       action: async (t, e) => {
+        if (typeof searchRendererInit == "function") searchRendererInit();
         if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
         t.ui.addItem({ type: "info", text: "Renderer switched to Lightpanda (default)." }, Date.now());
       },
     };
     var renderChromium = {
       name: "chromium",
-      description: "Switch to Chromium renderer (auto-installs Playwright)",
+      get description() { try { return I.t ? I.t("renderCommand.chromium") : "Chromium (auto-installs Playwright)"; } catch { return "Chromium (auto-installs Playwright)"; } },
       kind: "built-in",
       action: async (t, e) => {
+        if (typeof searchRendererInit == "function") searchRendererInit();
         if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
         if (!_installing) {
           _installing = !0;
@@ -836,9 +838,10 @@ var renderCmd,
     };
     var renderStatus = {
       name: "status",
-      description: "Show current renderer status",
+      get description() { try { return I.t ? I.t("renderCommand.status") : "Show renderer status"; } catch { return "Show renderer status"; } },
       kind: "built-in",
       action: async (t, e) => {
+        if (typeof searchRendererInit == "function") searchRendererInit();
         var s = globalThis.SearchRenderer;
         if (!s) t.ui.addItem({ type: "info", text: "SearchRenderer not available." }, Date.now());
         else t.ui.addItem({ type: "info", text: "Renderer: " + s.activeRenderer + (_installing ? " (Chromium installing...)" : "") }, Date.now());

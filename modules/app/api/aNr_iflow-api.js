@@ -2243,6 +2243,9 @@ Error: {{error}}`,
       skillCommand: { description: "Manage skills", demandCommand: "You need to specify a subcommand." },
       renderCommand: {
         description: "Switch web page renderer. Usage: /render lightpanda | /render chromium | /render status",
+        lightpanda: "Switch to Lightpanda renderer (default)",
+        chromium: "Switch to Chromium renderer (auto-installs Playwright)",
+        status: "Show current renderer status",
       },
       skillAdd: {
         description: "Add a skill from online repository",
@@ -5818,6 +5821,9 @@ var lNr,
       },
       renderCommand: {
         description: "\u5207\u6362\u7F51\u9875\u6E32\u67D3\u5668\u3002\u7528\u6CD5\uFF1A/render lightpanda | /render chromium | /render status",
+        lightpanda: "\u5207\u6362\u5230 Lightpanda \u6E32\u67D3\u5668\uFF08\u9ED8\u8BA4\uFF09",
+        chromium: "\u5207\u6362\u5230 Chromium \u6E32\u67D3\u5668\uFF08\u81EA\u52A8\u5B89\u88C5 Playwright\uFF09",
+        status: "\u67E5\u770B\u5F53\u524D\u6E32\u67D3\u5668\u72B6\u6001",
       },
       skillAdd: {
         description: "\u4ECE\u5728\u7EBF\u4ED3\u5E93\u6DFB\u52A0\u6280\u80FD",
