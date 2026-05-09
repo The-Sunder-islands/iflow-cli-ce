@@ -3862,7 +3862,7 @@ var Kt,
         (t.DEEPSEEK = "deepseek"),
         (t.OPENAI_COMPATIBLE = "openai-compatible"));
     })(Kt || (Kt = {}));
-    ((A6 = [Kt.IFLOW, Kt.AONE, Kt.DEEPSEEK]),
+    ((A6 = [Kt.DEEPSEEK]),
       (Nis = { [Kt.IDEA_LAB]: "https://idealab.alibaba-inc.com/api/openai/v1", [Kt.IFLOW]: Iie, [Kt.AONE]: Rqe, [Kt.DEEPSEEK]: "https://api.deepseek.com" }));
   });
 var Qqe,

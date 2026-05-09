@@ -4293,11 +4293,7 @@ Ot();
 dc();
 var validateAuthType = (t) => (
   qht(),
-  t === Kt.LOGIN_WITH_IFLOW ||
-    t === Kt.LOGIN_WITH_AONE ||
-    t === Kt.CLOUD_SHELL ||
-    [...A6, Kt.OPENAI_COMPATIBLE].includes(t) ||
-    (typeof t == "string" && t.startsWith("provider:"))
+  t === Kt.DEEPSEEK || t === Kt.OPENAI_COMPATIBLE || [...A6].includes(t) || (typeof t == "string" && t.startsWith("provider:"))
     ? null
     : "Invalid auth method selected."
 );
@@ -32178,78 +32174,17 @@ var oio = (t, e, r, n) => {
       let H = t.merged.selectedAuthType;
       if (!(s || !H))
         try {
-          if (
-            (R(!0),
+          (R(!0),
             await r.refreshAuth(H, {
               apiKey: t.merged.apiKey,
               baseUrl: t.merged.baseUrl ? vX(t.merged.baseUrl) : t.merged.baseUrl,
               modelName: t.merged.modelName,
             }),
             console.log(`Authenticated via "${H}".`),
-            H === Kt.LOGIN_WITH_IFLOW)
-          ) {
-            let U = await yR();
-            (U &&
-              U !== t.merged.apiKey &&
-              (t.setValue("User", "apiKey", U),
-              t.setValue("User", "searchApiKey", U),
-              await r.refreshAuth(H, {
-                apiKey: U,
-                baseUrl: t.merged.baseUrl ? vX(t.merged.baseUrl) : t.merged.baseUrl,
-                modelName: t.merged.modelName,
-                searchApiKey: U,
-              }),
-              console.log("Config refreshed with new API key from cache.")),
-              !t.merged.modelName && n && n());
-          }
-          if (H === Kt.LOGIN_WITH_AONE) {
-            let U = await vT();
-            if (U) {
-              let Y = Buffer.from(U, "utf8").toString("base64");
-              Y !== t.merged.apiKey &&
-                (t.setValue("User", "apiKey", Y),
-                t.setValue("User", "searchApiKey", Y),
-                await r.refreshAuth(H, {
-                  apiKey: Y,
-                  baseUrl: t.merged.baseUrl ? vX(t.merged.baseUrl) : t.merged.baseUrl,
-                  modelName: t.merged.modelName,
-                  searchApiKey: Y,
-                }),
-                console.log("Config refreshed with new API key from cache."));
-              let X = !t.merged.modelName;
-              if (t.merged.modelName && n)
-                try {
-                  hH(t.merged.modelName) &&
-                    (await xj(U))?.isC3() &&
-                    (console.log("Claude model is not allowed in C3 repository. Please select an internal model."),
-                    (X = !0));
-                } catch (J) {
-                  console.error("Error checking security level for C3 validation:", J);
-                }
-              X && n && n();
-            }
-          }
-          if (H === Kt.AONE) {
-            let U = t.merged.apiKey ? Buffer.from(t.merged.apiKey, "base64").toString("utf8") : void 0;
-            if (U && t.merged.modelName && n)
-              try {
-                hH(t.merged.modelName) &&
-                  (await xj(U))?.isC3() &&
-                  (console.log("Claude model is not allowed in C3 repository. Please select an internal model."), n());
-              } catch (Y) {
-                console.error("Error checking security level for C3 validation:", Y);
-              }
-          }
+            !t.merged.modelName && n && n());
         } catch (U) {
           let Y = mr(U);
-          if (H === Kt.LOGIN_WITH_IFLOW && Y.includes("SERVER_OAUTH2_REQUIRED")) {
-            x();
-            return;
-          }
-          if (H === Kt.LOGIN_WITH_IFLOW && Y.includes("BROWSER_LAUNCH_FAILED")) {
-            let X = Y.split("BROWSER_LAUNCH_FAILED: ")[1] || Y;
-            e(o("useAuthCommand.browserLaunchFailed", { message: X }));
-          } else e(o("useAuthCommand.loginFailed", { message: Y }));
+          e(o("useAuthCommand.loginFailed", { message: Y }));
           x();
         } finally {
           (R(!1), D(void 0));
@@ -32262,26 +32197,14 @@ var oio = (t, e, r, n) => {
         if (
           (t.setValue(U, "selectedAuthType", H),
           (A6.includes(H) || (typeof H == "string" && H.startsWith("provider:"))) && Y?.apiKey && t.setValue(U, "apiKey", Y.apiKey),
-          H === Kt.IFLOW && Y?.baseUrl)
+          H === Kt.OPENAI_COMPATIBLE || (typeof H == "string" && H.startsWith("provider:")))
         ) {
-          let X = vX(Y.baseUrl);
-          t.setValue(U, "baseUrl", X);
-        }
-        if (H === Kt.AONE && Y?.baseUrl) {
-          let X = vX(Y.baseUrl);
-          t.setValue(U, "baseUrl", X);
-        }
-        if (H === Kt.OPENAI_COMPATIBLE || (typeof H == "string" && H.startsWith("provider:"))) {
           t.setValue(U, "apiKey", Y.apiKey);
           let X = vX(Y.baseUrl);
           t.setValue(U, "baseUrl", X);
         }
         (Y?.modelName && t.setValue(U, "modelName", Y.modelName),
-          Y?.searchApiKey && t.setValue(U, "searchApiKey", Y.searchApiKey),
-          H === Kt.LOGIN_WITH_IFLOW &&
-            (t.setValue(U, "baseUrl", "https://apis.iflow.cn/v1"),
-            Y?.apiKey && t.setValue(U, "apiKey", Y.apiKey),
-            Y?.isServerOAuth2 && t.setValue(U, "isServerOAuth2", Y.isServerOAuth2)));
+          Y?.searchApiKey && t.setValue(U, "searchApiKey", Y.searchApiKey));
         if (Y?.apiKey && typeof Keychain?.saveApiKey == "function") Keychain.saveApiKey(H, Y.apiKey).catch(()=>{});
       },
       [t],
@@ -32290,63 +32213,20 @@ var oio = (t, e, r, n) => {
       async (K, H, U) => {
         let Y = t.merged.selectedAuthType === void 0;
         if (K) {
-          let J = t.merged.selectedAuthType,
-            q = U?.isServerOAuth2 === "true" || t.merged.isServerOAuth2 === "true";
-          ((J === Kt.LOGIN_WITH_IFLOW || K === Kt.LOGIN_WITH_IFLOW) && !q && (await RG()),
-            (J === Kt.LOGIN_WITH_AONE || K === Kt.LOGIN_WITH_AONE) && (await Uqe()));
           let ne = { authType: K, scope: H, extraData: { ...U }, isFirstTimeAuth: Y };
-          (K === Kt.LOGIN_WITH_IFLOW
-            ? ((ne.extraData.baseUrl = "https://apis.iflow.cn/v1"),
-              (ne.extraData.multimodalModelName = "qwen3-vl-plus"))
-            : K === Kt.LOGIN_WITH_AONE &&
-              ((ne.extraData.baseUrl = "https://ducky.code.alibaba-inc.com/v1/openai"),
-              (ne.extraData.multimodalModelName = "ide-qwen3-coder-modelscope")),
-            K !== Kt.LOGIN_WITH_IFLOW && K !== Kt.LOGIN_WITH_AONE && (await O(ne)));
+          await O(ne);
           try {
-            if (
-              ((K === Kt.LOGIN_WITH_IFLOW || K === Kt.LOGIN_WITH_AONE) && R(!0),
-              await r.refreshAuth(
-                K,
-                {
-                  apiKey: ne.extraData?.apiKey,
-                  modelName: ne.extraData?.modelName,
-                  baseUrl: ne.extraData?.baseUrl ? vX(ne.extraData.baseUrl) : ne.extraData?.baseUrl,
-                  searchApiKey: ne.extraData?.searchApiKey,
-                  multimodalModelName: ne.extraData?.multimodalModelName,
-                },
-                (de) => {
-                  D(de);
-                },
-              ),
-              console.log("Authentication updated and applied successfully."),
-              K === Kt.LOGIN_WITH_IFLOW)
-            ) {
-              let de = await yR();
-              (de && ((ne.extraData.apiKey = de), (ne.extraData.searchApiKey = de)), await O(ne), n && n());
-            }
-            if (K === Kt.LOGIN_WITH_AONE) {
-              let de = await vT();
-              if (de) {
-                let ce = Buffer.from(de, "utf8").toString("base64");
-                ((ne.extraData.apiKey = ce), (ne.extraData.searchApiKey = ce));
-              }
-              (await O(ne), n && n());
-            }
+            await r.refreshAuth(K, {
+              apiKey: ne.extraData?.apiKey,
+              modelName: ne.extraData?.modelName,
+              baseUrl: ne.extraData?.baseUrl ? vX(ne.extraData.baseUrl) : ne.extraData?.baseUrl,
+              searchApiKey: ne.extraData?.searchApiKey,
+            }, (de) => { D(de); });
+            console.log("Authentication updated and applied successfully.");
           } catch (de) {
             let ce = mr(de);
-            if ((K === Kt.LOGIN_WITH_IFLOW || K === Kt.LOGIN_WITH_AONE) && ce.includes("SERVER_OAUTH2_REQUIRED")) {
-              (R(!1), D(void 0), x());
-              return;
-            }
-            if ((K === Kt.LOGIN_WITH_IFLOW || K === Kt.LOGIN_WITH_AONE) && ce.includes("BROWSER_LAUNCH_FAILED")) {
-              let ye = ce.split("BROWSER_LAUNCH_FAILED: ")[1] || ce;
-              (e(o("useAuthCommand.browserLaunchFailed", { message: ye })), R(!1), D(void 0), x());
-              return;
-            }
             e(o("useAuthCommand.configurationFailed", { message: ce }));
             return;
-          } finally {
-            (K === Kt.LOGIN_WITH_IFLOW || K === Kt.LOGIN_WITH_AONE) && (R(!1), D(void 0));
           }
         }
         (a(!1), e(null));
