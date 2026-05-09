@@ -34,7 +34,6 @@
   "dependencies": {
     "@google/genai": ">=1.0.0",
     "@grpc/proto-loader": ">=0.7.0",
-    "@lightpanda/browser": "^1.2.0",
     "@lydell/node-pty": ">=1.1.0",
     "@xmldom/xmldom": "^0.9.10",
     "archiver": ">=7.0.0",
@@ -58,10 +57,11 @@
     "tmp": ">=0.2.0",
     "undici": ">=7.0.0",
     "xmlchars": ">=2.2.0",
-    "xpath": "^0.0.34",
     "yargs-parser": ">=21.0.0",
     "zip-stream": ">=6.0.0"
   },
+  "optionalDependencies": {
+    "@lightpanda/browser": "^1.2.0"
   "keywords": [
     "ai",
     "cli",
