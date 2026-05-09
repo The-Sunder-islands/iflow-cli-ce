@@ -826,14 +826,14 @@ var renderCmd,
         if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
         if (!_installing) {
           _installing = !0;
-          t.ui.addItem({ type: "info", text: "Installing Chromium in background..." }, Date.now());
+          t.ui.addItem({ type: "info", text: "Installing Chromium in background... (npx playwright install chromium)" }, Date.now());
           var cp = require("child_process");
           cp.exec("npx playwright install chromium 2>&1", { maxBuffer: 1024 * 1024 }, function (err, stdout) {
             _installing = !1;
-            if (err) console.error("[Render] Playwright install failed:", stdout);
-            else console.log("[Render] Chromium installed successfully");
+            if (err) { console.error("[Render] Playwright install failed:", stdout); return; }
+            console.log("[Render] Chromium installed successfully. Use /render status to verify.");
           });
-        } else t.ui.addItem({ type: "info", text: "Chromium is already being installed. Use /render status to check." }, Date.now());
+        } else t.ui.addItem({ type: "info", text: "Chromium installation already in progress. Run /render status to check." }, Date.now());
       },
     };
     var renderStatus = {
