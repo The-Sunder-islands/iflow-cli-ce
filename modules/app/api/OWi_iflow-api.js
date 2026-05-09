@@ -807,38 +807,51 @@ var renderCmd,
     Qs();
     Ot();
     var _installing = !1;
+    var renderLightpanda = {
+      name: "lightpanda",
+      description: "Switch to Lightpanda renderer (default)",
+      kind: "built-in",
+      action: async (t, e) => {
+        if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
+        t.ui.addItem({ type: "info", text: "Renderer switched to Lightpanda (default)." }, Date.now());
+      },
+    };
+    var renderChromium = {
+      name: "chromium",
+      description: "Switch to Chromium renderer (auto-installs Playwright)",
+      kind: "built-in",
+      action: async (t, e) => {
+        if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
+        if (!_installing) {
+          _installing = !0;
+          t.ui.addItem({ type: "info", text: "Installing Chromium in background..." }, Date.now());
+          var cp = require("child_process");
+          cp.exec("npx playwright install chromium 2>&1", { maxBuffer: 1024 * 1024 }, function (err, stdout) {
+            _installing = !1;
+            if (err) console.error("[Render] Playwright install failed:", stdout);
+            else console.log("[Render] Chromium installed successfully");
+          });
+        } else t.ui.addItem({ type: "info", text: "Chromium is already being installed. Use /render status to check." }, Date.now());
+      },
+    };
+    var renderStatus = {
+      name: "status",
+      description: "Show current renderer status",
+      kind: "built-in",
+      action: async (t, e) => {
+        var s = globalThis.SearchRenderer;
+        if (!s) t.ui.addItem({ type: "info", text: "SearchRenderer not available." }, Date.now());
+        else t.ui.addItem({ type: "info", text: "Renderer: " + s.activeRenderer + (_installing ? " (Chromium installing...)" : "") }, Date.now());
+      },
+    };
     renderCmd = {
       name: "render",
       get description() {
         try { return I.t ? I.t("renderCommand.description") : "Switch renderer"; } catch { return "Switch renderer"; }
       },
       kind: "built-in",
-      action: (t, e) => {
-        var r = (e || "").trim().toLowerCase();
-        if (r === "status") {
-          var s = globalThis.SearchRenderer;
-          if (!s) return { type: "status", message: "SearchRenderer not available." };
-          return { type: "status", message: "Renderer: " + s.activeRenderer + (_installing ? " (Chromium installing...)" : "") };
-        }
-        if (r === "chromium" || r === "chrome") {
-          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("chromium");
-          if (!_installing) {
-            _installing = !0;
-            var cp = require("child_process");
-            cp.exec("npx playwright install chromium 2>&1", { maxBuffer: 1024 * 1024 }, function (err, stdout) {
-              _installing = !1;
-              if (err) console.error("[Render] Playwright install failed:", stdout);
-              else console.log("[Render] Chromium installed successfully");
-            });
-          }
-          return { type: "status", message: _installing ? "Chromium installing in background... Use /render status to check." : "Renderer switched to Chromium." };
-        }
-        if (r === "lightpanda") {
-          if (globalThis.SearchRenderer) globalThis.SearchRenderer.setRenderer("lightpanda");
-          return { type: "status", message: "Renderer switched to Lightpanda (default)." };
-        }
-        return { type: "status", message: "Usage: /render lightpanda | /render chromium | /render status" };
-      },
+      subCommands: [renderLightpanda, renderChromium, renderStatus],
+      action: async (t, e) => { renderLightpanda.action(t, e); },
     };
   });
 import Gj from "path";
