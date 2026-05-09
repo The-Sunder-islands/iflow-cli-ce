@@ -29,10 +29,6 @@ var MigrateConfig,
           }
           if (typeof ConfigModel?.migrate == "function") {
             ConfigModel.migrate(old);
-            // If keytar not available, store apiKey in config (less secure but works)
-            if (old.apiKey && (!globalThis.Keychain || !globalThis.Keychain.available)) {
-              if (typeof ConfigModel?.set == "function") ConfigModel.set("_key_" + (old.selectedAuthType || "default"), old.apiKey);
-            }
             this.status = "done";
             console.log("");
             console.log("  Configuration migrated from ~/.iflow to ~/.iflow-ce");

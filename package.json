@@ -29,7 +29,8 @@
   "scripts": {
     "dev": "node bin/iflow-ce-dev.cjs",
     "start": "node bin/iflow-ce.cjs",
-    "build": "node build.js"
+    "build": "node build.js",
+    "postinstall": "node -e \"try{require('keytar')}catch(e){console.warn('[WARN] keytar not available. API keys will not be stored securely. Install libsecret: sudo apt install libsecret-1-dev' + (process.platform==='win32'?' OR for Windows you need Visual Studio Build Tools.':'') + (process.env.HOME?.includes('com.termux')?' OR on Termux: pkg install binutils gnupg':'') );}\" || true"
   },
   "dependencies": {
     "@google/genai": ">=1.0.0",

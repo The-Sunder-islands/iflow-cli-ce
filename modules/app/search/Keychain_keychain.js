@@ -2,33 +2,22 @@ var Keychain,
   keychainInit = j(() => {
     "use strict";
     var _kt = null;
-    var _ktAvailable = !1;
-    try {
-      _kt = require("keytar");
-      _ktAvailable = !0;
-    } catch (e) { _ktAvailable = !1; }
+    try { _kt = require("keytar"); } catch (e) { _kt = null; }
+    if (!_kt) console.warn("[Keychain] keytar not installed. API keys stored in settings file (less secure). To fix: npm install keytar");
+    function kt() { return _kt; }
     Keychain = {
-      get available() { return _ktAvailable; },
+      get available() { return !!_kt; },
       async saveApiKey(e, r) {
-        if (_ktAvailable) {
-          try { await _kt.setPassword("iflow-cli-ce", e, r); return; } catch (n) {}
-        }
-        // Fallback: store in persistence (less secure)
-        if (typeof ConfigModel?.set == "function") ConfigModel.set("_key_" + e, r);
+        if (!_kt) { console.warn("[Keychain] keytar not available, API key not stored."); return; }
+        try { await _kt.setPassword("iflow-cli-ce", e, r); } catch (n) { console.warn("[Keychain] Save failed:", n.message); }
       },
       async getApiKey(e) {
-        if (_ktAvailable) {
-          try { var r = await _kt.getPassword("iflow-cli-ce", e); if (r) return r; } catch (n) {}
-        }
-        // Fallback: read from persistence
-        if (typeof ConfigModel?.get == "function") return ConfigModel.get("_key_" + e);
-        return null;
+        if (!_kt) return null;
+        try { return await _kt.getPassword("iflow-cli-ce", e); } catch (n) { return null; }
       },
       async deleteApiKey(e) {
-        if (_ktAvailable) {
-          try { await _kt.deletePassword("iflow-cli-ce", e); } catch (n) {}
-        }
-        if (typeof ConfigModel?.set == "function") ConfigModel.set("_key_" + e, void 0);
+        if (!_kt) return;
+        try { await _kt.deletePassword("iflow-cli-ce", e); } catch (n) {}
       },
     };
   });
