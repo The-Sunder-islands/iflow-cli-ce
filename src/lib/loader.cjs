@@ -134,6 +134,7 @@ function loadAllModules() {
         filename: `modules/${category}/${name}_${safeLabel}.js`,
         lineOffset: 0,
         columnOffset: 0,
+        importModuleDynamically: (s) => import(s),
       });
       loaded++;
     } catch (err) {

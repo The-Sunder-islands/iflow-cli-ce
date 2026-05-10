@@ -14799,7 +14799,7 @@ var q0e,
       async initialize() {
         let e = {
           processId: process.pid,
-          clientInfo: { name: "iflow-cli-ce", version: "0.6.4" },
+          clientInfo: { name: "iflow-cli-ce", version: "0.6.5" },
           rootUri: `file://${this.workspaceRoot}`,
           capabilities: {
             textDocument: {
