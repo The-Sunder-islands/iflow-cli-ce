@@ -108833,7 +108833,7 @@ var Van = j(() => {
 import * as Qne from "os";
 import * as mGe from "fs";
 function Ma(t) {
-  let e = "0.6.6",
+  let e = "0.6.7",
     r = process.env.IFLOW_ENV || "normal",
     n = {
       darwin: "macOS",
@@ -110540,7 +110540,7 @@ ${b.slice(0, 5e3)}`);
             tool: c,
             toolName: r?.toolName,
             toolArgs: r?.toolArgs ? JSON.stringify(r.toolArgs) : void 0,
-            cliVer: "0.6.6",
+            cliVer: "0.6.7",
             platform: process.platform,
             arch: process.arch,
             nodeVersion: process.version,
@@ -127273,7 +127273,7 @@ ${"=".repeat(80)}
             O = Bln(k, R, P, this.apiKey);
           (O && ((D["x-iflow-signature"] = O), (D["x-iflow-timestamp"] = P.toString())),
             x && (D = { ...D, traceparent: x }),
-            y === "aone" && (D = { ...D, "X-Client-Type": "iflow-cli-ce", "X-Client-Version": "0.6.6" }),
+            y === "aone" && (D = { ...D, "X-Client-Type": "iflow-cli-ce", "X-Client-Version": "0.6.7" }),
             vqe(this.config, new Kne(this.baseUrl, a, JSON.stringify(p), r, JSON.stringify(e.contents))));
           let N = await fetch(`${E}/chat/completions`, {
               signal: e.config?.abortSignal,
@@ -157383,7 +157383,7 @@ var m9e,
               id: e.id,
               timestamp: Date.now(),
               payload: {
-                clientInfo: { version: "0.6.6", platform: process.platform, workingDirectory: process.cwd() },
+                clientInfo: { version: "0.6.7", platform: process.platform, workingDirectory: process.cwd() },
               },
             };
           if (e.method === "tools/call" && e.params?.name === "openDiff") {
@@ -363577,7 +363577,7 @@ var U0r,
         let n = iu.validate(this.schema.parameters, e);
         if (n) return n;
         if (!e.command.trim()) return I.t("shellTool.errors.commandEmpty");
-        if (nat(e.command).length === 0) return I.t("shellTool.errors.couldNotIdentifyCommand");
+        if (extractCommands(e.command).length === 0) return I.t("shellTool.errors.couldNotIdentifyCommand");
         if (e.dir_path) {
           let o = dsi.resolve(this.config.getTargetDir(), e.dir_path);
           if (!this.config.getWorkspaceContext().isPathWithinWorkspace(o))
@@ -363593,7 +363593,7 @@ var U0r,
       async shouldConfirmExecute(e, r) {
         if (this.validateToolParams(e)) return !1;
         let n = iat(e.command),
-          s = [...new Set(nat(n))].filter((u) => !this.allowlist.has(u));
+          s = [...new Set(extractCommands(n))].filter((u) => !this.allowlist.has(u));
         return s.length === 0
           ? !1
           : {
@@ -385366,7 +385366,7 @@ var q0e,
       async initialize() {
         let e = {
           processId: process.pid,
-          clientInfo: { name: "iflow-cli-ce", version: "0.6.6" },
+          clientInfo: { name: "iflow-cli-ce", version: "0.6.7" },
           rootUri: `file://${this.workspaceRoot}`,
           capabilities: {
             textDocument: {
@@ -448637,7 +448637,7 @@ var dau,
     ((dau = lau(import.meta.url)), (fau = mau.dirname(dau)));
   });
 async function uw() {
-  return "0.6.6";
+  return "0.6.7";
 }
 var D1e = j(() => {
   "use strict";
@@ -529708,7 +529708,7 @@ function c9u() {
           platform: process.platform,
           arch: process.arch,
           uptime: process.uptime(),
-          env: { NODE_ENV: "production", SANDBOX: process.env.SANDBOX, CLI_VERSION: "0.6.6" },
+          env: { NODE_ENV: "production", SANDBOX: process.env.SANDBOX, CLI_VERSION: "0.6.7" },
         },
         r = `crash-${Date.now()}-${process.pid}.json`,
         n = t9u.join(process.cwd(), r);

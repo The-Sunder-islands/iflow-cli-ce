@@ -788,7 +788,7 @@ var U0r,
         let n = iu.validate(this.schema.parameters, e);
         if (n) return n;
         if (!e.command.trim()) return I.t("shellTool.errors.commandEmpty");
-        if (nat(e.command).length === 0) return I.t("shellTool.errors.couldNotIdentifyCommand");
+        if (extractCommands(e.command).length === 0) return I.t("shellTool.errors.couldNotIdentifyCommand");
         if (e.dir_path) {
           let o = dsi.resolve(this.config.getTargetDir(), e.dir_path);
           if (!this.config.getWorkspaceContext().isPathWithinWorkspace(o))
@@ -804,7 +804,7 @@ var U0r,
       async shouldConfirmExecute(e, r) {
         if (this.validateToolParams(e)) return !1;
         let n = iat(e.command),
-          s = [...new Set(nat(n))].filter((u) => !this.allowlist.has(u));
+          s = [...new Set(extractCommands(n))].filter((u) => !this.allowlist.has(u));
         return s.length === 0
           ? !1
           : {
