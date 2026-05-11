@@ -520473,7 +520473,6 @@ var Gio = (t, e, r, n, o, s, a, u, c, m, d, f, p, h) => {
             });
         }, 300)));
     }, [n, G]),
-    Y = (0, Ia.useRef)(""),
     X = (0, Ia.useRef)([]),
     J = (0, Ia.useMemo)(() => {
       if (!n.getProjectRoot()) return;
