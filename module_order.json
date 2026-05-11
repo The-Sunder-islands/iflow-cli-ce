@@ -8062,11 +8062,6 @@
       "label": "yargs"
     },
     {
-      "name": "Joi",
-      "category": "protocol/acp",
-      "label": "acp"
-    },
-    {
       "name": "Xoi",
       "category": "app/api",
       "label": "iflow-api"
