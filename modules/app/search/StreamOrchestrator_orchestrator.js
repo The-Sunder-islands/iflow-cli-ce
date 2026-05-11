@@ -9,7 +9,8 @@ var StreamOrchestrator,
       _history = [],
       _historySnapshot = [],
       _thinking = null,
-      _msgIdCounter = 0;
+      _msgIdCounter = 0,
+      _tick = 0;
 
     function notify() {
       for (var i = 0; i < _listeners.length; i++) {
@@ -25,6 +26,7 @@ var StreamOrchestrator,
       get phase() { return _phase; },
       get buffer() { return _buffer; },
       get thinking() { return _thinking; },
+      get tick() { return _tick; },
 
       subscribe(e) {
         _listeners.push(e);
@@ -49,7 +51,7 @@ var StreamOrchestrator,
       finish() {
         var wasGenerating = _phase === "generating";
         _phase = "idle";
-        if (wasGenerating) notify();
+        if (wasGenerating) { _tick++; notify(); }
         return this._dequeue();
       },
 
