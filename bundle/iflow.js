@@ -486538,7 +486538,7 @@ var Coo,
     await Yr();
     qvr = c5u;
   });
-function RX(overrides, extensions) {
+function RX(t, e) {
   if (!Array.isArray(t)) throw new TypeError(`Expected an array, got \`${typeof t}\`.`);
   if (!Number.isSafeInteger(e)) throw new TypeError(`The \`steps\` parameter must be an integer, got ${e}.`);
   let { length: r } = t;
@@ -487267,7 +487267,7 @@ var Yvr = j(async () => {
 });
 var _so = {};
 Wi(_so, { handleAcpSlashCommand: () => I8u });
-function T8u(overrides, extensions) {
+function T8u(t, e) {
   let r = e.startsWith("/") || e.startsWith("\\"),
     n = e.startsWith(" ") && (e.slice(1).includes("/") || e.slice(1).includes("\\"));
   if (
@@ -487643,7 +487643,7 @@ var x8u,
 function R5(t, e, r, n) {
   r.assert.notStrictEqual(t, e, n);
 }
-function RCr(overrides, extensions) {
+function RCr(t, e) {
   e.assert.strictEqual(typeof t, "string");
 }
 function cpe(t) {
@@ -488182,7 +488182,7 @@ var MCr = j(() => {});
 function z8u(t) {
   return typeof t == "boolean";
 }
-function Qso(overrides, extensions) {
+function Qso(t, e) {
   let r = e.y18n.__,
     n = {},
     o = [];
@@ -488248,7 +488248,7 @@ function Qso(overrides, extensions) {
     (n.getDescriptions = () => h));
   let g = [];
   n.epilog = (N) => {
-    blockedMcpServers.push(N);
+    g.push(N);
   };
   let b = !1,
     A;
@@ -488549,7 +488549,7 @@ function Qso(overrides, extensions) {
 function FCr(t) {
   return typeof t == "object";
 }
-function Y8u(overrides, extensions) {
+function Y8u(t, e) {
   return FCr(t) ? { text: t.text, indentation: t.indentation + e } : { text: t, indentation: e };
 }
 function jso(t) {
@@ -488824,7 +488824,7 @@ var UCr,
       }
     };
   });
-function Yso(overrides, extensions) {
+function Yso(t, e) {
   if (t.length === 0) return e.length;
   if (e.length === 0) return t.length;
   let r = [],
@@ -488900,7 +488900,7 @@ function Xso(t, e, r) {
         let g = [];
         for (let A of Object.keys(h)) {
           let y = h[A];
-          y && g.indexOf(y) < 0 && blockedMcpServers.push(y);
+          y && g.indexOf(y) < 0 && g.push(y);
         }
         let b = g.length
           ? `
@@ -490585,15 +490585,15 @@ function aou(t) {
   } else return ["IFLOW.md"];
   return t.contextFileName;
 }
-function o$i(overrides, extensions) {
+function o$i(extList, filterList) {
   let r = [];
-  if (e.length === 0)
-    return t.map((s) => ({ name: s.config.name, version: s.config.version, isActive: !0, path: s.path }));
-  let n = new Set(e.map((s) => s.trim().toLowerCase()));
+  if (filterList.length === 0)
+    return extList.map((s) => ({ name: s.config.name, version: s.config.version, isActive: !0, path: s.path }));
+  let n = new Set(filterList.map((s) => s.trim().toLowerCase()));
   if (n.size === 1 && n.has("none"))
-    return t.map((s) => ({ name: s.config.name, version: s.config.version, isActive: !1, path: s.path }));
+    return extList.map((s) => ({ name: s.config.name, version: s.config.version, isActive: !1, path: s.path }));
   let o = new Set(n);
-  for (let s of t) {
+  for (let s of extList) {
     let a = s.config.name.toLowerCase(),
       u = n.has(a);
     (u && o.delete(a), r.push({ name: s.config.name, version: s.config.version, isActive: u, path: s.path }));
@@ -490772,7 +490772,7 @@ var cQi = {
 };
 dc();
 Ot();
-async function Tau(overrides, extensions) {
+async function Tau(t, e) {
   let { scope: r } = e,
     n = r === "user" ? "User" : "Workspace",
     o = hu(process.cwd()),
@@ -490821,7 +490821,7 @@ async function Oau() {
     });
   return r;
 }
-async function Nau(overrides, extensions) {
+async function Nau(t, e) {
   let r = new S6({ name: "mcp-test-client", version: "0.0.1" }),
     n;
   try {
@@ -490835,8 +490835,8 @@ async function Nau(overrides, extensions) {
     return (await n.close(), Ss.DISCONNECTED);
   }
 }
-async function Pau(overrides, extensions) {
-  return await Nau(overrides, extensions);
+async function Pau(t, e) {
+  return await Nau(t, e);
 }
 async function Bau() {
   let t = await Oau(),
@@ -491192,7 +491192,7 @@ var Tuu = async (t, e = 1, r = 20) => {
       );
     }
   },
-  Duu = async (overrides, extensions) => {
+  Duu = async (t, e) => {
     try {
       let r = await fetch(`https://apis.iflow.cn/v1/workflows/get/${e}`, { headers: { Authorization: `Bearer ${t}` } });
       if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
@@ -491203,7 +491203,7 @@ var Tuu = async (t, e = 1, r = 20) => {
       return (console.error(I.t("workflowAdd.failedToFetchDetails"), r), null);
     }
   },
-  Iuu = async (overrides, extensions) => {
+  Iuu = async (t, e) => {
     let r = await fetch(t);
     if (!r.ok) throw new Error(`Failed to download file: ${r.status} ${r.statusText}`);
     let n = await r.arrayBuffer();
@@ -491224,7 +491224,7 @@ var Tuu = async (t, e = 1, r = 20) => {
       return !1;
     }
   },
-  Ouu = async (overrides, extensions) => {
+  Ouu = async (t, e) => {
     let { exec: r } = await import("child_process"),
       { promisify: n } = await import("util"),
       o = n(r),
@@ -491269,7 +491269,7 @@ var Tuu = async (t, e = 1, r = 20) => {
     try {
       switch (r) {
         case ".zip":
-          await Ouu(overrides, extensions);
+          await Ouu(t, e);
           break;
         case ".tgz":
         case ".tar.gz":
@@ -491389,7 +491389,7 @@ var Tuu = async (t, e = 1, r = 20) => {
       return { success: !1, message: I.t("workflowAdd.installFailed", { workflowName: r, error: o }) };
     }
   },
-  WQi = async (overrides, extensions) => {
+  WQi = async (t, e) => {
     await T3.mkdir(e, { recursive: !0 });
     let r = await T3.readdir(t, { withFileTypes: !0 });
     for (let n of r) {
@@ -491531,7 +491531,7 @@ var $uu = async (t, e = 1, r = 20) => {
       );
     }
   },
-  juu = async (overrides, extensions) => {
+  juu = async (t, e) => {
     try {
       let r = await fetch(`https://apis.iflow.cn/v1/skills/get/${e}`, { headers: { Authorization: `Bearer ${t}` } });
       if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
@@ -491542,7 +491542,7 @@ var $uu = async (t, e = 1, r = 20) => {
       return (console.error(I.t("skillAdd.failedToFetchDetails"), r), null);
     }
   },
-  Quu = async (overrides, extensions) => {
+  Quu = async (t, e) => {
     let r = await fetch(t);
     if (!r.ok) throw new Error(`Failed to download file: ${r.status} ${r.statusText}`);
     let n = await r.arrayBuffer();
@@ -491563,7 +491563,7 @@ var $uu = async (t, e = 1, r = 20) => {
       return !1;
     }
   },
-  Huu = async (overrides, extensions) => {
+  Huu = async (t, e) => {
     let { exec: r } = await import("child_process"),
       { promisify: n } = await import("util"),
       o = n(r),
@@ -491608,7 +491608,7 @@ var $uu = async (t, e = 1, r = 20) => {
     try {
       switch (r) {
         case ".zip":
-          await Huu(overrides, extensions);
+          await Huu(t, e);
           break;
         case ".tgz":
         case ".tar.gz":
@@ -491734,7 +491734,7 @@ var $uu = async (t, e = 1, r = 20) => {
       return { success: !1, message: I.t("skillAdd.installFailed", { skillName: r, error: s }) };
     }
   },
-  JQi = async (overrides, extensions) => {
+  JQi = async (t, e) => {
     await rh.mkdir(e, { recursive: !0 });
     let r = await rh.readdir(t, { withFileTypes: !0 });
     for (let n of r) {
@@ -492527,12 +492527,12 @@ iFlow CLI - Launch an interactive CLI, use -p/--prompt for non-interactive mode`
   );
 }
 async function loadHierarchicalMemory(cwd, debug, fileService, overrides, contextFiles = [], memoryImportFormat = "tree", fileFilter) {
-  let u = k6r.realpathSync(O6r.resolve(t)),
+  let u = k6r.realpathSync(O6r.resolve(cwd)),
     c = k6r.realpathSync(O6r.resolve(tcu())),
-    d = u === c ? "" : t;
+    d = u === c ? "" : cwd;
   return (
-    e && N6r.debug(`CLI: Delegating hierarchical memory load to server for CWD: ${t} (memoryImportFormat: ${s})`),
-    loadMemoryWithDiscovery(cachedDir, debug, fileService, contextFiles, memoryImportFormat, fileFilter, (overrides.memoryDiscoveryMaxDirs ?? ConfigModel.get("memoryDiscoveryMaxDirs")))
+    debug && N6r.debug(`CLI: Delegating hierarchical memory load to server for CWD: ${cwd} (memoryImportFormat: ${memoryImportFormat})`),
+    t$(d, debug, fileService, contextFiles, memoryImportFormat, fileFilter, (overrides.memoryDiscoveryMaxDirs ?? ConfigModel.get("memoryDiscoveryMaxDirs")))
   );
 }
 async function buildSessionConfig(overrides, extensions, sessionId, argv, cwd = up.cwd()) {
@@ -492540,7 +492540,7 @@ async function buildSessionConfig(overrides, extensions, sessionId, argv, cwd = 
     memoryImportFormat = (overrides.memoryImportFormat ?? ConfigModel.get("memoryImportFormat")) || "tree",
     extensionParsed = o$i(extensions, argv.extensions || []),
     activeExtensions = extensions.filter((ext, i) => extensionParsed[i].isActive);
-  let contextFileName = (overrides.contextFileName ?? ConfigModel.get("contextFileName"));
+  let contextFileName = overrides.contextFileName ?? ConfigModel.get("contextFileName");
   contextFileName ? Jce(contextFileName) : Jce(Lz());
   let contextFiles = activeExtensions.flatMap((ext) => ext.contextFiles),
     fileDiscovery = new UY(cwd),
@@ -492551,12 +492551,12 @@ async function buildSessionConfig(overrides, extensions, sessionId, argv, cwd = 
     excludeTools = collectExcludeTools(overrides, activeExtensions),
     blockedMcpServers = [];
   if (!argv.allowedMcpServerNames) {
-    let allowedMcp = (overrides.allowMCPServers ?? ConfigModel.get("allowMCPServers"));
+    let allowedMcp = overrides.allowMCPServers ?? ConfigModel.get("allowMCPServers");
     if (allowedMcp) {
       let serverSet = new Set(allowedMcp.filter(Boolean));
       serverSet.size > 0 && (mcpServers = Object.fromEntries(Object.entries(mcpServers).filter(([name]) => serverSet.has(name))));
     }
-    let excludedMcp = (overrides.excludeMCPServers ?? ConfigModel.get("excludeMCPServers"));
+    let excludedMcp = overrides.excludeMCPServers ?? ConfigModel.get("excludeMCPServers");
     if (excludedMcp) {
       let serverSet = new Set(excludedMcp.filter(Boolean));
       serverSet.size > 0 && (mcpServers = Object.fromEntries(Object.entries(mcpServers).filter(([name]) => !serverSet.has(name))));
@@ -492680,7 +492680,7 @@ async function buildSessionConfig(overrides, extensions, sessionId, argv, cwd = 
 }
 function collectMcpServers(overrides, extensions) {
   let r = { ...((overrides.mcpServers ?? ConfigModel.get("mcpServers")) || {}) };
-  for (let n of e)
+  for (let n of extensions)
     Object.entries(n.config.mcpServers || {}).forEach(([o, s]) => {
       if (r[o]) {
         N6r.warn(`Skipping extension MCP config for server with key "${o}" as it already exists.`);
@@ -492692,7 +492692,7 @@ function collectMcpServers(overrides, extensions) {
 }
 function collectExcludeTools(overrides, extensions) {
   let r = new Set((overrides.excludeTools ?? ConfigModel.get("excludeTools")) || []);
-  for (let n of e) for (let o of n.config.excludeTools || []) r.add(o);
+  for (let n of extensions) for (let o of n.config.excludeTools || []) r.add(o);
   return [...r];
 }
 dc();
@@ -492703,7 +492703,7 @@ import * as zN from "node:path";
 import * as j3t from "node:os";
 var ocu = 10,
   B6r = ui();
-function aGi(overrides, extensions) {
+function aGi(t, e) {
   try {
     return (LA.existsSync(t) || LA.mkdirSync(t, { recursive: !0 }), t);
   } catch (r) {
@@ -492722,14 +492722,14 @@ var Cj;
 try {
   let t = zN.join(Tn(), "log"),
     e = zN.join(j3t.tmpdir(), B6r, "log");
-  Cj = aGi(overrides, extensions);
+  Cj = aGi(t, e);
 } catch {
   Cj = zN.join(j3t.tmpdir(), B6r, "log");
 }
 function scu() {
   let t = zN.join(Tn(), "log"),
     e = zN.join(j3t.tmpdir(), B6r, "log");
-  Cj = aGi(overrides, extensions);
+  Cj = aGi(t, e);
 }
 function uGi() {
   try {
@@ -492917,7 +492917,7 @@ ${o.updateMessage}`),
     m
   );
 }
-function mGi(overrides, extensions) {
+function mGi(t, e) {
   let r = !1,
     n = (u) => {
       e(u);
@@ -493111,7 +493111,7 @@ async function N1e(t) {
     return (console.error("Error executing statusline:", e instanceof Error ? e.message : e), null);
   }
 }
-async function Acu(overrides, extensions) {
+async function Acu(t, e) {
   try {
     let r = await bcu(t);
     if (!r) throw new Error("Invalid command format or forbidden command");
@@ -493647,7 +493647,7 @@ function pn(t, { isActive: e }) {
 vn();
 Hn();
 var $v = Se(Rt(), 1);
-function Pcu(overrides, extensions) {
+function Pcu(t, e) {
   switch (e.type) {
     case "insert": {
       let r = e.payload,
@@ -494762,7 +494762,7 @@ var XGi = (0, Xg.memo)(
           ],
         });
   },
-  (overrides, extensions) => t.config === e.config,
+  (t, e) => t.config === e.config,
 );
 var LI = Se(Yt(), 1);
 await Yr();
@@ -496933,7 +496933,7 @@ var Gcu = ({ messages: t, width: e }) => {
       ],
     });
   },
-  qcu = (overrides, extensions) => {
+  qcu = (t, e) => {
     if (t.width !== e.width || t.messages.length !== e.messages.length) return !1;
     let r = (s) => {
         let a = { error: 0, warn: 0, log: 0, debug: 0 };
@@ -497769,11 +497769,11 @@ var Dlu = { stdout: WHi(ZTe.stdout), stderr: WHi(ZTe.stderr) },
   Egt = Dlu;
 function EJ(t, e, { target: r = "stdout", ...n } = {}) {
   return Egt[r]
-    ? M1.link(overrides, extensions)
+    ? M1.link(t, e)
     : n.fallback === !1
       ? t
       : typeof n.fallback == "function"
-        ? n.fallback(overrides, extensions)
+        ? n.fallback(t, e)
         : `${t} ${e}`;
 }
 EJ.isSupported = Egt.stdout;
@@ -507543,7 +507543,7 @@ var Hyr = !1,
 function MWi(t) {
   Hyr = t;
 }
-function SJ(overrides, extensions) {
+function SJ(t, e) {
   if (!Hyr) return;
   if (!eb.default.isValidElement(e)) {
     console.error(t, `Invalid element: '${String(e)}' typeof=${typeof e}`);
@@ -508076,10 +508076,10 @@ var dmu = 1,
       h = [],
       g = !1,
       b = !0,
-      blockedMcpServers = [],
+      A = [],
       y = null,
       E = "",
-      historyAvailable = false,
+      v = !1,
       C = [],
       x = [];
     function k(R) {
@@ -508099,10 +508099,10 @@ var dmu = 1,
                 ),
               ),
               (g = !1),
-              (blockedMcpServers = []),
+              (A = []),
               (y = null),
               (E = ""))
-            : blockedMcpServers.push(R);
+            : A.push(R);
           return;
         }
         let O = R.match(u),
@@ -508132,7 +508132,7 @@ var dmu = 1,
             (x.length > 0 &&
               C.length > 0 &&
               k((0, Uo.jsx)(HWi, { headers: x, rows: C, terminalWidth: n }, `table-${h.length}`)),
-              (historyAvailable = false),
+              (v = !1),
               (C = []),
               (x = []),
               R.trim().length > 0 &&
@@ -508421,7 +508421,7 @@ var YWi = 4,
             p !== null &&
               y !== null &&
               y > p + h + 1 &&
-              blockedMcpServers.push(
+              g.push(
                 (0, S5.jsx)(
                   ie,
                   { children: (0, S5.jsx)(W, { wrap: "truncate", color: ae.Gray, children: "\u2550".repeat(o) }) },
@@ -508445,7 +508445,7 @@ var YWi = 4,
           }
           let C = b.content.substring(d);
           return (
-            blockedMcpServers.push(
+            g.push(
               (0, S5.jsx)(
                 ie,
                 {
@@ -508654,7 +508654,7 @@ function n_r(t) {
   return "#ffffff";
 }
 var ezi = Se(Rt(), 1);
-function kmu(overrides, extensions) {
+function kmu(t, e) {
   try {
     if (e?.getToolRegistry) {
       let r = e.getToolRegistry().getTool(t);
@@ -508795,7 +508795,7 @@ function Omu(t) {
   }
   return "";
 }
-function Fgt(overrides, extensions) {
+function Fgt(t, e) {
   return t.map((r) => {
     let n = Omu(r);
     if (!n && r.request.args)
@@ -510590,7 +510590,7 @@ await Yr();
 vn();
 Ot();
 var jA = Se(Rt(), 1);
-function Ymu(overrides, extensions) {
+function Ymu(t, e) {
   if (!t) return "";
   let r = t.replace(
     /\n\s*\n\s*\n/g,
@@ -510815,7 +510815,7 @@ var zgt = ({
             osVersion: t.osVersion,
             sandboxEnv: t.sandboxEnv,
             modelVersion: t.modelVersion,
-            selectedAuthType: (overrides.selectedAuthType ?? ConfigModel.get("selectedAuthType")),
+            selectedAuthType: t.selectedAuthType,
             gcpProject: t.gcpProject,
           }),
         t.type === "stats" && (0, ih.jsx)(Vgt, { duration: t.duration, width: p }),
@@ -511184,20 +511184,20 @@ function Rzi({ userMessages: t, userMessageContentMap: e, onSubmit: r, isActive:
               return;
             }
           }
-          let blockedMcpServers = [],
+          let A = [],
             y = /\[Image #(\d+)\]/g,
             E = [...b.matchAll(y)];
           if (E.length > 0) {
             let v = 0;
             for (let x of E) {
               let k = b.slice(v, x.index).trim();
-              k && blockedMcpServers.push({ type: "text", content: k });
+              k && A.push({ type: "text", content: k });
               let R = parseInt(x[1], 10);
-              (blockedMcpServers.push({ type: "image", content: `placeholder_image_data_${R}`, mimeType: "image/png", imageId: R }),
+              (A.push({ type: "image", content: `placeholder_image_data_${R}`, mimeType: "image/png", imageId: R }),
                 (v = (x.index || 0) + x[0].length));
             }
             let C = b.slice(v).trim();
-            (C && blockedMcpServers.push({ type: "text", content: C }), r(A));
+            (C && A.push({ type: "text", content: C }), r(A));
           } else r(b);
         }
         d();
@@ -511252,7 +511252,7 @@ async function tdu(t) {
     return Go(e) && e.code === "ENOENT" ? [] : (console.error("Error reading shell history:", e), []);
   }
 }
-async function rdu(overrides, extensions) {
+async function rdu(t, e) {
   try {
     (await ufe.mkdir(Ygt.dirname(t), { recursive: !0 }),
       await ufe.writeFile(
@@ -511309,7 +511309,7 @@ import aDe from "fs";
 import idu from "os";
 import Nzi from "path";
 Ot();
-function Ozi(overrides, extensions) {
+function Ozi(t, e) {
   let { lines: r, cursorRow: n, cursorCol: o } = t,
     s = null,
     a = () =>
@@ -511687,7 +511687,7 @@ function Ozi(overrides, extensions) {
 function KI(t) {
   return t === void 0 ? !1 : !/[\s,.;!?]/.test(t);
 }
-var cfe = (overrides, extensions) => {
+var cfe = (t, e) => {
     let r = e;
     if (r >= t.length) return r;
     let n = t[r];
@@ -511701,7 +511701,7 @@ var cfe = (overrides, extensions) => {
     }
     return r;
   },
-  Kgt = (overrides, extensions) => {
+  Kgt = (t, e) => {
     let r = e;
     if (r <= 0) return e;
     for (
@@ -511734,7 +511734,7 @@ var cfe = (overrides, extensions) => {
       return r + 1;
     }
   },
-  lfe = (overrides, extensions) => {
+  lfe = (t, e) => {
     let r = e;
     if (r < t.length && /\w/.test(t[r]) && (r + 1 >= t.length || !/\w/.test(t[r + 1])))
       for (r++; r < t.length && !/\w/.test(t[r]); ) r++;
@@ -511835,7 +511835,7 @@ function odu(t) {
 function c_r(t, e, r) {
   return t < e ? e : t > r ? r : t;
 }
-function sdu(overrides, extensions) {
+function sdu(t, e) {
   let r = e,
     n = 0;
   for (; n < t.length; ) {
@@ -511850,7 +511850,7 @@ function sdu(overrides, extensions) {
   }
   return [0, 0];
 }
-function l_r(overrides, extensions) {
+function l_r(t, e) {
   let r = 0,
     n = 0,
     o = 0;
@@ -511939,7 +511939,7 @@ var adu = 100,
       r = [...t.undoStack, e];
     return (r.length > adu && r.shift(), { ...t, undoStack: r, redoStack: [] });
   };
-function udu(overrides, extensions) {
+function udu(t, e) {
   let r = D1,
     n = (s) => t.lines[s] ?? "",
     o = (s) => xs(n(s));
@@ -512237,7 +512237,7 @@ function udu(overrides, extensions) {
     case "vim_move_to_last_line":
     case "vim_move_to_line":
     case "vim_escape_insert_mode":
-      return Ozi(overrides, extensions);
+      return Ozi(t, e);
     default:
       return (console.error(`Unknown action encountered: ${e}`), t);
   }
@@ -513194,7 +513194,7 @@ function Fzi(t) {
 function gdu(t) {
   return t === 1 ? "1 line" : `${t} lines`;
 }
-function Uzi(overrides, extensions) {
+function Uzi(t, e) {
   let r = gdu(e);
   return `[Pasted text #${t} +${r}]`;
 }
@@ -513305,7 +513305,7 @@ var obt = ((O) => (
     expandSuggestion: [{ key: "right" }],
     collapseSuggestion: [{ key: "left" }],
   };
-function Adu(overrides, extensions) {
+function Adu(t, e) {
   let r = !1;
   if (t.key !== void 0) r = t.key === e.name;
   else if (t.sequence !== void 0) r = t.sequence === e.sequence;
@@ -513327,7 +513327,7 @@ function _du(t = sbt) {
   return e;
 }
 var I1 = _du(sbt);
-function Vzi(overrides, extensions) {
+function Vzi(t, e) {
   if (!t) return !1;
   let r = t.trim();
   if (!r.startsWith("/")) return !1;
@@ -513388,7 +513388,7 @@ var vdu = ({
     setShellModeActive: A,
     vimHandleInput: y,
     agentsOnlineMode: E = !1,
-    hasActiveToolConfirmation: historyAvailable = false,
+    hasActiveToolConfirmation: v = !1,
     onToggleSuggestions: C,
   }) => {
     let { t: x } = rr(),
@@ -513819,7 +513819,7 @@ var vdu = ({
   },
   Wzi = (0, Ad.memo)(
     vdu,
-    (overrides, extensions) =>
+    (t, e) =>
       !(
         t.focus !== e.focus ||
         t.inputWidth !== e.inputWidth ||
@@ -516420,7 +516420,7 @@ var Gdu = Object.defineProperties(() => {}, {
     let n = (...o) => qdu(n, o.length === 1 ? "" + o[0] : o.join(" "));
     return (Object.setPrototypeOf(n, Gdu), (n[p_r] = t), (n[pfe] = e), (n[lDe] = r), n);
   },
-  qdu = (overrides, extensions) => {
+  qdu = (t, e) => {
     if (t.level <= 0 || !e) return t[lDe] ? "" : e;
     let r = t[pfe];
     if (r === void 0) return e;
@@ -517328,7 +517328,7 @@ var DYi = ({ sessions: t, onSelect: e }) => {
         : (0, dp.jsx)(ie, {})
   );
 };
-function Wdu(overrides, extensions) {
+function Wdu(t, e) {
   let r = t.sessionId.substring(0, 8),
     n = __r(t.lastActivity);
   return `${e}. [${r}] ${n}`;
@@ -517352,7 +517352,7 @@ function __r(t) {
             ? I.t("sessionSelectorComponent.time.weeksAgo", { count: Math.floor(a / 7) })
             : r.toLocaleDateString();
 }
-function zdu(overrides, extensions) {
+function zdu(t, e) {
   return t.length <= e ? t : t.substring(0, e - 3) + "...";
 }
 Ot();
@@ -518001,7 +518001,7 @@ var XDe = {
       "Programs",
     ],
   };
-function d2u(overrides, extensions) {
+function d2u(t, e) {
   let r = e.startsWith("/") || e.startsWith("\\"),
     n = e.startsWith(" ") && (e.slice(1).includes("/") || e.slice(1).includes("\\"));
   if (
@@ -518782,7 +518782,7 @@ ${I.t("cleanupHistoryDialog.restartReminder")}`;
   };
 };
 var Ly = Se(Yt(), 1);
-function h2u(overrides, extensions) {
+function h2u(t, e) {
   switch (e.type) {
     case "ADD_MESSAGES": {
       let r = [...t];
@@ -518912,7 +518912,7 @@ var g2u = "\x1B[?1004h",
 var yio = Se(Yt(), 1);
 WN();
 xX();
-async function Aio(overrides, extensions) {
+async function Aio(t, e) {
   try {
     let r = new hf();
     await r.initialize();
@@ -519529,7 +519529,7 @@ var Dio = (t, e, r, n, o, s) => ({
             let A = Date.now(),
               y = "",
               E = "",
-              historyAvailable = false,
+              v = !1,
               C = 0,
               x = {
                 callId: d,
@@ -520005,7 +520005,7 @@ async function kio({ query: t, config: e, addItem: r, onDebugMessage: n, message
     { processedQuery: [{ text: h }], shouldProceed: !0, selectedAgent: f }
   );
 }
-var Oio = (overrides, extensions) => {
+var Oio = (t, e) => {
     let r = 0,
       n = 0;
     for (; n < t.length; ) {
@@ -520015,8 +520015,8 @@ var Oio = (overrides, extensions) => {
     }
     return r % 2 === 1;
   },
-  U2u = (overrides, extensions) => {
-    if (!Oio(overrides, extensions)) return -1;
+  U2u = (t, e) => {
+    if (!Oio(t, e)) return -1;
     let r = 0;
     for (; r < e; ) {
       let n = t.indexOf("```", r);
@@ -520146,7 +520146,7 @@ function Yfe(t) {
       return (console.warn(`Unknown core status encountered: ${t}`), "Error");
   }
 }
-function Mvr(overrides, extensions) {
+function Mvr(t, e) {
   return {
     type: "tool_group",
     tools: (Array.isArray(t) ? t : [t]).map((o) => {
@@ -520235,7 +520235,7 @@ function Bio(t) {
       );
     }, []));
 }
-function Fvr(overrides, extensions) {
+function Fvr(t, e) {
   try {
     let r = t.getHistory();
     if (r.length === 0) return 0;
@@ -521310,7 +521310,7 @@ function Wio() {
 }
 ra();
 var sQ = Se(Yt(), 1);
-var zio = (overrides, extensions) => {
+var zio = (t, e) => {
   let [r, n] = (0, sQ.useState)(0),
     o = (0, sQ.useRef)(null),
     s = (0, sQ.useRef)(e),
@@ -521452,7 +521452,7 @@ var Q2u = () => I.t("loading.phrases", { returnObjects: !0 }),
   l7 = Q2u(),
   G2u = 15e3,
   Yio = { minShowInterval: 3e5 },
-  Kio = (overrides, extensions) => {
+  Kio = (t, e) => {
     let [r, n] = (0, Uy.useState)(l7[0]),
       [o, s] = (0, Uy.useState)(l7),
       a = (0, Uy.useRef)(null),
@@ -521464,7 +521464,7 @@ var Q2u = () => I.t("loading.phrases", { returnObjects: !0 }),
           h = o.filter((E) => !l7.includes(E)),
           g = c.current.getAvailablePhrases(p, Yio),
           b = c.current.getAvailablePhrases(h, Yio),
-          blockedMcpServers = [];
+          A = [];
         if (
           (g.length > 0 && b.length > 0
             ? (A = Math.random() < 0.5 ? b : g)
@@ -521876,7 +521876,7 @@ ra();
 Ot();
 import { promises as rIe } from "node:fs";
 import { join as roo } from "node:path";
-var noo = (overrides, extensions) => {
+var noo = (t, e) => {
   let [r, n] = (0, Xfe.useState)(!1),
     o = (0, Xfe.useCallback)(() => {
       n(!0);
@@ -522001,7 +522001,7 @@ var H2u = 10,
   },
   ioo = () => ({ count: 0, pendingOperator: null }),
   z2u = { mode: "NORMAL", count: 0, pendingOperator: null, lastCommand: null },
-  Y2u = (overrides, extensions) => {
+  Y2u = (t, e) => {
     switch (e.type) {
       case "SET_MODE":
         return { ...t, mode: e.mode };
@@ -522023,7 +522023,7 @@ var H2u = 10,
         return t;
     }
   };
-function ooo(overrides, extensions) {
+function ooo(t, e) {
   let { vimEnabled: r, vimMode: n, setVimMode: o } = Ebt(),
     [s, a] = (0, $y.useReducer)(Y2u, z2u);
   (0, $y.useEffect)(() => {
@@ -522382,7 +522382,7 @@ async function J2u(t) {
     throw e;
   }
 }
-async function X2u(overrides, extensions) {
+async function X2u(t, e) {
   return (
     await t.setCodeAssistGlobalUserSetting({ cloudaicompanionProject: t.projectId, freeTierDataCollectionOptin: e })
   ).freeTierDataCollectionOptin;
@@ -524251,7 +524251,7 @@ function Jvr() {
   }
   return new Kvr(r, e);
 }
-function Xvr(overrides, extensions) {
+function Xvr(t, e) {
   let n = Jvr().isPathTrusted(t);
   return n !== void 0 ? { isTrusted: n, source: "local" } : { isTrusted: void 0, source: "none" };
 }
@@ -524277,7 +524277,7 @@ function p5u(t) {
     }
   return e;
 }
-function zoo(overrides, extensions) {
+function zoo(t, e) {
   let r = (0, Sw.useRef)(!1),
     o = (() => {
       if (!Voo(t.merged)) return { trustResult: { isTrusted: !0, source: "none" }, showDialog: !1, detectedHooks: [] };
@@ -524778,7 +524778,7 @@ ${Hm}`,
             rC.cwd(),
             e.getDebugMode(),
             e.getFileService(),
-            ConfigModel.getAll(),
+            { memoryImportFormat: ConfigModel.get("memoryImportFormat"), memoryDiscoveryMaxDirs: ConfigModel.get("memoryDiscoveryMaxDirs") },
             e.getExtensionContextFilePaths(),
             ConfigModel.get("memoryImportFormat") || "tree",
             e.getFileFilteringOptions(),
@@ -525720,7 +525720,7 @@ ${Hm}`,
     return (0, yr.jsx)(rqi, { initialOutput: e, children: (0, yr.jsx)(A5u, { ...t }) });
   };
 async function tso() {
-  return new Promise((overrides, extensions) => {
+  return new Promise((t, e) => {
     let r = "";
     process.stdin.setEncoding("utf8");
     let n = () => {
@@ -526079,7 +526079,7 @@ async function oso(t, e = [], r) {
       });
     }));
 }
-async function rso(overrides, extensions) {
+async function rso(t, e) {
   return new Promise((r) => {
     let o = npe(t, ["images", "-q", e]),
       s = "";
@@ -526095,7 +526095,7 @@ async function rso(overrides, extensions) {
       }));
   });
 }
-async function x5u(overrides, extensions) {
+async function x5u(t, e) {
   return (
     console.info(`Attempting to pull image ${e} using ${t}...`),
     new Promise((r) => {
@@ -526129,16 +526129,16 @@ async function x5u(overrides, extensions) {
     })
   );
 }
-async function T5u(overrides, extensions) {
+async function T5u(t, e) {
   return (
     console.info(`Checking for sandbox image: ${e}`),
-    (await rso(overrides, extensions))
+    (await rso(t, e))
       ? (console.info(`Sandbox image ${e} found locally.`), !0)
       : (console.info(`Sandbox image ${e} not found locally.`),
         e === nso
           ? !1
-          : (await x5u(overrides, extensions))
-            ? (await rso(overrides, extensions))
+          : (await x5u(t, e))
+            ? (await rso(t, e))
               ? (console.info(`Sandbox image ${e} is now available after pulling.`), !0)
               : (console.warn(
                   `Sandbox image ${e} still not found after a pull attempt. This might indicate an issue with the image name or registry, or the pull command reported success but failed to make the image available.`,
@@ -526320,7 +526320,7 @@ var oIe = {
       "Programs",
     ],
   };
-function R5u(overrides, extensions) {
+function R5u(t, e) {
   if (t.includes("/") || t.includes("\\")) return !0;
   let r = e.startsWith("/") || e.startsWith("\\"),
     n = e.startsWith(" ") && (e.slice(1).includes("/") || e.slice(1).includes("\\"));
@@ -526503,7 +526503,7 @@ async function sCr(t, e, r, n, o, s, a) {
   }
 }
 dc();
-function fQ(overrides, extensions) {
+function fQ(t, e) {
   if (!t || typeof t != "string") return t;
   let r = e.toLowerCase(),
     n,
@@ -526519,8 +526519,8 @@ function fQ(overrides, extensions) {
     t.length > n ? t.substring(0, n) + o : t
   );
 }
-function O5u(overrides, extensions) {
-  if (typeof t == "string") return fQ(overrides, extensions);
+function O5u(t, e) {
+  if (typeof t == "string") return fQ(t, e);
   if (Array.isArray(t))
     return t.map((r) => {
       if (typeof r == "string") return fQ(r, e);
@@ -528050,7 +528050,7 @@ var cIe = class {
 };
 D1e();
 Ot();
-function pQ(overrides, extensions) {
+function pQ(t, e) {
   if (!t || typeof t != "string") return t;
   let r = e.toLowerCase(),
     n,
@@ -528066,8 +528066,8 @@ function pQ(overrides, extensions) {
     t.length > n ? t.substring(0, n) + o : t
   );
 }
-function xCr(overrides, extensions) {
-  if (typeof t == "string") return pQ(overrides, extensions);
+function xCr(t, e) {
+  if (typeof t == "string") return pQ(t, e);
   if (Array.isArray(t))
     return t.map((r) => {
       if (typeof r == "string") return pQ(r, e);
@@ -528108,7 +528108,7 @@ function xCr(overrides, extensions) {
   }
   return t;
 }
-function Aso(overrides, extensions) {
+function Aso(t, e) {
   let r = [],
     n = [];
   for (let o = 0; o < t.length; o++) {
@@ -528140,7 +528140,7 @@ function Aso(overrides, extensions) {
   return r;
 }
 Ot();
-function TCr(overrides, extensions) {
+function TCr(t, e) {
   if (t.error?.message) throw El.internalError(t.error.message);
   return t.returnDisplay
     ? typeof t.returnDisplay == "string"
@@ -528680,7 +528680,7 @@ _Context auto-compressed: ${b.originalTokenCount} \u2192 ${b.newTokenCount} toke
 `,
             },
           }));
-        let blockedMcpServers = [];
+        let A = [];
         try {
           let y = { message: m?.parts ?? [], config: { abortSignal: r.signal } },
             E = this.config.getStream() ? await o.sendMessageStream(y, n) : await o.sendMessageLatency(y, n);
@@ -528715,7 +528715,7 @@ _Context auto-compressed: ${b.originalTokenCount} \u2192 ${b.newTokenCount} toke
               }
             }
             v.functionCalls?.forEach((C) => {
-              typeof C.args < "u" && blockedMcpServers.push(C);
+              typeof C.args < "u" && A.push(C);
             });
           }
         } catch (y) {
@@ -529492,7 +529492,7 @@ function Dso(t, e, r, n, o) {
             if (b && !b.startsWith("//")) {
               let A = dIe.get(u);
               if (A) {
-                blockedMcpServers.push(b);
+                A.push(b);
                 try {
                   console.warn(`[WS ${h}] buffering early message len=${b.length}`);
                 } catch {}
@@ -529505,7 +529505,7 @@ function Dso(t, e, r, n, o) {
               process.env.GEMINI_VERBOSE === "1" &&
                 console.log(`[WS ${h}] inbound ${b.length} bytes: ${b.slice(0, 80)}`);
             } catch {}
-            blockedMcpServers.push(b);
+            g.push(b);
           }
         }),
         u.on("close", (p, h) => {
@@ -529790,7 +529790,7 @@ function c9u() {
     process.on("warning", (t) => {
       console.warn(I.t("gemini.debug.nodejsWarning"), { name: t.name, message: t.message, stack: t.stack });
     }),
-    process.on("unhandledRejection", (overrides, extensions) => {
+    process.on("unhandledRejection", (t, e) => {
       console.error(I.t("gemini.debug.unhandledPromiseRejectionDetected"), { reason: t, promise: e.toString() });
     }));
 }
@@ -530032,7 +530032,7 @@ async function Cao() {
     g = r.outputFile || r.output_file;
   (await lso(h, m, p, g), process.exit(0));
 }
-function Eao(overrides, extensions) {
+function Eao(t, e) {
   if (!e.merged.hideWindowTitle) {
     let r = (process.env.CLI_TITLE || `iFlow - ${t}`).replace(/[\x00-\x1F\x7F]/g, "");
     (process.stdout.write(`\x1B]2;${r}\x07`),
