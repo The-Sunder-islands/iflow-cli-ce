@@ -89,7 +89,7 @@ var StreamOrchestrator,
         return msg;
       },
 
-      getHistory() { return _history; },
+      getHistory() { return _history.slice(); },
 
       replaceHistory(e) {
         _history = Array.isArray(e) ? e.map(function(m) { return { ...m, id: nextId() }; }) : [];

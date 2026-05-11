@@ -486308,7 +486308,7 @@ var StreamOrchestrator,
         return msg;
       },
 
-      getHistory() { return _history; },
+      getHistory() { return _history.slice(); },
 
       replaceHistory(e) {
         _history = Array.isArray(e) ? e.map(function(m) { return { ...m, id: nextId() }; }) : [];
@@ -521369,11 +521369,10 @@ function Vio(t) {
 }
 var c7 = Se(Yt(), 1);
 function Wio() {
-  var [tick, setTick] = (0, c7.useState)(0);
-  (0, c7.useEffect)(function() {
-    return StreamOrchestrator.subscribe(function() { setTick(function(t) { return t + 1; }); });
-  }, []);
-  var t = StreamOrchestrator.getHistory();
+  var t = (0, c7.useSyncExternalStore)(
+    function(r) { return StreamOrchestrator.subscribe(r); },
+    function() { return StreamOrchestrator.getHistory(); }
+  );
   var s = (0, c7.useCallback)(function(c, m) {
     var msg = StreamOrchestrator.appendHistory(c);
     return msg.id;
