@@ -486226,6 +486226,7 @@ var StreamOrchestrator,
       _buffer = "",
       _parts = [],
       _history = [],
+      _historySnapshot = [],
       _thinking = null,
       _msgIdCounter = 0;
 
@@ -486304,14 +486305,16 @@ var StreamOrchestrator,
       appendHistory(e) {
         var msg = { ...e, id: nextId() };
         _history.push(msg);
+        _historySnapshot = _history.slice();
         notify();
         return msg;
       },
 
-      getHistory() { return _history.slice(); },
+      getHistory() { return _historySnapshot; },
 
       replaceHistory(e) {
         _history = Array.isArray(e) ? e.map(function(m) { return { ...m, id: nextId() }; }) : [];
+        _historySnapshot = _history.slice();
         notify();
       },
 
@@ -486320,6 +486323,7 @@ var StreamOrchestrator,
           if (_history[i].id === e) {
             var updater = typeof r == "function" ? r(_history[i]) : r;
             _history[i] = { ..._history[i], ...updater };
+            _historySnapshot = _history.slice();
             notify();
             return;
           }
@@ -486328,6 +486332,7 @@ var StreamOrchestrator,
 
       clearHistory() {
         _history = [];
+        _historySnapshot = [];
         notify();
       },
 
