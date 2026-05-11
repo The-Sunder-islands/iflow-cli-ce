@@ -1802,6 +1802,7 @@ var zj,
     persistenceInit();
     configModelInit();
     reactAdapterInit();
+    streamOrchestratorInit();
     migrateConfigInit();
     if (typeof MigrateConfig?.run == "function") MigrateConfig.run();
     // Load config into ConfigModel

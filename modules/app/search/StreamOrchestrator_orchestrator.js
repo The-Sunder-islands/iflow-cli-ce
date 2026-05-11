@@ -37,7 +37,6 @@ var StreamOrchestrator,
         var wasGenerating = _phase === "generating";
         _phase = "idle";
         if (wasGenerating) notify();
-        _tryDequeue();
       },
 
       setPhase(e) {
@@ -46,6 +45,11 @@ var StreamOrchestrator,
       },
 
       cancel(e) {
+        _phase = "idle";
+        notify();
+      },
+
+      cancelHard(e) {
         _queue = [];
         _phase = "idle";
         notify();

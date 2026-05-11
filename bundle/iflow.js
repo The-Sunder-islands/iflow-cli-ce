@@ -466904,6 +466904,7 @@ var zj,
     persistenceInit();
     configModelInit();
     reactAdapterInit();
+    streamOrchestratorInit();
     migrateConfigInit();
     if (typeof MigrateConfig?.run == "function") MigrateConfig.run();
     // Load config into ConfigModel
@@ -486255,7 +486256,6 @@ var StreamOrchestrator,
         var wasGenerating = _phase === "generating";
         _phase = "idle";
         if (wasGenerating) notify();
-        _tryDequeue();
       },
 
       setPhase(e) {
@@ -486264,6 +486264,11 @@ var StreamOrchestrator,
       },
 
       cancel(e) {
+        _phase = "idle";
+        notify();
+      },
+
+      cancelHard(e) {
         _queue = [];
         _phase = "idle";
         notify();
