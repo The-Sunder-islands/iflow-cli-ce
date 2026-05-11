@@ -8,6 +8,8 @@ var StreamOrchestrator,
       _parts = [],
       _history = [],
       _historySnapshot = [],
+      _items = [],
+      _itemsSnapshot = [],
       _thinking = null,
       _msgIdCounter = 0,
       _tick = 0;
@@ -85,7 +87,40 @@ var StreamOrchestrator,
         notify();
       },
 
+      getItems() { return _itemsSnapshot; },
+
+      dispatch(e) {
+        e.id = nextId();
+        _items.push(e);
+        _itemsSnapshot = _items.slice();
+        notify();
+      },
+
+      updateLastItem(e) {
+        if (_items.length === 0) return;
+        var i = _items.length - 1;
+        _items[i] = { ..._items[i], ...e };
+        _itemsSnapshot = _items.slice();
+        notify();
+      },
+
+      streamChunk(e) {
+        var lastContentIdx = -1;
+        for (var i = _items.length - 1; i >= 0; i--) {
+          if (_items[i].type === "content") { lastContentIdx = i; break; }
+        }
+        if (lastContentIdx >= 0) {
+          var existing = _items[lastContentIdx];
+          _items[lastContentIdx] = { ...existing, text: (existing.text || "") + e };
+        } else {
+          _items.push({ id: nextId(), type: "content", text: e });
+        }
+        _itemsSnapshot = _items.slice();
+        notify();
+      },
+
       appendHistory(e) {
+        console.warn("DEPRECATED: appendHistory -> use dispatch instead");
         var msg = { ...e, id: nextId() };
         _history.push(msg);
         _historySnapshot = _history.slice();
@@ -93,15 +128,17 @@ var StreamOrchestrator,
         return msg;
       },
 
-      getHistory() { return _historySnapshot; },
+      getHistory() { console.warn("DEPRECATED: getHistory -> use getItems instead"); return _historySnapshot; },
 
       replaceHistory(e) {
+        console.warn("DEPRECATED: replaceHistory -> use dispatch/clearItems instead");
         _history = Array.isArray(e) ? e.map(function(m) { return { ...m, id: nextId() }; }) : [];
         _historySnapshot = _history.slice();
         notify();
       },
 
       updateHistory(e, r) {
+        console.warn("DEPRECATED: updateHistory -> use updateLastItem instead");
         for (var i = 0; i < _history.length; i++) {
           if (_history[i].id === e) {
             var updater = typeof r == "function" ? r(_history[i]) : r;
@@ -114,6 +151,7 @@ var StreamOrchestrator,
       },
 
       clearHistory() {
+        console.warn("DEPRECATED: clearHistory -> use _items=[] instead");
         _history = [];
         _historySnapshot = [];
         notify();
