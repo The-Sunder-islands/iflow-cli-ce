@@ -34650,7 +34650,7 @@ ${je.description}`
     ),
     $e = (0, Ia.useCallback)(
       async (je, He, mt) => {
-        if ((StreamOrchestrator.phase !== "idle" || ee === "waiting_for_confirmation") && !He?.isContinuation && !He?.forceSubmit)
+        if (ee === "waiting_for_confirmation" && !He?.isContinuation && !He?.forceSubmit)
           return;
         let kt = Date.now();
         (He?.isContinuation || (f(!1), n.setQuotaErrorOccurred(!1)),
