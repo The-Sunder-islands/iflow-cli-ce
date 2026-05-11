@@ -1948,7 +1948,7 @@ var m9e,
               id: e.id,
               timestamp: Date.now(),
               payload: {
-                clientInfo: { version: "0.6.7", platform: process.platform, workingDirectory: process.cwd() },
+                clientInfo: { version: "0.7.0", platform: process.platform, workingDirectory: process.cwd() },
               },
             };
           if (e.method === "tools/call" && e.params?.name === "openDiff") {

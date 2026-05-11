@@ -108833,7 +108833,7 @@ var Van = j(() => {
 import * as Qne from "os";
 import * as mGe from "fs";
 function Ma(t) {
-  let e = "0.6.7",
+  let e = "0.7.0",
     r = process.env.IFLOW_ENV || "normal",
     n = {
       darwin: "macOS",
@@ -110540,7 +110540,7 @@ ${b.slice(0, 5e3)}`);
             tool: c,
             toolName: r?.toolName,
             toolArgs: r?.toolArgs ? JSON.stringify(r.toolArgs) : void 0,
-            cliVer: "0.6.7",
+            cliVer: "0.7.0",
             platform: process.platform,
             arch: process.arch,
             nodeVersion: process.version,
@@ -127273,7 +127273,7 @@ ${"=".repeat(80)}
             O = Bln(k, R, P, this.apiKey);
           (O && ((D["x-iflow-signature"] = O), (D["x-iflow-timestamp"] = P.toString())),
             x && (D = { ...D, traceparent: x }),
-            y === "aone" && (D = { ...D, "X-Client-Type": "iflow-cli-ce", "X-Client-Version": "0.6.7" }),
+            y === "aone" && (D = { ...D, "X-Client-Type": "iflow-cli-ce", "X-Client-Version": "0.7.0" }),
             vqe(this.config, new Kne(this.baseUrl, a, JSON.stringify(p), r, JSON.stringify(e.contents))));
           let N = await fetch(`${E}/chat/completions`, {
               signal: e.config?.abortSignal,
@@ -157383,7 +157383,7 @@ var m9e,
               id: e.id,
               timestamp: Date.now(),
               payload: {
-                clientInfo: { version: "0.6.7", platform: process.platform, workingDirectory: process.cwd() },
+                clientInfo: { version: "0.7.0", platform: process.platform, workingDirectory: process.cwd() },
               },
             };
           if (e.method === "tools/call" && e.params?.name === "openDiff") {
@@ -385361,7 +385361,7 @@ var q0e,
       async initialize() {
         let e = {
           processId: process.pid,
-          clientInfo: { name: "iflow-cli-ce", version: "0.6.7" },
+          clientInfo: { name: "iflow-cli-ce", version: "0.7.0" },
           rootUri: `file://${this.workspaceRoot}`,
           capabilities: {
             textDocument: {
@@ -448636,7 +448636,7 @@ var dau,
     ((dau = lau(import.meta.url)), (fau = mau.dirname(dau)));
   });
 async function uw() {
-  return "0.6.7";
+  return "0.7.0";
 }
 var D1e = j(() => {
   "use strict";
@@ -529807,7 +529807,7 @@ function c9u() {
           platform: process.platform,
           arch: process.arch,
           uptime: process.uptime(),
-          env: { NODE_ENV: "production", SANDBOX: process.env.SANDBOX, CLI_VERSION: "0.6.7" },
+          env: { NODE_ENV: "production", SANDBOX: process.env.SANDBOX, CLI_VERSION: "0.7.0" },
         },
         r = `crash-${Date.now()}-${process.pid}.json`,
         n = t9u.join(process.cwd(), r);

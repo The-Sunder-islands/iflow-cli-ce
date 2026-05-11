@@ -1,6 +1,6 @@
 {
   "name": "iflow-cli-ce",
-  "version": "0.6.7",
+  "version": "0.7.0",
   "description": "iFlow CLI Community Edition - A powerful AI assistant for your terminal",
   "engines": {
     "node": ">=20.0.0"
