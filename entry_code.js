@@ -35061,7 +35061,7 @@ function Wio() {
               let h = p[p.length - 1];
               if (h.type === "user" && f.type === "user" && h.text === f.text) return p;
             }
-            return [...p, f];
+            return [...p, f].sort((a, b) => a.id - b.id);
           }),
           d
         );
