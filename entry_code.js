@@ -35015,43 +35015,18 @@ function Vio(t) {
 }
 var c7 = Se(Yt(), 1);
 function Wio() {
-  let [t, e] = (0, c7.useState)([]),
-    r = (0, c7.useRef)(0),
-    n = (0, c7.useCallback)((c) => ((r.current += 1), c + r.current), []),
-    o = (0, c7.useCallback)((c) => {
-      e(c);
-    }, []),
-    s = (0, c7.useCallback)(
-      (c, m) => {
-        let d = n(performance.now()),
-          f = { ...c, id: d };
-        return (
-          e((p) => {
-            if (p.length > 0) {
-              let h = p[p.length - 1];
-              if (h.type === "user" && f.type === "user" && h.text === f.text) return p;
-            }
-            return [...p, f].sort((a, b) => a.id - b.id);
-          }),
-          d
-        );
-      },
-      [n],
-    ),
-    a = (0, c7.useCallback)((c, m) => {
-      e((d) =>
-        d.map((f) => {
-          if (f.id === c) {
-            let p = typeof m == "function" ? m(f) : m;
-            return { ...f, ...p };
-          }
-          return f;
-        }),
-      );
-    }, []),
-    u = (0, c7.useCallback)(() => {
-      (e([]), (r.current = 0));
-    }, []);
+  var [tick, setTick] = (0, c7.useState)(0);
+  (0, c7.useEffect)(function() {
+    return StreamOrchestrator.subscribe(function() { setTick(function(t) { return t + 1; }); });
+  }, []);
+  var t = StreamOrchestrator.getHistory();
+  var s = (0, c7.useCallback)(function(c, m) {
+    var msg = StreamOrchestrator.appendHistory(c);
+    return msg.id;
+  }, []);
+  var a = (0, c7.useCallback)(function(c, m) { StreamOrchestrator.updateHistory(c, m); }, []);
+  var u = (0, c7.useCallback)(function() { StreamOrchestrator.clearHistory(); }, []);
+  var o = (0, c7.useCallback)(function(c) { StreamOrchestrator.replaceHistory(c); }, []);
   return { history: t, addItem: s, updateItem: a, clearItems: u, loadHistory: o };
 }
 ra();

@@ -3,7 +3,12 @@ var StreamOrchestrator,
     "use strict";
     var _phase = "idle",
       _queue = [],
-      _listeners = [];
+      _listeners = [],
+      _buffer = "",
+      _parts = [],
+      _history = [],
+      _thinking = null,
+      _msgIdCounter = 0;
 
     function notify() {
       for (var i = 0; i < _listeners.length; i++) {
@@ -11,8 +16,14 @@ var StreamOrchestrator,
       }
     }
 
+    function nextId() {
+      return ++_msgIdCounter;
+    }
+
     StreamOrchestrator = {
       get phase() { return _phase; },
+      get buffer() { return _buffer; },
+      get thinking() { return _thinking; },
 
       subscribe(e) {
         _listeners.push(e);
@@ -29,6 +40,7 @@ var StreamOrchestrator,
           return false;
         }
         _phase = "generating";
+        this.clearBuffer();
         notify();
         return true;
       },
@@ -53,23 +65,80 @@ var StreamOrchestrator,
         notify();
       },
 
-      cancel(e) {
+      cancel() {
         _phase = "idle";
+        _buffer = "";
+        _parts = [];
+        _thinking = null;
         notify();
       },
 
-      cancelHard(e) {
+      cancelHard() {
         _queue = [];
         _phase = "idle";
+        _buffer = "";
+        _parts = [];
+        _thinking = null;
         notify();
+      },
+
+      appendHistory(e) {
+        var msg = { ...e, id: nextId() };
+        _history.push(msg);
+        notify();
+        return msg;
+      },
+
+      getHistory() { return _history; },
+
+      replaceHistory(e) {
+        _history = Array.isArray(e) ? e.map(function(m) { return { ...m, id: nextId() }; }) : [];
+        notify();
+      },
+
+      updateHistory(e, r) {
+        for (var i = 0; i < _history.length; i++) {
+          if (_history[i].id === e) {
+            var updater = typeof r == "function" ? r(_history[i]) : r;
+            _history[i] = { ..._history[i], ...updater };
+            notify();
+            return;
+          }
+        }
+      },
+
+      clearHistory() {
+        _history = [];
+        notify();
+      },
+
+      getBuffer() { return _buffer; },
+
+      clearBuffer() {
+        _buffer = "";
+        _parts = [];
+        _thinking = null;
+      },
+
+      _consumeChunk(chunk) {
+        _buffer += chunk;
+        if (_parts.length === 0 || _parts[_parts.length - 1].type !== "text") {
+          _parts.push({ type: "text", text: chunk });
+        } else {
+          _parts[_parts.length - 1].text += chunk;
+        }
+        notify();
+        return _buffer;
       },
 
       getSnapshot() {
         return {
           phase: _phase,
           queueLength: _queue.length,
+          buffer: _buffer,
+          thinking: _thinking,
+          historyLength: _history.length,
         };
       },
-
     };
   });

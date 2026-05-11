@@ -486222,7 +486222,12 @@ var StreamOrchestrator,
     "use strict";
     var _phase = "idle",
       _queue = [],
-      _listeners = [];
+      _listeners = [],
+      _buffer = "",
+      _parts = [],
+      _history = [],
+      _thinking = null,
+      _msgIdCounter = 0;
 
     function notify() {
       for (var i = 0; i < _listeners.length; i++) {
@@ -486230,8 +486235,14 @@ var StreamOrchestrator,
       }
     }
 
+    function nextId() {
+      return ++_msgIdCounter;
+    }
+
     StreamOrchestrator = {
       get phase() { return _phase; },
+      get buffer() { return _buffer; },
+      get thinking() { return _thinking; },
 
       subscribe(e) {
         _listeners.push(e);
@@ -486248,6 +486259,7 @@ var StreamOrchestrator,
           return false;
         }
         _phase = "generating";
+        this.clearBuffer();
         notify();
         return true;
       },
@@ -486272,24 +486284,81 @@ var StreamOrchestrator,
         notify();
       },
 
-      cancel(e) {
+      cancel() {
         _phase = "idle";
+        _buffer = "";
+        _parts = [];
+        _thinking = null;
         notify();
       },
 
-      cancelHard(e) {
+      cancelHard() {
         _queue = [];
         _phase = "idle";
+        _buffer = "";
+        _parts = [];
+        _thinking = null;
         notify();
+      },
+
+      appendHistory(e) {
+        var msg = { ...e, id: nextId() };
+        _history.push(msg);
+        notify();
+        return msg;
+      },
+
+      getHistory() { return _history; },
+
+      replaceHistory(e) {
+        _history = Array.isArray(e) ? e.map(function(m) { return { ...m, id: nextId() }; }) : [];
+        notify();
+      },
+
+      updateHistory(e, r) {
+        for (var i = 0; i < _history.length; i++) {
+          if (_history[i].id === e) {
+            var updater = typeof r == "function" ? r(_history[i]) : r;
+            _history[i] = { ..._history[i], ...updater };
+            notify();
+            return;
+          }
+        }
+      },
+
+      clearHistory() {
+        _history = [];
+        notify();
+      },
+
+      getBuffer() { return _buffer; },
+
+      clearBuffer() {
+        _buffer = "";
+        _parts = [];
+        _thinking = null;
+      },
+
+      _consumeChunk(chunk) {
+        _buffer += chunk;
+        if (_parts.length === 0 || _parts[_parts.length - 1].type !== "text") {
+          _parts.push({ type: "text", text: chunk });
+        } else {
+          _parts[_parts.length - 1].text += chunk;
+        }
+        notify();
+        return _buffer;
       },
 
       getSnapshot() {
         return {
           phase: _phase,
           queueLength: _queue.length,
+          buffer: _buffer,
+          thinking: _thinking,
+          historyLength: _history.length,
         };
       },
-
     };
   });
 
@@ -521305,43 +521374,18 @@ function Vio(t) {
 }
 var c7 = Se(Yt(), 1);
 function Wio() {
-  let [t, e] = (0, c7.useState)([]),
-    r = (0, c7.useRef)(0),
-    n = (0, c7.useCallback)((c) => ((r.current += 1), c + r.current), []),
-    o = (0, c7.useCallback)((c) => {
-      e(c);
-    }, []),
-    s = (0, c7.useCallback)(
-      (c, m) => {
-        let d = n(performance.now()),
-          f = { ...c, id: d };
-        return (
-          e((p) => {
-            if (p.length > 0) {
-              let h = p[p.length - 1];
-              if (h.type === "user" && f.type === "user" && h.text === f.text) return p;
-            }
-            return [...p, f].sort((a, b) => a.id - b.id);
-          }),
-          d
-        );
-      },
-      [n],
-    ),
-    a = (0, c7.useCallback)((c, m) => {
-      e((d) =>
-        d.map((f) => {
-          if (f.id === c) {
-            let p = typeof m == "function" ? m(f) : m;
-            return { ...f, ...p };
-          }
-          return f;
-        }),
-      );
-    }, []),
-    u = (0, c7.useCallback)(() => {
-      (e([]), (r.current = 0));
-    }, []);
+  var [tick, setTick] = (0, c7.useState)(0);
+  (0, c7.useEffect)(function() {
+    return StreamOrchestrator.subscribe(function() { setTick(function(t) { return t + 1; }); });
+  }, []);
+  var t = StreamOrchestrator.getHistory();
+  var s = (0, c7.useCallback)(function(c, m) {
+    var msg = StreamOrchestrator.appendHistory(c);
+    return msg.id;
+  }, []);
+  var a = (0, c7.useCallback)(function(c, m) { StreamOrchestrator.updateHistory(c, m); }, []);
+  var u = (0, c7.useCallback)(function() { StreamOrchestrator.clearHistory(); }, []);
+  var o = (0, c7.useCallback)(function(c) { StreamOrchestrator.replaceHistory(c); }, []);
   return { history: t, addItem: s, updateItem: a, clearItems: u, loadHistory: o };
 }
 ra();
