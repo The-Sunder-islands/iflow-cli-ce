@@ -34514,6 +34514,7 @@ ${_t}`,
         (we && r({ type: "info", text: `\u26A0\uFE0F  ${we}` }, He),
           pGi(),
           k(!1),
+          StreamOrchestrator.finish(),
           H.current && (clearTimeout(H.current), (H.current = null)),
           console.log("\u{1F680} Updating statusline on response complete..."),
           N1e(n)
@@ -36474,28 +36475,7 @@ function hoo({
           if (J.length === 0) return;
           X = J;
         }
-        if (s === "responding") {
-          let J;
-          (typeof X == "string"
-            ? (J = X)
-            : Array.isArray(X)
-              ? (J = X.map((ne) =>
-                  typeof ne == "string"
-                    ? { type: "text", content: ne }
-                    : "text" in ne
-                      ? { type: "text", content: ne.text || "" }
-                      : "inlineData" in ne
-                        ? {
-                            type: "image",
-                            content: ne.inlineData?.data || "",
-                            mimeType: ne.inlineData?.mimeType || "image/png",
-                          }
-                        : { type: "text", content: "" },
-                ))
-              : (J = ""),
-            Uj.enqueueMessage(J));
-          return;
-        }
+        if (!StreamOrchestrator.ingest(X)) return;
         o(X, void 0);
       },
       [o, s, n, r, u, c, m, v, C],

@@ -10090,6 +10090,11 @@
       "name": "ReactAdapter",
       "category": "app/search",
       "label": "react"
+    },
+    {
+      "name": "StreamOrchestrator",
+      "category": "app/search",
+      "label": "orchestrator"
     }
   ]
 }
