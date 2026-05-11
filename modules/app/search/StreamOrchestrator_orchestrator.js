@@ -17,6 +17,10 @@ var StreamOrchestrator,
       }
     }
 
+    function dbg(e) {
+      try { process._rawDebug("[ORCH]", Date.now(), e); } catch (t) {}
+    }
+
     function nextId() {
       return ++_msgIdCounter;
     }
@@ -47,9 +51,11 @@ var StreamOrchestrator,
       },
 
       finish() {
+        dbg("finish START phase=" + _phase);
         var wasGenerating = _phase === "generating";
         _phase = "idle";
-        if (wasGenerating) notify();
+        if (wasGenerating) { dbg("finish notify"); notify(); }
+        dbg("finish END _dequeue");
         return this._dequeue();
       },
 

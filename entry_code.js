@@ -38225,13 +38225,11 @@ var g5u = (t) => {
       [A, y] = (0, mn.useState)(null),
       [E, v] = (0, mn.useState)(0),
       { stdout: C } = Yhe(),
-      [x, k] = (0, mn.useState)(!0),
-      [orchestratorTick, setOrchestratorTick] = (0, mn.useState)(0);
-    (0, mn.useEffect)(function() {
-      return StreamOrchestrator.subscribe(function() {
-        setOrchestratorTick(function(n) { return n + 1; });
-      });
-    }, []);
+      [x, k] = (0, mn.useState)(!0);
+    var orchestratorPhase = (0, mn.useSyncExternalStore)(
+      function(r) { return StreamOrchestrator.subscribe(r); },
+      function() { return StreamOrchestrator.phase; }
+    );
     var R = o.includes("nightly"),
       { history: P, addItem: D, clearItems: O, loadHistory: N } = Wio(),
       [F, B] = (0, mn.useState)(!1);
@@ -38893,7 +38891,13 @@ ${Hm}`,
                     as === Hm.length - 1 &&
                       bp.type !== "user" &&
                       (!bp?.tools || bp?.tools?.every((V9) => !V9?.callId?.startsWith(g8))) &&
-                      StreamOrchestrator.phase === "idle" &&
+                      (function() {
+                        var show = StreamOrchestrator.phase === "idle";
+                        if (as === Hm.length - 1 && bp.type !== "user" && !bp?.hiddenDivider) {
+                          console.error("[SEP]", Date.now(), "phase=" + StreamOrchestrator.phase, "show=" + show, "last=" + as + "/" + Hm.length);
+                        }
+                        return show;
+                      })() &&
                       !bp?.hiddenDivider &&
                       (0, yr.jsx)(ie, {
                         borderStyle: {
