@@ -456203,7 +456203,7 @@ var MYi,
             (r = `sandbox-exec (${BJ.env.SEATBELT_PROFILE || I.t("aboutCommand.unknown")})`);
         let n = t.services.config?.getModel() || I.t("aboutCommand.unknown"),
           o = await uw(),
-          s = t.services.settings.merged.selectedAuthType || "",
+          s = ConfigModel.get("selectedAuthType") || "",
           a = BJ.env.GOOGLE_CLOUD_PROJECT || "",
           u = {
             type: "about",
@@ -458314,9 +458314,9 @@ var NKi,
                   e.getDebugMode(),
                   e.getFileService(),
                   e.getExtensionContextFilePaths(),
-                  t.services.settings.merged.memoryImportFormat || "tree",
+                  ConfigModel.get("memoryImportFormat") || "tree",
                   e.getFileFilteringOptions(),
-                  t.services.settings.merged.memoryDiscoveryMaxDirs,
+                  ConfigModel.get("memoryDiscoveryMaxDirs"),
                 );
                 (e.setUserMemory(r), e.setGeminiMdFileCount(n), e.setGeminiMdFilePaths(o));
                 let s =
@@ -458348,9 +458348,9 @@ var NKi,
                   e.getDebugMode(),
                   e.getFileService(),
                   e.getExtensionContextFilePaths(),
-                  t.services.settings.merged.memoryImportFormat || "tree",
+                  ConfigModel.get("memoryImportFormat") || "tree",
                   e.getFileFilteringOptions(),
-                  t.services.settings.merged.memoryDiscoveryMaxDirs,
+                  ConfigModel.get("memoryDiscoveryMaxDirs"),
                 );
                 (e.setUserMemory(r), e.setGeminiMdFileCount(n), e.setGeminiMdFilePaths(o));
                 let s = o.join(`
@@ -458961,7 +458961,7 @@ var vfe,
         if (!t.services.config)
           return { type: "message", messageType: "error", content: I.t("initCommand.configNotAvailable") };
         let r = t.services.config.getTargetDir(),
-          n = t.services.settings.merged.contextFileName,
+          n = ConfigModel.get("contextFileName"),
           o = Array.isArray(n) ? n[0] : n,
           s = (g) => Efe.existsSync(M_r.join(r, g)),
           u = [o, "AGENTS.md", "IFLOW.md"].filter(Boolean).find(s) || "AGENTS.md",
