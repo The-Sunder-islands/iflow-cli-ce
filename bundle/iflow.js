@@ -486236,10 +486236,6 @@ var StreamOrchestrator,
       }
     }
 
-    function dbg(e) {
-      try { process._rawDebug("[ORCH]", Date.now(), e); } catch (t) {}
-    }
-
     function nextId() {
       return ++_msgIdCounter;
     }
@@ -486270,11 +486266,9 @@ var StreamOrchestrator,
       },
 
       finish() {
-        dbg("finish START phase=" + _phase);
         var wasGenerating = _phase === "generating";
         _phase = "idle";
-        if (wasGenerating) { dbg("finish notify"); notify(); }
-        dbg("finish END _dequeue");
+        if (wasGenerating) notify();
         return this._dequeue();
       },
 
@@ -524591,10 +524585,6 @@ var g5u = (t) => {
       [E, v] = (0, mn.useState)(0),
       { stdout: C } = Yhe(),
       [x, k] = (0, mn.useState)(!0);
-    var orchestratorPhase = (0, mn.useSyncExternalStore)(
-      function(r) { return StreamOrchestrator.subscribe(r); },
-      function() { return StreamOrchestrator.phase; }
-    );
     var R = o.includes("nightly"),
       { history: P, addItem: D, clearItems: O, loadHistory: N } = Wio(),
       [F, B] = (0, mn.useState)(!1);
@@ -525256,13 +525246,6 @@ ${Hm}`,
                     as === Hm.length - 1 &&
                       bp.type !== "user" &&
                       (!bp?.tools || bp?.tools?.every((V9) => !V9?.callId?.startsWith(g8))) &&
-                      (function() {
-                        var show = StreamOrchestrator.phase === "idle";
-                        if (as === Hm.length - 1 && bp.type !== "user" && !bp?.hiddenDivider) {
-                          console.error("[SEP]", Date.now(), "phase=" + StreamOrchestrator.phase, "show=" + show, "last=" + as + "/" + Hm.length);
-                        }
-                        return show;
-                      })() &&
                       !bp?.hiddenDivider &&
                       (0, yr.jsx)(ie, {
                         borderStyle: {
