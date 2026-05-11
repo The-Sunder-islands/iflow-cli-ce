@@ -33781,47 +33781,6 @@ async function kio({ query: t, config: e, addItem: r, onDebugMessage: n, message
     { processedQuery: [{ text: h }], shouldProceed: !0, selectedAgent: f }
   );
 }
-var Oio = (t, e) => {
-    let r = 0,
-      n = 0;
-    for (; n < t.length; ) {
-      let o = t.indexOf("```", n);
-      if (o === -1 || o >= e) break;
-      (r++, (n = o + 3));
-    }
-    return r % 2 === 1;
-  },
-  U2u = (t, e) => {
-    if (!Oio(t, e)) return -1;
-    let r = 0;
-    for (; r < e; ) {
-      let n = t.indexOf("```", r);
-      if (n === -1 || n >= e) break;
-      let o = t.indexOf("```", n + 3);
-      if (n < e && (o === -1 || e < o + 3)) return n;
-      if (o === -1) break;
-      r = o + 3;
-    }
-    return -1;
-  },
-  Nio = (t) => {
-    let e = U2u(t, t.length);
-    if (e !== -1) return e;
-    let r = t.length;
-    for (; r >= 0; ) {
-      let n = t.lastIndexOf(
-        `
-
-`,
-        r,
-      );
-      if (n === -1) break;
-      let o = n + 2;
-      if (!Oio(t, o)) return o;
-      r = n - 1;
-    }
-    return t.length;
-  };
 var XAt = Se(Yt(), 1);
 Ot();
 var ZAt = (t) => {

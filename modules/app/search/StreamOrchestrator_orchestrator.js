@@ -149,8 +149,14 @@ var StreamOrchestrator,
         }
       },
 
+      clearItems() {
+        _items = [];
+        _itemsSnapshot = [];
+        notify();
+      },
+
       clearHistory() {
-        console.warn("DEPRECATED: clearHistory -> use _items=[] instead");
+        console.warn("DEPRECATED: clearHistory -> use clearItems instead");
         _history = [];
         _historySnapshot = [];
         notify();
