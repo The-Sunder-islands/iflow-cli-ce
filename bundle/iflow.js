@@ -486341,11 +486341,6 @@ var StreamOrchestrator,
 
       _consumeChunk(chunk) {
         _buffer += chunk;
-        if (_parts.length === 0 || _parts[_parts.length - 1].type !== "text") {
-          _parts.push({ type: "text", text: chunk });
-        } else {
-          _parts[_parts.length - 1].text += chunk;
-        }
         notify();
         return _buffer;
       },
@@ -520743,7 +520738,8 @@ ${_t}`,
     pe = (0, Ia.useCallback)(
       (je, He, mt) => {
         if (E.current) return "";
-        if (((Y.current += je), X.current.length === 0 || X.current[X.current.length - 1].type !== "text"))
+        StreamOrchestrator._consumeChunk(je);
+        if (X.current.length === 0 || X.current[X.current.length - 1].type !== "text")
           X.current.push({ type: "text", text: je });
         else {
           let Te = X.current[X.current.length - 1];

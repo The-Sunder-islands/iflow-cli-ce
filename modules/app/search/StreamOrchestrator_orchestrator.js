@@ -122,11 +122,6 @@ var StreamOrchestrator,
 
       _consumeChunk(chunk) {
         _buffer += chunk;
-        if (_parts.length === 0 || _parts[_parts.length - 1].type !== "text") {
-          _parts.push({ type: "text", text: chunk });
-        } else {
-          _parts[_parts.length - 1].text += chunk;
-        }
         notify();
         return _buffer;
       },

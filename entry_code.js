@@ -34384,7 +34384,8 @@ ${_t}`,
     pe = (0, Ia.useCallback)(
       (je, He, mt) => {
         if (E.current) return "";
-        if (((Y.current += je), X.current.length === 0 || X.current[X.current.length - 1].type !== "text"))
+        StreamOrchestrator._consumeChunk(je);
+        if (X.current.length === 0 || X.current[X.current.length - 1].type !== "text")
           X.current.push({ type: "text", text: je });
         else {
           let Te = X.current[X.current.length - 1];
