@@ -914,6 +914,10 @@ var Qht,
         errors;
         _merged;
         get merged() {
+          if (!this.__mergedProxy && typeof ReactAdapter !== "undefined" && ReactAdapter.shimMerged) {
+            try { this._merged = ReactAdapter.shimMerged({ merged: this._merged }).merged; } catch (t) {}
+            this.__mergedProxy = !0;
+          }
           return this._merged;
         }
         computeMergedSettings() {

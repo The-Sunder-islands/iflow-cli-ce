@@ -437378,6 +437378,10 @@ var Qht,
         errors;
         _merged;
         get merged() {
+          if (!this.__mergedProxy && typeof ReactAdapter !== "undefined" && ReactAdapter.shimMerged) {
+            try { this._merged = ReactAdapter.shimMerged({ merged: this._merged }).merged; } catch (t) {}
+            this.__mergedProxy = !0;
+          }
           return this._merged;
         }
         computeMergedSettings() {
@@ -486135,10 +486139,10 @@ var ReactAdapter,
           get: function (r, o) {
             if (o === "__configShimmed") return !0;
             if (o === Symbol.toPrimitive || o === "constructor") return r[o];
-            if (o in r) return r[o];
             if (typeof o === "string" && !o.startsWith("_") && o !== "toJSON" && o !== "inspect" && o !== "then") {
               try { var e = new Error("deprecated: t.merged." + o + " — use ConfigModel.get(\"" + o + "\") instead"); console.warn("[deprecated] t.merged." + o + " called at:"); console.warn(e.stack); } catch (t) {}
             }
+            if (o in r) return r[o];
             var s = ConfigModel.get(o);
             return s !== void 0 ? s : r[o];
           },
