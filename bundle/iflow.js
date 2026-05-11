@@ -486538,7 +486538,7 @@ var Coo,
     await Yr();
     qvr = c5u;
   });
-function RX(t, e) {
+function RX(overrides, extensions) {
   if (!Array.isArray(t)) throw new TypeError(`Expected an array, got \`${typeof t}\`.`);
   if (!Number.isSafeInteger(e)) throw new TypeError(`The \`steps\` parameter must be an integer, got ${e}.`);
   let { length: r } = t;
@@ -487267,7 +487267,7 @@ var Yvr = j(async () => {
 });
 var _so = {};
 Wi(_so, { handleAcpSlashCommand: () => I8u });
-function T8u(t, e) {
+function T8u(overrides, extensions) {
   let r = e.startsWith("/") || e.startsWith("\\"),
     n = e.startsWith(" ") && (e.slice(1).includes("/") || e.slice(1).includes("\\"));
   if (
@@ -487643,7 +487643,7 @@ var x8u,
 function R5(t, e, r, n) {
   r.assert.notStrictEqual(t, e, n);
 }
-function RCr(t, e) {
+function RCr(overrides, extensions) {
   e.assert.strictEqual(typeof t, "string");
 }
 function cpe(t) {
@@ -488182,7 +488182,7 @@ var MCr = j(() => {});
 function z8u(t) {
   return typeof t == "boolean";
 }
-function Qso(t, e) {
+function Qso(overrides, extensions) {
   let r = e.y18n.__,
     n = {},
     o = [];
@@ -488248,7 +488248,7 @@ function Qso(t, e) {
     (n.getDescriptions = () => h));
   let g = [];
   n.epilog = (N) => {
-    g.push(N);
+    blockedMcpServers.push(N);
   };
   let b = !1,
     A;
@@ -488549,7 +488549,7 @@ function Qso(t, e) {
 function FCr(t) {
   return typeof t == "object";
 }
-function Y8u(t, e) {
+function Y8u(overrides, extensions) {
   return FCr(t) ? { text: t.text, indentation: t.indentation + e } : { text: t, indentation: e };
 }
 function jso(t) {
@@ -488824,7 +488824,7 @@ var UCr,
       }
     };
   });
-function Yso(t, e) {
+function Yso(overrides, extensions) {
   if (t.length === 0) return e.length;
   if (e.length === 0) return t.length;
   let r = [],
@@ -488900,7 +488900,7 @@ function Xso(t, e, r) {
         let g = [];
         for (let A of Object.keys(h)) {
           let y = h[A];
-          y && g.indexOf(y) < 0 && g.push(y);
+          y && g.indexOf(y) < 0 && blockedMcpServers.push(y);
         }
         let b = g.length
           ? `
@@ -490585,7 +490585,7 @@ function aou(t) {
   } else return ["IFLOW.md"];
   return t.contextFileName;
 }
-function o$i(t, e) {
+function o$i(overrides, extensions) {
   let r = [];
   if (e.length === 0)
     return t.map((s) => ({ name: s.config.name, version: s.config.version, isActive: !0, path: s.path }));
@@ -490640,11 +490640,11 @@ function Cau(t) {
             process.exit(1)),
           "");
 }
-async function uQi(t, e) {
-  let r = e.sandbox ?? t.sandbox,
+async function resolveSandboxConfig(overrides, argv) {
+  let r = argv.sandbox ?? (overrides.sandbox ?? ConfigModel.get("sandbox")),
     n = Cau(r),
     o = await vj(),
-    s = e.sandboxImage ?? process.env.IFLOW_SANDBOX_IMAGE ?? o?.config?.sandboxImageUri;
+    s = argv.sandboxImage ?? process.env.IFLOW_SANDBOX_IMAGE ?? o?.config?.sandboxImageUri;
   return n === "sandbox-exec" ? { command: n, image: s || "n/a" } : n && s ? { command: n, image: s } : void 0;
 }
 dc();
@@ -490772,7 +490772,7 @@ var cQi = {
 };
 dc();
 Ot();
-async function Tau(t, e) {
+async function Tau(overrides, extensions) {
   let { scope: r } = e,
     n = r === "user" ? "User" : "Workspace",
     o = hu(process.cwd()),
@@ -490821,7 +490821,7 @@ async function Oau() {
     });
   return r;
 }
-async function Nau(t, e) {
+async function Nau(overrides, extensions) {
   let r = new S6({ name: "mcp-test-client", version: "0.0.1" }),
     n;
   try {
@@ -490835,8 +490835,8 @@ async function Nau(t, e) {
     return (await n.close(), Ss.DISCONNECTED);
   }
 }
-async function Pau(t, e) {
-  return await Nau(t, e);
+async function Pau(overrides, extensions) {
+  return await Nau(overrides, extensions);
 }
 async function Bau() {
   let t = await Oau(),
@@ -491192,7 +491192,7 @@ var Tuu = async (t, e = 1, r = 20) => {
       );
     }
   },
-  Duu = async (t, e) => {
+  Duu = async (overrides, extensions) => {
     try {
       let r = await fetch(`https://apis.iflow.cn/v1/workflows/get/${e}`, { headers: { Authorization: `Bearer ${t}` } });
       if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
@@ -491203,7 +491203,7 @@ var Tuu = async (t, e = 1, r = 20) => {
       return (console.error(I.t("workflowAdd.failedToFetchDetails"), r), null);
     }
   },
-  Iuu = async (t, e) => {
+  Iuu = async (overrides, extensions) => {
     let r = await fetch(t);
     if (!r.ok) throw new Error(`Failed to download file: ${r.status} ${r.statusText}`);
     let n = await r.arrayBuffer();
@@ -491224,7 +491224,7 @@ var Tuu = async (t, e = 1, r = 20) => {
       return !1;
     }
   },
-  Ouu = async (t, e) => {
+  Ouu = async (overrides, extensions) => {
     let { exec: r } = await import("child_process"),
       { promisify: n } = await import("util"),
       o = n(r),
@@ -491269,7 +491269,7 @@ var Tuu = async (t, e = 1, r = 20) => {
     try {
       switch (r) {
         case ".zip":
-          await Ouu(t, e);
+          await Ouu(overrides, extensions);
           break;
         case ".tgz":
         case ".tar.gz":
@@ -491389,7 +491389,7 @@ var Tuu = async (t, e = 1, r = 20) => {
       return { success: !1, message: I.t("workflowAdd.installFailed", { workflowName: r, error: o }) };
     }
   },
-  WQi = async (t, e) => {
+  WQi = async (overrides, extensions) => {
     await T3.mkdir(e, { recursive: !0 });
     let r = await T3.readdir(t, { withFileTypes: !0 });
     for (let n of r) {
@@ -491531,7 +491531,7 @@ var $uu = async (t, e = 1, r = 20) => {
       );
     }
   },
-  juu = async (t, e) => {
+  juu = async (overrides, extensions) => {
     try {
       let r = await fetch(`https://apis.iflow.cn/v1/skills/get/${e}`, { headers: { Authorization: `Bearer ${t}` } });
       if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
@@ -491542,7 +491542,7 @@ var $uu = async (t, e = 1, r = 20) => {
       return (console.error(I.t("skillAdd.failedToFetchDetails"), r), null);
     }
   },
-  Quu = async (t, e) => {
+  Quu = async (overrides, extensions) => {
     let r = await fetch(t);
     if (!r.ok) throw new Error(`Failed to download file: ${r.status} ${r.statusText}`);
     let n = await r.arrayBuffer();
@@ -491563,7 +491563,7 @@ var $uu = async (t, e = 1, r = 20) => {
       return !1;
     }
   },
-  Huu = async (t, e) => {
+  Huu = async (overrides, extensions) => {
     let { exec: r } = await import("child_process"),
       { promisify: n } = await import("util"),
       o = n(r),
@@ -491608,7 +491608,7 @@ var $uu = async (t, e = 1, r = 20) => {
     try {
       switch (r) {
         case ".zip":
-          await Huu(t, e);
+          await Huu(overrides, extensions);
           break;
         case ".tgz":
         case ".tar.gz":
@@ -491734,7 +491734,7 @@ var $uu = async (t, e = 1, r = 20) => {
       return { success: !1, message: I.t("skillAdd.installFailed", { skillName: r, error: s }) };
     }
   },
-  JQi = async (t, e) => {
+  JQi = async (overrides, extensions) => {
     await rh.mkdir(e, { recursive: !0 });
     let r = await rh.readdir(t, { withFileTypes: !0 });
     for (let n of r) {
@@ -492526,157 +492526,160 @@ iFlow CLI - Launch an interactive CLI, use -p/--prompt for non-interactive mode`
     n
   );
 }
-async function P6r(t, e, r, n, o = [], s = "tree", a) {
+async function loadHierarchicalMemory(cwd, debug, fileService, overrides, contextFiles = [], memoryImportFormat = "tree", fileFilter) {
   let u = k6r.realpathSync(O6r.resolve(t)),
     c = k6r.realpathSync(O6r.resolve(tcu())),
     d = u === c ? "" : t;
   return (
     e && N6r.debug(`CLI: Delegating hierarchical memory load to server for CWD: ${t} (memoryImportFormat: ${s})`),
-    t$(d, e, r, o, s, a, n.memoryDiscoveryMaxDirs)
+    loadMemoryWithDiscovery(cachedDir, debug, fileService, contextFiles, memoryImportFormat, fileFilter, (overrides.memoryDiscoveryMaxDirs ?? ConfigModel.get("memoryDiscoveryMaxDirs")))
   );
 }
-async function gJ(t, e, r, n, o = up.cwd()) {
-  let s = n.debug || [up.env.DEBUG, up.env.DEBUG_MODE].some((C) => C === "true" || C === "1") || !1,
-    a = t.memoryImportFormat || "tree",
-    u = o$i(e, n.extensions || []),
-    c = e.filter((C, x) => u[x].isActive);
-  t.contextFileName ? Jce(t.contextFileName) : Jce(Lz());
-  let m = c.flatMap((C) => C.contextFiles),
-    d = new UY(o),
-    f = { ...eme, ...t.fileFiltering };
-  LOt(t.errorLog);
-  let { memoryContent: p, fileCount: h } = await P6r(o, s, d, t, m, a, f),
-    g = ncu(t, c),
-    b = icu(t, c),
-    A = [];
-  if (!n.allowedMcpServerNames) {
-    if (t.allowMCPServers) {
-      let C = new Set(t.allowMCPServers.filter(Boolean));
-      C.size > 0 && (g = Object.fromEntries(Object.entries(g).filter(([x]) => C.has(x))));
+async function buildSessionConfig(overrides, extensions, sessionId, argv, cwd = up.cwd()) {
+  let debug = argv.debug || [up.env.DEBUG, up.env.DEBUG_MODE].some((v) => v === "true" || v === "1") || !1,
+    memoryImportFormat = (overrides.memoryImportFormat ?? ConfigModel.get("memoryImportFormat")) || "tree",
+    extensionParsed = o$i(extensions, argv.extensions || []),
+    activeExtensions = extensions.filter((ext, i) => extensionParsed[i].isActive);
+  let contextFileName = (overrides.contextFileName ?? ConfigModel.get("contextFileName"));
+  contextFileName ? Jce(contextFileName) : Jce(Lz());
+  let contextFiles = activeExtensions.flatMap((ext) => ext.contextFiles),
+    fileDiscovery = new UY(cwd),
+    fileFilter = { ...eme, ...(overrides.fileFiltering ?? ConfigModel.get("fileFiltering")) };
+  LOt(overrides.errorLog ?? ConfigModel.get("errorLog"));
+  let { memoryContent, fileCount } = await loadHierarchicalMemory(cwd, debug, fileDiscovery, overrides, contextFiles, memoryImportFormat, fileFilter),
+    mcpServers = collectMcpServers(overrides, activeExtensions),
+    excludeTools = collectExcludeTools(overrides, activeExtensions),
+    blockedMcpServers = [];
+  if (!argv.allowedMcpServerNames) {
+    let allowedMcp = (overrides.allowMCPServers ?? ConfigModel.get("allowMCPServers"));
+    if (allowedMcp) {
+      let serverSet = new Set(allowedMcp.filter(Boolean));
+      serverSet.size > 0 && (mcpServers = Object.fromEntries(Object.entries(mcpServers).filter(([name]) => serverSet.has(name))));
     }
-    if (t.excludeMCPServers) {
-      let C = new Set(t.excludeMCPServers.filter(Boolean));
-      C.size > 0 && (g = Object.fromEntries(Object.entries(g).filter(([x]) => !C.has(x))));
+    let excludedMcp = (overrides.excludeMCPServers ?? ConfigModel.get("excludeMCPServers"));
+    if (excludedMcp) {
+      let serverSet = new Set(excludedMcp.filter(Boolean));
+      serverSet.size > 0 && (mcpServers = Object.fromEntries(Object.entries(mcpServers).filter(([name]) => !serverSet.has(name))));
     }
   }
-  if (n.allowedMcpServerNames) {
-    let C = new Set(n.allowedMcpServerNames.filter(Boolean));
-    C.size > 0
-      ? (g = Object.fromEntries(
-          Object.entries(g).filter(([x, k]) => {
-            let R = C.has(x);
-            return (R || A.push({ name: x, extensionName: k.extensionName || "" }), R);
+  if (argv.allowedMcpServerNames) {
+    let serverSet = new Set(argv.allowedMcpServerNames.filter(Boolean));
+    serverSet.size > 0
+      ? (mcpServers = Object.fromEntries(
+          Object.entries(mcpServers).filter(([name, config]) => {
+            let allowed = serverSet.has(name);
+            return (allowed || blockedMcpServers.push({ name, extensionName: config.extensionName || "" }), allowed);
           }),
         ))
-      : (A.push(...Object.entries(g).map(([x, k]) => ({ name: x, extensionName: k.extensionName || "" }))), (g = {}));
+      : (blockedMcpServers.push(...Object.entries(mcpServers).map(([name, config]) => ({ name, extensionName: config.extensionName || "" }))), (mcpServers = {}));
   }
-  let y = await uQi(t, n),
-    E = new hf(),
-    v = !1;
+  let sandboxResult = await resolveSandboxConfig(overrides, argv),
+    historyManager = new hf(),
+    historyAvailable = !1;
   try {
-    (await E.initialize(), (v = !0));
-  } catch (C) {
-    N6r.error("History manager initialization failed. History features will be disabled.", C);
+    (await historyManager.initialize(), (historyAvailable = !0));
+  } catch (err) {
+    N6r.error("History manager initialization failed. History features will be disabled.", err);
   }
   return new ySe({
-    apiKey: t.apiKey,
-    baseUrl: t.baseUrl,
-    authType: t.selectedAuthType,
-    searchApiKey: t.searchApiKey,
-    cna: t.cna,
-    language: t.language,
-    sessionId: r,
+    apiKey: (overrides.apiKey ?? ConfigModel.get("apiKey")),
+    baseUrl: (overrides.baseUrl ?? ConfigModel.get("baseUrl")),
+    authType: (overrides.selectedAuthType ?? ConfigModel.get("selectedAuthType")),
+    searchApiKey: (overrides.searchApiKey ?? ConfigModel.get("searchApiKey")),
+    cna: (overrides.cna ?? ConfigModel.get("cna")),
+    language: (overrides.language ?? ConfigModel.get("language")),
+    sessionId,
     embeddingModel: Die,
-    sandbox: y,
-    targetDir: o || up.cwd(),
-    includeDirectories: t.includeDirectories || n.includeDirectories,
-    debugMode: s,
-    question: n.promptInteractive || n.prompt || "",
-    fullContext: n.allFiles || n.all_files || !1,
-    coreTools: t.coreTools || void 0,
-    excludeTools: b,
-    toolDiscoveryCommand: t.toolDiscoveryCommand,
-    toolCallCommand: t.toolCallCommand,
-    mcpServerCommand: t.mcpServerCommand,
-    mcpServers: g,
-    userMemory: p,
-    geminiMdFileCount: h,
+    sandbox: sandboxResult,
+    targetDir: cwd,
+    includeDirectories: (overrides.includeDirectories ?? ConfigModel.get("includeDirectories")) || argv.includeDirectories,
+    debugMode: debug,
+    question: argv.promptInteractive || argv.prompt || "",
+    fullContext: argv.allFiles || argv.all_files || !1,
+    coreTools: (overrides.coreTools ?? ConfigModel.get("coreTools")) || void 0,
+    excludeTools,
+    toolDiscoveryCommand: (overrides.toolDiscoveryCommand ?? ConfigModel.get("toolDiscoveryCommand")),
+    toolCallCommand: (overrides.toolCallCommand ?? ConfigModel.get("toolCallCommand")),
+    mcpServerCommand: (overrides.mcpServerCommand ?? ConfigModel.get("mcpServerCommand")),
+    mcpServers,
+    userMemory: memoryContent,
+    geminiMdFileCount: fileCount,
     approvalMode:
-      t.approvalMode ||
-      (n.default
+      (overrides.approvalMode ?? ConfigModel.get("approvalMode")) ||
+      (argv.default
         ? dn.DEFAULT
-        : n.autoEdit
+        : argv.autoEdit
           ? dn.SMART
-          : n.plan
+          : argv.plan
             ? dn.PLAN
-            : n.yolo
+            : argv.yolo
               ? dn.YOLO
-              : (n.prompt && !n.promptInteractive && (!n.resume || typeof n.resume == "string")) || n.experimentalAcp
+              : (argv.prompt && !argv.promptInteractive && (!argv.resume || typeof argv.resume == "string")) || argv.experimentalAcp
                 ? dn.YOLO
                 : dn.SMART),
-    thinkingModeEnabled: n.thinking ?? t.thinkingModeEnabled ?? rlt,
-    showMemoryUsage: n.showMemoryUsage || n.show_memory_usage || t.showMemoryUsage || !1,
-    accessibility: t.accessibility,
+    thinkingModeEnabled: argv.thinking ?? (overrides.thinkingModeEnabled ?? ConfigModel.get("thinkingModeEnabled")) ?? rlt,
+    showMemoryUsage: argv.showMemoryUsage || argv.show_memory_usage || (overrides.showMemoryUsage ?? ConfigModel.get("showMemoryUsage")) || !1,
+    accessibility: (overrides.accessibility ?? ConfigModel.get("accessibility")),
     telemetry: {
-      enabled: n.telemetry ?? t.telemetry?.enabled,
-      target: n.telemetryTarget ?? t.telemetry?.target,
-      otlpEndpoint: n.telemetryOtlpEndpoint ?? up.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? t.telemetry?.otlpEndpoint,
-      logPrompts: n.telemetryLogPrompts ?? t.telemetry?.logPrompts,
-      outfile: n.telemetryOutfile ?? t.telemetry?.outfile,
+      enabled: argv.telemetry ?? (overrides.telemetry ?? ConfigModel.get("telemetry"))?.enabled,
+      target: argv.telemetryTarget ?? (overrides.telemetry ?? ConfigModel.get("telemetry"))?.target,
+      otlpEndpoint: argv.telemetryOtlpEndpoint ?? up.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? (overrides.telemetry ?? ConfigModel.get("telemetry"))?.otlpEndpoint,
+      logPrompts: argv.telemetryLogPrompts ?? (overrides.telemetry ?? ConfigModel.get("telemetry"))?.logPrompts,
+      outfile: argv.telemetryOutfile ?? (overrides.telemetry ?? ConfigModel.get("telemetry"))?.outfile,
     },
-    usageStatisticsEnabled: t.usageStatisticsEnabled ?? !0,
+    usageStatisticsEnabled: (overrides.usageStatisticsEnabled ?? ConfigModel.get("usageStatisticsEnabled")) ?? !0,
     fileFiltering: {
-      respectGitIgnore: t.fileFiltering?.respectGitIgnore,
-      respectGeminiIgnore: t.fileFiltering?.respectGeminiIgnore,
-      enableRecursiveFileSearch: t.fileFiltering?.enableRecursiveFileSearch,
+      respectGitIgnore: (overrides.fileFiltering ?? ConfigModel.get("fileFiltering"))?.respectGitIgnore,
+      respectGeminiIgnore: (overrides.fileFiltering ?? ConfigModel.get("fileFiltering"))?.respectGeminiIgnore,
+      enableRecursiveFileSearch: (overrides.fileFiltering ?? ConfigModel.get("fileFiltering"))?.enableRecursiveFileSearch,
     },
-    checkpointing: n.checkpointing !== void 0 ? n.checkpointing : (t.checkpointing?.enabled ?? !1),
-    maxCheckpoints: t.checkpointing?.maxCheckpoints ?? 50,
-    proxy: n.proxy || up.env.HTTPS_PROXY || up.env.https_proxy || up.env.HTTP_PROXY || up.env.http_proxy,
-    cwd: o,
-    fileDiscoveryService: d,
-    bugCommand: t.bugCommand,
-    model: n.model || t.modelName || Np,
-    extensionContextFilePaths: m,
-    maxSessionTurns: n.maxTurns || n.max_turns || (t.maxSessionTurns ?? -1),
-    experimentalAcp: n.experimentalAcp || !1,
-    stream: n.stream ?? !1,
-    acpPort: n.port,
-    listExtensions: n.listExtensions || !1,
-    extensions: u,
-    blockedMcpServers: A,
+    checkpointing: argv.checkpointing !== void 0 ? argv.checkpointing : ((overrides.checkpointing ?? ConfigModel.get("checkpointing"))?.enabled ?? !1),
+    maxCheckpoints: (overrides.checkpointing ?? ConfigModel.get("checkpointing"))?.maxCheckpoints ?? 50,
+    proxy: argv.proxy || up.env.HTTPS_PROXY || up.env.https_proxy || up.env.HTTP_PROXY || up.env.http_proxy,
+    cwd,
+    fileDiscoveryService: fileDiscovery,
+    bugCommand: (overrides.bugCommand ?? ConfigModel.get("bugCommand")),
+    model: argv.model || (overrides.modelName ?? ConfigModel.get("modelName")) || Np,
+    extensionContextFilePaths: contextFiles,
+    maxSessionTurns: argv.maxTurns || argv.max_turns || ((overrides.maxSessionTurns ?? ConfigModel.get("maxSessionTurns")) ?? -1),
+    experimentalAcp: argv.experimentalAcp || !1,
+    stream: argv.stream ?? !1,
+    acpPort: argv.port,
+    listExtensions: argv.listExtensions || !1,
+    extensions: extensionParsed,
+    blockedMcpServers,
     noBrowser: !!up.env.NO_BROWSER,
-    summarizeToolOutput: t.toolSummarizationSettings,
-    hookManager: t.hookManager ?? !0,
-    compressionTokenThreshold: t.compressionTokenThreshold,
-    useRipgrep: t.useRipgrep,
-    maxTokens: n.maxTokens || n.max_tokens,
-    timeout: n.timeout,
-    tokensLimit: t.tokensLimit,
-    outputTokensLimit: t.outputTokensLimit,
-    skipNextSpeakerCheck: t.skipNextSpeakerCheck ?? !0,
-    shellTimeout: t.shellTimeout,
-    temperature: t.temperature,
-    topP: t.topP,
-    historyManager: v ? E : void 0,
-    lightWeightPlan: t.lightWeightPlan,
+    summarizeToolOutput: (overrides.toolSummarizationSettings ?? ConfigModel.get("toolSummarizationSettings")),
+    hookManager: (overrides.hookManager ?? ConfigModel.get("hookManager")) ?? !0,
+    compressionTokenThreshold: (overrides.compressionTokenThreshold ?? ConfigModel.get("compressionTokenThreshold")),
+    useRipgrep: (overrides.useRipgrep ?? ConfigModel.get("useRipgrep")),
+    maxTokens: argv.maxTokens || argv.max_tokens,
+    timeout: argv.timeout,
+    tokensLimit: (overrides.tokensLimit ?? ConfigModel.get("tokensLimit")),
+    outputTokensLimit: (overrides.outputTokensLimit ?? ConfigModel.get("outputTokensLimit")),
+    skipNextSpeakerCheck: (overrides.skipNextSpeakerCheck ?? ConfigModel.get("skipNextSpeakerCheck")) ?? !0,
+    shellTimeout: (overrides.shellTimeout ?? ConfigModel.get("shellTimeout")),
+    temperature: (overrides.temperature ?? ConfigModel.get("temperature")),
+    topP: (overrides.topP ?? ConfigModel.get("topP")),
+    historyManager: historyAvailable ? historyManager : void 0,
+    lightWeightPlan: (overrides.lightWeightPlan ?? ConfigModel.get("lightWeightPlan")),
     isNonInteractive:
-      (!!n.prompt && !n.promptInteractive && (!n.resume || typeof n.resume == "string")) || n.experimentalAcp,
+      (!!argv.prompt && !argv.promptInteractive && (!argv.resume || typeof argv.resume == "string")) || argv.experimentalAcp,
     usageMode:
-      (n.prompt && !n.promptInteractive && (!n.resume || typeof n.resume == "string")) || n.experimentalAcp
+      (argv.prompt && !argv.promptInteractive && (!argv.resume || typeof argv.resume == "string")) || argv.experimentalAcp
         ? "non-interactive"
         : "interactive",
-    disableTelemetry: t.disableTelemetry ?? !1,
-    enableBuildInTask: t.enableBuildInTask,
-    shouldUseNodePtyShell: t.enableInteractiveShell ?? !1,
-    hasIdeOnboardingBeenShown: t.hasIdeOnboardingBeenShown,
-    bootAnimationShown: t.bootAnimationShown ?? !1,
-    useSmartEdit: t.useSmartEdit ?? !0,
-    outputLimit: t.outputLimit,
+    disableTelemetry: (overrides.disableTelemetry ?? ConfigModel.get("disableTelemetry")) ?? !1,
+    enableBuildInTask: (overrides.enableBuildInTask ?? ConfigModel.get("enableBuildInTask")),
+    shouldUseNodePtyShell: (overrides.enableInteractiveShell ?? ConfigModel.get("enableInteractiveShell")) ?? !1,
+    hasIdeOnboardingBeenShown: (overrides.hasIdeOnboardingBeenShown ?? ConfigModel.get("hasIdeOnboardingBeenShown")),
+    bootAnimationShown: (overrides.bootAnimationShown ?? ConfigModel.get("bootAnimationShown")) ?? !1,
+    useSmartEdit: (overrides.useSmartEdit ?? ConfigModel.get("useSmartEdit")) ?? !0,
+    outputLimit: (overrides.outputLimit ?? ConfigModel.get("outputLimit")),
   });
 }
-function ncu(t, e) {
-  let r = { ...(t.mcpServers || {}) };
+function collectMcpServers(overrides, extensions) {
+  let r = { ...((overrides.mcpServers ?? ConfigModel.get("mcpServers")) || {}) };
   for (let n of e)
     Object.entries(n.config.mcpServers || {}).forEach(([o, s]) => {
       if (r[o]) {
@@ -492687,8 +492690,8 @@ function ncu(t, e) {
     });
   return r;
 }
-function icu(t, e) {
-  let r = new Set(t.excludeTools || []);
+function collectExcludeTools(overrides, extensions) {
+  let r = new Set((overrides.excludeTools ?? ConfigModel.get("excludeTools")) || []);
   for (let n of e) for (let o of n.config.excludeTools || []) r.add(o);
   return [...r];
 }
@@ -492700,7 +492703,7 @@ import * as zN from "node:path";
 import * as j3t from "node:os";
 var ocu = 10,
   B6r = ui();
-function aGi(t, e) {
+function aGi(overrides, extensions) {
   try {
     return (LA.existsSync(t) || LA.mkdirSync(t, { recursive: !0 }), t);
   } catch (r) {
@@ -492719,14 +492722,14 @@ var Cj;
 try {
   let t = zN.join(Tn(), "log"),
     e = zN.join(j3t.tmpdir(), B6r, "log");
-  Cj = aGi(t, e);
+  Cj = aGi(overrides, extensions);
 } catch {
   Cj = zN.join(j3t.tmpdir(), B6r, "log");
 }
 function scu() {
   let t = zN.join(Tn(), "log"),
     e = zN.join(j3t.tmpdir(), B6r, "log");
-  Cj = aGi(t, e);
+  Cj = aGi(overrides, extensions);
 }
 function uGi() {
   try {
@@ -492914,7 +492917,7 @@ ${o.updateMessage}`),
     m
   );
 }
-function mGi(t, e) {
+function mGi(overrides, extensions) {
   let r = !1,
     n = (u) => {
       e(u);
@@ -493108,7 +493111,7 @@ async function N1e(t) {
     return (console.error("Error executing statusline:", e instanceof Error ? e.message : e), null);
   }
 }
-async function Acu(t, e) {
+async function Acu(overrides, extensions) {
   try {
     let r = await bcu(t);
     if (!r) throw new Error("Invalid command format or forbidden command");
@@ -493644,7 +493647,7 @@ function pn(t, { isActive: e }) {
 vn();
 Hn();
 var $v = Se(Rt(), 1);
-function Pcu(t, e) {
+function Pcu(overrides, extensions) {
   switch (e.type) {
     case "insert": {
       let r = e.payload,
@@ -494759,7 +494762,7 @@ var XGi = (0, Xg.memo)(
           ],
         });
   },
-  (t, e) => t.config === e.config,
+  (overrides, extensions) => t.config === e.config,
 );
 var LI = Se(Yt(), 1);
 await Yr();
@@ -496930,7 +496933,7 @@ var Gcu = ({ messages: t, width: e }) => {
       ],
     });
   },
-  qcu = (t, e) => {
+  qcu = (overrides, extensions) => {
     if (t.width !== e.width || t.messages.length !== e.messages.length) return !1;
     let r = (s) => {
         let a = { error: 0, warn: 0, log: 0, debug: 0 };
@@ -497766,11 +497769,11 @@ var Dlu = { stdout: WHi(ZTe.stdout), stderr: WHi(ZTe.stderr) },
   Egt = Dlu;
 function EJ(t, e, { target: r = "stdout", ...n } = {}) {
   return Egt[r]
-    ? M1.link(t, e)
+    ? M1.link(overrides, extensions)
     : n.fallback === !1
       ? t
       : typeof n.fallback == "function"
-        ? n.fallback(t, e)
+        ? n.fallback(overrides, extensions)
         : `${t} ${e}`;
 }
 EJ.isSupported = Egt.stdout;
@@ -507540,7 +507543,7 @@ var Hyr = !1,
 function MWi(t) {
   Hyr = t;
 }
-function SJ(t, e) {
+function SJ(overrides, extensions) {
   if (!Hyr) return;
   if (!eb.default.isValidElement(e)) {
     console.error(t, `Invalid element: '${String(e)}' typeof=${typeof e}`);
@@ -508073,10 +508076,10 @@ var dmu = 1,
       h = [],
       g = !1,
       b = !0,
-      A = [],
+      blockedMcpServers = [],
       y = null,
       E = "",
-      v = !1,
+      historyAvailable = false,
       C = [],
       x = [];
     function k(R) {
@@ -508096,10 +508099,10 @@ var dmu = 1,
                 ),
               ),
               (g = !1),
-              (A = []),
+              (blockedMcpServers = []),
               (y = null),
               (E = ""))
-            : A.push(R);
+            : blockedMcpServers.push(R);
           return;
         }
         let O = R.match(u),
@@ -508129,7 +508132,7 @@ var dmu = 1,
             (x.length > 0 &&
               C.length > 0 &&
               k((0, Uo.jsx)(HWi, { headers: x, rows: C, terminalWidth: n }, `table-${h.length}`)),
-              (v = !1),
+              (historyAvailable = false),
               (C = []),
               (x = []),
               R.trim().length > 0 &&
@@ -508418,7 +508421,7 @@ var YWi = 4,
             p !== null &&
               y !== null &&
               y > p + h + 1 &&
-              g.push(
+              blockedMcpServers.push(
                 (0, S5.jsx)(
                   ie,
                   { children: (0, S5.jsx)(W, { wrap: "truncate", color: ae.Gray, children: "\u2550".repeat(o) }) },
@@ -508442,7 +508445,7 @@ var YWi = 4,
           }
           let C = b.content.substring(d);
           return (
-            g.push(
+            blockedMcpServers.push(
               (0, S5.jsx)(
                 ie,
                 {
@@ -508651,7 +508654,7 @@ function n_r(t) {
   return "#ffffff";
 }
 var ezi = Se(Rt(), 1);
-function kmu(t, e) {
+function kmu(overrides, extensions) {
   try {
     if (e?.getToolRegistry) {
       let r = e.getToolRegistry().getTool(t);
@@ -508792,7 +508795,7 @@ function Omu(t) {
   }
   return "";
 }
-function Fgt(t, e) {
+function Fgt(overrides, extensions) {
   return t.map((r) => {
     let n = Omu(r);
     if (!n && r.request.args)
@@ -510587,7 +510590,7 @@ await Yr();
 vn();
 Ot();
 var jA = Se(Rt(), 1);
-function Ymu(t, e) {
+function Ymu(overrides, extensions) {
   if (!t) return "";
   let r = t.replace(
     /\n\s*\n\s*\n/g,
@@ -510812,7 +510815,7 @@ var zgt = ({
             osVersion: t.osVersion,
             sandboxEnv: t.sandboxEnv,
             modelVersion: t.modelVersion,
-            selectedAuthType: t.selectedAuthType,
+            selectedAuthType: (overrides.selectedAuthType ?? ConfigModel.get("selectedAuthType")),
             gcpProject: t.gcpProject,
           }),
         t.type === "stats" && (0, ih.jsx)(Vgt, { duration: t.duration, width: p }),
@@ -511181,20 +511184,20 @@ function Rzi({ userMessages: t, userMessageContentMap: e, onSubmit: r, isActive:
               return;
             }
           }
-          let A = [],
+          let blockedMcpServers = [],
             y = /\[Image #(\d+)\]/g,
             E = [...b.matchAll(y)];
           if (E.length > 0) {
             let v = 0;
             for (let x of E) {
               let k = b.slice(v, x.index).trim();
-              k && A.push({ type: "text", content: k });
+              k && blockedMcpServers.push({ type: "text", content: k });
               let R = parseInt(x[1], 10);
-              (A.push({ type: "image", content: `placeholder_image_data_${R}`, mimeType: "image/png", imageId: R }),
+              (blockedMcpServers.push({ type: "image", content: `placeholder_image_data_${R}`, mimeType: "image/png", imageId: R }),
                 (v = (x.index || 0) + x[0].length));
             }
             let C = b.slice(v).trim();
-            (C && A.push({ type: "text", content: C }), r(A));
+            (C && blockedMcpServers.push({ type: "text", content: C }), r(A));
           } else r(b);
         }
         d();
@@ -511249,7 +511252,7 @@ async function tdu(t) {
     return Go(e) && e.code === "ENOENT" ? [] : (console.error("Error reading shell history:", e), []);
   }
 }
-async function rdu(t, e) {
+async function rdu(overrides, extensions) {
   try {
     (await ufe.mkdir(Ygt.dirname(t), { recursive: !0 }),
       await ufe.writeFile(
@@ -511306,7 +511309,7 @@ import aDe from "fs";
 import idu from "os";
 import Nzi from "path";
 Ot();
-function Ozi(t, e) {
+function Ozi(overrides, extensions) {
   let { lines: r, cursorRow: n, cursorCol: o } = t,
     s = null,
     a = () =>
@@ -511684,7 +511687,7 @@ function Ozi(t, e) {
 function KI(t) {
   return t === void 0 ? !1 : !/[\s,.;!?]/.test(t);
 }
-var cfe = (t, e) => {
+var cfe = (overrides, extensions) => {
     let r = e;
     if (r >= t.length) return r;
     let n = t[r];
@@ -511698,7 +511701,7 @@ var cfe = (t, e) => {
     }
     return r;
   },
-  Kgt = (t, e) => {
+  Kgt = (overrides, extensions) => {
     let r = e;
     if (r <= 0) return e;
     for (
@@ -511731,7 +511734,7 @@ var cfe = (t, e) => {
       return r + 1;
     }
   },
-  lfe = (t, e) => {
+  lfe = (overrides, extensions) => {
     let r = e;
     if (r < t.length && /\w/.test(t[r]) && (r + 1 >= t.length || !/\w/.test(t[r + 1])))
       for (r++; r < t.length && !/\w/.test(t[r]); ) r++;
@@ -511832,7 +511835,7 @@ function odu(t) {
 function c_r(t, e, r) {
   return t < e ? e : t > r ? r : t;
 }
-function sdu(t, e) {
+function sdu(overrides, extensions) {
   let r = e,
     n = 0;
   for (; n < t.length; ) {
@@ -511847,7 +511850,7 @@ function sdu(t, e) {
   }
   return [0, 0];
 }
-function l_r(t, e) {
+function l_r(overrides, extensions) {
   let r = 0,
     n = 0,
     o = 0;
@@ -511936,7 +511939,7 @@ var adu = 100,
       r = [...t.undoStack, e];
     return (r.length > adu && r.shift(), { ...t, undoStack: r, redoStack: [] });
   };
-function udu(t, e) {
+function udu(overrides, extensions) {
   let r = D1,
     n = (s) => t.lines[s] ?? "",
     o = (s) => xs(n(s));
@@ -512234,7 +512237,7 @@ function udu(t, e) {
     case "vim_move_to_last_line":
     case "vim_move_to_line":
     case "vim_escape_insert_mode":
-      return Ozi(t, e);
+      return Ozi(overrides, extensions);
     default:
       return (console.error(`Unknown action encountered: ${e}`), t);
   }
@@ -513191,7 +513194,7 @@ function Fzi(t) {
 function gdu(t) {
   return t === 1 ? "1 line" : `${t} lines`;
 }
-function Uzi(t, e) {
+function Uzi(overrides, extensions) {
   let r = gdu(e);
   return `[Pasted text #${t} +${r}]`;
 }
@@ -513302,7 +513305,7 @@ var obt = ((O) => (
     expandSuggestion: [{ key: "right" }],
     collapseSuggestion: [{ key: "left" }],
   };
-function Adu(t, e) {
+function Adu(overrides, extensions) {
   let r = !1;
   if (t.key !== void 0) r = t.key === e.name;
   else if (t.sequence !== void 0) r = t.sequence === e.sequence;
@@ -513324,7 +513327,7 @@ function _du(t = sbt) {
   return e;
 }
 var I1 = _du(sbt);
-function Vzi(t, e) {
+function Vzi(overrides, extensions) {
   if (!t) return !1;
   let r = t.trim();
   if (!r.startsWith("/")) return !1;
@@ -513385,7 +513388,7 @@ var vdu = ({
     setShellModeActive: A,
     vimHandleInput: y,
     agentsOnlineMode: E = !1,
-    hasActiveToolConfirmation: v = !1,
+    hasActiveToolConfirmation: historyAvailable = false,
     onToggleSuggestions: C,
   }) => {
     let { t: x } = rr(),
@@ -513816,7 +513819,7 @@ var vdu = ({
   },
   Wzi = (0, Ad.memo)(
     vdu,
-    (t, e) =>
+    (overrides, extensions) =>
       !(
         t.focus !== e.focus ||
         t.inputWidth !== e.inputWidth ||
@@ -516417,7 +516420,7 @@ var Gdu = Object.defineProperties(() => {}, {
     let n = (...o) => qdu(n, o.length === 1 ? "" + o[0] : o.join(" "));
     return (Object.setPrototypeOf(n, Gdu), (n[p_r] = t), (n[pfe] = e), (n[lDe] = r), n);
   },
-  qdu = (t, e) => {
+  qdu = (overrides, extensions) => {
     if (t.level <= 0 || !e) return t[lDe] ? "" : e;
     let r = t[pfe];
     if (r === void 0) return e;
@@ -517325,7 +517328,7 @@ var DYi = ({ sessions: t, onSelect: e }) => {
         : (0, dp.jsx)(ie, {})
   );
 };
-function Wdu(t, e) {
+function Wdu(overrides, extensions) {
   let r = t.sessionId.substring(0, 8),
     n = __r(t.lastActivity);
   return `${e}. [${r}] ${n}`;
@@ -517349,7 +517352,7 @@ function __r(t) {
             ? I.t("sessionSelectorComponent.time.weeksAgo", { count: Math.floor(a / 7) })
             : r.toLocaleDateString();
 }
-function zdu(t, e) {
+function zdu(overrides, extensions) {
   return t.length <= e ? t : t.substring(0, e - 3) + "...";
 }
 Ot();
@@ -517998,7 +518001,7 @@ var XDe = {
       "Programs",
     ],
   };
-function d2u(t, e) {
+function d2u(overrides, extensions) {
   let r = e.startsWith("/") || e.startsWith("\\"),
     n = e.startsWith(" ") && (e.slice(1).includes("/") || e.slice(1).includes("\\"));
   if (
@@ -518779,7 +518782,7 @@ ${I.t("cleanupHistoryDialog.restartReminder")}`;
   };
 };
 var Ly = Se(Yt(), 1);
-function h2u(t, e) {
+function h2u(overrides, extensions) {
   switch (e.type) {
     case "ADD_MESSAGES": {
       let r = [...t];
@@ -518909,7 +518912,7 @@ var g2u = "\x1B[?1004h",
 var yio = Se(Yt(), 1);
 WN();
 xX();
-async function Aio(t, e) {
+async function Aio(overrides, extensions) {
   try {
     let r = new hf();
     await r.initialize();
@@ -519526,7 +519529,7 @@ var Dio = (t, e, r, n, o, s) => ({
             let A = Date.now(),
               y = "",
               E = "",
-              v = !1,
+              historyAvailable = false,
               C = 0,
               x = {
                 callId: d,
@@ -520002,7 +520005,7 @@ async function kio({ query: t, config: e, addItem: r, onDebugMessage: n, message
     { processedQuery: [{ text: h }], shouldProceed: !0, selectedAgent: f }
   );
 }
-var Oio = (t, e) => {
+var Oio = (overrides, extensions) => {
     let r = 0,
       n = 0;
     for (; n < t.length; ) {
@@ -520012,8 +520015,8 @@ var Oio = (t, e) => {
     }
     return r % 2 === 1;
   },
-  U2u = (t, e) => {
-    if (!Oio(t, e)) return -1;
+  U2u = (overrides, extensions) => {
+    if (!Oio(overrides, extensions)) return -1;
     let r = 0;
     for (; r < e; ) {
       let n = t.indexOf("```", r);
@@ -520143,7 +520146,7 @@ function Yfe(t) {
       return (console.warn(`Unknown core status encountered: ${t}`), "Error");
   }
 }
-function Mvr(t, e) {
+function Mvr(overrides, extensions) {
   return {
     type: "tool_group",
     tools: (Array.isArray(t) ? t : [t]).map((o) => {
@@ -520232,7 +520235,7 @@ function Bio(t) {
       );
     }, []));
 }
-function Fvr(t, e) {
+function Fvr(overrides, extensions) {
   try {
     let r = t.getHistory();
     if (r.length === 0) return 0;
@@ -521307,7 +521310,7 @@ function Wio() {
 }
 ra();
 var sQ = Se(Yt(), 1);
-var zio = (t, e) => {
+var zio = (overrides, extensions) => {
   let [r, n] = (0, sQ.useState)(0),
     o = (0, sQ.useRef)(null),
     s = (0, sQ.useRef)(e),
@@ -521449,7 +521452,7 @@ var Q2u = () => I.t("loading.phrases", { returnObjects: !0 }),
   l7 = Q2u(),
   G2u = 15e3,
   Yio = { minShowInterval: 3e5 },
-  Kio = (t, e) => {
+  Kio = (overrides, extensions) => {
     let [r, n] = (0, Uy.useState)(l7[0]),
       [o, s] = (0, Uy.useState)(l7),
       a = (0, Uy.useRef)(null),
@@ -521461,7 +521464,7 @@ var Q2u = () => I.t("loading.phrases", { returnObjects: !0 }),
           h = o.filter((E) => !l7.includes(E)),
           g = c.current.getAvailablePhrases(p, Yio),
           b = c.current.getAvailablePhrases(h, Yio),
-          A = [];
+          blockedMcpServers = [];
         if (
           (g.length > 0 && b.length > 0
             ? (A = Math.random() < 0.5 ? b : g)
@@ -521873,7 +521876,7 @@ ra();
 Ot();
 import { promises as rIe } from "node:fs";
 import { join as roo } from "node:path";
-var noo = (t, e) => {
+var noo = (overrides, extensions) => {
   let [r, n] = (0, Xfe.useState)(!1),
     o = (0, Xfe.useCallback)(() => {
       n(!0);
@@ -521998,7 +522001,7 @@ var H2u = 10,
   },
   ioo = () => ({ count: 0, pendingOperator: null }),
   z2u = { mode: "NORMAL", count: 0, pendingOperator: null, lastCommand: null },
-  Y2u = (t, e) => {
+  Y2u = (overrides, extensions) => {
     switch (e.type) {
       case "SET_MODE":
         return { ...t, mode: e.mode };
@@ -522020,7 +522023,7 @@ var H2u = 10,
         return t;
     }
   };
-function ooo(t, e) {
+function ooo(overrides, extensions) {
   let { vimEnabled: r, vimMode: n, setVimMode: o } = Ebt(),
     [s, a] = (0, $y.useReducer)(Y2u, z2u);
   (0, $y.useEffect)(() => {
@@ -522379,7 +522382,7 @@ async function J2u(t) {
     throw e;
   }
 }
-async function X2u(t, e) {
+async function X2u(overrides, extensions) {
   return (
     await t.setCodeAssistGlobalUserSetting({ cloudaicompanionProject: t.projectId, freeTierDataCollectionOptin: e })
   ).freeTierDataCollectionOptin;
@@ -524248,7 +524251,7 @@ function Jvr() {
   }
   return new Kvr(r, e);
 }
-function Xvr(t, e) {
+function Xvr(overrides, extensions) {
   let n = Jvr().isPathTrusted(t);
   return n !== void 0 ? { isTrusted: n, source: "local" } : { isTrusted: void 0, source: "none" };
 }
@@ -524274,7 +524277,7 @@ function p5u(t) {
     }
   return e;
 }
-function zoo(t, e) {
+function zoo(overrides, extensions) {
   let r = (0, Sw.useRef)(!1),
     o = (() => {
       if (!Voo(t.merged)) return { trustResult: { isTrusted: !0, source: "none" }, showDialog: !1, detectedHooks: [] };
@@ -524771,13 +524774,13 @@ ${Hm}`,
       it = (0, mn.useCallback)(async () => {
         D({ type: "info", text: m("app.memory.refreshing") }, Date.now());
         try {
-          let { memoryContent: an, fileCount: as } = await P6r(
+          let { memoryContent: an, fileCount: as } = await loadHierarchicalMemory(
             rC.cwd(),
             e.getDebugMode(),
             e.getFileService(),
-            r.merged,
+            ConfigModel.getAll(),
             e.getExtensionContextFilePaths(),
-            r.merged.memoryImportFormat || "tree",
+            ConfigModel.get("memoryImportFormat") || "tree",
             e.getFileFilteringOptions(),
           );
           (e.setUserMemory(an),
@@ -525717,7 +525720,7 @@ ${Hm}`,
     return (0, yr.jsx)(rqi, { initialOutput: e, children: (0, yr.jsx)(A5u, { ...t }) });
   };
 async function tso() {
-  return new Promise((t, e) => {
+  return new Promise((overrides, extensions) => {
     let r = "";
     process.stdin.setEncoding("utf8");
     let n = () => {
@@ -526076,7 +526079,7 @@ async function oso(t, e = [], r) {
       });
     }));
 }
-async function rso(t, e) {
+async function rso(overrides, extensions) {
   return new Promise((r) => {
     let o = npe(t, ["images", "-q", e]),
       s = "";
@@ -526092,7 +526095,7 @@ async function rso(t, e) {
       }));
   });
 }
-async function x5u(t, e) {
+async function x5u(overrides, extensions) {
   return (
     console.info(`Attempting to pull image ${e} using ${t}...`),
     new Promise((r) => {
@@ -526126,16 +526129,16 @@ async function x5u(t, e) {
     })
   );
 }
-async function T5u(t, e) {
+async function T5u(overrides, extensions) {
   return (
     console.info(`Checking for sandbox image: ${e}`),
-    (await rso(t, e))
+    (await rso(overrides, extensions))
       ? (console.info(`Sandbox image ${e} found locally.`), !0)
       : (console.info(`Sandbox image ${e} not found locally.`),
         e === nso
           ? !1
-          : (await x5u(t, e))
-            ? (await rso(t, e))
+          : (await x5u(overrides, extensions))
+            ? (await rso(overrides, extensions))
               ? (console.info(`Sandbox image ${e} is now available after pulling.`), !0)
               : (console.warn(
                   `Sandbox image ${e} still not found after a pull attempt. This might indicate an issue with the image name or registry, or the pull command reported success but failed to make the image available.`,
@@ -526317,7 +526320,7 @@ var oIe = {
       "Programs",
     ],
   };
-function R5u(t, e) {
+function R5u(overrides, extensions) {
   if (t.includes("/") || t.includes("\\")) return !0;
   let r = e.startsWith("/") || e.startsWith("\\"),
     n = e.startsWith(" ") && (e.slice(1).includes("/") || e.slice(1).includes("\\"));
@@ -526500,7 +526503,7 @@ async function sCr(t, e, r, n, o, s, a) {
   }
 }
 dc();
-function fQ(t, e) {
+function fQ(overrides, extensions) {
   if (!t || typeof t != "string") return t;
   let r = e.toLowerCase(),
     n,
@@ -526516,8 +526519,8 @@ function fQ(t, e) {
     t.length > n ? t.substring(0, n) + o : t
   );
 }
-function O5u(t, e) {
-  if (typeof t == "string") return fQ(t, e);
+function O5u(overrides, extensions) {
+  if (typeof t == "string") return fQ(overrides, extensions);
   if (Array.isArray(t))
     return t.map((r) => {
       if (typeof r == "string") return fQ(r, e);
@@ -528047,7 +528050,7 @@ var cIe = class {
 };
 D1e();
 Ot();
-function pQ(t, e) {
+function pQ(overrides, extensions) {
   if (!t || typeof t != "string") return t;
   let r = e.toLowerCase(),
     n,
@@ -528063,8 +528066,8 @@ function pQ(t, e) {
     t.length > n ? t.substring(0, n) + o : t
   );
 }
-function xCr(t, e) {
-  if (typeof t == "string") return pQ(t, e);
+function xCr(overrides, extensions) {
+  if (typeof t == "string") return pQ(overrides, extensions);
   if (Array.isArray(t))
     return t.map((r) => {
       if (typeof r == "string") return pQ(r, e);
@@ -528105,7 +528108,7 @@ function xCr(t, e) {
   }
   return t;
 }
-function Aso(t, e) {
+function Aso(overrides, extensions) {
   let r = [],
     n = [];
   for (let o = 0; o < t.length; o++) {
@@ -528137,7 +528140,7 @@ function Aso(t, e) {
   return r;
 }
 Ot();
-function TCr(t, e) {
+function TCr(overrides, extensions) {
   if (t.error?.message) throw El.internalError(t.error.message);
   return t.returnDisplay
     ? typeof t.returnDisplay == "string"
@@ -528531,7 +528534,7 @@ var mIe = class t {
           compressionTokenThreshold: u?.compression_token_threshold,
           lightCompressionTokenThreshold: u?.light_compression_token_threshold,
         },
-        d = await gJ(m, this.extensions, e, this.argv, r);
+        d = await buildSessionConfig(m, this.extensions, e, this.argv, r);
       if (
         (d.setUsageMode("sdk"),
         await d.initialize(),
@@ -528677,7 +528680,7 @@ _Context auto-compressed: ${b.originalTokenCount} \u2192 ${b.newTokenCount} toke
 `,
             },
           }));
-        let A = [];
+        let blockedMcpServers = [];
         try {
           let y = { message: m?.parts ?? [], config: { abortSignal: r.signal } },
             E = this.config.getStream() ? await o.sendMessageStream(y, n) : await o.sendMessageLatency(y, n);
@@ -528712,7 +528715,7 @@ _Context auto-compressed: ${b.originalTokenCount} \u2192 ${b.newTokenCount} toke
               }
             }
             v.functionCalls?.forEach((C) => {
-              typeof C.args < "u" && A.push(C);
+              typeof C.args < "u" && blockedMcpServers.push(C);
             });
           }
         } catch (y) {
@@ -529362,7 +529365,7 @@ async function Sso(t) {
     }
     let g = await $3t(),
       b = Aj(p),
-      A = await gJ(h.merged, b, th.generateSessionId(), g);
+      A = await buildSessionConfig(h.merged, b, th.generateSessionId(), g);
     if ((A.setUsageMode("sdk"), A.getListExtensions())) {
       console.log("Installed extensions:");
       for (let y of b) console.log(`- ${y.config.name}`);
@@ -529489,7 +529492,7 @@ function Dso(t, e, r, n, o) {
             if (b && !b.startsWith("//")) {
               let A = dIe.get(u);
               if (A) {
-                A.push(b);
+                blockedMcpServers.push(b);
                 try {
                   console.warn(`[WS ${h}] buffering early message len=${b.length}`);
                 } catch {}
@@ -529502,7 +529505,7 @@ function Dso(t, e, r, n, o) {
               process.env.GEMINI_VERBOSE === "1" &&
                 console.log(`[WS ${h}] inbound ${b.length} bytes: ${b.slice(0, 80)}`);
             } catch {}
-            g.push(b);
+            blockedMcpServers.push(b);
           }
         }),
         u.on("close", (p, h) => {
@@ -529787,7 +529790,7 @@ function c9u() {
     process.on("warning", (t) => {
       console.warn(I.t("gemini.debug.nodejsWarning"), { name: t.name, message: t.message, stack: t.stack });
     }),
-    process.on("unhandledRejection", (t, e) => {
+    process.on("unhandledRejection", (overrides, extensions) => {
       console.error(I.t("gemini.debug.unhandledPromiseRejectionDetected"), { reason: t, promise: e.toString() });
     }));
 }
@@ -529836,7 +529839,7 @@ async function Cao() {
       (console.warn("Failed to load recent session, creating new one:", b), (a = th.generateSessionId()));
     }
   else a = th.generateSessionId();
-  let u = await gJ(e.merged, s, a, r);
+  let u = await buildSessionConfig(e.merged, s, a, r);
   try {
     let { ExtensionManager: b, agentRegistry: A } = await Promise.resolve().then(() => (Ot(), Jg)),
       y = await uw(),
@@ -530029,7 +530032,7 @@ async function Cao() {
     g = r.outputFile || r.output_file;
   (await lso(h, m, p, g), process.exit(0));
 }
-function Eao(t, e) {
+function Eao(overrides, extensions) {
   if (!e.merged.hideWindowTitle) {
     let r = (process.env.CLI_TITLE || `iFlow - ${t}`).replace(/[\x00-\x1F\x7F]/g, "");
     (process.stdout.write(`\x1B]2;${r}\x07`),
@@ -530046,7 +530049,7 @@ async function l9u(t, e, r, n) {
       u = [...new Set([...s, ...a])],
       c = { ...r.merged, excludeTools: u },
       m = { ...n };
-    ((o = await gJ(c, e, t.getSessionId(), m)), await o.initialize());
+    ((o = await buildSessionConfig(c, e, t.getSessionId(), m)), await o.initialize());
   }
   return await m9u(r.merged.selectedAuthType, o, r);
 }
