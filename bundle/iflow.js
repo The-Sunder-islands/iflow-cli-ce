@@ -520434,7 +520434,7 @@ var Gio = (t, e, r, n, o, s, a, u, c, m, d, f, p, h) => {
     q = (0, Ia.useRef)(J),
     ne = (0, Ia.useRef)(null),
     $eRef = (0, Ia.useRef)(null);
-  (0, Ia.useEffect)(() => { $eRef.current = $e; }, [$e]);
+  (0, Ia.useEffect)(() => { $eRef.current = $e; });
   (0, Ia.useEffect)(() => {
     q.current = J;
   }, [J]);
