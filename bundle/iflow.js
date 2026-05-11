@@ -486340,28 +486340,30 @@ var StreamOrchestrator,
 
       appendHistory(e) {
         var msg = { ...e, id: nextId() };
+        _items.push(msg);
+        _itemsSnapshot = _items.slice();
         _history.push(msg);
         _historySnapshot = _history.slice();
         notify();
         return msg;
       },
 
-      getHistory() { console.warn("DEPRECATED: getHistory -> use getItems instead"); return _historySnapshot; },
+      getHistory() { return _historySnapshot; },
 
       replaceHistory(e) {
-        console.warn("DEPRECATED: replaceHistory -> use dispatch/clearItems instead");
+        _items = Array.isArray(e) ? e.map(function(m) { return { ...m, id: nextId() }; }) : [];
+        _itemsSnapshot = _items.slice();
         _history = Array.isArray(e) ? e.map(function(m) { return { ...m, id: nextId() }; }) : [];
         _historySnapshot = _history.slice();
         notify();
       },
 
       updateHistory(e, r) {
-        console.warn("DEPRECATED: updateHistory -> use updateLastItem instead");
-        for (var i = 0; i < _history.length; i++) {
-          if (_history[i].id === e) {
-            var updater = typeof r == "function" ? r(_history[i]) : r;
-            _history[i] = { ..._history[i], ...updater };
-            _historySnapshot = _history.slice();
+        for (var i = 0; i < _items.length; i++) {
+          if (_items[i].id === e) {
+            var updater = typeof r == "function" ? r(_items[i]) : r;
+            _items[i] = { ..._items[i], ...updater };
+            _itemsSnapshot = _items.slice();
             notify();
             return;
           }
@@ -486371,11 +486373,14 @@ var StreamOrchestrator,
       clearItems() {
         _items = [];
         _itemsSnapshot = [];
+        _history = [];
+        _historySnapshot = [];
         notify();
       },
 
       clearHistory() {
-        console.warn("DEPRECATED: clearHistory -> use clearItems instead");
+        _items = [];
+        _itemsSnapshot = [];
         _history = [];
         _historySnapshot = [];
         notify();
