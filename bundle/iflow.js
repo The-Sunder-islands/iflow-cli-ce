@@ -525246,8 +525246,9 @@ ${Hm}`,
                     as === Hm.length - 1 &&
                       bp.type !== "user" &&
                       (!bp?.tools || bp?.tools?.every((V9) => !V9?.callId?.startsWith(g8))) &&
-                      StreamOrchestrator.phase === "idle" &&
+                      !x &&
                       !bp?.hiddenDivider &&
+                      Si === "idle" &&
                       (0, yr.jsx)(ie, {
                         borderStyle: {
                           topLeft: "-",
