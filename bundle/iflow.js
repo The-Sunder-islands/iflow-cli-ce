@@ -128886,7 +128886,7 @@ async function KOt(t, e, r) {
   if (typeof Keychain?.getApiKey == "function") try { a = await Keychain.getApiKey(e); } catch {}
   if (!a && typeof Keychain?.available && typeof process !== "undefined" && process.env?.HOME?.includes("com.termux") && typeof ConfigModel?.get == "function") { a = ConfigModel.get("_key_" + e); }
   let u = r?.baseUrl || o || Nis[e];
-  c = r?.modelName || t.getModel() || s || Np;
+  let c = r?.modelName || t.getModel() || s || Np;
   let m = { model: c, authType: e, proxy: t?.getProxy(), debugMode: t?.getDebugMode(), config: t };
   if (e === Kt.CLOUD_SHELL) return m;
   if (e === Kt.LOGIN_WITH_IFLOW || e === Kt.IFLOW) {
