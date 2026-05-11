@@ -14,10 +14,70 @@ var ConfigModel,
       hasViewedAnnualReport:{ target: "hasViewedAnnualReport" },
       searchApiKey:         { target: "searchApiKey", isSecret: !0 },
     };
-    var KNOWN_DEFAULTS = {
-      renderer: "lightpanda",
-      bootAnimationShown: !1,
-      hasViewedAnnualReport: {},
+    var SCHEMA = {
+      accessibility:            { default: !1 },
+      allowMCPServers:          { default: void 0 },
+      apiKey:                   { default: void 0 },
+      approvalMode:             { default: void 0 },
+      autoConfigureMaxOldSpaceSize: { default: void 0 },
+      baseUrl:                  { default: void 0 },
+      bootAnimationShown:       { default: !1 },
+      bugCommand:               { default: void 0 },
+      checkpointing:            { default: !1 },
+      cna:                      { default: void 0 },
+      compressionTokenThreshold:{ default: void 0 },
+      contextFileName:          { default: void 0 },
+      coreTools:                { default: void 0 },
+      customThemes:             { default: {} },
+      debugKeystrokeLogging:    { default: !1 },
+      disableTelemetry:         { default: !1 },
+      dnsResolutionOrder:       { default: void 0 },
+      enableBuildInTask:        { default: !1 },
+      enableInteractiveShell:   { default: !0 },
+      errorLog:                 { default: void 0 },
+      excludeMCPServers:        { default: void 0 },
+      excludeTools:             { default: void 0 },
+      fileFiltering:            { default: {} },
+      hasIdeOnboardingBeenShown:{ default: !1 },
+      hasViewedAnnualReport:    { default: {} },
+      hideBanner:               { default: !1 },
+      hideTips:                 { default: !1 },
+      hideWindowTitle:          { default: !1 },
+      hookManager:              { default: void 0 },
+      includeDirectories:       { default: void 0 },
+      language:                 { default: "en" },
+      lightWeightPlan:          { default: !1 },
+      maxSessionTurns:          { default: void 0 },
+      mcpServerCommand:         { default: void 0 },
+      mcpServers:               { default: {} },
+      memoryDiscoveryMaxDirs:   { default: 10 },
+      memoryImportFormat:       { default: "tree" },
+      modelName:                { default: void 0 },
+      outputLimit:              { default: !0 },
+      outputTokensLimit:        { default: void 0 },
+      preferredEditor:          { default: void 0 },
+      renderer:                 { default: "lightpanda" },
+      sandbox:                  { default: !1 },
+      searchApiKey:             { default: void 0 },
+      security:                 { default: void 0 },
+      selectedAuthType:         { default: void 0 },
+      shellTimeout:             { default: 120 },
+      showMemoryUsage:          { default: !1 },
+      skipNextSpeakerCheck:     { default: !1 },
+      telemetry:                { default: {} },
+      temperature:              { default: void 0 },
+      theme:                    { default: void 0 },
+      thinkingModeEnabled:      { default: !1 },
+      tokensLimit:              { default: void 0 },
+      toolCallCommand:          { default: void 0 },
+      toolDiscoveryCommand:     { default: void 0 },
+      toolSummarizationSettings:{ default: void 0 },
+      topP:                     { default: void 0 },
+      usageStatisticsEnabled:   { default: !0 },
+      useExternalAuth:          { default: !1 },
+      useRipgrep:               { default: !0 },
+      useSmartEdit:             { default: !0 },
+      vimMode:                  { default: !1 },
     };
     function notify(e, r) {
       var n = _listeners[e];
@@ -27,7 +87,7 @@ var ConfigModel,
     }
     ConfigModel = {
       LEGACY_FIELDS,
-      KNOWN_DEFAULTS,
+      SCHEMA,
       subscribe(e, r) {
         if (!_listeners[e]) _listeners[e] = [];
         _listeners[e].push(r);
@@ -36,17 +96,20 @@ var ConfigModel,
           if (n) { var o = n.indexOf(r); if (o >= 0) n.splice(o, 1); }
         };
       },
+      has(e) { return e in _cache; },
       load() {
         var e = Persistence ? Persistence.read() : {};
         for (var r in e) _cache[r] = e[r];
-        for (var n in KNOWN_DEFAULTS) {
-          if (_cache[n] === void 0) _cache[n] = KNOWN_DEFAULTS[n];
+        for (var n in SCHEMA) {
+          if (_cache[n] === void 0) _cache[n] = SCHEMA[n].default;
         }
-        // Keytar is async; apiKey will be populated by KOt() at auth time.
-        // If already in settings.json (from migration run in same session), it's in cache.
         return _cache;
       },
       get(e) { return _cache[e]; },
+      getOrDefault(e) {
+        var r = _cache[e];
+        return r !== void 0 ? r : (SCHEMA[e] ? SCHEMA[e].default : void 0);
+      },
       getAll() { return Object.assign({}, _cache); },
       set(e, r) {
         _cache[e] = r;
@@ -84,7 +147,7 @@ var ConfigModel,
           }
           n[s.target] = a;
         }
-        for (var l in KNOWN_DEFAULTS) { if (n[l] === void 0) n[l] = KNOWN_DEFAULTS[l]; }
+        for (var l in SCHEMA) { if (n[l] === void 0) n[l] = SCHEMA[l].default; }
         if (Persistence) Persistence.write(n);
         return n;
       },
