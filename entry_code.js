@@ -34423,7 +34423,7 @@ ${_t}`,
     be = (0, Ia.useCallback)(
       (je) => {
         if (!E.current) {
-          if (((Y.current = ""), (X.current = []), D.current)) {
+          if ((StreamOrchestrator.clearBuffer(), (X.current = []), D.current)) {
             if (D.current.type === "tool_group") {
               let He = D.current.tools.map((kt) =>
                   kt.status === "Pending" || kt.status === "Confirming" || kt.status === "Executing"
@@ -34577,7 +34577,7 @@ ${je.description}`
               X.current.push(Te);
               try {
                 let Pe = [...X.current];
-                Y.current && !Pe.some((Je) => Je.type === "text") && Pe.unshift({ type: "text", text: Y.current });
+                StreamOrchestrator.getBuffer() && !Pe.some((Je) => Je.type === "text") && Pe.unshift({ type: "text", text: StreamOrchestrator.getBuffer() });
                 let tt = {
                   id: `response-${Date.now()}-tool-${we.value.callId}`,
                   content: Pe,
@@ -34586,7 +34586,7 @@ ${je.description}`
                 };
                 (await K.recordAssistantResponse(tt, K.getLastUserMessageId() || void 0, n.getProjectRoot()),
                   (X.current = [Te]),
-                  (Y.current = ""));
+                  StreamOrchestrator.clearBuffer());
               } catch (Pe) {
                 o(`Failed to immediately record tool_use to history: ${Pe}`);
               }
@@ -34683,7 +34683,7 @@ ${je.description}`
               o(`Failed to set thinking config: ${Je}`);
             }
         }
-        (He?.isContinuation || (F(), P(null), (Y.current = ""), (X.current = [])), k(!0), A(null));
+        (He?.isContinuation || (F(), P(null), StreamOrchestrator.clearBuffer(), (X.current = [])), k(!0), A(null));
         try {
           let tt = "";
           if (
@@ -34724,7 +34724,7 @@ ${je.description}`
           if (D.current) {
             r(D.current, kt);
             try {
-              let ct = X.current.length > 0 ? X.current : [{ type: "text", text: Y.current || D.current.text || "" }],
+              let ct = X.current.length > 0 ? X.current : [{ type: "text", text: StreamOrchestrator.getBuffer() || D.current.text || "" }],
                 pt = {
                   id: `response-${Date.now()}`,
                   content: ct,
@@ -34732,7 +34732,7 @@ ${je.description}`
                   usage: { input_tokens: 0, output_tokens: 0 },
                 };
               (await K.recordAssistantResponse(pt, K.getLastUserMessageId() || void 0, n.getProjectRoot()),
-                (Y.current = ""),
+                StreamOrchestrator.clearBuffer(),
                 (X.current = []));
             } catch (ct) {
               o(`Failed to record assistant response to history: ${ct}`);
