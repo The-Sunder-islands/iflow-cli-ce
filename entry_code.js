@@ -33978,39 +33978,6 @@ function Mvr(t, e) {
 }
 var tIe = Se(Yt(), 1);
 NI();
-function Bio(t) {
-  let e = (0, tIe.useRef)(t);
-  ((0, tIe.useEffect)(() => {
-    e.current = t;
-  }, [t]),
-    (0, tIe.useEffect)(() => {
-      let r = () => {
-        if (!Uj.isEmpty()) {
-          let n = Uj.dequeueMessage();
-          n &&
-            setTimeout(() => {
-              let o;
-              (typeof n.content == "string"
-                ? (o = n.content)
-                : (o = n.content.map((s) =>
-                    s.type === "text"
-                      ? { text: s.content }
-                      : s.type === "image"
-                        ? { inlineData: { mimeType: s.mimeType || "image/png", data: s.content } }
-                        : { text: "" },
-                  )),
-                e.current(o, { isContinuation: !1, forceSubmit: !0 }));
-            }, 300);
-        }
-      };
-      return (
-        yo.on("response-finished", r),
-        () => {
-          yo.off("response-finished", r);
-        }
-      );
-    }, []));
-}
 function Fvr(t, e) {
   try {
     let r = t.getHistory();
@@ -34166,7 +34133,9 @@ var Gio = (t, e, r, n, o, s, a, u, c, m, d, f, p, h) => {
       );
     }, [n]),
     q = (0, Ia.useRef)(J),
-    ne = (0, Ia.useRef)(null);
+    ne = (0, Ia.useRef)(null),
+    $eRef = (0, Ia.useRef)(null);
+  (0, Ia.useEffect)(() => { $eRef.current = $e; }, [$e]);
   (0, Ia.useEffect)(() => {
     q.current = J;
   }, [J]);
@@ -34255,8 +34224,7 @@ var Gio = (t, e, r, n, o, s, a, u, c, m, d, f, p, h) => {
           O(null),
           k(!1),
           Fvr(t, o),
-          t2e(n),
-          yo.emit("response-finished"));
+          t2e(n));
       }
     },
     { isActive: ee === "responding" },
@@ -34514,7 +34482,10 @@ ${_t}`,
         (we && r({ type: "info", text: `\u26A0\uFE0F  ${we}` }, He),
           pGi(),
           k(!1),
-          StreamOrchestrator.finish(),
+          (function() {
+            var next = StreamOrchestrator.finish();
+            if (next && $eRef.current) setTimeout(function() { $eRef.current(next, { isContinuation: !1, forceSubmit: !0 }); }, 0);
+          })(),
           H.current && (clearTimeout(H.current), (H.current = null)),
           console.log("\u{1F680} Updating statusline on response complete..."),
           N1e(n)
@@ -34525,10 +34496,9 @@ ${_t}`,
               console.error("Failed to execute statusline:", Te);
             }),
           Z(mt),
-          yo.emit("response-finished"),
           C(v.current || ""));
       },
-      [r, n, p, o, G, Z],
+      [r, n, p, o, G, Z, $eRef],
     ),
     Ze = (0, Ia.useCallback)(
       () =>
@@ -34944,7 +34914,6 @@ You can make any file changes or run any tools.</system-reminder>`,
         }
       );
     }, [$e, t]),
-    Bio($e),
     {
       streamingState: ee,
       submitQuery: $e,

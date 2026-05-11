@@ -37,6 +37,15 @@ var StreamOrchestrator,
         var wasGenerating = _phase === "generating";
         _phase = "idle";
         if (wasGenerating) notify();
+        return _dequeue();
+      },
+
+      _dequeue() {
+        while (_queue.length > 0) {
+          var msg = _queue.shift();
+          if (msg) return msg;
+        }
+        return null;
       },
 
       setPhase(e) {
