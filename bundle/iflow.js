@@ -486256,7 +486256,7 @@ var StreamOrchestrator,
         var wasGenerating = _phase === "generating";
         _phase = "idle";
         if (wasGenerating) notify();
-        return _dequeue();
+        return this._dequeue();
       },
 
       _dequeue() {
@@ -486290,15 +486290,6 @@ var StreamOrchestrator,
         };
       },
 
-      _tryDequeue() {
-        while (_queue.length > 0) {
-          var msg = _queue.shift();
-          if (!msg) continue;
-          _phase = "generating";
-          notify();
-          return msg;
-        }
-      },
     };
   });
 
