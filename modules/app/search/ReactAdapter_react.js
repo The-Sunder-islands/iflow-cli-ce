@@ -17,7 +17,11 @@ var ReactAdapter,
         e.merged = new Proxy(n, {
           get: function (r, o) {
             if (o === "__configShimmed") return !0;
+            if (o === Symbol.toPrimitive || o === "constructor") return r[o];
             if (o in r) return r[o];
+            if (typeof o === "string" && !o.startsWith("_") && o !== "toJSON" && o !== "inspect" && o !== "then") {
+              try { var e = new Error("deprecated: t.merged." + o + " — use ConfigModel.get(\"" + o + "\") instead"); console.warn("[deprecated] t.merged." + o + " called at:"); console.warn(e.stack); } catch (t) {}
+            }
             var s = ConfigModel.get(o);
             return s !== void 0 ? s : r[o];
           },
