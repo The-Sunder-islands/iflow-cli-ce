@@ -38252,6 +38252,10 @@ var g5u = (t) => {
       function(r) { return StreamOrchestrator.subscribe(r); },
       function() { return StreamOrchestrator.tick; }
     );
+    var items = (0, mn.useSyncExternalStore)(
+      function(r) { return StreamOrchestrator.subscribe(r); },
+      function() { return StreamOrchestrator.getItems(); }
+    );
     var R = o.includes("nightly"),
       { history: P, addItem: D, clearItems: O, loadHistory: N } = Wio(),
       [F, B] = (0, mn.useState)(!1);
@@ -38891,50 +38895,29 @@ ${Hm}`,
       ge
         ? am.push((0, yr.jsx)(XHi, { commands: q9, version: o, config: e }))
         : am.push(
-            ...(Eo ? [...P, ...vf] : P).map((an, as, Hm) => {
-              let bp = an;
-              return (0, yr.jsxs)(
-                mn.Fragment,
-                {
-                  children: [
-                    (0, yr.jsx)(zgt, {
-                      item: bp,
-                      isPending: !1,
-                      config: e,
-                      subAgentState: Bw,
-                      taskTool: xd,
-                      canExpandCompression: Eo,
-                      terminalWidth: wr,
-                      constrainHeight: Ps,
-                      availableTerminalHeight: ri,
-                      hookManager: Vs,
-                      width: tr,
-                    }),
-                    as === Hm.length - 1 &&
-                      bp.type !== "user" &&
-                      (!bp?.tools || bp?.tools?.every((V9) => !V9?.callId?.startsWith(g8))) &&
-                      !bp?.hiddenDivider &&
-                      (0, yr.jsx)(ie, {
-                        borderStyle: {
-                          topLeft: "-",
-                          top: "-",
-                          topRight: "-",
-                          left: "",
-                          bottomLeft: "",
-                          bottom: "",
-                          bottomRight: "",
-                          right: "",
-                        },
-                        borderColor: ae.Gray,
-                        borderDimColor: !0,
-                        width: "100%",
-                        height: 1,
-                        marginTop: 2,
-                      }),
-                  ],
-                },
-                bp.id ?? performance.now(),
-              );
+            ...items.map((an) => {
+              if (an.type === "separator")
+                return (0, yr.jsx)(ie, {
+                  borderStyle: { topLeft: "-", top: "-", topRight: "-", left: "", bottomLeft: "", bottom: "", bottomRight: "", right: "" },
+                  borderColor: ae.Gray,
+                  borderDimColor: !0,
+                  width: "100%",
+                  height: 1,
+                  marginTop: 2,
+                }, an.id);
+              return (0, yr.jsx)(zgt, {
+                item: an,
+                isPending: !1,
+                config: e,
+                subAgentState: Bw,
+                taskTool: xd,
+                canExpandCompression: Eo,
+                terminalWidth: wr,
+                constrainHeight: Ps,
+                availableTerminalHeight: ri,
+                hookManager: Vs,
+                width: tr,
+              }, an.id);
             }),
           ),
       p
@@ -38946,53 +38929,14 @@ ${Hm}`,
               width: "95%",
               children: [
                 (0, yr.jsx)(KRe, { items: am, style: { width: "100%" }, children: (an) => an }, E),
-                Eo &&
-                  (0, yr.jsx)(ie, {
-                    marginTop: 1,
-                    marginBottom: 1,
-                    children: (0, yr.jsx)(W, { color: "blueBright", children: m("input.toggleDetail") }),
-                  }),
-                !Eo &&
-                  !ge &&
-                  (0, yr.jsxs)(yr.Fragment, {
-                    children: [
-                      (0, yr.jsx)(Pgt, {
-                        children: (0, yr.jsxs)(ie, {
-                          ref: DQ,
-                          flexDirection: "column",
-                          children: [
-                            vf.map((an, as) =>
-                              (0, yr.jsx)(
-                                zgt,
-                                {
-                                  item: { ...an, id: 0 },
-                                  isPending: !0,
-                                  config: e,
-                                  isFocused: !zy,
-                                  subAgentState: Bw,
-                                  taskTool: xd,
-                                  canExpandCompression: Eo,
-                                  terminalWidth: wr,
-                                  constrainHeight: Ps,
-                                  availableTerminalHeight: Ps ? H9 : void 0,
-                                  hookManager: Vs,
-                                  width: tr,
-                                },
-                                as,
-                              ),
-                            ),
-                            (0, yr.jsx)(_bt, { constrainHeight: Ps }),
-                          ],
-                        }),
-                      }),
-                      (0, yr.jsxs)(ie, {
-                        flexDirection: "column",
-                        ref: v7,
-                        children: [
-                          gpe && !P?.length && (0, yr.jsx)(eso, {}),
-                          A && (0, yr.jsx)(C_r, { message: A.message }),
-                          U3 && (0, yr.jsx)(C_r, { message: U3 }),
-                          n.length > 0 &&
+                (0, yr.jsxs)(ie, {
+                  flexDirection: "column",
+                  ref: v7,
+                  children: [
+                    gpe && !P?.length && (0, yr.jsx)(eso, {}),
+                    A && (0, yr.jsx)(C_r, { message: A.message }),
+                    U3 && (0, yr.jsx)(C_r, { message: U3 }),
+                    n.length > 0 &&
                             (0, yr.jsx)(ie, {
                               paddingX: 1,
                               marginY: 1,
@@ -39402,11 +39346,9 @@ ${Hm}`,
                             showAutoAcceptIndicator: AIe,
                             mcpServers: de,
                             blockedMcpServers: ce,
-                          }),
-                        ],
-                      }),
-                    ],
-                  }),
+                        }),
+                      ],
+                    }),
               ],
             }),
           })
