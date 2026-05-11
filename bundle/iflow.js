@@ -524585,7 +524585,13 @@ var g5u = (t) => {
       [E, v] = (0, mn.useState)(0),
       { stdout: C } = Yhe(),
       [x, k] = (0, mn.useState)(!0),
-      R = o.includes("nightly"),
+      [orchestratorTick, setOrchestratorTick] = (0, mn.useState)(0);
+    (0, mn.useEffect)(function() {
+      return StreamOrchestrator.subscribe(function() {
+        setOrchestratorTick(function(n) { return n + 1; });
+      });
+    }, []);
+    var R = o.includes("nightly"),
       { history: P, addItem: D, clearItems: O, loadHistory: N } = Wio(),
       [F, B] = (0, mn.useState)(!1);
     _io({ fgMode: u, config: e, loadHistory: N, addItem: D });
@@ -525246,9 +525252,8 @@ ${Hm}`,
                     as === Hm.length - 1 &&
                       bp.type !== "user" &&
                       (!bp?.tools || bp?.tools?.every((V9) => !V9?.callId?.startsWith(g8))) &&
-                      !x &&
+                      StreamOrchestrator.phase === "idle" &&
                       !bp?.hiddenDivider &&
-                      Si === "idle" &&
                       (0, yr.jsx)(ie, {
                         borderStyle: {
                           topLeft: "-",
