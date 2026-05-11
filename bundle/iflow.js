@@ -486339,7 +486339,6 @@ var StreamOrchestrator,
       },
 
       appendHistory(e) {
-        console.warn("DEPRECATED: appendHistory -> use dispatch instead");
         var msg = { ...e, id: nextId() };
         _history.push(msg);
         _historySnapshot = _history.slice();
@@ -520497,9 +520496,13 @@ var Gio = (t, e, r, n, o, s, a, u, c, m, d, f, p, h) => {
     v = (0, Ia.useRef)(""),
     { sendTaskCompletedNotification: C } = Cio(),
     [x, k] = (0, Ia.useState)(!1),
-    [R, P] = (0, Ia.useState)(null),
-    [D, O] = Cbt(null),
-    N = (0, Ia.useRef)(new Set()),
+    [R, P] = (0, Ia.useState)(null);
+    var D = (0, Ia.useRef)(null);
+    var O = (0, Ia.useCallback)(function(t) {
+      if (typeof t === "function") { D.current = t(D.current); }
+      else { D.current = t; }
+    }, []);
+    let N = (0, Ia.useRef)(new Set()),
     { startNewPrompt: F, getPromptCount: B } = Gv(),
     L = ZAt(n),
     { updateOutput: G } = Z3t(),
@@ -520617,9 +520620,8 @@ var Gio = (t, e, r, n, o, s, a, u, c, m, d, f, p, h) => {
         if (h || E.current) return;
         ((E.current = !0),
           y.current?.abort(),
-          D.current && r(D.current, Date.now()),
+          D.current && (r(D.current, Date.now()), D.current = null),
           r({ type: "info", text: g("geminiStream.messages.requestCancelled") }, Date.now()),
-          O(null),
           k(!1),
           Fvr(t, o),
           t2e(n));
@@ -520780,43 +520782,19 @@ ${_t}`,
       [n, r, o, V, s, L, a, ue, K, p],
     ),
     pe = (0, Ia.useCallback)(
-      (je, He, mt) => {
-        if (E.current) return "";
+      (je) => {
+        if (E.current) return;
         StreamOrchestrator._consumeChunk(je);
         if (X.current.length === 0 || X.current[X.current.length - 1].type !== "text")
           X.current.push({ type: "text", text: je });
         else {
-          let Te = X.current[X.current.length - 1];
-          Te.text = (Te.text || "") + je;
+          let last = X.current[X.current.length - 1];
+          last.text = (last.text || "") + je;
         }
-        let kt = He + je;
-        D.current?.type !== "iflow" &&
-          D.current?.type !== "gemini_content" &&
-          (D.current && r(D.current, mt), O({ type: "iflow", text: "" }), (kt = je));
-        let we = /<think>([\s\S]*?)<\/think>/.exec(kt);
-        if (we) {
-          let Te = we.index,
-            Pe = Te + we[0].length;
-          if (Te > 0) {
-            let Je = kt.substring(0, Te).trim();
-            Je && r({ type: D.current?.type, text: Je }, mt);
-          }
-          let tt = we[1].trim();
-          (tt && r({ type: "thinking", text: tt, thinking: { subject: "", description: tt }, displayMode: "full" }, mt),
-            (kt = kt.substring(Pe)));
-        }
-        if (kt.trim()) {
-          let Te = Nio(kt);
-          if (Te === kt.length) O((Pe) => ({ type: Pe?.type, text: kt }));
-          else {
-            let Pe = kt.substring(0, Te),
-              tt = kt.substring(Te);
-            (Pe.trim() && r({ type: D.current?.type, text: Pe }, mt), O({ type: "iflow", text: tt }), (kt = tt));
-          }
-        } else (O(null), (kt = ""));
-        return kt;
+        StreamOrchestrator.streamChunk(je);
+        O((prev) => ({ type: prev?.type || "iflow", text: (prev?.text || "") + je }));
       },
-      [r, D, O],
+      [O],
     ),
     be = (0, Ia.useCallback)(
       (je) => {
@@ -520831,7 +520809,7 @@ ${_t}`,
                 mt = { ...D.current, tools: He };
               r(mt, je);
             } else r(D.current, je);
-            O(null);
+            D.current = null;
           }
           (k(!1), P(null), Fvr(t, o));
         }
@@ -520840,7 +520818,7 @@ ${_t}`,
     ),
     Ne = (0, Ia.useCallback)(
       (je, He) => {
-        (D.current && (r(D.current, He), O(null)),
+        (D.current && (r(D.current, He), D.current = null),
           r(
             { type: "error", text: eIe(je.error, n.getContentGeneratorConfig()?.authType, void 0, n.getModel(), l1) },
             He,
@@ -520879,6 +520857,8 @@ ${_t}`,
           [id.UNEXPECTED_TOOL_CALL]: g("geminiStream.finishReasons.unexpectedToolCall"),
         }[mt];
         (we && r({ type: "info", text: `\u26A0\uFE0F  ${we}` }, He),
+          D.current && (r(D.current, He), D.current = null),
+          StreamOrchestrator.dispatch({ type: "separator" }),
           pGi(),
           k(!1),
           (function() {
@@ -520954,8 +520934,9 @@ ${je.description}`
     ),
     ke = (0, Ia.useCallback)(
       async (je, He, mt) => {
-        let kt = "",
-          $t = [];
+        var THINK_OPEN_TAGS = ["<think>", "<thought>"];
+        var isThinking = false, currentCloseTag = "", tagBuffer = "";
+        let $t = [];
         for await (let we of je)
           switch (we.type) {
             case As.Thought: {
@@ -520964,9 +520945,49 @@ ${je.description}`
               r(Te, He);
               break;
             }
-            case As.Content:
-              (U(), (kt = pe(we.value, kt, He)));
+            case As.Content: {
+              U();
+              var rawChunk = we.value;
+              if (isThinking) {
+                tagBuffer += rawChunk;
+                var closeIdx = tagBuffer.indexOf(currentCloseTag);
+                if (closeIdx !== -1) {
+                  var thoughtText = tagBuffer.substring(0, closeIdx);
+                  var thoughtItem = { type: "thinking", text: thoughtText, thinking: { subject: "", description: thoughtText }, displayMode: "full" };
+                  StreamOrchestrator.dispatch(thoughtItem);
+                  r(thoughtItem, He);
+                  var afterThought = tagBuffer.substring(closeIdx + currentCloseTag.length);
+                  isThinking = false; tagBuffer = "";
+                  if (afterThought.trim()) { pe(afterThought); }
+                }
+              } else {
+                var thinkIdx = -1, matchedOpenTag = null;
+                for (var ti = 0; ti < THINK_OPEN_TAGS.length; ti++) {
+                  var tag = THINK_OPEN_TAGS[ti];
+                  var idx = rawChunk.indexOf(tag);
+                  if (idx !== -1 && (thinkIdx === -1 || idx < thinkIdx)) { thinkIdx = idx; matchedOpenTag = tag; }
+                }
+                if (matchedOpenTag) {
+                  if (thinkIdx > 0) { pe(rawChunk.substring(0, thinkIdx)); }
+                  isThinking = true;
+                  currentCloseTag = matchedOpenTag.replace("<", "</");
+                  tagBuffer = rawChunk.substring(thinkIdx + matchedOpenTag.length);
+                  var inlineCloseIdx = tagBuffer.indexOf(currentCloseTag);
+                  if (inlineCloseIdx !== -1) {
+                    var inlineThought = tagBuffer.substring(0, inlineCloseIdx);
+                    var inlineItem = { type: "thinking", text: inlineThought, thinking: { subject: "", description: inlineThought }, displayMode: "full" };
+                    StreamOrchestrator.dispatch(inlineItem);
+                    r(inlineItem, He);
+                    var afterInline = tagBuffer.substring(inlineCloseIdx + currentCloseTag.length);
+                    isThinking = false; tagBuffer = "";
+                    if (afterInline.trim()) { pe(afterInline); }
+                  }
+                } else {
+                  pe(rawChunk);
+                }
+              }
               break;
+            }
             case As.ToolCallRequestPending:
               break;
             case As.ToolCallRequest: {
@@ -521135,7 +521156,7 @@ ${je.description}`
             } catch (ct) {
               o(`Failed to record assistant response to history: ${ct}`);
             }
-            O(null);
+            D.current = null;
           }
         } catch (tt) {
           (k(!1),
@@ -521158,7 +521179,7 @@ ${je.description}`
         } finally {
         }
       },
-      [ee, f, Ce, ke, D, r, O, A, t, c, n, F, B, K, o, Q],
+      [ee, f, Ce, ke, D, r, A, t, c, n, F, B, K, o, Q],
     ),
     Le = (0, Ia.useCallback)(
       async (je) => {

@@ -120,7 +120,6 @@ var StreamOrchestrator,
       },
 
       appendHistory(e) {
-        console.warn("DEPRECATED: appendHistory -> use dispatch instead");
         var msg = { ...e, id: nextId() };
         _history.push(msg);
         _historySnapshot = _history.slice();
